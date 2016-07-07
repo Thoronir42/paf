@@ -1,0 +1,12 @@
+.idea
+
+log/*
+temp/*
+vendor/*
+!.gitignore
+!.htaccess
+!web.config
+www/images/games/*
+www/images/platforms/*
+app/config/config.local.neon
+app/config/users.neon

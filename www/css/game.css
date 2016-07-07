@@ -1,0 +1,49 @@
+/* 
+    Created on : 22.11.2015, 15:19:32
+    Author     : Stepan
+*/
+
+.game{
+	background: lightskyblue;
+	padding: 4px;
+	font-family: "Courier New";
+}
+.game .panel-body{
+	padding:0px;
+}
+
+.game .panel-heading{
+	height: 60px;
+}
+
+.gameTitle{
+	font-weight: bold;
+	font-size: 1.4em;
+	overflow-y: auto;
+}
+
+li.buttons{
+	padding: 0px;
+	border: 0px;
+}
+
+.game .frame{
+	width:100%;
+	
+	padding: 0px;
+	background: azure;
+}
+.game .frame img{
+	max-width: 100%;
+}
+
+.gamePicture .frame img{
+	max-width: 100%;
+	max-height: 100%;
+	margin: 0px auto;
+	vertical-align: middle;
+}
+
+.game .progress-bar{
+	min-width: 30px;
+}

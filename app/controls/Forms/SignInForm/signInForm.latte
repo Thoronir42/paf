@@ -1,0 +1,23 @@
+<form n:name=form class="form-horizontal" style="display: inline-block">
+    <ul class="error list-group" n:if="$form->ownErrors">
+        <li class="list-group-item list-group-item-danger" n:foreach="$form->ownErrors as $error">{$error}</li>
+    </ul>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>{label login, class => 'control-label' /}</th>
+            <td>{input login, class => 'form-control'} <span class=error n:ifcontent>{$form['login']->error}</span></td>
+        </tr>
+        <tr>
+            <th>{label password, class => 'control-label' /}</th>
+            <td>{input password, class => 'form-control'} <span class=error n:ifcontent>{$form['password']->error}</span></td>
+        </tr>
+        <tr>
+            <th colspan="2" class="text-center">
+                {input remember}
+                <br/>
+                {input send, class => "btn btn-primary"}
+            </th>
+        </tr>
+    </table>
+</form>

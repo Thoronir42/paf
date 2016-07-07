@@ -1,0 +1,11 @@
+{block content}
+	<h1>Quo T.S.</h1>
+{if !$enableQuotes}
+	<div class="text-warning">V tuto chvíli není možné posílat žádosti.</div>
+	<br/>
+	<div class="text-center">
+		<a n:href="Default:" class="btn btn-lg btn-primary">Nashledanou</a>
+	</div>
+{else}
+	{control quoteForm}
+{/if}

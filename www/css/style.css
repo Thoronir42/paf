@@ -1,0 +1,238 @@
+body{
+	background-color: #25c887;
+	font-size: 15px;
+	line-height: 1.6;
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+
+#headder{
+	font-size: 4em;
+	font-family: Impact;
+	margin: 12px 0 20px;
+}
+
+.navbar, .navbar .dropdown-menu{
+	background-color: dimgray;
+}
+
+.nav li, .navbar-brand{
+	color: black;
+	font-size: 1.2em;
+	font-weight: 400;
+}
+.navbar-brand{
+	font-weight:900;
+}
+.nav a, .navbar-brand{
+	color:cornsilk !important;
+}
+.dropdown-menu a:hover{
+	background-color: cornsilk !important;
+	color: darkred !important;
+}
+
+.nav li.active a,
+.nav .open li.active a,
+.nav .open a.dropdown-toggle{
+	color: cornsilk !important;
+	background-color: darkred !important;
+}
+.nav .divider{
+	background-color: black;
+}
+
+#bodyContent{
+	/*margin-bottom: 20px;*/
+}
+
+h1 {
+	color: #3484D2;
+}
+
+.footer {
+	position: fixed;
+	/* Set the fixed height of the footer here */
+	height: 60px;
+	background-color: #f5f5f5;
+}
+
+.footer p{
+	padding: 0 15px;
+	margin: 18px 0;
+}
+
+
+#ajax-spinner {
+	margin: 15px 0 0 15px;
+	padding: 13px;
+	background: white url('../images/spinner.gif') no-repeat 50% 50%;
+	font-size: 0;
+	z-index: 123456;
+	display: none;
+}
+
+div.flash {
+	color: black;
+	background: #FFF9D7;
+	border: 1px solid #E2C822;
+	padding: 1em;
+	margin: 1em 0;
+}
+
+a[href^="#error:"] {
+	background: red;
+	color: white;
+}
+
+form th, form td {
+	vertical-align: top;
+	font-weight: normal;
+}
+
+form th {
+	text-align: right;
+}
+
+form .required label {
+	font-weight: bold;
+}
+
+form .error {
+	color: #D00;
+	font-weight: bold;
+}
+
+.picture-panel .panel-body{
+	max-height: 390px;
+	overflow-y: auto;
+}
+
+.game .frame img{
+	max-width:100%;
+}
+
+.img-thumbnail{
+	height: 140px;
+	position: relative;
+}
+
+.img-thumbnail img{
+
+	max-height:100%;
+}
+
+.img-thumbnail a{
+	visibility: hidden;
+}
+
+.img-thumbnail:hover a{
+	visibility: visible;
+}
+
+
+
+.primary-picture{
+	border-color: black;
+}
+
+.picture-mark{
+	position: absolute;
+	right: 4px;
+}
+
+.delete-mark{
+	top: 0.5em;
+	color: #FF6000;
+}
+.delete-mark:hover{
+	color: #FF0000;
+}
+
+.select-mark{
+	top: 3em;
+	color: yellowgreen;
+}
+
+.popover{
+	min-width: 160px;
+}
+
+.btn-list{
+	top: 5px; right: 5px; position: absolute;
+}
+
+.platform-panel > .panel-heading{
+	position: relative;
+	padding-left:60px;
+}
+
+.platform-panel .panel-heading .img-thumbnail{
+	position: absolute;
+	top: -10px; left: -10px;
+	transform: rotate(-7deg);
+
+	width: 60px; height:60px;
+}
+
+.tag.label{
+	position: relative;
+	font-size: large;
+	margin: 6px 12px;
+	padding-right: 30px;
+}
+
+.tag.label .btn-label{
+	position: absolute;
+	font-size:x-small;
+	top: 2px;
+	right: 2px;
+}
+
+.game-mini{
+	border-radius: 6px;
+	background: darkgray;
+	padding: 6px;
+	margin: 4px 6px;
+	display: inline-block;
+	width: 120px;
+
+}
+.game-mini img{
+	width: 100%;
+	background-color: dodgerblue;
+	border-color: aliceblue;
+}
+
+.game-mini .states{
+	color: transparent;
+	transition: color 0.25s;
+}
+
+.game-mini:hover .states{
+	color: black;
+}
+
+.game-mini .state{
+	display: inline-block;
+	width: 30%;
+	background: greenyellow;
+	border-radius: 3px;
+}
+.game-mini .controls{
+	margin-top: 6px;
+}
+
+.platform-navigation{
+	position: fixed;
+	width: 200px;
+}
+
+.platform-navigation > .btn-group-vertical, .platform-navigation > a{
+	width: 100%;
+}
+
+.platform-navigation > a{
+	margin-top: 10px;
+}

@@ -1,0 +1,5 @@
+{form form}
+	<ul class="list-group" n:if="$this->flashes">
+		<li n:foreach="$this->flashes as $flash">{$flash->message}</li>
+	</ul>
+{/form}

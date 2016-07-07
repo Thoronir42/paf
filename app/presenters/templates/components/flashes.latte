@@ -1,0 +1,5 @@
+<div id="flashes">
+    <ul class="list-group" n:if="$flashes">
+        <li n:foreach="$flashes as $flash" n:class="list-group-item, flash, $flash->type">{$flash->message}</li>
+    </ul>
+</div>

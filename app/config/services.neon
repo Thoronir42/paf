@@ -1,0 +1,18 @@
+services:
+	router: App\RouterFactory::createRouter
+	authenticator: App\Model\Auth\Authenticator
+
+	- App\Libs\Initialiser
+	- App\Model\Settings\Settings
+
+	- App\Controls\NavigationMenu\INavigationMenuFactory
+
+	- App\Controls\Settings\ISettingsControlFactory
+
+	- App\Forms\FormFactory
+	- App\Forms\ISignInFormFactory
+	- App\Forms\IQuoteFormFactory
+
+	- App\Model\Services\Users
+	- App\Model\Services\Quotes
+
