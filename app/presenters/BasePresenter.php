@@ -34,7 +34,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
 		parent::startup();
 
-		$this->template->appName = 'Pretty Acceptable Fursuits';
+		$this->template->appName = $this->context->parameters['appName'];
 		$this->template->title = '';
 
 		if($this->user->isLoggedIn()){
@@ -60,24 +60,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function createComponentMenu()
 	{
 		$menu = $this->navigationMenuFactory->create();
-		$menu->setTitle('Debtr');
+		$menu->setTitle($this->context->parameters['appName']);
 		if(true || $this->user->isLoggedIn()){
 			$debts = $menu->addItem('Default:', 'Wowie');
 			$debts->addItem('Quotes:', 'Pls?');
-
 		}
 
-
-		/*
-		if($this->user->isLoggedIn()){
-			$manageItem = $menu->addItem('default', 'Správa');
-			$manageItem->addItem('Games:add', 'Zadat novou hru');
-			$manageItem->addSeparator();
-			$manageItem->addItem('Platforms:', 'Platformy');
-			$manageItem->addItem('States:', 'Stavy');
-			$manageItem->addItem('Tags:', 'Tagy');
-		}
-		*/
 		return $menu;
 	}
 }

@@ -1,5 +1,12 @@
+{dump $form}
 {form form}
 	<ul class="list-group" n:if="$this->flashes">
 		<li n:foreach="$this->flashes as $flash">{$flash->message}</li>
 	</ul>
+	<div class="row">
+		{foreach $form->controls as $control}
+			<div class="col-sm-2">{label $control/}</div>
+			<div class="col-sm-10">{input $control}</div>
+		{/foreach}
+	</div>
 {/form}

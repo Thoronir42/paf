@@ -8,8 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 
 /**
- * @property 	int			$id
- * @property 	string		$handle
+ * @property    int $id
+ * @property    string $handle
+ * @property 	string $title
  *
  * @ORM\Entity
  * @ORM\Table(name="option")
@@ -20,8 +21,15 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
  */
 abstract class AOption extends BaseEntity
 {
+	const TYPE_STRING = 'string';
+	const TYPE_BOOL = 'bool';
+	const TYPE_INT = 'int';
+
 	use Identifier;
 
-	/** @ORM\Column(type="string")  */
+	/** @ORM\Column(type="string") */
 	protected $handle;
+
+	/** @ORM\Column(type="string") */
+	protected $title;
 }

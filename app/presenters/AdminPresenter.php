@@ -3,7 +3,7 @@
 namespace App\Presenters;
 
 
-class AdminPresenter extends BasePresenter
+abstract class AdminPresenter extends BasePresenter
 {
-
+	
 }

@@ -23,15 +23,15 @@ class SignInForm extends BaseFormControl
 	{
 		$form = $this->factory->create();
 		
-		$form->addText('login', 'Uživatelské jméno')
+		$form->addText('login', 'Who?')
 			->setRequired();
 
-		$form->addPassword('password', 'Heslo')
+		$form->addPassword('password', 'U ? ? ???')
 			->setRequired();
 
-		$form->addCheckbox('remember', 'Pamatovat si mě');
+		$form->addCheckbox('remember', 'Pls, remember');
 
-		$form->addSubmit('send', 'Odeslat');
+		$form->addSubmit('send', 'Whrrr?!');
 
 		$form->onSuccess[] = $this->processForm;
 		return $form;
