@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 
+use App\Utils\Migrations\BaseMigration;
 use App\Utils\Migrations\Migrations;
 use Nette\Application\BadRequestException;
 
@@ -14,20 +15,28 @@ class UtilitiesPresenter extends AdminPresenter
 	public function startup()
 	{
 		parent::startup();
-		$this->authenticationCheck();
+		if ($this->action != 'migrate' || $this->getParameter('handle') != BaseMigration::HANDLE_000_INIT) {
+			$this->authenticationCheck('You need to be logged in to access Utilities', []);
+		}
 	}
 
-	public function actionDefault(){
+	public function actionDefault()
+	{
 		throw new BadRequestException();
 	}
 
-	public function actionInitialise()
+	public function actionMigrate($handle)
 	{
-		$migration = $this->migrations->get_000_initialize();
+		$message_buffer = $this->migrations->getLog();
+		$migration = $this->migrations->get($handle);
+		if ($migration) {
+			$message_buffer->writeln('Starting migration');
 
-		$log = $migration->run();
+			$migration->run();
 
-		$this->flashMessage('Initial setup was succesfull');
-		
+			$message_buffer->writeln($migration->title . ' finished.');
+		}
+
+		$this->template->log = $message_buffer->fetch();
 	}
 }

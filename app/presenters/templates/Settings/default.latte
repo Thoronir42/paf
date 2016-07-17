@@ -1,1 +1,18 @@
 {block content}
+
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Option</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tbody>
+		{foreach $settings as $setting}
+			<tr>
+				<td>{$setting->title}</td>
+				<td>{$setting->value}</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>

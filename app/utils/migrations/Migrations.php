@@ -12,6 +12,7 @@ use Nette\DI\Extensions\InjectExtension;
 use Nette\MemberAccessException;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Tracy\Debugger;
 
 /**
@@ -35,13 +36,16 @@ final class Migrations
 
 	/** @var SchemaUpdateCommand @inject */
 	public $schemaUpdateCommand;
-	/** @var MigraLog */
+
+	private $all_migrations;
+
+	/** @var BufferedOutput */
 	private $log;
 
-	public function __construct(Container $context, MigraLog $log)
+	public function __construct(Container $context)
 	{
 		$this->context = $context;
-		$this->log = $log;
+		$this->log = new BufferedOutput();
 		$this->initializer = new EntityInitializer($this);
 	}
 
@@ -61,8 +65,41 @@ final class Migrations
 		return $service;
 	}
 
+	/**
+	 * @return BufferedOutput
+	 */
 	public function getLog(){
 		return $this->log;
+	}
+
+	public function getAll()
+	{
+		if (!$this->all_migrations) {
+			$this->all_migrations = $this->buildMigrationsList();
+		}
+
+		return $this->all_migrations;
+	}
+
+	public function get($handle)
+	{
+		$migrations = $this->getAll();
+		if (!array_key_exists($handle, $migrations)) {
+			$this->log->writeln('Migration of handle ' . $handle . ' was not found.');
+			return null;
+		}
+		/** @var BaseMigration $migration */
+		$migration = $migrations[$handle];
+		$migration->injectMessageBuffer($this->log);
+
+		return $migration;
+	}
+
+	private function buildMigrationsList()
+	{
+		return [
+			BaseMigration::HANDLE_000_INIT => new ProjectInitialiseMigration($this->initializer),
+		];
 	}
 
 	protected function updateDatabase()
@@ -79,6 +116,6 @@ final class Migrations
 
 	public function get_000_initialize()
 	{
-		return new Migration_000_ProjectInitialise($this->initializer);
+		return new ProjectInitialiseMigration($this->initializer);
 	}
 }

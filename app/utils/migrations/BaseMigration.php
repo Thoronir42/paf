@@ -4,28 +4,51 @@ namespace App\Utils\Migrations;
 
 
 use App\Utils\EntityInitializer;
+use Nette\Object;
+use Symfony\Component\Console\Output\BufferedOutput;
 
-abstract class BaseMigration
+/**
+ * @property        string $title
+ * @property        string $description
+ */
+abstract class BaseMigration extends Object
 {
-    /** @var EntityInitializer */
-    protected $add;
+	const HANDLE_000_INIT = 'init';
 
-    /** @var  MigraLog */
-    protected $log;
+	/** @var EntityInitializer */
+	protected $add;
 
-    public function __construct(EntityInitializer $initializer, MigraLog $log)
-    {
-        $this->add = $initializer;
-        $this->log = $log;
-    }
+	protected $title = 'Base migration (TITLE NOT SET)';
 
-    public final function __invoke()
-    {
-        $this->run();
-    }
+	protected $description = 'Base migration description (DESCRIPTION NOT SET)';
 
-    /**
-     * @return MigraLog
-     */
-    public abstract function run();
+	/** @var  BufferedOutput */
+	protected $log;
+
+	public function __construct(EntityInitializer $initializer)
+	{
+		$this->add = $initializer;
+	}
+
+	public final function __invoke()
+	{
+		$this->run();
+	}
+
+	public abstract function run();
+
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	public function injectMessageBuffer(BufferedOutput $log)
+	{
+		$this->log = $log;
+	}
 }

@@ -5,7 +5,6 @@ services:
 	- App\Libs\Initialiser
 	- App\Utils\EntityInitializer
 	- App\Utils\Migrations\Migrations
-	- App\Utils\Migrations\MigraLog
 	- App\Model\Settings\Settings
 
 	- App\Controls\NavigationMenu\INavigationMenuFactory

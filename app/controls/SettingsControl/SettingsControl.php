@@ -45,7 +45,7 @@ class SettingsControl extends BaseFormControl
 		if ($this->option instanceof OptionString) {
 			$form->addText('value', 'Hodnota');
 		} elseif ($this->option instanceof OptionInt) {
-			$form->addText('value', 'Hodnota')->getControlPrototype()->type = 'number';
+			$form->addText('value', 'Hodnota')->controlPrototype->type = 'number';
 		} elseif ($this->option instanceof OptionBool) {
 			$form->addCheckbox('value', 'Hodnota');
 		} else {

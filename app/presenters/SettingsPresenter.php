@@ -17,6 +17,13 @@ class SettingsPresenter extends AdminPresenter
 	/** @var Settings @inject */
 	public $settings;
 
+	public function startup()
+	{
+		parent::startup();
+
+		$this->template->title = 'Settings';
+	}
+
 	public function actionDefault()
 	{
 		$this->template->settings = $this->settings->fetchAll();

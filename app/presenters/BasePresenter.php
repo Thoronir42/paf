@@ -35,6 +35,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		parent::startup();
 
 		$this->template->appName = $this->context->parameters['appName'];
+		$this->template->background_color = '#25c887';
 		$this->template->title = '';
 
 		if($this->user->isLoggedIn()){

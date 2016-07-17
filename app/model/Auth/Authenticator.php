@@ -43,9 +43,9 @@ class Authenticator extends Object implements IAuthenticator
 		$user = $this->users->findOneBy(['username' => $login]);
 
 		if (!$user) {
-			throw new AuthenticationException('Zadaný login nebyl rozpoznán.', self::IDENTITY_NOT_FOUND);
+			throw new AuthenticationException('Login was not recognised.', self::IDENTITY_NOT_FOUND);
 		} elseif (!Passwords::verify($password, $user->password)) {
-			throw new AuthenticationException('Heslo nebylo zadáno správně.', self::INVALID_CREDENTIAL);
+			throw new AuthenticationException('Entered password did not match the login.', self::INVALID_CREDENTIAL);
 		}
 
 		$arr = $user->toArray();

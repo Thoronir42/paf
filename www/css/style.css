@@ -1,5 +1,4 @@
 body{
-	background-color: #25c887;
 	font-size: 15px;
 	line-height: 1.6;
 	margin-top: 60px;
@@ -52,7 +51,7 @@ h1 {
 }
 
 .footer {
-	position: fixed;
+	position: absolute;
 	/* Set the fixed height of the footer here */
 	height: 60px;
 	background-color: #f5f5f5;
