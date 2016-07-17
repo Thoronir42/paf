@@ -5,6 +5,8 @@ namespace App\Model\Settings;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @param	bool	$value
+ *
  * @ORM\Entity
  */
 class OptionBool extends AOption
@@ -13,7 +15,7 @@ class OptionBool extends AOption
 	protected $bool;
 
 	/**
-	 * @return int
+	 * @return boolean
 	 */
 	public function getValue()
 	{
@@ -21,10 +23,17 @@ class OptionBool extends AOption
 	}
 
 	/**
-	 * @param int $int
+	 * @param boolean $bool
 	 */
-	public function setValue($int)
+	public function setValue($bool)
 	{
-		$this->bool = $int;
+		$this->bool = !!$bool;
+	}
+
+	public function getValues(){
+		return [
+			true => 'Yes',
+			false => 'No',
+		];
 	}
 }

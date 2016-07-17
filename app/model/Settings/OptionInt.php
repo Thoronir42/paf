@@ -3,6 +3,7 @@
 namespace App\Model\Settings;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nette\InvalidArgumentException;
 
 /**
  * @property	int		$value
@@ -27,6 +28,9 @@ class OptionInt extends AOption
 	 */
 	public function setValue($int)
 	{
+		if(!is_integer($int)){
+			throw new InvalidArgumentException('Int option must not receive a ' . gettype($int) .' value');
+		}
 		$this->int = $int;
 	}
 

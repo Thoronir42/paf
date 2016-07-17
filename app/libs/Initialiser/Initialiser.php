@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Stepan
- * Date: 05.06.2016
- * Time: 11:57
- */
 
 namespace App\Libs;
 

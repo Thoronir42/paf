@@ -3,64 +3,66 @@
 namespace App\Controls\Settings;
 
 
-use App\Forms\BaseFormControl;
-use App\Forms\FormFactory;
 use App\Model\Settings\AOption;
-use App\Model\Settings\OptionBool;
-use App\Model\Settings\OptionInt;
-use App\Model\Settings\OptionString;
-use Nette\Application\UI\Form;
-use Nette\InvalidStateException;
+use App\Model\Settings\Settings;
 
-class SettingsControl extends BaseFormControl
+use Nette\Application\UI;
+use Nette\Application\UI\Multiplier;
+use Nette\InvalidArgumentException;
+use Nette\Utils\Strings;
+
+/**
+ * @property	boolean	$enableQuotes
+ */
+class SettingsControl extends UI\Control
 {
-	/** @var AOption */
-	private $option;
+	/** @var Settings */
+	private $settings;
 
-	public function __construct(FormFactory $factory)
+	public function __construct(Settings $settings)
 	{
-		parent::__construct($factory);
+		parent::__construct();
+		$this->settings = $settings;
 	}
 
-	public function setOption(AOption $option)
+	public function renderTable()
 	{
-		$this->option = $option;
-	}
+		$this->template->options = $this->settings->fetchAll();
 
-	public function renderForm()
-	{
-		if(!$this->option){
-			throw new InvalidStateException('No option was selected before ' . self::class . ' was rendered.');
-		}
-
-		$this->template->setFile(__DIR__ . '/settingsControlForm.latte');
-
+		$this->template->setFile(__DIR__ . '/settingsControlTable.latte');
 		$this->template->render();
 	}
 
-	public function createComponentForm()
+	public function handleSet($pk, $value, $name)
 	{
-		$form = $this->factory->create();
+		// fixme: blee?!!
+		$pk = $_POST['pk'];
+		$value = $_POST['value'];
 
-		if ($this->option instanceof OptionString) {
-			$form->addText('value', 'Hodnota');
-		} elseif ($this->option instanceof OptionInt) {
-			$form->addText('value', 'Hodnota')->controlPrototype->type = 'number';
-		} elseif ($this->option instanceof OptionBool) {
-			$form->addCheckbox('value', 'Hodnota');
-		} else {
-			$this->flashMessage('Invalid option type.');
-			return $form;
+		try{
+			$this->settings->$pk = $value;
+		} catch (InvalidArgumentException $ex){
+			$this->sendJson([
+				'status' => 'error',
+				'message' => $ex->getMessage(),
+			]);
 		}
-
-		$form->addSubmit('save', 'Save!');
-
-		return $form;
+		$this->sendJson([
+			'status' => 'success',
+			'message' => "$pk set to $value",
+		]);
 	}
 
-	public function processForm(Form $form, $values)
+	public function createComponentOption()
 	{
-		// TODO: Implement processForm() method.
+		return new Multiplier(function ($id) {
+			return new OptionControl($this->settings);
+		});
+	}
+
+	private function sendJson($data)
+	{
+		$this->presenter->sendJson($data);
 	}
 }
 
@@ -70,5 +72,5 @@ interface ISettingsControlFactory
 	 * @param AOption $option
 	 * @return SettingsControl
 	 */
-	public function create();
+	public function create(Settings $settings);
 }

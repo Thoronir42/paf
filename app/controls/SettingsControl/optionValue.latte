@@ -1,0 +1,12 @@
+{dump $type}
+{switch $type}
+	{case 'select'}
+	<a data-pk="{$option->handle}" class="editable" data-type="select"
+	   data-value="{include #value, value => $option->value|trim}" data-source="{link values! $option->handle}">{$readableValue}</a>
+	{default}
+	<a data-pk="{$option->handle}" class="editable" data-type="text">{$readableValue}</a>
+{/switch}
+
+{define #value, $value}
+	{if is_bool($value)}{$value?1:0}{else}{$value}{/if}
+{/define}

@@ -5,6 +5,7 @@ namespace App\Model\Settings;
 
 use App\Model\Services\BaseService;
 use Kdyby\Doctrine\EntityManager;
+use Nette\InvalidArgumentException;
 use Nette\Utils\ArrayHash;
 
 class Settings extends BaseService
@@ -15,13 +16,49 @@ class Settings extends BaseService
 	public function __construct(EntityManager $em)
 	{
 		parent::__construct($em, $em->getRepository(AOption::class));
+
+		$this->settings = $this->prepareSettings();
+
+
 	}
 
 	public function fetchAll()
 	{
-		if ($this->settings) {
-			return $this->settings;
+		return $this->settings;
+	}
+
+	/**
+	 * @param string $name
+	 * @return AOption
+	 */
+	public function option($name)
+	{
+		if (!isset($this->settings->$name)) {
+			throw new InvalidArgumentException("Option $name does not exist.");
 		}
+		return  $this->settings->$name;
+	}
+
+	/**
+	 * @param string $name
+	 * @return mixed
+	 */
+	public function &__get($name)
+	{
+		$option = $this->option($name);
+		$value = $option->getValue();
+		return $value;
+
+	}
+
+	public function __set($name, $value)
+	{
+		$option = $this->option($name);
+		$option->setValue($value);
+		$this->save($option);
+	}
+
+	private function prepareSettings(){
 		$settings = new ArrayHash();
 
 		$result = $this->findBy([], ['handle' => 'ASC']);
@@ -30,7 +67,6 @@ class Settings extends BaseService
 		foreach ($result as $option) {
 			$settings->{$option->handle} = $option;
 		}
-
-		return $this->settings = $settings;
+		return $settings;
 	}
 }

@@ -1,18 +1,28 @@
 {block content}
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th>Option</th>
-			<th>Value</th>
-		</tr>
-	</thead>
-	<tbody>
-		{foreach $settings as $setting}
-			<tr>
-				<td>{$setting->title}</td>
-				<td>{$setting->value}</td>
-			</tr>
-		{/foreach}
-	</tbody>
-</table>
+{control settings:table}
+
+{/block}
+
+{block scripts}
+	{include #parent}
+
+	<script>
+		initEditable();
+
+		function initEditable(){
+			var options = {
+				success: function (response, newValue) {
+					if(response.status === 'error'){
+						return response.message;
+					}
+				},
+				url: {link settings-set!},
+				name: 'value',
+				mode: 'inline'
+
+			};
+			$('a.editable').editable(options);
+		}
+	</script>
+{/block}

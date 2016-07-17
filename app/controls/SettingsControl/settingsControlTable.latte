@@ -1,0 +1,19 @@
+<table class="table table-bordered">
+	<thead>
+	<tr>
+		<th>Option</th>
+		<th>Value</th>
+	</tr>
+	</thead>
+	<tbody>
+	{foreach $options as $option}
+		<tr>
+			<td>{$option->title}</td>
+			<td>
+				{control option-{$option->id} $option}
+			</td>
+		</tr>
+
+	{/foreach}
+	</tbody>
+</table>

@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 
 /**
- * @property    int $id
- * @property    string $handle
- * @property 	string $title
+ * @property        int $id
+ * @property        string $handle
+ * @property        string $title
  *
  * @ORM\Entity
  * @ORM\Table(name="option")
@@ -32,4 +32,42 @@ abstract class AOption extends BaseEntity
 
 	/** @ORM\Column(type="string") */
 	protected $title;
+
+	/**
+	 * @return string
+	 */
+	public function getHandle()
+	{
+		return $this->handle;
+	}
+
+	/**
+	 * @param string $handle
+	 */
+	public function setHandle($handle)
+	{
+		$this->handle = $handle;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
+	 * @param string $title
+	 */
+	public function setTitle($title)
+	{
+		$this->title = $title;
+	}
+
+	public abstract function getValue();
+
+	public abstract function setValue($value);
+
+
 }
