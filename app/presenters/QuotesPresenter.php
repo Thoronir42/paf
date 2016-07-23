@@ -20,8 +20,8 @@ class QuotesPresenter extends BasePresenter
 		//$this->authenticationCheck('Pro kontrolu dluhů je nezbytné přihlášení.', [])
 	}
 
-	public function actionDefault($enable = false){
-		$this->template->enableQuotes = $enable;
+	public function actionDefault(){
+		$this->template->enableQuotes = $this->settings->{'enable-quotes'};
 	}
 
 	public function createComponentQuoteForm()

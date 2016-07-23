@@ -8,6 +8,9 @@ use Kdyby\Doctrine\EntityManager;
 use Nette\InvalidArgumentException;
 use Nette\Utils\ArrayHash;
 
+/**
+ * @property 		boolean			$enable-quotes
+ */
 class Settings extends BaseService
 {
 	/** @var ArrayHash */

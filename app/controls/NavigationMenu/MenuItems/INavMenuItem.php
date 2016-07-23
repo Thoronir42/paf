@@ -3,7 +3,7 @@
 namespace App\Controls\NavigationMenu;
 
 
-class NavigationMenuChildren
+interface INavMenuItem
 {
-	
+	public function getRole();
 }

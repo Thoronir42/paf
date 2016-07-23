@@ -14,40 +14,21 @@
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<ul class="nav navbar-nav">
 				{foreach $items as $item}
-					{if !$item->hasItems()}
-						{var $link = $presenter->link($item->code)}
+					{switch $item->role}
+						{case 'separator'}
+						{dump $item}
+						{case 'link'}
+						{var $link = $presenter->link($item->target, $item->parameters)}
 						<li n:class="$presenter->linkCurrent ? active">
 							<a href="{$link}">{$item->caption}</a>
+							{include #label, label => $item->label}
 						</li>
-					{else}
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$item->caption} <span
-										class="caret"></span></a>
-							<ul class="dropdown-menu">
-								{foreach $item->items as $subitem}
-									{if $subitem->isSeparator()}
-										<li role="separator" class="divider"></li>
-									{else}
-										{if $subitem->code}
-											{var $link = $presenter->link($subitem->code)}
-											<li n:class="$presenter->linkCurrent?active">
-												<a href="{$link}">{$subitem->caption}</a>
-											</li>
-										{else}
-											<li style="margin: 5px 15px">
-												<span>{$subitem->caption}</span>
-												{var $label = $subitem->label}
-												<span n:if="$label" class="label {$label->class} pull-right">{$label->text}</span>
-											</li>
-										{/if}
-
-									{/if}
-								{/foreach}
-							</ul>
-						</li>
-					{/if}
+						{case 'dropdown'}
+						{include #dropdown, parent => $item}
+					{/switch}
 				{/foreach}
 			</ul>
+
 			<ul class="nav navbar-nav pull-right">
 				<li>
 					{if $user->isLoggedIn()}
@@ -69,3 +50,37 @@
 	</div>
 	<!-- /.container -->
 </nav>
+
+
+{define #dropdown, $parent}
+	<li n:class="dropdown, $control->currentDropdown($parent)?active">
+		<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$parent->caption}<span class="caret"></span></a>
+		<ul class="dropdown-menu">
+			{foreach $parent->items as $item}
+				{switch $item->role}
+					{case 'separator'}
+					<li role="separator" class="divider"></li>
+				{case 'link'}
+				{var $link = $control->link($item->target, $item->parameters)}
+					<li n:class="$presenter->linkCurrent?active">
+						<a href="{$link}">{$item->caption}</a>
+						{include #label, label => $item->label}
+					</li>
+				{case 'info'}
+					<li style="margin: 5px 15px">
+						<span>{$subitem->caption}</span>
+						{var $label = $subitem->label}
+						<span n:if="$label"
+								class="label {$label->class} pull-right">{$label->text}</span>
+					</li>
+					{case 'dropdown'}
+					{include #dropdown, parent => $item}
+				{/switch}
+			{/foreach}
+		</ul>
+	</li>
+{/define}
+
+{define #label, $label}
+	<span n:if="$label" class="label label-{$label->level}">{$label->text}</span>
+{/define}

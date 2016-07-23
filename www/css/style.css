@@ -13,7 +13,7 @@ body{
 }
 
 .navbar, .navbar .dropdown-menu{
-	background-color: dimgray;
+	background-color: darkgray;
 }
 
 .nav li, .navbar-brand{
@@ -29,14 +29,14 @@ body{
 }
 .dropdown-menu a:hover{
 	background-color: cornsilk !important;
-	color: darkred !important;
+	color: mediumpurple !important;
 }
 
 .nav li.active a,
 .nav .open li.active a,
 .nav .open a.dropdown-toggle{
 	color: cornsilk !important;
-	background-color: darkred !important;
+	background-color: mediumpurple !important;
 }
 .nav .divider{
 	background-color: black;
@@ -51,7 +51,8 @@ h1 {
 }
 
 .footer {
-	position: absolute;
+	position: relative;
+	bottom:-60px;
 	/* Set the fixed height of the footer here */
 	height: 60px;
 	background-color: #f5f5f5;
@@ -103,25 +104,6 @@ form .error {
 	font-weight: bold;
 }
 
-.picture-panel .panel-body{
-	max-height: 390px;
-	overflow-y: auto;
-}
-
-.game .frame img{
-	max-width:100%;
-}
-
-.img-thumbnail{
-	height: 140px;
-	position: relative;
-}
-
-.img-thumbnail img{
-
-	max-height:100%;
-}
-
 .img-thumbnail a{
 	visibility: hidden;
 }
@@ -130,108 +112,9 @@ form .error {
 	visibility: visible;
 }
 
-
-
-.primary-picture{
-	border-color: black;
-}
-
-.picture-mark{
-	position: absolute;
-	right: 4px;
-}
-
-.delete-mark{
-	top: 0.5em;
-	color: #FF6000;
-}
-.delete-mark:hover{
-	color: #FF0000;
-}
-
-.select-mark{
-	top: 3em;
-	color: yellowgreen;
-}
-
-.popover{
-	min-width: 160px;
-}
-
-.btn-list{
-	top: 5px; right: 5px; position: absolute;
-}
-
-.platform-panel > .panel-heading{
-	position: relative;
-	padding-left:60px;
-}
-
-.platform-panel .panel-heading .img-thumbnail{
-	position: absolute;
-	top: -10px; left: -10px;
-	transform: rotate(-7deg);
-
-	width: 60px; height:60px;
-}
-
-.tag.label{
-	position: relative;
-	font-size: large;
-	margin: 6px 12px;
-	padding-right: 30px;
-}
-
 .tag.label .btn-label{
 	position: absolute;
 	font-size:x-small;
 	top: 2px;
 	right: 2px;
-}
-
-.game-mini{
-	border-radius: 6px;
-	background: darkgray;
-	padding: 6px;
-	margin: 4px 6px;
-	display: inline-block;
-	width: 120px;
-
-}
-.game-mini img{
-	width: 100%;
-	background-color: dodgerblue;
-	border-color: aliceblue;
-}
-
-.game-mini .states{
-	color: transparent;
-	transition: color 0.25s;
-}
-
-.game-mini:hover .states{
-	color: black;
-}
-
-.game-mini .state{
-	display: inline-block;
-	width: 30%;
-	background: greenyellow;
-	border-radius: 3px;
-}
-.game-mini .controls{
-	margin-top: 6px;
-}
-
-.platform-navigation{
-	position: fixed;
-	width: 200px;
-}
-
-.platform-navigation > .btn-group-vertical, .platform-navigation > a{
-	width: 100%;
-}
-
-.platform-navigation > a{
-	margin-top: 10px;
 }

@@ -3,55 +3,48 @@
 namespace App\Controls\NavigationMenu;
 
 
+use App\Libs\Bootstrap\BootstrapLevels;
+use Nette\InvalidArgumentException;
 use Nette\Object;
 
+/**
+ * Class NavMenuLabel
+ * @package App\Controls\NavigationMenu
+ *
+ * @property		string $text
+ * @property		string $level
+ */
 class NavMenuLabel extends Object
 {
 	protected $text;
+	protected $level;
 
-	protected $class;
-
-	/**
-	 * NavigationMenuLabel constructor.
-	 * @param string $text
-	 * @param string $class
-	 */
-	public function __construct($text = '0', $class = 'label-default')
-	{
-		$this->text = $text;
-		$this->class = $class;
-	}
-
-	/**
-	 * @return string
-	 */
+	/** @return string */
 	public function getText()
 	{
 		return $this->text;
 	}
 
-	/**
-	 * @param string $text
-	 */
+	/** @param string $text */
 	public function setText($text)
 	{
 		$this->text = $text;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getClass()
+	/** @return string */
+	public function getLevel()
 	{
-		return $this->class;
+		return $this->level;
 	}
 
-	/**
-	 * @param string $class
-	 */
-	public function setClass($class)
+	/** @param string $level */
+	public function setLevel($level)
 	{
-		$this->class = $class;
+		if(!array_key_exists($level, BootstrapLevels::getLevels())){
+			throw new InvalidArgumentException();
+		}
+
+		$this->level = $level;
 	}
 
 

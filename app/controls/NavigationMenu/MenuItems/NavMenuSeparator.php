@@ -3,7 +3,11 @@
 namespace App\Controls\NavigationMenu;
 
 
-class NavMenuSeparator extends NavMenuItem
+class NavMenuSeparator implements INavMenuItem
 {
 
+	public function getRole()
+	{
+		return 'separator';
+	}
 }
