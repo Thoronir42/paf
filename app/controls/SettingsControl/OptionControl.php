@@ -37,7 +37,7 @@ class OptionControl extends UI\Control
 	}
 
 	public function handleValues($handle){
-		$option = $this->settings->option($handle);
+		$option = $this->settings->getOption($handle);
 
 		if($option instanceof OptionBool){
 			$this->presenter->sendJson($option->getValues());

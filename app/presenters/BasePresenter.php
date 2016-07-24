@@ -3,9 +3,7 @@
 namespace App\Presenters;
 
 use App\Controls\NavigationMenu\INavigationMenuFactory;
-use App\Model\Entity\Quote;
 use App\Model\Entity\User;
-use App\Model\Services\Quotes;
 use App\Model\Services\Users;
 use App\Model\Settings\Settings;
 use Nette;
@@ -62,10 +60,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	public function createComponentMenu()
 	{
 		$menu = $this->navigationMenuFactory->create();
+
 		$menu->setTitle($this->context->parameters['appName']);
 		if (true || $this->user->isLoggedIn()) {
-			$debts = $menu->addLink('Quotes:', 'Su-meme-ry');
-			$debts->addLink('Quotes:', 'Pls?');
+			$quotes = $menu->addLink('Quotes:', 'Su-meme-ry');
+			$quotes->addLink('Quotes:', 'Pls?');
 		}
 
 		return $menu;

@@ -8,16 +8,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 
 /**
- * @property        int $id
- * @property        string $handle
- * @property        string $title
- *
  * @ORM\Entity
  * @ORM\Table(name="option")
  *
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn("option_type", columnDefinition="ENUM('string', 'bool', 'int')")
  * @ORM\DiscriminatorMap({"string" = "OptionString", "bool" = "OptionBool", "int" = "OptionInt"})
+ *
+ * @property		int $id
+ * @property		string $domain
+ * @property		string $title
+ * @property		SettingsSection $section
  */
 abstract class AOption extends BaseEntity
 {
@@ -28,25 +29,31 @@ abstract class AOption extends BaseEntity
 	use Identifier;
 
 	/** @ORM\Column(type="string") */
-	protected $handle;
+	protected $domain;
 
 	/** @ORM\Column(type="string") */
 	protected $title;
 
 	/**
+	 * @ORM\ManyToOne(targetEntity="SettingsSection")
+	 * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
+	 */
+	protected $section;
+
+	/**
 	 * @return string
 	 */
-	public function getHandle()
+	public function getDomain()
 	{
-		return $this->handle;
+		return $this->domain;
 	}
 
 	/**
-	 * @param string $handle
+	 * @param string $domain
 	 */
-	public function setHandle($handle)
+	public function setDomain($domain)
 	{
-		$this->handle = $handle;
+		$this->domain = $domain;
 	}
 
 	/**
@@ -64,6 +71,24 @@ abstract class AOption extends BaseEntity
 	{
 		$this->title = $title;
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getSection()
+	{
+		return $this->section;
+	}
+
+	/**
+	 * @param mixed $section
+	 */
+	public function setSection($section)
+	{
+		$this->section = $section;
+	}
+
+	
 
 	public abstract function getValue();
 

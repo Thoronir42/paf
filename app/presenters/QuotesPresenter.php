@@ -21,7 +21,7 @@ class QuotesPresenter extends BasePresenter
 	}
 
 	public function actionDefault(){
-		$this->template->enableQuotes = $this->settings->{'enable-quotes'};
+		$this->template->enableQuotes = $this->settings->get('enable-quotes');
 	}
 
 	public function createComponentQuoteForm()

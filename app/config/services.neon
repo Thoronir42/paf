@@ -6,6 +6,8 @@ services:
 	- App\Utils\EntityInitializer
 	- App\Utils\Migrations\Migrations
 	- App\Model\Settings\Settings
+	- App\Model\Settings\Options
+	- App\Model\Settings\SettingsSections
 
 	- App\Controls\NavigationMenu\INavigationMenuFactory
 

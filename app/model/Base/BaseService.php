@@ -10,7 +10,7 @@ use Nette;
 use Nette\Object;
 
 
-class BaseService extends Object
+abstract class BaseService extends Object
 {
 	/** @var EntityManager */
 	protected $em;

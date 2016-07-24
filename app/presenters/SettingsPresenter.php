@@ -28,7 +28,7 @@ class SettingsPresenter extends AdminPresenter
 
 	public function createComponentSettings()
 	{
-		$control = $this->settingControlFactory->create($this->settings);
+		$control = $this->settingControlFactory->create();
 
 		return $control;
 	}

@@ -40,7 +40,7 @@ class SettingsControl extends UI\Control
 		$value = $_POST['value'];
 
 		try{
-			$this->settings->$pk = $value;
+			$this->settings->set($pk, $value);
 		} catch (InvalidArgumentException $ex){
 			$this->sendJson([
 				'status' => 'error',
@@ -72,5 +72,5 @@ interface ISettingsControlFactory
 	 * @param AOption $option
 	 * @return SettingsControl
 	 */
-	public function create(Settings $settings);
+	public function create();
 }

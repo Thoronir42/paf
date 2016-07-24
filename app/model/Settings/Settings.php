@@ -3,73 +3,79 @@
 namespace App\Model\Settings;
 
 
-use App\Model\Services\BaseService;
-use Kdyby\Doctrine\EntityManager;
 use Nette\InvalidArgumentException;
-use Nette\Utils\ArrayHash;
+use Nette\InvalidStateException;
 
 /**
- * @property 		boolean			$enable-quotes
+ * @property        SettingsSection $general
+ * @property        SettingsSection $quotes
  */
-class Settings extends BaseService
+class Settings
 {
-	/** @var ArrayHash */
-	private $settings;
+	use SettingsLookup;
 
-	public function __construct(EntityManager $em)
+	/** @var SettingsSection[] */
+	private $section_entities;
+
+
+	/** @var Options  */
+	private $options;
+	/** @var SettingsSections */
+	private $sections;
+
+	public function __construct(Options $options, SettingsSections $sections)
 	{
-		parent::__construct($em, $em->getRepository(AOption::class));
-
-		$this->settings = $this->prepareSettings();
-
-
+		$this->sections = $sections;
+		$this->options = $options;
 	}
 
 	public function fetchAll()
 	{
-		return $this->settings;
+		return $this->options->findAll();
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $domain
+	 * @return SettingsSection
+	 */
+	public function getSection($domain)
+	{
+		$section = $this->sections->findByDomain($domain);
+		if (!$section) {
+			throw new InvalidStateException("Section $domain could not be found");
+		}
+		return $section;
+	}
+
+	/**
+	 * @param string $domain
 	 * @return AOption
 	 */
-	public function option($name)
+	public function getOption($domain)
 	{
-		if (!isset($this->settings->$name)) {
-			throw new InvalidArgumentException("Option $name does not exist.");
+		$option = $this->options->findByDomain($domain);
+		if (!$option) {
+			throw new InvalidArgumentException("Option $domain does not exist.");
 		}
-		return  $this->settings->$name;
+		return $option;
 	}
 
 	/**
 	 * @param string $name
 	 * @return mixed
 	 */
-	public function &__get($name)
+	public function get($name)
 	{
-		$option = $this->option($name);
+		$option = $this->getOption($name);
 		$value = $option->getValue();
 		return $value;
 
 	}
 
-	public function __set($name, $value)
+	public function set($name, $value)
 	{
-		$option = $this->option($name);
+		$option = $this->getOption($name);
 		$option->setValue($value);
-		$this->save($option);
-	}
-
-	private function prepareSettings(){
-		$settings = new ArrayHash();
-
-		$result = $this->findBy([], ['handle' => 'ASC']);
-
-		/** @var AOption $option */
-		foreach ($result as $option) {
-			$settings->{$option->handle} = $option;
-		}
-		return $settings;
+		$this->options->save($option);
 	}
 }
