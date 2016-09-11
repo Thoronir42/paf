@@ -5,9 +5,9 @@ namespace App\Model\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 Use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Nette\InvalidArgumentException;
 use Nette\Security\Passwords;
 use Nette\Utils\DateTime;
+use Thoronir42\Model\BaseEntity;
 
 /**
  * @property    string $username

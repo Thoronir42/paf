@@ -1,7 +1,7 @@
 {switch $type}
 	{case 'select'}
 	<a data-pk="{$option->domain}" class="editable" data-type="select"
-	   data-value="{include #value, value => $option->value|trim}" data-source="{link values! $option->domain}">{$readableValue}</a>
+	   data-value="{include #value, value => $option->value}" data-source="{link values! $option->domain}">{$readableValue}</a>
 	{default}
 	<a data-pk="{$option->domain}" class="editable" data-type="text">{$readableValue}</a>
 {/switch}

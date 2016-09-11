@@ -2,13 +2,13 @@
 
 namespace App\Controls\Settings;
 
-use App\Model\Settings\AOption;
-use App\Model\Settings\OptionBool;
-use App\Model\Settings\OptionInt;
-use App\Model\Settings\OptionString;
-use App\Model\Settings\Settings;
 use Libs\LatteFilters\YesNoFilter;
 use Nette\Application\UI;
+use Thoronir42\Settings\Options\AOption;
+use Thoronir42\Settings\Options\OptionBool;
+use Thoronir42\Settings\Options\OptionInt;
+use Thoronir42\Settings\Options\OptionString;
+use Thoronir42\Settings\Settings;
 
 class OptionControl extends UI\Control
 {

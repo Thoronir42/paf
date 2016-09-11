@@ -8,5 +8,6 @@ vendor/*
 !web.config
 www/images/games/*
 www/images/platforms/*
-app/config/config.local.neon
+app/config/config.*.neon
+!app/config/config.sample.neon
 app/config/users.neon

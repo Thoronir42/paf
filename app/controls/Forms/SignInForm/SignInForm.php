@@ -33,7 +33,7 @@ class SignInForm extends BaseFormControl
 
 		$form->addSubmit('send', 'Whrrr?!');
 
-		$form->onSuccess[] = $this->processForm;
+		$form->onSuccess[] = [$this, 'processForm'];
 		return $form;
 	}
 

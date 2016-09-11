@@ -3,13 +3,10 @@
 namespace App\Controls\Settings;
 
 
-use App\Model\Settings\AOption;
-use App\Model\Settings\Settings;
-
 use Nette\Application\UI;
 use Nette\Application\UI\Multiplier;
 use Nette\InvalidArgumentException;
-use Nette\Utils\Strings;
+use Thoronir42\Settings\Settings;
 
 /**
  * @property	boolean	$enableQuotes
@@ -69,7 +66,6 @@ class SettingsControl extends UI\Control
 interface ISettingsControlFactory
 {
 	/**
-	 * @param AOption $option
 	 * @return SettingsControl
 	 */
 	public function create();

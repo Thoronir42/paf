@@ -1,15 +1,20 @@
 services:
 	router: App\RouterFactory::createRouter
 	authenticator: App\Model\Auth\Authenticator
+	authorisator: App\Model\Auth\Authorisator
+
+	settings:
+		class: Thoronir42\Settings\Settings
+		arguments:
+			options: Thoronir42\Settings\Options()
+			sections: Thoronir42\Settings\SettingsSections()
+
+
+	- Thoronir42\Navigation\Control\INavigationMenuFactory
 
 	- App\Libs\Initialiser
 	- App\Utils\EntityInitializer
 	- App\Utils\Migrations\Migrations
-	- App\Model\Settings\Settings
-	- App\Model\Settings\Options
-	- App\Model\Settings\SettingsSections
-
-	- App\Controls\NavigationMenu\INavigationMenuFactory
 
 	- App\Controls\Settings\ISettingsControlFactory
 

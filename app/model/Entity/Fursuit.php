@@ -4,6 +4,7 @@ namespace App\Model\Entity;
 
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Thoronir42\Model\BaseEntity;
 
 class Fursuit extends BaseEntity
 {

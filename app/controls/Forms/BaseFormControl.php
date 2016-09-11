@@ -26,9 +26,7 @@ abstract class BaseFormControl extends UI\Control
 
 	public abstract function processForm(Form $form, $values);
 
-	/**
-	 * @return Form
-	 */
+	/** @return Form */
 	protected function form(){
 		return $this['form'];
 	}

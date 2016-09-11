@@ -3,15 +3,12 @@
 namespace App\Model\Services;
 
 use App\Model\Entity\User;
-use Kdyby\Doctrine\EntityManager;
 use Nette\Utils\DateTime;
+use Thoronir42\Model\BaseRepository;
 
-class Users extends BaseService
+class Users extends BaseRepository
 {
-	public function __construct(EntityManager $em)
-	{
-		parent::__construct($em, $em->getRepository(User::class));
-	}
+	protected $entity_class = User::class;
 
 	public function create($username, $password){
 		$check = $this->findOneBy(['username' => $username]);

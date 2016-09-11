@@ -2,12 +2,12 @@
 
 namespace App\Presenters;
 
-use App\Controls\NavigationMenu\INavigationMenuFactory;
 use App\Model\Entity\User;
 use App\Model\Services\Users;
-use App\Model\Settings\Settings;
 use Nette;
 use App\Model;
+use Thoronir42\Navigation\Control\INavigationMenuFactory;
+use Thoronir42\Settings\Settings;
 
 
 /**

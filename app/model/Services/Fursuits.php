@@ -5,11 +5,9 @@ namespace App\Model\Services;
 
 use App\Model\Entity\Fursuit;
 use Kdyby\Doctrine\EntityManager;
+use Thoronir42\Model\BaseRepository;
 
-class Fursuits extends BaseService
+class Fursuits extends BaseRepository
 {
-	public function __construct(EntityManager $em)
-	{
-		parent::__construct($em, $em->getRepository(Fursuit::class));
-	}
+    protected $entity_class = Fursuit::class;
 }

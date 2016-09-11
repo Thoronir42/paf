@@ -4,15 +4,11 @@ namespace App\Presenters;
 
 
 use App\Controls\Settings\ISettingsControlFactory;
-use App\Model\Settings\Settings;
 
 class SettingsPresenter extends AdminPresenter
 {
 	/** @var ISettingsControlFactory @inject */
 	public $settingControlFactory;
-
-	/** @var Settings @inject */
-	public $settings;
 
 	public function startup()
 	{
