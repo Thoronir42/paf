@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90b5ceb6ac32b6a2fb770a574d0cd327",
-    "content-hash": "17bdfee8c2d5c0b458bc3f8b76327fb5",
+    "hash": "7c91c162fe16f29de58f4829404f6a41",
+    "content-hash": "cabdaf48025c992a64dac010774e3fff",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2120,6 +2120,166 @@
             "time": "2016-06-17 13:15:10"
         },
         {
+            "name": "sestep/doctrine-model",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/doctrine-model.git",
+                "reference": "f74e49f13a3721667d4e031a28f5a0178e560fad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/doctrine-model/zipball/f74e49f13a3721667d4e031a28f5a0178e560fad",
+                "reference": "f74e49f13a3721667d4e031a28f5a0178e560fad",
+                "shasum": ""
+            },
+            "require": {
+                "kdyby/doctrine": "^3.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Base classes for a doctrine entity and repository",
+            "support": {
+                "source": "https://github.com/SeStep/doctrine-model/tree/master",
+                "issues": "https://github.com/SeStep/doctrine-model/issues"
+            },
+            "time": "2016-09-17 19:04:15"
+        },
+        {
+            "name": "sestep/navigation",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/navigation.git",
+                "reference": "2031c94402e7cbe07525cd613f2c70cbeb786f6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/navigation/zipball/2031c94402e7cbe07525cd613f2c70cbeb786f6d",
+                "reference": "2031c94402e7cbe07525cd613f2c70cbeb786f6d",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Small library that is all about links and menus",
+            "support": {
+                "source": "https://github.com/SeStep/navigation/tree/master",
+                "issues": "https://github.com/SeStep/navigation/issues"
+            },
+            "time": "2016-09-17 18:55:12"
+        },
+        {
+            "name": "sestep/settings",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/settings.git",
+                "reference": "f39579bc3158d7684a56ab34fb0363a31fa61796"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/settings/zipball/f39579bc3158d7684a56ab34fb0363a31fa61796",
+                "reference": "f39579bc3158d7684a56ab34fb0363a31fa61796",
+                "shasum": ""
+            },
+            "require": {
+                "kdyby/doctrine": "^3.1",
+                "sestep/doctrine-model": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Settings library built on Kdyby/Doctrine",
+            "support": {
+                "source": "https://github.com/SeStep/settings/tree/master",
+                "issues": "https://github.com/SeStep/settings/issues"
+            },
+            "time": "2016-09-17 16:20:06"
+        },
+        {
+            "name": "sestep/settings-control",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/settings-control.git",
+                "reference": "d3443df4b47a54a18eee9da51667e654a43debf4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/settings-control/zipball/d3443df4b47a54a18eee9da51667e654a43debf4",
+                "reference": "d3443df4b47a54a18eee9da51667e654a43debf4",
+                "shasum": ""
+            },
+            "require": {
+                "nette/application": "~2.4",
+                "php": ">=5.6",
+                "sestep/doctrine-model": "dev-master",
+                "sestep/settings": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Nette control interface to sestep/settings",
+            "support": {
+                "source": "https://github.com/SeStep/settings-control/tree/master",
+                "issues": "https://github.com/SeStep/settings-control/issues"
+            },
+            "time": "2016-09-17 19:24:14"
+        },
+        {
             "name": "symfony/console",
             "version": "v3.1.4",
             "source": {
@@ -2237,124 +2397,6 @@
                 "shim"
             ],
             "time": "2016-05-18 14:26:46"
-        },
-        {
-            "name": "thoronir42/doctrine-model",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Thoronir42/doctrine-model.git",
-                "reference": "5982064b04bdb9460b022fe8c08e4c7b0197f8c3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Thoronir42/doctrine-model/zipball/5982064b04bdb9460b022fe8c08e4c7b0197f8c3",
-                "reference": "5982064b04bdb9460b022fe8c08e4c7b0197f8c3",
-                "shasum": ""
-            },
-            "require": {
-                "kdyby/doctrine": "^3.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thoronir42",
-                    "email": "Thoronir42@Gmail.com"
-                }
-            ],
-            "description": "Base entity and repository classes",
-            "support": {
-                "source": "https://github.com/Thoronir42/doctrine-model/tree/master",
-                "issues": "https://github.com/Thoronir42/doctrine-model/issues"
-            },
-            "time": "2016-09-11 11:39:15"
-        },
-        {
-            "name": "thoronir42/navigation",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Thoronir42/navigation.git",
-                "reference": "5d0cad4066d7390b161105180ea6171375fc982e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Thoronir42/navigation/zipball/5d0cad4066d7390b161105180ea6171375fc982e",
-                "reference": "5d0cad4066d7390b161105180ea6171375fc982e",
-                "shasum": ""
-            },
-            "require": {
-                "nette/application": "~2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thoronir42",
-                    "email": "Thoronir42@Gmail.com"
-                }
-            ],
-            "description": "Small library that is all about links and menus",
-            "support": {
-                "source": "https://github.com/Thoronir42/navigation/tree/master",
-                "issues": "https://github.com/Thoronir42/navigation/issues"
-            },
-            "time": "2016-09-11 10:33:59"
-        },
-        {
-            "name": "thoronir42/settings",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Thoronir42/settings.git",
-                "reference": "b19db3feff1a773b3e4782ead287a7016fcc0145"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Thoronir42/settings/zipball/b19db3feff1a773b3e4782ead287a7016fcc0145",
-                "reference": "b19db3feff1a773b3e4782ead287a7016fcc0145",
-                "shasum": ""
-            },
-            "require": {
-                "kdyby/doctrine": "^3.1",
-                "thoronir42/doctrine-model": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thoronir42",
-                    "email": "Thoronir42@Gmail.com"
-                }
-            ],
-            "description": "Settings library built on Kdyby/Doctrine",
-            "support": {
-                "source": "https://github.com/Thoronir42/settings/tree/master",
-                "issues": "https://github.com/Thoronir42/settings/issues"
-            },
-            "time": "2016-09-11 11:52:50"
         },
         {
             "name": "tracy/tracy",
@@ -2480,9 +2522,10 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "thoronir42/navigation": 20,
-        "thoronir42/doctrine-model": 20,
-        "thoronir42/settings": 20
+        "sestep/navigation": 20,
+        "sestep/doctrine-model": 20,
+        "sestep/settings": 20,
+        "sestep/settings-control": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

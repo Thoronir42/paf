@@ -26,6 +26,11 @@ extensions:
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
 
+doctrine:
+    metadata:
+        App: %appDir%
+        SeStep\Settings: %appDir%/../vendor/sestep/settings/src
+
 includes:
     - services.neon
     - latte.neon
