@@ -3,7 +3,7 @@
 namespace App\Libs;
 
 
-use App\Model\Services\States;
+use App\Services\Doctrine\States;
 use App\Model\State;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Kdyby\Console\StringOutput;

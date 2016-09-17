@@ -5,6 +5,13 @@ namespace App\Forms;
 use Nette\Application\UI as UI;
 use Nette\Application\UI\Form;
 
+
+/**
+ * Class BaseFormControl
+ * @package App\Forms
+ *
+ * @method onSave(Form $form, $values)
+ */
 abstract class BaseFormControl extends UI\Control
 {
 	/** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */

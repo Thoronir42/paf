@@ -3,11 +3,9 @@
 namespace App\Forms;
 
 
-use App\Forms\BaseFormControl;
-use App\Forms\FormFactory;
 use App\Model\Entity\Fursuit;
 use App\Model\Entity\Quote;
-use App\Model\Services\Quotes;
+use App\Services\Doctrine\Quotes;
 use Nette\Application\UI\Form;
 
 class QuoteForm extends BaseFormControl
@@ -76,7 +74,7 @@ class QuoteForm extends BaseFormControl
 
     public function processForm(Form $form, $values)
     {
-
+        $this->onSave($form, $values);
     }
 }
 

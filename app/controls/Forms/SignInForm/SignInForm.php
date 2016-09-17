@@ -2,50 +2,44 @@
 
 namespace App\Forms;
 
-
-use Nette;
-use Nette\Application\UI as UI;
-
-
 use Nette\Application\UI\Form;
-use Nette\Security\AuthenticationException;
-use Nette\Security\User;
 
 class SignInForm extends BaseFormControl
 {
-	public function render()
-	{
-		$this->template->setFile(__DIR__ . '/signInForm.latte');
-		$this->template->render();
-	}
+    public function render()
+    {
+        $this->template->setFile(__DIR__ . '/signInForm.latte');
+        $this->template->render();
+    }
 
-	public function createComponentForm()
-	{
-		$form = $this->factory->create();
-		
-		$form->addText('login', 'Who?')
-			->setRequired();
+    public function createComponentForm()
+    {
+        $form = $this->factory->create();
 
-		$form->addPassword('password', 'U ? ? ???')
-			->setRequired();
+        $form->addText('login', 'Who?')
+            ->setRequired();
 
-		$form->addCheckbox('remember', 'Pls, remember');
+        $form->addPassword('password', 'U ? ? ???')
+            ->setRequired();
 
-		$form->addSubmit('send', 'Whrrr?!');
+        $form->addCheckbox('remember', 'Pls, remember');
 
-		$form->onSuccess[] = [$this, 'processForm'];
-		return $form;
-	}
+        $form->addSubmit('send', 'Whrrr?!');
+
+        $form->onSuccess[] = [$this, 'processForm'];
+
+        return $form;
+    }
 
 
-	public function processForm(Form $form, $values)
-	{
-		$this->onSave($form, $values);
-	}
+    public function processForm(Form $form, $values)
+    {
+        $this->onSave($form, $values);
+    }
 }
 
 interface ISignInFormFactory
 {
-	/** @return SignInForm */
-	function create();
+    /** @return SignInForm */
+    function create();
 }

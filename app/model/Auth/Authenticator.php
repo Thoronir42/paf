@@ -4,8 +4,8 @@ namespace App\Model\Auth;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserRole;
-use App\Model\Services\UserRoles;
-use App\Model\Services\Users;
+use App\Services\Doctrine\UserRoles;
+use App\Services\Doctrine\Users;
 use Nette;
 use Nette\Object;
 use Nette\Security\AuthenticationException;

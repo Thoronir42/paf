@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Model\Services;
+namespace App\Services\Doctrine;
 
 use App\Model\Entity\User;
 use Nette\Utils\DateTime;
-use Thoronir42\Model\BaseRepository;
+use SeStep\Model\BaseDoctrineService;
+use SeStep\Model\TProtoRepositoryAccess;
 
-class Users extends BaseRepository
+class Users extends BaseDoctrineService
 {
-	protected $entity_class = User::class;
+    use TProtoRepositoryAccess;
 
 	public function create($username, $password){
-		$check = $this->findOneBy(['username' => $username]);
+		$check = $this->repository->findOneBy(['username' => $username]);
 		if($check){
 			return false;
 		}

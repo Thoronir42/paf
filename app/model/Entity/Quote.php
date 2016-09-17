@@ -4,41 +4,45 @@ namespace App\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Thoronir42\Model\BaseEntity;
+use SeStep\Model\BaseEntity;
 
 /**
  * @ORM\Entity
+ *
+ * @property User $user
+ * @property string $status
+ * @property string $url
  */
 class Quote extends BaseEntity
 {
-	const STATUS_NEW = 'new';
-	const STATUS_SELECTED = 'selected';
-	const STATUS_DENIED = 'denied';
+    const STATUS_NEW = 'new';
+    const STATUS_SELECTED = 'selected';
+    const STATUS_DENIED = 'denied';
 
-	use Identifier;
+    use Identifier;
 
-	/**
-	 * @var User
-	 * @ORM\OneToOne(targetEntity="User")
-	 * @ORM\JoinColumn(name="user", referencedColumnName="id")
-	 */
-	protected $user;
+    /**
+     * @var User
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    protected $user;
 
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'denied')")
-	 */
-	protected $status;
+    /**
+     * @var string
+     * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'denied')")
+     */
+    protected $status;
 
-	/**
-	 * @ORM\Column(type="string")
-	 */
-	protected $handle;
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $url;
 
-	public function __construct()
-	{
+    public function __construct()
+    {
 
-	}
+    }
 
 
 }

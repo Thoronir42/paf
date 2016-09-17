@@ -2,7 +2,6 @@
 
 namespace App\Utils\Migrations;
 
-use App\Model\Services\BaseService;
 use App\Utils\EntityInitializer;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Kdyby\Console\StringOutput;
@@ -10,10 +9,10 @@ use Kdyby\Doctrine\Console\SchemaUpdateCommand;
 use Nette\DI\Container;
 use Nette\DI\Extensions\InjectExtension;
 use Nette\MemberAccessException;
+use SeStep\Model\BaseDoctrineService;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Tracy\Debugger;
 
 /**
  * Class Migrations
@@ -51,13 +50,13 @@ final class Migrations
 
 	/**
 	 * @param $type
-	 * @return BaseService
+	 * @return BaseDoctrineService
 	 */
 	public function getService($type)
 	{
 		$service = $this->context->getByType($type);
 
-		if (!($service instanceof BaseService)) {
+		if (!($service instanceof BaseDoctrineService)) {
 			throw new MemberAccessException('Migrations can only use model services of BaseService type, '
 				. gettype($service) . ' requested.');
 		}
@@ -81,15 +80,15 @@ final class Migrations
 		return $this->all_migrations;
 	}
 
-	public function get($handle)
+	public function get($key)
 	{
 		$migrations = $this->getAll();
-		if (!array_key_exists($handle, $migrations)) {
-			$this->log->writeln('Migration of handle ' . $handle . ' was not found.');
+		if (!array_key_exists($key, $migrations)) {
+			$this->log->writeln('Migration of handle ' . $key . ' was not found.');
 			return null;
 		}
 		/** @var BaseMigration $migration */
-		$migration = $migrations[$handle];
+		$migration = $migrations[$key];
 		$migration->injectMessageBuffer($this->log);
 
 		return $migration;

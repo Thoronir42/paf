@@ -4,20 +4,37 @@ namespace App\Model\Entity;
 
 
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use Thoronir42\Model\BaseEntity;
 
+use Doctrine\ORM\Mapping as ORM;
+use SeStep\Model\BaseEntity;
+
+/**
+ * Class Fursuit
+ * @package App\Model\Entity
+ *
+ * @ORM\Entity
+ */
 class Fursuit extends BaseEntity
 {
-	use Identifier;
+    use Identifier;
 
-	public static function getTypes()
-	{
-		return [
-			'partial' => 'Partial',
-			'half-suit' => 'Half-Suit',
-			'full-suit' => 'Full-Suit',
-		];
-	}
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $type;
 
-	protected $type;
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="user")
+     */
+    protected $user;
+
+    public static function getTypes()
+    {
+        return [
+            'partial' => 'Partial',
+            'half-suit' => 'Half-Suit',
+            'full-suit' => 'Full-Suit',
+        ];
+    }
 }
