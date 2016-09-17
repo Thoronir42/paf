@@ -4,37 +4,37 @@ namespace App\Presenters;
 
 
 use App\Controls\Views\QuoteView;
-use App\Model\Services\Quotes;
+use App\Services\Doctrine\Quotes;
 
 class ControlPresenter extends AdminPresenter
 {
-	/** @var Quotes @inject */
-	public $quotes;
+    /** @var Quotes @inject */
+    public $quotes;
 
-	public function startup()
-	{
-		parent::startup();
-	}
+    public function startup()
+    {
+        parent::startup();
+    }
 
-	public function actionDefault()
-	{
-		
-	}
+    public function actionDefault()
+    {
 
-	public function actionQuotes()
-	{
-		$this->template->quotes = $this->quotes->findForOverview();
-	}
+    }
 
-	public function handleSwitchQuotes($enable)
-	{
+    public function actionQuotes()
+    {
+        $this->template->quotes = $this->quotes->findForOverview();
+    }
 
-	}
+    public function handleSwitchQuotes($enable)
+    {
 
-	public function createComponentQuote()
-	{
-		return new QuoteView();
-	}
+    }
+
+    public function createComponentQuote()
+    {
+        return new QuoteView();
+    }
 
 
 }

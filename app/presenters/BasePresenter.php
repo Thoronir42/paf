@@ -3,11 +3,11 @@
 namespace App\Presenters;
 
 use App\Model\Entity\User;
-use App\Model\Services\Users;
+use App\Services\Doctrine\Users;
 use Nette;
 use App\Model;
-use Thoronir42\Navigation\Control\INavigationMenuFactory;
-use Thoronir42\Settings\Settings;
+use SeStep\Navigation\Control\INavigationMenuFactory;
+use SeStep\Settings\Settings;
 
 
 /**
@@ -16,57 +16,57 @@ use Thoronir42\Settings\Settings;
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
 
-	/** @var  INavigationMenuFactory @inject */
-	public $navigationMenuFactory;
+    /** @var  INavigationMenuFactory @inject */
+    public $navigationMenuFactory;
 
-	/** @var Users @inject */
-	public $users;
+    /** @var Users @inject */
+    public $users;
+    /** @var Settings @inject */
+    public $settings;
+    /** @var User */
+    protected $eUser;
 
-	/** @var User */
-	protected $eUser;
+    public function startup()
+    {
+        parent::startup();
 
-	/** @var Settings @inject */
-	public $settings;
+        $this->template->appName = $this->context->parameters['appName'];
+        $this->template->background_color = '#25c887';
+        $this->template->title = '';
 
-	public function startup()
-	{
-		parent::startup();
+        if ($this->user->isLoggedIn()) {
+            $this->eUser = $this->users->find($this->user->id);
+        }
+    }
 
-		$this->template->appName = $this->context->parameters['appName'];
-		$this->template->background_color = '#25c887';
-		$this->template->title = '';
+    protected function authenticationCheck(
+        $message = 'Pro vstup do této části je přihlášení nezbytné.',
+        $allowedActions = ['default']
+    ) {
+        $action = $this->getAction();
+        if (in_array($action, $allowedActions) || $this->user->isLoggedIn()) {
+            return;
+        }
 
-		if ($this->user->isLoggedIn()) {
-			$this->eUser = $this->users->find($this->user->id);
-		}
-	}
+        $this->flashMessage($message);
+        if (empty($allowedActions)) {
+            $this->redirect('Default:');
+        }
 
-	protected function authenticationCheck($message = 'Pro vstup do této části je přihlášení nezbytné.', $allowedActions = ['default'])
-	{
-		$action = $this->getAction();
-		if (in_array($action, $allowedActions) || $this->user->isLoggedIn()) {
-			return;
-		}
+        $action = array_shift($allowedActions);
+        $this->redirect($action);
+    }
 
-		$this->flashMessage($message);
-		if (empty($allowedActions)) {
-			$this->redirect('Default:');
-		}
+    public function createComponentMenu()
+    {
+        $menu = $this->navigationMenuFactory->create();
 
-		$action = array_shift($allowedActions);
-		$this->redirect($action);
-	}
+        $menu->setTitle($this->context->parameters['appName']);
+        if (true || $this->user->isLoggedIn()) {
+            $quotes = $menu->addLink('Quotes:', 'Su-meme-ry');
+            $quotes->addLink('Quotes:', 'Pls?');
+        }
 
-	public function createComponentMenu()
-	{
-		$menu = $this->navigationMenuFactory->create();
-
-		$menu->setTitle($this->context->parameters['appName']);
-		if (true || $this->user->isLoggedIn()) {
-			$quotes = $menu->addLink('Quotes:', 'Su-meme-ry');
-			$quotes->addLink('Quotes:', 'Pls?');
-		}
-
-		return $menu;
-	}
+        return $menu;
+    }
 }

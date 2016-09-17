@@ -5,7 +5,8 @@ namespace App\Presenters;
 
 class DefaultPresenter extends BasePresenter
 {
-	public function actionDefault(){
+    public function actionDefault()
+    {
 
-	}
+    }
 }

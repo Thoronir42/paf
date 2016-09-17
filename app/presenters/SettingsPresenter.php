@@ -3,29 +3,29 @@
 namespace App\Presenters;
 
 
-use App\Controls\Settings\ISettingsControlFactory;
+use SeStep\SettingsControl\ISettingsControlFactory;
 
 class SettingsPresenter extends AdminPresenter
 {
-	/** @var ISettingsControlFactory @inject */
-	public $settingControlFactory;
+    /** @var ISettingsControlFactory @inject */
+    public $settingControlFactory;
 
-	public function startup()
-	{
-		parent::startup();
+    public function startup()
+    {
+        parent::startup();
 
-		$this->template->title = 'Settings';
-	}
+        $this->template->title = 'Settings';
+    }
 
-	public function actionDefault()
-	{
-		$this->template->settings = $this->settings->fetchAll();
-	}
+    public function actionDefault()
+    {
+        $this->template->settings = $this->settings->fetchAll();
+    }
 
-	public function createComponentSettings()
-	{
-		$control = $this->settingControlFactory->create();
+    public function createComponentSettings()
+    {
+        $control = $this->settingControlFactory->create();
 
-		return $control;
-	}
+        return $control;
+    }
 }

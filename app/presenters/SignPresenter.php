@@ -11,77 +11,79 @@ use Nette\Utils\DateTime;
 
 class SignPresenter extends BasePresenter
 {
-	/** @var ISignInFormFactory @inject */
-	public $in_factory;
+    /** @var ISignInFormFactory @inject */
+    public $in_factory;
 
-	public function actionDefault()
-	{
-		$this->redirect('in');
-	}
+    public function actionDefault()
+    {
+        $this->redirect('in');
+    }
 
-	public function actionOut()
-	{
-		$this->getUser()->logout(true);
-		$this->redirect('Default:');
-	}
+    public function actionOut()
+    {
+        $this->getUser()->logout(true);
+        $this->redirect('Default:');
+    }
 
-	/**
-	 * Sign-in form factory.
-	 * @return Nette\Application\UI\Form
-	 */
-	protected function createComponentSignInForm()
-	{
-		$form = $this->in_factory->create();
+    /**
+     * Sign-in form factory.
+     * @return Nette\Application\UI\Form
+     */
+    protected function createComponentSignInForm()
+    {
+        $form = $this->in_factory->create();
 
-		$form->onSave[] = function (Form $form, $values){
-			$login = $values->login;
-			$password = $values->password;
-			$remember = $values->remember;
-			
-			if ($remember) {
-				$this->user->setExpiration('14 days', FALSE);
-			} else {
-				$this->user->setExpiration('30 minutes', TRUE);
-			}
+        $form->onSave[] = function (Form $form, $values) {
+            $login = $values->login;
+            $password = $values->password;
+            $remember = $values->remember;
 
-			try {
-				$this->user->login($login, $password);
-			} catch (AuthenticationException $e) {
-				$form->addError('Nesprávné jméno nebo heslo.');
-				return;
-			}
-			$this->redirect('Default:');
-		};
+            if ($remember) {
+                $this->user->setExpiration('14 days', false);
+            } else {
+                $this->user->setExpiration('30 minutes', true);
+            }
 
-		return $form;
-	}
+            try {
+                $this->user->login($login, $password);
+            } catch (AuthenticationException $e) {
+                $form->addError('Nesprávné jméno nebo heslo.');
 
-	/**
-	 * Sign-in form factory.
-	 * @return Nette\Application\UI\Form
-	 */
-	protected function createComponentSignUpForm()
-	{
-		$form = $this->up_factory->create();
+                return;
+            }
+            $this->redirect('Default:');
+        };
 
-		$form->onSave[] = function (Form $form, $values){
-			$login = $values->login;
-			$password = $values->password;
+        return $form;
+    }
 
-			$check = $this->users->findOneBy(['username' => $login]);
-			if($check){
-				$form->addError('Uživatel se jménem' . $login . ' již existuje.');
-				return;
-			}
+    /**
+     * Sign-in form factory.
+     * @return Nette\Application\UI\Form
+     */
+    protected function createComponentSignUpForm()
+    {
+        $form = $this->up_factory->create();
 
-			$this->users->createNewUser($login, $password);
+        $form->onSave[] = function (Form $form, $values) {
+            $login = $values->login;
+            $password = $values->password;
 
-			$this->flashMessage('Váš účet byl vytvořen.');
+            $check = $this->users->findOneBy(['username' => $login]);
+            if ($check) {
+                $form->addError('Uživatel se jménem' . $login . ' již existuje.');
 
-			$this->redirect('in');
-		};
+                return;
+            }
 
-		return $form;
-	}
+            $this->users->createNewUser($login, $password);
+
+            $this->flashMessage('Váš účet byl vytvořen.');
+
+            $this->redirect('in');
+        };
+
+        return $form;
+    }
 
 }
