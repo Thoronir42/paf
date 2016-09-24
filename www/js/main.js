@@ -8,6 +8,8 @@ $(document).ready( function () {
     initSortable();
 
     initTags();
+
+    initEditable();
 });
 
 function initConfirmation() {
@@ -40,4 +42,31 @@ function initTags(){
         tags: true
     };
     $('.tags').select2(options)
+}
+
+function initEditable() {
+    var options = {
+        success: function (response, newValue) {
+            if (response.status === 'error') {
+                return response.message;
+            }
+        },
+        name: 'value',
+        mode: 'inline'
+
+    };
+    $('a.editable').each(function () {
+        var $this = $(this);
+        var specOpts = $.extend({}, options);
+        specOpts.url = function(params) {
+            var url = $this.data('url-set');
+            var values = {},
+                name = $this.data('value-name');
+            values[name] = params['value'];
+
+            return $.post(url, values);
+        };
+
+        $this.editable(specOpts);
+    });
 }

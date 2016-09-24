@@ -1,7 +1,7 @@
 {
   "name": "thoronir42/paf",
   "description": "Portfolio application with quote functionality",
-  "homepage": "https://nette.org",
+  "homepage": "https://paf.feline.lol",
   "type": "project",
   "license": [
     "BSD-3-Clause",
@@ -32,9 +32,11 @@
     "latte/latte": "^2.4",
     "tracy/tracy": "^2.4",
     "kdyby/doctrine": "^3.1",
+
     "sestep/navigation": "dev-master",
     "sestep/doctrine-model": "dev-master",
-    "sestep/settings": "dev-master",
+    "sestep/settings-interface": "dev-master",
+    "sestep/settings-doctrine": "dev-master",
     "sestep/settings-control": "dev-master"
   },
   "require-dev": {
@@ -51,7 +53,11 @@
     },
     {
       "type": "vcs",
-      "url": "git@github.com:SeStep/settings.git"
+      "url": "git@github.com:SeStep/settings-interface.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:SeStep/settings-doctrine.git"
     },
     {
       "type": "vcs",

@@ -19,12 +19,26 @@ class SettingsPresenter extends AdminPresenter
 
     public function actionDefault()
     {
-        $this->template->settings = $this->settings->fetchAll();
+
     }
 
     public function createComponentSettings()
     {
-        $control = $this->settingControlFactory->create();
+        $control = $this->settingControlFactory->create($this->settings->findAll());
+        $control->onSet[] = function ($name, $value) {
+            try {
+                $this->settings->setValue($name, $value);
+                throw new \Exception("Terkl má problém.");
+            } catch (\Exception $e) {
+                $this->sendJson([
+                    'status' => 'error',
+                    'message' => get_class($e) . ': ' . $e->getMessage(),
+                    'source' => $e->getFile() . ':' . $e->getLine(),
+                ]);
+            }
+
+            $this->sendJson(['status' => 'success']);
+        };
 
         return $control;
     }

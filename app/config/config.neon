@@ -29,7 +29,7 @@ extensions:
 doctrine:
     metadata:
         App: %appDir%
-        SeStep\Settings: %appDir%/../vendor/sestep/settings/src
+        SeStep\Settings: %appDir%/../vendor/sestep/settings-doctrine/src
 
 includes:
     - services.neon

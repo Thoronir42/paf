@@ -1,28 +1,5 @@
 {block content}
 
-{control settings:table}
+    {control settings:bootstrap}
 
-{/block}
-
-{block scripts}
-	{include #parent}
-
-	<script>
-		initEditable();
-
-		function initEditable(){
-			var options = {
-				success: function (response, newValue) {
-					if(response.status === 'error'){
-						return response.message;
-					}
-				},
-				url: {link settings-set!},
-				name: 'value',
-				mode: 'inline'
-
-			};
-			$('a.editable').editable(options);
-		}
-	</script>
 {/block}

@@ -30,7 +30,7 @@ class Quote extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'denied')")
+     * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'wip', 'denied')")
      */
     protected $status;
 

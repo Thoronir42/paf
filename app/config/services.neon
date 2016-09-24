@@ -3,11 +3,9 @@ services:
 	authenticator: App\Model\Auth\Authenticator
 	authorisator: App\Model\Auth\Authorisator
 
-	settings:
-		class: SeStep\Settings\Settings
-		arguments:
-			options: SeStep\Settings\Options(SeStep\Settings\Options\AOption)
-			sections: SeStep\Settings\SettingsSections(SeStep\Settings\SettingsSection)
+	options: SeStep\SettingsDoctrine\DoctrineOptions
+	settings: SeStep\SettingsInterface\Settings
+
 
 
 	- SeStep\Navigation\Control\INavigationMenuFactory

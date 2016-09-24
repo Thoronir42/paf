@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7c91c162fe16f29de58f4829404f6a41",
-    "content-hash": "cabdaf48025c992a64dac010774e3fff",
+    "hash": "8db9ae48f9f78a0b99bfc89f51a53374",
+    "content-hash": "69ca1e4235a6e021103385fd86add0df",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2198,64 +2198,23 @@
             "time": "2016-09-17 18:55:12"
         },
         {
-            "name": "sestep/settings",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SeStep/settings.git",
-                "reference": "f39579bc3158d7684a56ab34fb0363a31fa61796"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/settings/zipball/f39579bc3158d7684a56ab34fb0363a31fa61796",
-                "reference": "f39579bc3158d7684a56ab34fb0363a31fa61796",
-                "shasum": ""
-            },
-            "require": {
-                "kdyby/doctrine": "^3.1",
-                "sestep/doctrine-model": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thoronir42",
-                    "email": "Thoronir42@Gmail.com"
-                }
-            ],
-            "description": "Settings library built on Kdyby/Doctrine",
-            "support": {
-                "source": "https://github.com/SeStep/settings/tree/master",
-                "issues": "https://github.com/SeStep/settings/issues"
-            },
-            "time": "2016-09-17 16:20:06"
-        },
-        {
             "name": "sestep/settings-control",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/settings-control.git",
-                "reference": "d3443df4b47a54a18eee9da51667e654a43debf4"
+                "reference": "9b19a4f496012642584121df4813bcfc1e4534cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/settings-control/zipball/d3443df4b47a54a18eee9da51667e654a43debf4",
-                "reference": "d3443df4b47a54a18eee9da51667e654a43debf4",
+                "url": "https://api.github.com/repos/SeStep/settings-control/zipball/9b19a4f496012642584121df4813bcfc1e4534cd",
+                "reference": "9b19a4f496012642584121df4813bcfc1e4534cd",
                 "shasum": ""
             },
             "require": {
                 "nette/application": "~2.4",
                 "php": ">=5.6",
-                "sestep/doctrine-model": "dev-master",
-                "sestep/settings": "dev-master"
+                "sestep/settings-interface": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -2277,7 +2236,92 @@
                 "source": "https://github.com/SeStep/settings-control/tree/master",
                 "issues": "https://github.com/SeStep/settings-control/issues"
             },
-            "time": "2016-09-17 19:24:14"
+            "time": "2016-09-19 21:02:00"
+        },
+        {
+            "name": "sestep/settings-doctrine",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/settings-doctrine.git",
+                "reference": "46a03353120ec5dd2e909482266411786dfa5b55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/settings-doctrine/zipball/46a03353120ec5dd2e909482266411786dfa5b55",
+                "reference": "46a03353120ec5dd2e909482266411786dfa5b55",
+                "shasum": ""
+            },
+            "require": {
+                "sestep/doctrine-model": "dev-master",
+                "sestep/settings-interface": "dev-master"
+            },
+            "suggest": {
+                "sestep/settings-control": "For a Nette control implementation of settings user interface"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Kdyby/Doctrine implementation of sestep/settings-interface built on sestep/doctrine-model",
+            "support": {
+                "source": "https://github.com/SeStep/settings-doctrine/tree/master",
+                "issues": "https://github.com/SeStep/settings-doctrine/issues"
+            },
+            "time": "2016-09-23 21:52:52"
+        },
+        {
+            "name": "sestep/settings-interface",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/settings-interface.git",
+                "reference": "4f7493782fd54a5c4eb124c2dff315820ea389a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/settings-interface/zipball/4f7493782fd54a5c4eb124c2dff315820ea389a0",
+                "reference": "4f7493782fd54a5c4eb124c2dff315820ea389a0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "suggest": {
+                "sestep/settings-doctrine": "Doctrine implementation"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Interface for general-purpose sestep/settings implementations",
+            "support": {
+                "source": "https://github.com/SeStep/settings-interface/tree/master",
+                "issues": "https://github.com/SeStep/settings-interface/issues"
+            },
+            "time": "2016-09-19 21:02:28"
         },
         {
             "name": "symfony/console",
@@ -2524,7 +2568,8 @@
     "stability-flags": {
         "sestep/navigation": 20,
         "sestep/doctrine-model": 20,
-        "sestep/settings": 20,
+        "sestep/settings-interface": 20,
+        "sestep/settings-doctrine": 20,
         "sestep/settings-control": 20
     },
     "prefer-stable": false,

@@ -4,17 +4,16 @@ namespace App\Utils;
 
 use App\Services\Doctrine\Users;
 use App\Utils\Migrations\Migrations;
+use Kdyby\Doctrine\InvalidStateException;
 use Nette\Utils\Strings;
-use SeStep\Settings\Options;
-use SeStep\Settings\Options\AOption;
-use SeStep\Settings\Options\OptionBool;
-use SeStep\Settings\Options\OptionInt;
-use SeStep\Settings\Options\OptionString;
-use SeStep\Settings\Settings;
+use SeStep\SettingsDoctrine\DoctrineOptions;
+use SeStep\SettingsDoctrine\Options\OptionsSection;
+use SeStep\SettingsInterface\Exceptions\OptionNotFoundException;
+use SeStep\SettingsInterface\Exceptions\OptionsSectionNotFoundException;
 
 final class EntityInitializer
 {
-    /** @var Options */
+    /** @var DoctrineOptions */
     protected $options;
 
     /** @var  Users */
@@ -22,41 +21,35 @@ final class EntityInitializer
 
     public function __construct(Migrations $migrations)
     {
-        $this->options = $migrations->getService(Settings::class);
+        $this->options = $migrations->getService(DoctrineOptions::class);
         $this->users = $migrations->getService(Users::class);
     }
 
-    public function option($type, $title, $value, $handle = null)
+    public function section($name, $caption = '', OptionsSection $parent = null)
     {
-        if (!$handle) {
-            $handle = Strings::webalize($title);
-        }
-        $option = $this->options->findBy(['handle' => $handle]);
-        if ($option) {
-            return 'Err- Option with handle' . $handle . ' already exists';
-        }
+        $section = $this->options->createSection($name, $caption, $parent);
 
-        switch ($type) {
-            default:
-                return "Err- Option type $type is not valid";
-            case AOption::TYPE_STRING:
-                $option = new OptionString();
-                break;
-            case AOption::TYPE_BOOL:
-                $option = new OptionBool();
-                break;
-            case AOption::TYPE_INT:
-                $option = new OptionInt();
-                break;
+        $this->options->save($section);
+
+        return $section;
+    }
+
+    public function option($type, $caption, $value, $name = null, OptionsSection $section = null)
+    {
+        if (!$name) {
+            $name = Strings::webalize($caption);
         }
 
-        $option->title = $title;
-        $option->handle = $handle;
-        $option->value = $value;
+        try {
+            $option = $this->options->getOption($name, $section);
 
-        $this->options->save($option);
+            return 'Err- Option ' . $option->getFQN() . ' already exists';
+        } catch (OptionNotFoundException $exception) {
+            $option = $this->options->createOption($type, $name, $value, $caption, $section);
+            $this->options->save($option);
 
-        return "Ok - Option $handle added";
+            return 'Ok - Option ' . $option->getFQN() . ' added';
+        }
     }
 
     public function user($username, $password)
@@ -67,5 +60,10 @@ final class EntityInitializer
         } else {
             return "Err- User $username could not be added";
         }
+    }
+
+    public function flushAll()
+    {
+        $this->options->flushAll();
     }
 }

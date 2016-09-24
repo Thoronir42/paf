@@ -15,9 +15,8 @@ class UtilitiesPresenter extends AdminPresenter
     public function startup()
     {
         parent::startup();
-        if ($this->action != 'migrate' || $this->getParameter('handle') != BaseMigration::HANDLE_000_INIT) {
-            $this->authenticationCheck('You need to be logged in to access Utilities', []);
-        }
+
+        $this->authenticationCheck('You need to be logged in to access Utilities', ['migrate']);
     }
 
     public function actionDefault()
@@ -25,16 +24,18 @@ class UtilitiesPresenter extends AdminPresenter
         throw new BadRequestException();
     }
 
-    public function actionMigrate($handle)
+    public function actionMigrate($key)
     {
         $message_buffer = $this->migrations->getLog();
-        $migration = $this->migrations->get($handle);
+        $migration = $this->migrations->get($key);
         if ($migration) {
             $message_buffer->writeln('Starting migration');
 
             $migration->run();
 
             $message_buffer->writeln($migration->title . ' finished.');
+        } else {
+            $message_buffer->writeln("Migration of key '$key' was not found ");
         }
 
         $this->template->log = $message_buffer->fetch();

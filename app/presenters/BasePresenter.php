@@ -7,7 +7,7 @@ use App\Services\Doctrine\Users;
 use Nette;
 use App\Model;
 use SeStep\Navigation\Control\INavigationMenuFactory;
-use SeStep\Settings\Settings;
+use SeStep\SettingsInterface\Settings;
 
 
 /**

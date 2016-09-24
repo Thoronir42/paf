@@ -28,7 +28,7 @@ class Authorisator implements IAuthorizator
 	 * @param	string	$privilege
 	 * @return bool
 	 */
-	function isAllowed($role = Permission::ALL, $resource = Permission::ALL, $privilege = Permission::ALL)
+	function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL)
 	{
 		return $this->acl->isAllowed($role, $resource, $privilege);
 	}
