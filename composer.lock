@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8db9ae48f9f78a0b99bfc89f51a53374",
-    "content-hash": "69ca1e4235a6e021103385fd86add0df",
+    "hash": "0fecfb5badf302723c088f3eebe22fe0",
+    "content-hash": "85176168ec28cdf4f07df5dedf0a2e4b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2159,6 +2159,44 @@
             "time": "2016-09-17 19:04:15"
         },
         {
+            "name": "sestep/entity-migrations",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/entity-migrations.git",
+                "reference": "64b4f8710d5a8781c8cb6e13d5e3184b00b48251"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/entity-migrations/zipball/64b4f8710d5a8781c8cb6e13d5e3184b00b48251",
+                "reference": "64b4f8710d5a8781c8cb6e13d5e3184b00b48251",
+                "shasum": ""
+            },
+            "require": {
+                "kdyby/doctrine": "^3.1",
+                "nette/di": "^2.4",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thoronir42",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "Bbase for small or large scaled entity state changes",
+            "time": "2016-10-01 16:31:40"
+        },
+        {
             "name": "sestep/navigation",
             "version": "dev-master",
             "source": {
@@ -2570,7 +2608,8 @@
         "sestep/doctrine-model": 20,
         "sestep/settings-interface": 20,
         "sestep/settings-doctrine": 20,
-        "sestep/settings-control": 20
+        "sestep/settings-control": 20,
+        "sestep/entity-migrations": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

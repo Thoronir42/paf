@@ -1,28 +1,34 @@
 <?php
 
-namespace App\Utils;
+namespace App\Utils\Migrations;
 
 use App\Services\Doctrine\Users;
 use App\Utils\Migrations\Migrations;
 use Kdyby\Doctrine\InvalidStateException;
 use Nette\Utils\Strings;
+use SeStep\Migrations\IServiceProvider;
 use SeStep\SettingsDoctrine\DoctrineOptions;
 use SeStep\SettingsDoctrine\Options\OptionsSection;
 use SeStep\SettingsInterface\Exceptions\OptionNotFoundException;
 use SeStep\SettingsInterface\Exceptions\OptionsSectionNotFoundException;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final class EntityInitializer
+class CoreEntityInitializer
 {
     /** @var DoctrineOptions */
     protected $options;
-
-    /** @var  Users */
+    /** @var Users */
     protected $users;
 
-    public function __construct(Migrations $migrations)
+    /** @var OutputInterface */
+    protected $output;
+
+    public function __construct(IServiceProvider $provider, OutputInterface $output)
     {
-        $this->options = $migrations->getService(DoctrineOptions::class);
-        $this->users = $migrations->getService(Users::class);
+        $this->options = $provider->getService(DoctrineOptions::class);
+        $this->users = $provider->getService(Users::class);
+
+        $this->output = $output;
     }
 
     public function section($name, $caption = '', OptionsSection $parent = null)
@@ -43,27 +49,31 @@ final class EntityInitializer
         try {
             $option = $this->options->getOption($name, $section);
 
-            return 'Err- Option ' . $option->getFQN() . ' already exists';
+            $this->output->writeln('Err- Option ' . $option->getFQN() . ' already exists');
+
+            return $option;
         } catch (OptionNotFoundException $exception) {
             $option = $this->options->createOption($type, $name, $value, $caption, $section);
             $this->options->save($option);
 
-            return 'Ok - Option ' . $option->getFQN() . ' added';
+            $this->output->writeln('Ok - Option ' . $option->getFQN() . ' added');
+
+            return $option;
         }
     }
 
     public function user($username, $password)
     {
-        $result = $this->users->create($username, $password);
+        $result = $this->users->findOneByUsername($username);
         if ($result) {
-            return "OK - User $username was created succesfully.";
-        } else {
-            return "Err- User $username could not be added";
-        }
-    }
+            $this->output->writeln("OK - User $username was created succesfully.");
 
-    public function flushAll()
-    {
-        $this->options->flushAll();
+            return $result;
+        } else {
+            $user = $this->users->create($username, $password);
+            $this->output->writeln("Err- User $username could not be added");
+
+            return $user;
+        }
     }
 }

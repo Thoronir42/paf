@@ -6,13 +6,7 @@ services:
 	options: SeStep\SettingsDoctrine\DoctrineOptions
 	settings: SeStep\SettingsInterface\Settings
 
-
-
 	- SeStep\Navigation\Control\INavigationMenuFactory
-
-	- App\Libs\Initialiser
-	- App\Utils\EntityInitializer
-	- App\Utils\Migrations\Migrations
 
 	- SeStep\SettingsControl\ISettingsControlFactory
 

@@ -60,9 +60,13 @@ class User extends BaseEntity
      */
     protected $fursuits;
 
-    public function __construct()
+    public function __construct($username, $password)
     {
         $this->fursuits = new ArrayCollection();
+        $this->setUsername($username);
+        $this->setPassword($password);
+        $this->lastActivity = $this->registered = new DateTime();
+
     }
 
     /**

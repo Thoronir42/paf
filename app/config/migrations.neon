@@ -1,0 +1,7 @@
+migrations:
+	list:
+		init:
+			class: SeStep\Migrations\ProjectInitializerMigration
+			arguments:
+				modules:
+					- App\Utils\Migrations\CoreInitializerModule

@@ -3,17 +3,18 @@
 namespace App\Utils\Migrations;
 
 
-use App\Utils\EntityInitializer;
+use SeStep\Migrations\Base\InitializerModuleBase;
 use SeStep\SettingsDoctrine\Options\OptionsSection;
 use SeStep\SettingsInterface\Options\IOptions;
 
-class ProjectInitialiseMigration extends BaseMigration
+class CoreInitializerModule extends InitializerModuleBase
 {
-    public function __construct(EntityInitializer $initializer)
+    /** @var CoreEntityInitializer */
+    private $add;
+
+    protected function setup()
     {
-        parent::__construct($initializer);
-        $this->title = 'Project initialisation';
-        $this->description = 'Creates basic entities for proper functionality';
+        $this->add = new CoreEntityInitializer($this->provider, $this->output);
     }
 
     public function run()
@@ -37,11 +38,11 @@ class ProjectInitialiseMigration extends BaseMigration
      */
     private function addOptions($sections = [])
     {
-        $this->log->writeln($this->add->option(IOptions::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']));
+        $this->add->option(IOptions::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']);
     }
 
     private function addUsers()
     {
-        $this->log->writeln($this->add->user('Toanir', 'test'));
+        $this->add->user('Toanir', 'test');
     }
 }

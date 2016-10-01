@@ -37,7 +37,8 @@
     "sestep/doctrine-model": "dev-master",
     "sestep/settings-interface": "dev-master",
     "sestep/settings-doctrine": "dev-master",
-    "sestep/settings-control": "dev-master"
+    "sestep/settings-control": "dev-master",
+    "sestep/entity-migrations": "dev-master"
   },
   "require-dev": {
     "nette/tester": "~1.3"
