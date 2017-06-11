@@ -1,33 +1,33 @@
 <?php
 
-namespace App\Model\Auth;
+namespace App\Services\Auth;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserRole;
 use App\Services\Doctrine\UserRoles;
 use App\Services\Doctrine\Users;
-use Nette;
-use Nette\Object;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\Passwords;
-use Nette\Utils\DateTime;
 
 
 /**
  * Users management.
  */
-class Authenticator extends Object implements IAuthenticator
+class Authenticator implements IAuthenticator
 {
 	/** @var Users */
 	private $users;
+    /** @var string[] */
+    private $powerUsers;
 
 
-	public function __construct(Users $users)
+    public function __construct(Users $users, $powerUsers = [])
 	{
 		$this->users = $users;
-	}
+        $this->powerUsers = $powerUsers;
+    }
 
 
 	/**
@@ -44,12 +44,15 @@ class Authenticator extends Object implements IAuthenticator
 
 		if (!$user) {
 			throw new AuthenticationException('Login was not recognised.', self::IDENTITY_NOT_FOUND);
-		} elseif (!Passwords::verify($password, $user->password)) {
+		} elseif (!Passwords::verify($password, $user->getPassword())) {
 			throw new AuthenticationException('Entered password did not match the login.', self::INVALID_CREDENTIAL);
 		}
 
 		$arr = $user->toArray();
 		unset($arr['password']);
-		return new Identity($user->getId(), 'user', $arr);
+
+		$role = in_array($user->getUsername(), $this->powerUsers) ? 'power-user' : 'user';
+
+		return new Identity($user->getId(), $role, $arr);
 	}
 }

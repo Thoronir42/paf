@@ -67,6 +67,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             $quotes->addLink('Quotes:', 'Pls?');
         }
 
+        if($this->user->isAllowed(SettingsPresenter::class)) {
+            $menu->addLink('Settings:', 'Manage');
+        }
+
         return $menu;
     }
 }

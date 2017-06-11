@@ -4,7 +4,6 @@ namespace App\Services\Doctrine;
 
 use App\Model\Entity\User;
 use Nette\InvalidStateException;
-use Nette\Utils\DateTime;
 use SeStep\Model\BaseDoctrineService;
 use SeStep\Model\TProtoRepositoryAccess;
 
@@ -13,6 +12,14 @@ class Users extends BaseDoctrineService
     use TProtoRepositoryAccess;
 
 
+    /**
+     * @param string $username
+     * @param string $password
+     *
+     * @throws InvalidStateException
+     *
+     * @return User
+     */
     public function create($username, $password)
     {
         $check = $this->repository->findOneBy(['username' => $username]);
@@ -23,6 +30,10 @@ class Users extends BaseDoctrineService
         return new User($username, $password);
     }
 
+    /**
+     * @param $username
+     * @return User|null
+     */
     public function findOneByUsername($username)
     {
         return $this->repository->findOneBy(['username' => $username]);

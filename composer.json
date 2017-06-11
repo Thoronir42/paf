@@ -34,14 +34,20 @@
     "kdyby/doctrine": "^3.1",
 
     "sestep/navigation": "dev-master",
+    "sestep/navigation-control": "dev-master",
     "sestep/doctrine-model": "dev-master",
-    "sestep/settings-interface": "dev-master",
+    "sestep/general-settings": "dev-master",
     "sestep/settings-doctrine": "dev-master",
     "sestep/settings-control": "dev-master",
     "sestep/entity-migrations": "dev-master"
   },
   "require-dev": {
     "nette/tester": "~1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
   },
   "repositories": [
     {
@@ -50,11 +56,7 @@
     },
     {
       "type": "vcs",
-      "url": "git@github.com:SeStep/doctrine-model.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/settings-interface.git"
+      "url": "git@github.com:SeStep/general-settings.git"
     },
     {
       "type": "vcs",
@@ -63,6 +65,10 @@
     {
       "type": "vcs",
       "url": "git@github.com:SeStep/settings-control.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:SeStep/navigation-control.git"
     }
   ]
 }

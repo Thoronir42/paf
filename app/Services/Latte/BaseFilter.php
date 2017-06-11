@@ -1,6 +1,6 @@
 <?php
 
-namespace Libs\LatteFilters;
+namespace App\Services\Latte;
 
 
 use Nette\Object;

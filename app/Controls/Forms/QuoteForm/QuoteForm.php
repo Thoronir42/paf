@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Forms;
+namespace App\Controls\Forms\QuoteForm;
 
 
+use App\Controls\Forms\BaseFormControl;
+use App\Controls\Forms\FormFactory;
 use App\Model\Entity\Fursuit;
 use App\Model\Entity\Quote;
 use App\Services\Doctrine\Quotes;

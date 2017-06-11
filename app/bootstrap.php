@@ -14,11 +14,11 @@ $configurator->enableDebugger(__DIR__ . '/../log');
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 
 $configurator->createRobotLoader()
-	->addDirectory(__DIR__)
+	->addDirectory(__DIR__ . '/Controls/Forms')
 	->register();
 
 $configurator->addConfig(__DIR__ . '/config/config.neon');
-if (!isset($_SERVER['REMOTE_ADDR']) OR in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) { // !isset is for doctrine
+if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) { // !isset is for doctrine
 	$configurator->addConfig(__DIR__ . '/config/config.local.neon');
 } else {
 	$configurator->addConfig(__DIR__ . '/config/config.production.neon');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Forms;
+namespace App\Controls\Forms;
 
 use Nette;
 use Nette\Application\UI\Form;

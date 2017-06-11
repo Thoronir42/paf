@@ -1,4 +1,5 @@
 migrations:
+	command: 'app:migrate'
 	list:
 		init:
 			class: SeStep\Migrations\ProjectInitializerMigration

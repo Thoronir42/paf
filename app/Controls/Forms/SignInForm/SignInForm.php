@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Forms;
+namespace App\Controls\Forms\SignInForm;
 
+use App\Controls\Forms\BaseFormControl;
 use Nette\Application\UI\Form;
 
 class SignInForm extends BaseFormControl

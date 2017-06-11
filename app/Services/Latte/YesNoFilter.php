@@ -1,6 +1,6 @@
 <?php
 
-namespace Libs\LatteFilters;
+namespace App\Services\Latte;
 
 /**
  * fiksme-possible enhancement: multi-lingual filter support

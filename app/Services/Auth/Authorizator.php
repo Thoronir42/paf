@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Model\Auth;
+namespace App\Services\Auth;
 
 
+use App\Presenters\SettingsPresenter;
 use Nette\Security\IAuthorizator;
 use Nette\Security\IResource;
 use Nette\Security\IRole;
 use Nette\Security\Permission;
 
-class Authorisator implements IAuthorizator
+class Authorizator implements IAuthorizator
 {
 	/** @var Permission */
 	private $acl;
@@ -16,7 +17,14 @@ class Authorisator implements IAuthorizator
 	public function __construct()
 	{
 		$acl = new Permission();
-		
+
+		$acl->addRole('guest');
+        $acl->addRole('user');
+        $acl->addRole('power-user', ['user']);
+
+		$acl->addResource(SettingsPresenter::class);
+
+		$acl->allow('power-user', SettingsPresenter::class);
 
 		$this->acl = $acl;
 	}

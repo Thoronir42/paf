@@ -3,10 +3,7 @@
 namespace App\Presenters;
 
 
-use App\Controls\DebtView;
-use App\Forms\IDebtFormFactory;
-use App\Forms\IQuoteFormFactory;
-use App\Model\Entity\Quote;
+use App\Controls\Forms\QuoteForm\IQuoteFormFactory;
 
 class QuotesPresenter extends BasePresenter
 {
@@ -20,7 +17,7 @@ class QuotesPresenter extends BasePresenter
 
     public function actionDefault()
     {
-        $this->template->enableQuotes = $this->settings->getValue('enable_quotes');
+        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable_quotes');
     }
 
     public function createComponentQuoteForm()

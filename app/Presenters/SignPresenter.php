@@ -2,11 +2,10 @@
 
 namespace App\Presenters;
 
+use App\Controls\Forms\SignInForm\ISignInFormFactory;
 use Nette;
-use App\Forms\ISignInFormFactory;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
-use Nette\Utils\DateTime;
 
 
 class SignPresenter extends BasePresenter
@@ -25,10 +24,6 @@ class SignPresenter extends BasePresenter
         $this->redirect('Default:');
     }
 
-    /**
-     * Sign-in form factory.
-     * @return Nette\Application\UI\Form
-     */
     protected function createComponentSignInForm()
     {
         $form = $this->in_factory->create();
@@ -69,14 +64,14 @@ class SignPresenter extends BasePresenter
             $login = $values->login;
             $password = $values->password;
 
-            $check = $this->users->findOneBy(['username' => $login]);
-            if ($check) {
+            try {
+                $user = $this->users->create($login, $password);
+                $this->users->save($user);
+            } catch (Nette\InvalidStateException $ex) {
                 $form->addError('Uživatel se jménem' . $login . ' již existuje.');
 
                 return;
             }
-
-            $this->users->createNewUser($login, $password);
 
             $this->flashMessage('Váš účet byl vytvořen.');
 

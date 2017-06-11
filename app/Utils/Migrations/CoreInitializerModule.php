@@ -9,12 +9,12 @@ use SeStep\SettingsInterface\Options\IOptions;
 
 class CoreInitializerModule extends InitializerModuleBase
 {
-    /** @var CoreEntityInitializer */
+    /** @var CoreEntityCreator */
     private $add;
 
     protected function setup()
     {
-        $this->add = new CoreEntityInitializer($this->provider, $this->output);
+        $this->add = new CoreEntityCreator($this->provider, $this->output);
     }
 
     public function run()
@@ -44,5 +44,6 @@ class CoreInitializerModule extends InitializerModuleBase
     private function addUsers()
     {
         $this->add->user('Toanir', 'test');
+        $this->add->user('Toust', 'test');
     }
 }

@@ -25,10 +25,9 @@ class SettingsPresenter extends AdminPresenter
     public function createComponentSettings()
     {
         $control = $this->settingControlFactory->create($this->settings->findAll());
-        $control->onSet[] = function ($name, $value) {
+        $control->onSetValue[] = function ($name, $value) {
             try {
                 $this->settings->setValue($name, $value);
-                throw new \Exception("Terkl má problém.");
             } catch (\Exception $e) {
                 $this->sendJson([
                     'status' => 'error',

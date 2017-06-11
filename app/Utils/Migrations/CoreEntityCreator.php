@@ -3,17 +3,14 @@
 namespace App\Utils\Migrations;
 
 use App\Services\Doctrine\Users;
-use App\Utils\Migrations\Migrations;
-use Kdyby\Doctrine\InvalidStateException;
 use Nette\Utils\Strings;
 use SeStep\Migrations\IServiceProvider;
 use SeStep\SettingsDoctrine\DoctrineOptions;
 use SeStep\SettingsDoctrine\Options\OptionsSection;
-use SeStep\SettingsInterface\Exceptions\OptionNotFoundException;
-use SeStep\SettingsInterface\Exceptions\OptionsSectionNotFoundException;
+use SeStep\SettingsInterface\Exceptions\NotFoundException;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CoreEntityInitializer
+class CoreEntityCreator
 {
     /** @var DoctrineOptions */
     protected $options;
@@ -52,7 +49,7 @@ class CoreEntityInitializer
             $this->output->writeln('Err- Option ' . $option->getFQN() . ' already exists');
 
             return $option;
-        } catch (OptionNotFoundException $exception) {
+        } catch (NotFoundException $exception) {
             $option = $this->options->createOption($type, $name, $value, $caption, $section);
             $this->options->save($option);
 
@@ -66,12 +63,14 @@ class CoreEntityInitializer
     {
         $result = $this->users->findOneByUsername($username);
         if ($result) {
-            $this->output->writeln("OK - User $username was created succesfully.");
+            $this->output->writeln("Err- User $username already exist.");
 
             return $result;
         } else {
             $user = $this->users->create($username, $password);
-            $this->output->writeln("Err- User $username could not be added");
+            $this->users->save($user);
+
+            $this->output->writeln("Ok - User $username has been created");
 
             return $user;
         }
