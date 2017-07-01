@@ -1,6 +1,6 @@
 services:
     nette.latteFactory:
         setup:
-            - addFilter(yesno, @App\Libs\LatteFilters\YesNoFilter)
+            - addFilter(yesno, @App\Common\Services\Latte\YesNoFilter)
 
-    - App\Libs\LatteFilters\YesNoFilter
+    - App\Common\Services\Latte\YesNoFilter

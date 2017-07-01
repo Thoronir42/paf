@@ -2,7 +2,7 @@
 
 namespace App\Utils\Migrations;
 
-use App\Services\Doctrine\Users;
+use App\Common\Services\Doctrine\Users;
 use Nette\Utils\Strings;
 use SeStep\Migrations\IServiceProvider;
 use SeStep\SettingsDoctrine\DoctrineOptions;

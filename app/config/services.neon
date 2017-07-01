@@ -1,10 +1,10 @@
 services:
-	router: App\Router\RouterFactory::createRouter
+	router: App\Common\Router\RouterFactory::createRouter
 	authenticator:
-	    class: App\Services\Auth\Authenticator
+	    class: App\Common\Auth\Authenticator
 	    arguments:
 	        powerUsers: %powerUsers%
-	authorizator: App\Services\Auth\Authorizator
+	authorizator: App\Common\Auth\Authorizator
 
 	options: SeStep\SettingsDoctrine\DoctrineOptions
 	settings: SeStep\SettingsInterface\Settings
@@ -13,10 +13,10 @@ services:
 
 	- SeStep\SettingsControl\ISettingsControlFactory
 
-	- App\Controls\Forms\FormFactory
-	- App\Controls\Forms\SignInForm\ISignInFormFactory
-	- App\Controls\Forms\QuoteForm\IQuoteFormFactory
+	- App\Common\Controls\Forms\FormFactory
+	- App\Common\Controls\Forms\SignInForm\ISignInFormFactory
+	- App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
 
-	- App\Services\Doctrine\Users(App\Model\Entity\User)
-	- App\Services\Doctrine\Quotes(App\Model\Entity\Quote)
+	- App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
+	- App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
 

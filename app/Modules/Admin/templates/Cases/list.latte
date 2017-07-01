@@ -1,0 +1,11 @@
+{block content}
+<div class="well">
+    <div class="row">
+        <div class="col-md-6 col-lg-4" n:foreach="$cases as $case">
+            <div class="panel panel-default">
+                <div class="panel-heading">{$case->getTitle()}</div>
+            </div>
+        </div>
+    </div>
+</div>
+

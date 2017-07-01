@@ -28,6 +28,7 @@ class CoreInitializerModule extends InitializerModuleBase
     {
         $sections = [
             'paf.quotes' => $this->add->section('paf.quotes', 'Quotes related settings'),
+            'paf.priceList' => $this->add->section('paf.priceList', 'Price list'),
         ];
 
         return $sections;
@@ -39,6 +40,10 @@ class CoreInitializerModule extends InitializerModuleBase
     private function addOptions($sections = [])
     {
         $this->add->option(IOptions::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']);
+        $this->add->option(IOptions::TYPE_STRING, 'Preffered species', '', null, $sections['paf.quotes']);
+
+        $this->add->option(IOptions::TYPE_INT, 'Base suit price', 420, null, $sections['paf.priceList']);
+        $this->add->option(IOptions::TYPE_INT, 'Extra feature', 50, null, $sections['paf.priceList']);
     }
 
     private function addUsers()
