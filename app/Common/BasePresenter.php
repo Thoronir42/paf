@@ -61,6 +61,7 @@ abstract class BasePresenter extends Presenter
     {
         $fileCandidates = parent::formatLayoutTemplateFiles();
         array_unshift($fileCandidates, __DIR__ . '/templates/@layout.latte');
+
         return $fileCandidates;
     }
 
@@ -69,17 +70,11 @@ abstract class BasePresenter extends Presenter
         $menu = $this->navigationMenuFactory->create();
 
         $menu->setBrandTarget(':Front:Default:');
-
         $menu->setTitle($this->context->parameters['appName']);
-        if (true || $this->user->isLoggedIn()) {
-            $quotes = $menu->addLink(':Front:Quotes:', 'Quotes');
-            $quotes->addLink(':Front:Quotes:', 'Pls?');
-            $quotes->addLink(':Front:Quotes:add', 'Pls?');
-            $quotes->addLink(':Front:Quotes:list', 'Pls?');
-            $quotes->addLink(':Front:Quotes:listen', 'Pls?');
-        }
 
-        if($this->user->isAllowed(SettingsPresenter::class)) {
+        $menu->addLink(':Front:Quotes:', 'Quotes');
+
+        if ($this->user->isAllowed(SettingsPresenter::class)) {
             $manage = $menu->addLink(':Admin:Settings:', 'Manage');
             $manage->addLink(':Admin:Settings:', 'Settings');
             $manage->addLink(':Admin:Cases:list', 'Cases');

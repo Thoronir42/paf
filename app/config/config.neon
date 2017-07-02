@@ -10,7 +10,8 @@ php:
 
 
 application:
-	errorPresenter: Error
+	catchExceptions: %productionMode%
+	errorPresenter: Front:Error
 	mapping:
 		*: App\Modules\*\Presenters\*Presenter
 

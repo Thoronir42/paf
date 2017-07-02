@@ -5,9 +5,14 @@ require __DIR__ . '/../vendor/autoload.php';
 \Tracy\Debugger::$showLocation = true;
 \Tracy\Debugger::$maxDepth = 4;
 
-$configurator = new Nette\Configurator;
+$configurator = new Nette\Configurator();
 
-//$configurator->setDebugMode('23.75.345.200'); // enable for your remote IP
+$debugList = [
+    'whoop whoop',
+    'nobody watches over me',
+];
+
+$configurator->setDebugMode($debugList); // enable for your remote IP
 $configurator->enableDebugger(__DIR__ . '/../log');
 
 
