@@ -32,6 +32,8 @@ doctrine:
     metadata:
         App: %appDir%
         SeStep\Settings: %appDir%/../vendor/sestep/settings-doctrine/src
+        SeStep\Commentable: %appDir%/../extensions/SeStep/Commentable/src
+        SeStep\FileAttachable: %appDir%/../extensions/SeStep/FileAttachable/src
 
 includes:
     - services.neon

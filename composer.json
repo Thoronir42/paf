@@ -46,14 +46,12 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "SeStep\\Commentable\\": "extensions/SeStep/Commentable/src/",
+      "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/"
     }
   },
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/navigation.git"
-    },
     {
       "type": "vcs",
       "url": "git@github.com:SeStep/general-settings.git"
