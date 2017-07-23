@@ -1,8 +1,6 @@
-$(function () {
-    $.nette.init();
-});
-
 $(document).ready( function () {
+    $.nette.init();
+
     initConfirmation();
 
     initSortable();
@@ -10,6 +8,8 @@ $(document).ready( function () {
     initTags();
 
     initEditable();
+
+    initSelect2();
 });
 
 function initConfirmation() {
@@ -69,4 +69,11 @@ function initEditable() {
 
         $this.editable(specOpts);
     });
+}
+
+function initSelect2() {
+    $('select:not(.no-select2)').each(function () {
+        console.log(this);
+        $(this).select2();
+    })
 }

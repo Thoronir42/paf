@@ -49,7 +49,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 			],
 
 			'pair' => [
-				'container' => 'div class=form-group',
+				'container' => 'div class="row form-group"',
 				'.required' => 'required',
 				'.optional' => NULL,
 				'.odd' => NULL,
@@ -68,7 +68,6 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 
 				'.required' => 'required',
 				'.text' => 'form-control',
-                'textarea' => 'form-control',
 				'.number' => 'form-control',
 				'.select' => 'form-control',
 				'.password' => 'text',
@@ -79,7 +78,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 			],
 
 			'label' => [
-				'container' => 'div class=col-sm-3 control-label',
+				'container' => 'div class="col-sm-3 control-label"',
 				'suffix' => NULL,
 				'requiredsuffix' => '',
 			],

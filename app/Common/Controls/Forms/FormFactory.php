@@ -17,6 +17,7 @@ class FormFactory extends Nette\Object
 		$form = new Form();
 
 		$form->setRenderer(new BootstrapFormRenderer());
+		$form->getElementPrototype()->class = 'bs-form';
 		
 		return $form;
 	}

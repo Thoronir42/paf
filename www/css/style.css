@@ -58,6 +58,10 @@ textarea {
     resize: vertical;
 }
 
+.bs-form .form-group {
+    margin-bottom: 5px;
+}
+
 .footer {
     position: fixed;
     bottom: 0;
