@@ -2,6 +2,8 @@
 
 namespace App\Common\Model\Entity;
 
+use App\Common\Model\Embeddable\Contact;
+use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Exceptions\EnumValueException;
 use App\Common\Model\Traits\Slug;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
@@ -19,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Quote extends BaseEntity
 {
     const STATUS_NEW = 'new';
+    const STATUS_ACCEPTED = 'accepted';
     const STATUS_DENIED = 'denied';
 
     use Identifier;
@@ -34,7 +37,7 @@ class Quote extends BaseEntity
 
     /**
      * @var string
-     * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'wip', 'denied')")
+     * @ORM\Column(type="string", length=24)
      */
     protected $status;
 
@@ -45,16 +48,16 @@ class Quote extends BaseEntity
     protected $dateCreated;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
+     * @var Contact
+     * @ORM\Embedded(class="App\Common\Model\Embeddable\Contact")
      */
-    protected $name;
+    protected $contact;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
+     * @var FursuitSpecification
+     * @ORM\Embedded(class="App\Common\Model\Embeddable\FursuitSpecification")
      */
-    protected $type;
+    protected $fursuit;
 
     /**
      * @var string
@@ -70,29 +73,14 @@ class Quote extends BaseEntity
     protected $photos;
 
 
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=2000)
-     */
     protected $characterDescription;
 
-    public function __construct($name)
+    public function __construct(Contact $contact, FursuitSpecification $fursuitSpecification)
     {
         $this->dateCreated = new DateTime();
-        $this->setName($name);
-    }
-
-    /** @return User */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /** @param User $user */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
+        $this->setStatus(self::STATUS_NEW);
+        $this->contact = $contact;
+        $this->fursuit = $fursuitSpecification;
     }
 
     /** @return string */
@@ -107,69 +95,44 @@ class Quote extends BaseEntity
         $this->status = $status;
     }
 
-    /** @return string */
-    public function getName()
+    /** @return Contact */
+    public function getContact()
     {
-        return $this->name;
+        return $this->contact;
     }
 
-    /** @param string $name */
-    public function setName($name)
+    /** @param Contact $contact */
+    public function setContact(Contact $contact)
     {
-        $this->name = $name;
-        $this->setSlug(Strings::webalize($name));
+        $this->contact = $contact;
     }
 
-    /** @return string */
-    public function getType()
+    /** @return FursuitSpecification */
+    public function getFursuit()
     {
-        return $this->type;
+        return $this->fursuit;
     }
 
-    /** @param string $type */
-    public function setType($type)
+    /** @param FursuitSpecification $fursuit */
+    public function setFursuit($fursuit)
     {
-        if(!in_array($type, Fursuit::getTypes())) {
-            throw new EnumValueException($type, Fursuit::getTypes());
-        }
-
-        $this->type = $type;
+        $this->fursuit = $fursuit;
+        $this->setSlug(Strings::webalize($fursuit->getName()));
     }
 
-    /** @return string */
-    public function getSleeveLength()
-    {
-        return $this->sleeveLength;
-    }
-
-    /** @param string $sleeveLength */
-    public function setSleeveLength($sleeveLength)
-    {
-        $this->sleeveLength = $sleeveLength;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharacterDescription()
-    {
-        return $this->characterDescription;
-    }
-
-    /**
-     * @param string $characterDescription
-     */
-    public function setCharacterDescription($characterDescription)
-    {
-        $this->characterDescription = $characterDescription;
-    }
-
-    /**
-     * @return FileThread
-     */
+    /** @return FileThread */
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    public static function getStatuses()
+    {
+        return [
+            self::STATUS_NEW,
+            self::STATUS_ACCEPTED,
+            self::STATUS_DENIED,
+        ];
     }
 
 }

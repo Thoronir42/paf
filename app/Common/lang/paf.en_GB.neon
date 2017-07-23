@@ -14,6 +14,10 @@ quote-form:
 
     group-finish: "Finalize quote"
 
+contact:
+    name: "Name"
+    email: "Email"
+    telegram: "Telegram"
 
 fursuit:
     type: "Fursuit type"

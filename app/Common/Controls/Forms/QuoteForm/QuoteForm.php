@@ -5,6 +5,8 @@ namespace App\Common\Controls\Forms\QuoteForm;
 
 use App\Common\Controls\Forms\BaseFormControl;
 use App\Common\Controls\Forms\FormFactory;
+use App\Common\Model\Embeddable\Contact;
+use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\Quotes;
@@ -24,14 +26,6 @@ class QuoteForm extends BaseFormControl
     /** @var Quotes */
     private $quote;
 
-
-    public function __construct(FormFactory $factory, Translator $translator)
-    {
-        parent::__construct($factory, $translator);
-        $this->onSave;
-        $this->quote = new Quote("");
-
-    }
 
     public function setEntity(Quote $quote)
     {
@@ -58,25 +52,26 @@ class QuoteForm extends BaseFormControl
 
 
         $form->addGroup('group-contact');
+        $contactTranslator = $this->translator->domain('paf.contact');
         $contact = $form->addContainer('contact');
-        $contact->addText('name', 'name');
+        $contact->addText('name', 'name')->setTranslator($contactTranslator);
+        $contact->addText('email', 'email')->setTranslator($contactTranslator);
+        $contact->addText('telegram', 'telegram')->setTranslator($contactTranslator);
 
         $form->addGroup('group-fursuit');
         $fursuitContainer = $form->addContainer('fursuit');
 
         $fursuitContainer->addText('name', 'fursuit-name');
-        $fursuitContainer->addTextArea('character_description', 'character-description');
+        $fursuitContainer->addTextArea('characterDescription', 'character-description');
         $fursuitContainer->addSelect('type', 'type', self::getFursuitTypes())
+            ->setAttribute('data-minimum-results-for-search', 'Infinity')
             ->setTranslator($this->translator->domain('paf.fursuit'));
-
 
 
         $additionals = $form->addContainer('additionals');
         $additionals->addCheckbox('sleeves', 'long-sleeves');
 
         $form->addGroup('group-additional-info');
-        $form->addText('teeth', 'teeth-amount')
-            ->getControlPrototype()->type = 'number';
 
         $form->addMultiUpload('reference', 'references');
 
@@ -93,17 +88,23 @@ class QuoteForm extends BaseFormControl
 
     public function processForm(Form $form, $values)
     {
-        $this->quote->setName($values->contact->name);
-        $this->quote->setType($values->fursuit->type);
-        $this->quote->setSleeveLength($values->additionals->sleeves ? 80 : 0);
+        $contact = (new Contact($values->contact->name))
+            ->setEmail($values->contact->email)
+            ->setTelegram($values->contact->telegram);
 
-        $this->onSave($this->quote, $form);
+        $fursuitSpecification = (new FursuitSpecification($values->fursuit->name))
+            ->setType($values->fursuit->type)
+            ->setCharacterDescription($values->fursuit->characterDescription);
+
+        $quote = $this->quote ?: new Quote($contact, $fursuitSpecification);
+
+        $this->onSave($quote, $form);
     }
 
     private static function getFursuitTypes()
     {
         $types = [];
-        foreach (Fursuit::getTypes() as $type){
+        foreach (Fursuit::getTypes() as $type) {
             $types[$type] = "types.$type";
         }
 

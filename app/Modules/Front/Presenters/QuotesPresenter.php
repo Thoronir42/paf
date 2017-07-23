@@ -4,6 +4,9 @@ namespace App\Modules\Front\Presenters;
 
 
 use App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory;
+use App\Common\Model\Embeddable\Contact;
+use App\Common\Model\Embeddable\FursuitSpecification;
+use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\Fursuits;
 use App\Common\Services\Doctrine\Quotes;
@@ -28,6 +31,17 @@ class QuotesPresenter extends FrontPresenter
     public function actionDefault()
     {
         $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable_quotes');
+
+        /*$contact = (new Contact("Karel"))
+            ->setEmail("ka@ta.lan")
+            ->setTelegram("katalanec");
+        $fursuitSpecification = (new FursuitSpecification('Kaja'))
+            ->setType(Fursuit::TYPE_PARTIAL)
+            ->setCharacterDescription("Kaja to je vocas. Krasny gradientni vocas.");
+        $quote = new Quote($contact, $fursuitSpecification);
+        dump($quote->toArray()); exit;
+        $this['quoteForm']->setEntity($quote);*/
+
     }
 
     public function createComponentQuoteForm()
@@ -46,7 +60,7 @@ class QuotesPresenter extends FrontPresenter
 
 //            $this->quotes->save($quote);
             $this->flashMessage('todo: quote-saved'); // todo
-            dump($form->getValues()); exit;
+//            dump($quote); exit;
         };
 
         return $form;
