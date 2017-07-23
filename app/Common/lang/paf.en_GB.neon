@@ -1,0 +1,23 @@
+quote-form:
+    group-contact: "Contact information"
+    name: "Your name"
+
+    group-fursuit: "Fursuit information"
+    fursuit-name: "Name of fursuit"
+    fursuit-type: "Type of fursuit"
+    long-sleeves: "Long sleeves"
+    character-description: "Character description"
+
+    group-additional-info: "Additional information"
+    teeth-amount: "Amount of teeth"
+    references: "References"
+
+    group-finish: "Finalize quote"
+
+
+fursuit:
+    type: "Fursuit type"
+    types:
+        partial: "Partial"
+        halfsuit: "Half-suit"
+        fullsuit: "Fullboddy fursuit"

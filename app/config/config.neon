@@ -22,11 +22,12 @@ session:
 
 
 extensions:
-    console: Kdyby\Console\DI\ConsoleExtension
-    events: Kdyby\Events\DI\EventsExtension
     annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    console: Kdyby\Console\DI\ConsoleExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
+    events: Kdyby\Events\DI\EventsExtension
     migrations: SeStep\Migrations\DI\MigrationsExtension
+    translation: Kdyby\Translation\DI\TranslationExtension
 
 doctrine:
     metadata:
@@ -34,6 +35,11 @@ doctrine:
         SeStep\Settings: %appDir%/../vendor/sestep/settings-doctrine/src
         SeStep\Commentable: %appDir%/../extensions/SeStep/Commentable/src
         SeStep\FileAttachable: %appDir%/../extensions/SeStep/FileAttachable/src
+
+translation:
+	default: en_GB
+	fallback: [en_GB]
+	dirs: ['%appDir%/Common/lang']
 
 includes:
     - services.neon

@@ -53,6 +53,11 @@ h1 {
     color: #3484D2;
 }
 
+
+textarea {
+    resize: vertical;
+}
+
 .footer {
     position: fixed;
     bottom: 0;

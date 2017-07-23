@@ -2,7 +2,11 @@
 
 namespace App\Common\Model\Entity;
 
+use App\Common\Model\Exceptions\EnumValueException;
+use App\Common\Model\Traits\Slug;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use Nette\Utils\DateTime;
+use Nette\Utils\Strings;
 use SeStep\FileAttachable\Model\FileThread;
 use SeStep\Model\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,23 +19,30 @@ use Doctrine\ORM\Mapping as ORM;
 class Quote extends BaseEntity
 {
     const STATUS_NEW = 'new';
-    const STATUS_SELECTED = 'selected';
     const STATUS_DENIED = 'denied';
 
     use Identifier;
+    use Slug;
 
-    /**
+    /*
      * @var User
      * @ORM\OneToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user", referencedColumnName="id")
-     */
+     *
     protected $user;
+     */
 
     /**
      * @var string
      * @ORM\Column(type="string", columnDefinition="ENUM('new', 'selected', 'wip', 'denied')")
      */
     protected $status;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $dateCreated;
 
     /**
      * @var string
@@ -66,9 +77,10 @@ class Quote extends BaseEntity
      */
     protected $characterDescription;
 
-    public function __construct()
+    public function __construct($name)
     {
-
+        $this->dateCreated = new DateTime();
+        $this->setName($name);
     }
 
     /** @return User */
@@ -105,6 +117,7 @@ class Quote extends BaseEntity
     public function setName($name)
     {
         $this->name = $name;
+        $this->setSlug(Strings::webalize($name));
     }
 
     /** @return string */
@@ -116,6 +129,10 @@ class Quote extends BaseEntity
     /** @param string $type */
     public function setType($type)
     {
+        if(!in_array($type, Fursuit::getTypes())) {
+            throw new EnumValueException($type, Fursuit::getTypes());
+        }
+
         $this->type = $type;
     }
 

@@ -39,7 +39,8 @@
     "sestep/general-settings": "dev-master",
     "sestep/settings-doctrine": "dev-master",
     "sestep/settings-control": "dev-master",
-    "sestep/entity-migrations": "dev-master"
+    "sestep/entity-migrations": "dev-master",
+    "kdyby/translation": "^2.4"
   },
   "require-dev": {
     "nette/tester": "~1.3"

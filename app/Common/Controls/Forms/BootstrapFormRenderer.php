@@ -2,28 +2,33 @@
 
 namespace App\Common\Controls\Forms;
 
+use Nette\Forms\Controls\TextArea;
+use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 
 class BootstrapFormRenderer extends DefaultFormRenderer
 {
 	public function __construct()
 	{
-		$this->setWrappers();
+        $this->wrappers = $this->createWrappers();
 	}
 	
-/*
-	public function render(\Nette\Forms\Form $form, $mode = NULL)
+
+	public function render(Form $form, $mode = NULL)
 	{
 		foreach ($form->getControls() as $control) {
-			$control->getControlPrototype()->class[] = $control->name;
+		    if($control instanceof TextArea) {
+                $control->getControlPrototype()->class[] = 'form-control';
+		    }
+
 		}
 
 		return parent::render($form, $mode);
 	}
-*/
-	private function setWrappers()
+
+	private function createWrappers()
 	{
-		$wrappers = [
+		return [
 			'form' => [
 				'container' => NULL,
 			],
@@ -44,7 +49,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 			],
 
 			'pair' => [
-				'container' => 'div class="form-group"',
+				'container' => 'div class=form-group',
 				'.required' => 'required',
 				'.optional' => NULL,
 				'.odd' => NULL,
@@ -53,16 +58,17 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 			],
 
 			'control' => [
-				'container' => NULL,
+				'container' => 'div class=col-sm-9',
 				'.odd' => NULL,
 
-				'description' => 'small',
+				'description' => 'span class=help-block',
 				'requiredsuffix' => '',
-				'errorcontainer' => 'span class=error',
+				'errorcontainer' => 'span class=help-block error',
 				'erroritem' => '',
 
 				'.required' => 'required',
 				'.text' => 'form-control',
+                'textarea' => 'form-control',
 				'.number' => 'form-control',
 				'.select' => 'form-control',
 				'.password' => 'text',
@@ -73,7 +79,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 			],
 
 			'label' => [
-				'container' => NULL,
+				'container' => 'div class=col-sm-3 control-label',
 				'suffix' => NULL,
 				'requiredsuffix' => '',
 			],
@@ -82,9 +88,6 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 				'container' => 'div',
 			],
 		];
-
-		$this->wrappers = $wrappers;
-
 	}
 
 

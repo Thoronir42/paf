@@ -75,4 +75,9 @@ class CoreEntityCreator
             return $user;
         }
     }
+
+    public function quote($name, $files = [])
+    {
+
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Common\Controls\Forms;
 
+use Kdyby\Translation\Translator;
 use Nette\Application\UI as UI;
 use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 
 /**
@@ -19,18 +21,25 @@ abstract class BaseFormControl extends UI\Control
 
 	/** @var FormFactory */
 	protected $factory;
+    /** @var Translator */
+    protected $translator;
 
-	public function __construct(FormFactory $factory)
+    public function __construct(FormFactory $factory, Translator $translator)
 	{
 		parent::__construct();
 		$this->factory = $factory;
-	}
+        $this->translator = $translator;
+    }
 
 	/**
 	 * @return mixed
 	 */
 	public abstract function createComponentForm();
 
+    /**
+     * @param Form $form
+     * @param ArrayHash $values
+     */
 	public abstract function processForm(Form $form, $values);
 
 	/** @return Form */

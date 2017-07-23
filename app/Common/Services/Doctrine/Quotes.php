@@ -7,16 +7,11 @@ use SeStep\Model\BaseDoctrineService;
 
 class Quotes extends BaseDoctrineService
 {
-    protected $entity_class = Quote::class;
+
+    use SlugService;
 
     public function findForOverview()
     {
-        $picked = $this->repository->findBy(['status' => 'selected']);
-        $new = $this->repository->findBy(['status' => 'new']);
-
-        return [
-            'picked' => $picked,
-            'new' => $new,
-        ];
+        return $this->repository->findBy(['status' => 'new'], ['dateCreated' => 'ASC']);
     }
 }
