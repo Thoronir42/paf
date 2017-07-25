@@ -1,3 +1,10 @@
+views:
+    home: "Home"
+    quotes: "Quotes"
+    manage: "Manage"
+    settings: "Settings"
+    cases: "Cases"
+
 quote-form:
     group-contact: "Contact information"
     name: "Your name"
@@ -7,6 +14,7 @@ quote-form:
     fursuit-type: "Type of fursuit"
     long-sleeves: "Long sleeves"
     character-description: "Character description"
+    character-description-help: "Write the most important points in design"
 
     group-additional-info: "Additional information"
     teeth-amount: "Amount of teeth"

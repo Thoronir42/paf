@@ -1,11 +1,11 @@
 {block content}
-	<h1>Quo T.S.</h1>
+<h1>{_'title'}{if !$enableQuotes} {_'currently-closed'}{/if}</h1>
 {if !$enableQuotes}
-	<div class="text-warning">V tuto chvíli není možné posílat žádosti.</div>
-	<br/>
-	<div class="text-center">
-		<a n:href="Default:" class="btn btn-lg btn-primary">Nashledanou</a>
-	</div>
+    <div class="text-info">{_'currently-closed-text'}</div>
+    <br/>
+    <div class="text-center">
+        <a n:href=":Front:Default:" class="btn btn-lg btn-default">{$defaultTranslator->translate('generic.return-home')}</a>
+    </div>
 {else}
-	{control quoteForm}
+    {control quoteForm}
 {/if}

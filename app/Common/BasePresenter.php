@@ -6,7 +6,9 @@ namespace App\Common;
 use App\Common\Model\Entity\User;
 use App\Common\Services\Doctrine\Users;
 use App\Modules\Admin\Presenters\SettingsPresenter;
+use Kdyby\Translation\Translator;
 use Nette\Application\UI\Presenter;
+use Nette\Bridges\ApplicationLatte\Template;
 use SeStep\Navigation\Control\INavigationMenuFactory;
 use SeStep\SettingsInterface\Settings;
 
@@ -21,6 +23,8 @@ abstract class BasePresenter extends Presenter
     /** @var  INavigationMenuFactory @inject */
     public $navigationMenuFactory;
 
+    /** @var Translator @inject */
+    public $translator;
 
     /** @var User */
     protected $eUser;
@@ -28,6 +32,12 @@ abstract class BasePresenter extends Presenter
     protected function startup()
     {
         parent::startup();
+        
+        /** @var Template $template */
+        $template = $this->template;
+        $template->setTranslator($this->translator->domain(strtolower(str_replace(":", ".", $this->name))));
+
+        $this->template->defaultTranslator = $this->translator;
 
         $this->template->appName = $this->context->parameters['appName'];
         $this->template->background_color = '#25c887';
@@ -72,12 +82,12 @@ abstract class BasePresenter extends Presenter
         $menu->setBrandTarget(':Front:Default:');
         $menu->setTitle($this->context->parameters['appName']);
 
-        $menu->addLink(':Front:Quotes:', 'Quotes');
+        $menu->addLink(':Front:Quotes:', 'paf.views.quotes');
 
         if ($this->user->isAllowed(SettingsPresenter::class)) {
-            $manage = $menu->addLink(':Admin:Settings:', 'Manage');
-            $manage->addLink(':Admin:Settings:', 'Settings');
-            $manage->addLink(':Admin:Cases:list', 'Cases');
+            $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');
+            $manage->addLink(':Admin:Settings:', 'paf.views.settings');
+            $manage->addLink(':Admin:Cases:list', 'paf.views.cases');
         }
 
         return $menu;

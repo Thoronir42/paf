@@ -37,9 +37,9 @@ doctrine:
         SeStep\FileAttachable: %appDir%/../extensions/SeStep/FileAttachable/src
 
 translation:
-	default: en_GB
-	fallback: [en_GB]
-	dirs: ['%appDir%/Common/lang']
+    default: en_GB
+    fallback: [en_GB]
+    dirs: ['%appDir%/Common/lang', '%appDir%/Modules/Front/lang']
 
 includes:
     - services.neon

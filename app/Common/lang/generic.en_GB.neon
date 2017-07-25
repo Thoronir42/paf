@@ -1,1 +1,5 @@
 submit: "Submit"
+return-home: "Return home"
+
+sign-in: "Sign in"
+sign-out: "Sign out"
