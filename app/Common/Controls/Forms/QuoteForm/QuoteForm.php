@@ -62,7 +62,8 @@ class QuoteForm extends BaseFormControl
         $fursuitContainer = $form->addContainer('fursuit');
 
         $fursuitContainer->addText('name', 'fursuit-name');
-        $fursuitContainer->addTextArea('characterDescription', 'character-description');
+        $fursuitContainer->addTextArea('characterDescription', 'character-description')
+            ->setOption('help-text', 'character-description-help');
         $fursuitContainer->addSelect('type', 'type', self::getFursuitTypes())
             ->setAttribute('data-minimum-results-for-search', 'Infinity')
             ->setTranslator($this->translator->domain('paf.fursuit'));
