@@ -24,3 +24,5 @@ services:
 
 	- App\Common\Services\Doctrine\PafCases(App\Common\Model\Entity\PafCase)
 
+	- SeStep\FileAttachable\Service\Files
+

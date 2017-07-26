@@ -3,6 +3,9 @@
 namespace App\Utils\Migrations;
 
 
+use App\Common\Model\Embeddable\Contact;
+use App\Common\Model\Embeddable\FursuitSpecification;
+use App\Common\Model\Entity\Fursuit;
 use SeStep\Migrations\Base\InitializerModuleBase;
 use SeStep\SettingsDoctrine\Options\OptionsSection;
 use SeStep\SettingsInterface\Options\IOptions;
@@ -22,6 +25,7 @@ class CoreInitializerModule extends InitializerModuleBase
         $sections = $this->addSections();
         $this->addOptions($sections);
         $this->addUsers();
+        $this->addQoutes();
     }
 
     private function addSections()
@@ -50,5 +54,14 @@ class CoreInitializerModule extends InitializerModuleBase
     {
         $this->add->user('Toanir', 'test');
         $this->add->user('Toust', 'test');
+    }
+
+    private function addQoutes()
+    {
+        $contact = (new Contact("T-boy"))->setEmail("t.boi42@@gmail.com")->setTelegram("t.boi");
+        $fursuitSpec = (new FursuitSpecification("Thumb"))
+            ->setType(Fursuit::TYPE_PARTIAL)
+            ->setCharacterDescription("Big teethy\nHeary heary\nFiery occulery");
+        $this->add->quote($contact, $fursuitSpec);
     }
 }

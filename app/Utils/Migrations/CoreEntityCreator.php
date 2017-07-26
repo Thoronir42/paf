@@ -2,8 +2,13 @@
 
 namespace App\Utils\Migrations;
 
+use App\Common\Model\Embeddable\Contact;
+use App\Common\Model\Embeddable\FursuitSpecification;
+use App\Common\Model\Entity\Quote;
+use App\Common\Services\Doctrine\Quotes;
 use App\Common\Services\Doctrine\Users;
 use Nette\Utils\Strings;
+use SeStep\FileAttachable\Service\Files;
 use SeStep\Migrations\IServiceProvider;
 use SeStep\SettingsDoctrine\DoctrineOptions;
 use SeStep\SettingsDoctrine\Options\OptionsSection;
@@ -16,14 +21,22 @@ class CoreEntityCreator
     protected $options;
     /** @var Users */
     protected $users;
+    /** @var Quotes */
+    protected $quotes;
+
+    /** @var Files */
+    protected $files;
 
     /** @var OutputInterface */
     protected $output;
 
     public function __construct(IServiceProvider $provider, OutputInterface $output)
     {
+        $this->files = $provider->getService(Files::class);
+
         $this->options = $provider->getService(DoctrineOptions::class);
         $this->users = $provider->getService(Users::class);
+        $this->quotes = $provider->getService(Quotes::class);
 
         $this->output = $output;
     }
@@ -70,14 +83,23 @@ class CoreEntityCreator
             $user = $this->users->create($username, $password);
             $this->users->save($user);
 
-            $this->output->writeln("Ok - User $username has been created");
+            $this->output->writeln("Ok - User $username has been created.");
 
             return $user;
         }
     }
 
-    public function quote($name, $files = [])
+    public function quote(Contact $contact, FursuitSpecification $fursuit, $files = [])
     {
+        $quote = new Quote($contact, $fursuit);
+        $quote->setPhotosThread($this->files->createThread(true));
 
+        if (!$this->quotes->saveNew($quote)) {
+            $this->output->writeln("Err- Quote {$quote->getSlug()} already exists.");
+        } else {
+            $this->output->writeln("Ok - Quote {$quote->getSlug()} created successfully.");
+        }
+
+        return $quote;
     }
 }

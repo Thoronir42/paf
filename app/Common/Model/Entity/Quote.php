@@ -60,8 +60,8 @@ class Quote extends BaseEntity
     protected $fursuit;
 
     /**
-     * @var string
-     * @ORM\Column(type="integer")
+     * @var integer
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $sleeveLength;
 
@@ -124,6 +124,12 @@ class Quote extends BaseEntity
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /** @param FileThread $thread */
+    public function setPhotosThread(FileThread $thread = null)
+    {
+        $this->photos = $thread;
     }
 
     public static function getStatuses()

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Skoro
- * Date: 03.07.2017
- * Time: 18:33
- */
 
 namespace SeStep\FileAttachable\Model;
 
