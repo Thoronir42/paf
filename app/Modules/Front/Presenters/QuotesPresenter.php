@@ -10,7 +10,10 @@ use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\Fursuits;
 use App\Common\Services\Doctrine\Quotes;
+use App\Common\Services\Storage\PafImageStorage;
 use Nette\Forms\Form;
+use Nette\Http\FileUpload;
+use SeStep\FileAttachable\Service\Files;
 
 class QuotesPresenter extends FrontPresenter
 {
@@ -22,6 +25,12 @@ class QuotesPresenter extends FrontPresenter
 
     /** @var Fursuits @inject */
     public $fursuits;
+
+    /** @var PafImageStorage @inject */
+    public $pafImages;
+
+    /** @var Files @inject */
+    public $files;
 
     public function startup()
     {
@@ -48,16 +57,25 @@ class QuotesPresenter extends FrontPresenter
     {
         $form = $this->form_factory->create();
 
-        $form->onSave[] = function (Quote $quote, Form $form) {
+        $form->onSave[] = function (Quote $quote, Form $form, $references) {
+            /**@var FileUpload[] $references*/
             if ($this->quotes->slugExists($quote->getSlug())) {
-                $form['name']->addError("Quote with this name already exists");
+                $form['fursuit']['name']->addError("Quote with this name already exists");
                 return;
             }
             if ($this->fursuits->slugExists($quote->getSlug())) {
-                $form['name']->addError("Fursuit with this name already exists");
+                $form['fursuit']['name']->addError("Fursuit with this name already exists");
                 return;
             }
 
+            $refs = $this->files->createThread(true);
+            $quote->setReferences($refs);
+            foreach ($references as $file) {
+                $fileEntity = $this->pafImages->saveQuoteReference($quote, $file, $quote->getSlug());
+                $refs->addFile($fileEntity);
+            }
+
+            $this->quotes->save($quote);
 //            $this->quotes->save($quote);
             $this->flashMessage('todo: quote-saved'); // todo
 //            dump($quote); exit;

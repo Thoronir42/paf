@@ -11,8 +11,6 @@ use Nette\Utils\ArrayHash;
 /**
  * Class BaseFormControl
  * @package App\Forms
- *
- * @method onSave(Form $form, $values)
  */
 abstract class BaseFormControl extends UI\Control
 {

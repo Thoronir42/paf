@@ -4,19 +4,18 @@ namespace App\Common\Controls\Forms\QuoteForm;
 
 
 use App\Common\Controls\Forms\BaseFormControl;
-use App\Common\Controls\Forms\FormFactory;
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\Quotes;
-use Kdyby\Translation\Translator;
 use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 /**
  * Class QuoteForm
  *
- * @method onSave(Quote $quote, Form $form)
+ * @method onSave(Quote $quote, Form $form, ArrayHash $values)
  */
 class QuoteForm extends BaseFormControl
 {
@@ -54,7 +53,9 @@ class QuoteForm extends BaseFormControl
         $form->addGroup('group-contact');
         $contactTranslator = $this->translator->domain('paf.contact');
         $contact = $form->addContainer('contact');
-        $contact->addText('name', 'name')->setTranslator($contactTranslator);
+        $contact->addText('name', 'name')->setTranslator($contactTranslator)
+            ->setRequired(true)
+            ->addRule(Form::MIN_LENGTH, 'name-min-length', 3);
         $contact->addText('email', 'email')->setTranslator($contactTranslator);
         $contact->addText('telegram', 'telegram')->setTranslator($contactTranslator);
 
@@ -99,7 +100,7 @@ class QuoteForm extends BaseFormControl
 
         $quote = $this->quote ?: new Quote($contact, $fursuitSpecification);
 
-        $this->onSave($quote, $form);
+        $this->onSave($quote, $form, $values->reference);
     }
 
     private static function getFursuitTypes()

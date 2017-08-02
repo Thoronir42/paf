@@ -11,3 +11,4 @@ app/config/config.*.neon
 app/config/users.neon
 
 www/ref/
+/www/images/quotes/*

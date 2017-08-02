@@ -29,5 +29,12 @@ class FileThread extends BaseEntity
         $this->files = new ArrayCollection();
     }
 
+    public function addFile(FileEntity $fileEntity) {
+        return $this->files->add($fileEntity);
+    }
+
+    public function removeFile(FileEntity $fileEntity) {
+        return $this->files->removeElement($fileEntity);
+    }
 
 }

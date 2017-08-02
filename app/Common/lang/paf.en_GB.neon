@@ -8,6 +8,7 @@ views:
 quote-form:
     group-contact: "Contact information"
     name: "Your name"
+    name-min-length: "Name must be at least %d characters long"
 
     group-fursuit: "Fursuit information"
     fursuit-name: "Name of fursuit"

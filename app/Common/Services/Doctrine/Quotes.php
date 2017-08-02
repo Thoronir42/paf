@@ -14,4 +14,13 @@ class Quotes extends BaseDoctrineService
     {
         return $this->repository->findBy(['status' => 'new'], ['dateCreated' => 'ASC']);
     }
+
+    public function saveNew(Quote $quote) {
+        if ($this->slugExists($quote->getSlug())) {
+            return false;
+        }
+
+        $this->save($quote);
+        return true;
+    }
 }

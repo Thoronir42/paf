@@ -37,12 +37,20 @@ class FileEntity extends BaseEntity
     protected $size;
 
 
+    /**
+     * FileEntity constructor.
+     * @param string $filename
+     * @param int    $size
+     */
     public function __construct($filename, $size = 0)
     {
-        if(strlen($filename) > 420) {
+        if (!is_string($filename)) {
+            throw new InvalidArgumentException("Filename must be a string");
+        }
+        if (strlen($filename) > 420) {
             throw new InvalidArgumentException("Filename must be at most 420 characters long");
         }
-        if($size < 0) {
+        if ($size < 0) {
             throw new InvalidArgumentException("File size must be a positive number or zero");
         }
 
@@ -50,11 +58,13 @@ class FileEntity extends BaseEntity
         $this->size = $size;
     }
 
-    public function getFilename() {
+    public function getFilename()
+    {
         return $this->filename;
     }
 
-    public function getSize() {
+    public function getSize()
+    {
         return $this->size;
     }
 

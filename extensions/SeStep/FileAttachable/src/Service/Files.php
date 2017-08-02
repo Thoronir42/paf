@@ -46,4 +46,19 @@ class Files
 
         return $thread;
     }
+
+    /**
+     * @param FileEntity|FileThread $entity
+     */
+    public function save($entity, $flushImmediatelly = true) {
+        $this->em->persist($entity);
+        if($flushImmediatelly) {
+            $this->em->flush($entity);
+        }
+    }
+
+
+    public function flushAll() {
+        $this->em->flush();
+    }
 }

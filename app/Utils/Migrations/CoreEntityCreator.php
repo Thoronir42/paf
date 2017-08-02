@@ -92,7 +92,7 @@ class CoreEntityCreator
     public function quote(Contact $contact, FursuitSpecification $fursuit, $files = [])
     {
         $quote = new Quote($contact, $fursuit);
-        $quote->setPhotosThread($this->files->createThread(true));
+        $quote->setReferences($this->files->createThread(true));
 
         if (!$this->quotes->saveNew($quote)) {
             $this->output->writeln("Err- Quote {$quote->getSlug()} already exists.");

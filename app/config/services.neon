@@ -1,28 +1,32 @@
 services:
-	router: App\Common\Router\RouterFactory::createRouter
-	authenticator:
-	    class: App\Common\Auth\Authenticator
-	    arguments:
-	        powerUsers: %powerUsers%
-	authorizator: App\Common\Auth\Authorizator
+    router: App\Common\Router\RouterFactory::createRouter
+    authenticator:
+        class: App\Common\Auth\Authenticator
+        arguments:
+            powerUsers: %powerUsers%
+    authorizator: App\Common\Auth\Authorizator
 
-	options: SeStep\SettingsDoctrine\DoctrineOptions
-	settings: SeStep\SettingsInterface\Settings
+    options: SeStep\SettingsDoctrine\DoctrineOptions
+    settings: SeStep\SettingsInterface\Settings
 
-	- SeStep\Navigation\Control\INavigationMenuFactory
+    - SeStep\Navigation\Control\INavigationMenuFactory
 
-	- SeStep\SettingsControl\ISettingsControlFactory
+    - SeStep\SettingsControl\ISettingsControlFactory
 
-	- App\Common\Controls\Forms\FormFactory
-	- App\Common\Controls\Forms\SignInForm\ISignInFormFactory
-	- App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
+    - App\Common\Controls\Forms\FormFactory
+    - App\Common\Controls\Forms\SignInForm\ISignInFormFactory
+    - App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
 
-	- App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
+    - App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
 
-	- App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
-	- App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
+    - App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
+    - App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
 
-	- App\Common\Services\Doctrine\PafCases(App\Common\Model\Entity\PafCase)
+    - App\Common\Services\Doctrine\PafCases(App\Common\Model\Entity\PafCase)
 
-	- SeStep\FileAttachable\Service\Files
+    - SeStep\FileAttachable\Service\Files
 
+    -
+        class: App\Common\Services\Storage\PafImageStorage
+        arguments:
+            fileStorage: App\Common\Services\Storage\FileStorage(%wwwDir%/images)

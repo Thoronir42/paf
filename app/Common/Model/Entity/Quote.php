@@ -70,7 +70,7 @@ class Quote extends BaseEntity
      * @ORM\OneToOne(targetEntity="SeStep\FileAttachable\Model\FileThread")
      * @ORM\JoinColumn(name="photos_file_thread_id", referencedColumnName="id")
      */
-    protected $photos;
+    protected $referenes;
 
 
     protected $characterDescription;
@@ -79,8 +79,8 @@ class Quote extends BaseEntity
     {
         $this->dateCreated = new DateTime();
         $this->setStatus(self::STATUS_NEW);
-        $this->contact = $contact;
-        $this->fursuit = $fursuitSpecification;
+        $this->setContact($contact);
+        $this->setFursuit($fursuitSpecification);
     }
 
     /** @return string */
@@ -121,15 +121,15 @@ class Quote extends BaseEntity
     }
 
     /** @return FileThread */
-    public function getPhotos()
+    public function getReferenes()
     {
-        return $this->photos;
+        return $this->referenes;
     }
 
     /** @param FileThread $thread */
-    public function setPhotosThread(FileThread $thread = null)
+    public function setReferences(FileThread $thread = null)
     {
-        $this->photos = $thread;
+        $this->referenes = $thread;
     }
 
     public static function getStatuses()
