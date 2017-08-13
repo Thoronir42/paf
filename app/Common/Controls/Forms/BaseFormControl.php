@@ -14,34 +14,35 @@ use Nette\Utils\ArrayHash;
  */
 abstract class BaseFormControl extends UI\Control
 {
-	/** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
-	public $onSave;
+    /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
+    public $onSave;
 
-	/** @var FormFactory */
-	protected $factory;
+    /** @var FormFactory */
+    protected $factory;
     /** @var Translator */
     protected $translator;
 
     public function __construct(FormFactory $factory, Translator $translator)
-	{
-		parent::__construct();
-		$this->factory = $factory;
+    {
+        parent::__construct();
+        $this->factory = $factory;
         $this->translator = $translator;
     }
 
-	/**
-	 * @return mixed
-	 */
-	public abstract function createComponentForm();
+    /**
+     * @return mixed
+     */
+    public abstract function createComponentForm();
 
     /**
-     * @param Form $form
+     * @param Form      $form
      * @param ArrayHash $values
      */
-	public abstract function processForm(Form $form, $values);
+    public abstract function processForm(Form $form, $values);
 
-	/** @return Form */
-	protected function form(){
-		return $this['form'];
-	}
+    /** @return Form */
+    protected function form()
+    {
+        return $this['form'];
+    }
 }

@@ -2,7 +2,7 @@ body {
     font-size: 15px;
     line-height: 1.6;
     margin-top: 60px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 #headder {
@@ -65,14 +65,34 @@ textarea {
 .footer {
     position: fixed;
     bottom: 0;
+
+    margin: 0 8px 0;
+    padding: 8px 0 2px;
+
     /* Set the fixed height of the footer here */
-    height: 60px;
-    background-color: #f5f5f5;
+    background-color: rgba(240, 240, 240, 0.8);
+
+    border: 1px #222 solid;
+    border-bottom-width: 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
 }
 
-.footer p {
-    padding: 0 15px;
-    margin: 18px 0;
+.footer ul {
+    padding: 0;
+}
+
+.footer ul li {
+    list-style: none;
+    display: inline-block;
+}
+.footer ul li::after {
+    content: ' ';
+    display: inline-block;
+    width: 6px;
+}
+.footer ul li:last-child::after {
+    content: none;
 }
 
 #ajax-spinner {

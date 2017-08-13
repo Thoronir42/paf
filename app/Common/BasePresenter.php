@@ -3,6 +3,7 @@
 namespace App\Common;
 
 
+use App\Common\Controls\Footer\Footer;
 use App\Common\Model\Entity\User;
 use App\Common\Services\Doctrine\Users;
 use App\Modules\Admin\Presenters\SettingsPresenter;
@@ -91,6 +92,11 @@ abstract class BasePresenter extends Presenter
         }
 
         return $menu;
+    }
+
+    public function createComponentFooter()
+    {
+        return new Footer();
     }
 
 
