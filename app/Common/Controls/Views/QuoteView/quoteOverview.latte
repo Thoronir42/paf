@@ -1,3 +1,21 @@
-<div class="quote quote-overview">
-	{dump($quote)}
+<div class="panel panel-default quote quote-overview">
+    <div class="panel-heading">
+        <span>{$quote->getFursuit()->getName()}</span>
+        <span class="btn btn-xs btn-danger pull-right">
+            <i class="">&times;</i>
+        </span>
+    </div>
+    <div class="panel-body">
+        <span>{_'paf.quote.references', [count => $quote->getReferences()->count()]}</span>
+        <div class="row references text-center" n:if="$quote->getReferences()->count() > 0">
+            {foreach $quote->getReferences()->iterator() as $file}
+                <a href="{$baseUrl .'/images/'. $file->getFilename()}">
+                    <img class="img-thumbnail" src="{$baseUrl .'/images/'. $file->getFilename()}"/>
+                </a>
+            {/foreach}
+        </div>
+        <div class="btn btn-sm btn-primary ">
+            <i class="glyphicon glyphicon-check"></i>
+        </div>
+    </div>
 </div>

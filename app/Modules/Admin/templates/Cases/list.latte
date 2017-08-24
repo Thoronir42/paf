@@ -3,17 +3,8 @@
         <div class="panel-heading">Quotes</div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-6 col-lg-4" n:foreach="$quote in $quotes">
-                    <div class="well">
-                        <b>{$quote->getName()}</b><br/>
-                        <span>{$quote->getDateCreated()}</span>
-                        <a class="btn btn-sm btn-primary">
-                            <i class="glyphicon glyphicon-check"></i>
-                        </a>
-                        <a class="btn btn-sm btn-warning">
-                            <i class="glyphicon glyphicon-trash"></i>
-                        </a>
-                    </div>
+                <div class="col-md-6 col-lg-4" n:foreach="$quotes as $quote">
+                    {control quote-{$quote->getSlug()}:overview}
                 </div>
             </div>
         </div>

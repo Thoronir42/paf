@@ -23,6 +23,9 @@ quote-form:
 
     group-finish: "Finalize quote"
 
+quote:
+    references: "%count% references"
+
 contact:
     name: "Name"
     email: "Email"

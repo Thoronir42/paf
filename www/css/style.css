@@ -135,6 +135,19 @@ form .error {
     font-weight: bold;
 }
 
+.quote-overview .references {
+    height: 80px;
+    overflow-y: scroll;
+}
+.quote-overview .references a {
+    text-decoration: none;
+}
+.quote-overview .references img{
+    max-height: 60px;
+    max-width: 60px;
+}
+
+
 .img-thumbnail a {
     visibility: hidden;
 }

@@ -28,13 +28,17 @@ class FursuitSpecification
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      */
     protected $characterDescription;
 
-    public function __construct($name)
+    public function __construct($name, $type = '')
     {
         $this->name = $name;
+        if ($type) {
+            $this->setType($type);
+        }
+
     }
 
     /** @return string */
@@ -80,8 +84,6 @@ class FursuitSpecification
 
         return $this;
     }
-
-
 
 
 }

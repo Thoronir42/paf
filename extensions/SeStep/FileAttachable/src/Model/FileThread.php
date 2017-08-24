@@ -37,4 +37,11 @@ class FileThread extends BaseEntity
         return $this->files->removeElement($fileEntity);
     }
 
+    public function iterator() {
+        return $this->files->getIterator();
+    }
+
+    public function count() {
+        return $this->files->count();
+    }
 }

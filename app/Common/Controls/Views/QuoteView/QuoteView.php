@@ -8,9 +8,19 @@ use App\Common\Model\Entity\Quote;
 
 class QuoteView extends BaseView
 {
-    public function renderOverview(Quote $quote)
+    /** @var Quote */
+    private $quote;
+
+    public function __construct(Quote $quote)
     {
-        $this->template->quote = $quote;
+        parent::__construct();
+
+        $this->quote = $quote;
+    }
+
+    public function renderOverview()
+    {
+        $this->template->quote = $this->quote;
 
         $this->template->setFile(__DIR__ . '/quoteOverview.latte');
 
