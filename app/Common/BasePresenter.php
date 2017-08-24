@@ -4,13 +4,13 @@ namespace App\Common;
 
 
 use App\Common\Controls\Footer\Footer;
+use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
 use App\Common\Model\Entity\User;
 use App\Common\Services\Doctrine\Users;
 use App\Modules\Admin\Presenters\SettingsPresenter;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
-use SeStep\Navigation\Control\INavigationMenuFactory;
 use SeStep\SettingsInterface\Settings;
 
 abstract class BasePresenter extends Presenter
@@ -33,7 +33,7 @@ abstract class BasePresenter extends Presenter
     protected function startup()
     {
         parent::startup();
-        
+
         /** @var Template $template */
         $template = $this->template;
         $template->setTranslator($this->translator->domain(strtolower(str_replace(":", ".", $this->name))));

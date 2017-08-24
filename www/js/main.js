@@ -3,8 +3,6 @@ $(document).ready( function () {
 
     initConfirmation();
 
-    initSortable();
-
     initTags();
 
     initEditable();
@@ -23,18 +21,6 @@ function initConfirmation() {
         btnCancelLabel: "Ne-e"
     };
     $('[data-toggle=confirmation]').confirmation(options);
-}
-
-function initSortable() {
-    var $sortables = $('.sortable');
-
-    var options = {
-        update: function () {
-            $.get(handle_sort, {'sort': $sortables.sortable('toArray', { attribute: 'data-id' })});
-        }
-    };
-
-    $sortables.sortable(options);
 }
 
 function initTags(){
@@ -73,7 +59,6 @@ function initEditable() {
 
 function initSelect2() {
     $('select:not(.no-select2)').each(function () {
-        console.log(this);
         $(this).select2();
     })
 }

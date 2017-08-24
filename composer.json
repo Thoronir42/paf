@@ -34,7 +34,6 @@
     "kdyby/doctrine": "^3.1",
 
     "sestep/navigation": "dev-master",
-    "sestep/navigation-control": "dev-master",
     "sestep/doctrine-model": "dev-master",
     "sestep/general-settings": "dev-master",
     "sestep/settings-doctrine": "dev-master",
@@ -64,10 +63,6 @@
     {
       "type": "vcs",
       "url": "git@github.com:SeStep/settings-control.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/navigation-control.git"
     }
   ]
 }

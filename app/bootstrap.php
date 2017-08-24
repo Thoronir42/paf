@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
+(new \App\FactoryInterfaceAutoloader())->register();
 
 \Tracy\Debugger::$showLocation = true;
 \Tracy\Debugger::$maxDepth = 4;
@@ -17,10 +18,6 @@ $configurator->enableDebugger(__DIR__ . '/../log');
 
 
 $configurator->setTempDirectory(__DIR__ . '/../temp');
-
-$configurator->createRobotLoader()
-	->addDirectory(__DIR__ . '/Common/Controls')
-	->register();
 
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], array('127.0.0.1', '::1'))) { // !isset is for doctrine

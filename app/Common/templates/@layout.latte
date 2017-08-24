@@ -9,9 +9,11 @@
 
     <title>{ifset title}{include title|striptags} | {/ifset}{$appName}</title>
 
-    <link rel="stylesheet" href="{$basePath}/vendor/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="{$basePath}/vendor/bootstrap/bootstrap-editable.css">
-    <link rel="stylesheet" href="{$basePath}/vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap-editable/css/bootstrap-editable.css">
+    <link rel="stylesheet" href="{$basePath}/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{$basePath}/node_modules/select2/dist/css/select2.min.css">
+
     <link rel="stylesheet" href="{$basePath}/css/input-file.css">
     <link rel="stylesheet" href="{$basePath}/css/style.css">
 
@@ -52,14 +54,13 @@
 {block scripts}
     <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
 
-    <script src="{$basePath}/vendor/jquery/jquery-2.1.4.min.js"></script>
-    <script src="{$basePath}/vendor/jquery/jquery-ui.min.js"></script>
-    <script src="{$basePath}/vendor/nette/nette.ajax.js"></script>
-    <script src="{$basePath}/vendor/bootstrap/bootstrap.js"></script>
-    <script src="{$basePath}/vendor/bootstrap/bootstrap-confirmation.min.js"></script>
-    <script src="{$basePath}/vendor/bootstrap/bootstrap-editable.min.js"></script>
-    <script src="{$basePath}/vendor/select2/select2.min.js"></script>
+    <script src="{$basePath}/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="{$basePath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{$basePath}/node_modules/bootstrap-confirmation/bootstrap-confirmation.js"></script>
+    <script src="{$basePath}/node_modules/bootstrap-editable/js/index.js"></script>
+    <script src="{$basePath}/node_modules/select2/dist/js/select2.min.js"></script>
 
+    <script src="{$basePath}/js/nette.ajax.js"></script>
     <script src="{$basePath}/js/input-file.js"></script>
     <script src="{$basePath}/js/main.js"></script>
 {/block}

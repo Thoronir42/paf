@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b8d28af303d53322e252b35a05f2f9f4",
+    "content-hash": "a4a210d7f2444204488447b3d490385e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2335,45 +2335,6 @@
             "time": "2016-11-13 15:19:39"
         },
         {
-            "name": "sestep/navigation-control",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/SeStep/navigation-control.git",
-                "reference": "080a16875d1398a70a06caedf9e0a5161e6b12e5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/navigation-control/zipball/080a16875d1398a70a06caedf9e0a5161e6b12e5",
-                "reference": "080a16875d1398a70a06caedf9e0a5161e6b12e5",
-                "shasum": ""
-            },
-            "require": {
-                "nette/application": "~2.4"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Thoronir42",
-                    "email": "Thoronir42@Gmail.com"
-                }
-            ],
-            "description": "Nette control integration of sestep/navigation",
-            "support": {
-                "source": "https://github.com/SeStep/navigation-control/tree/master",
-                "issues": "https://github.com/SeStep/navigation-control/issues"
-            },
-            "time": "2016-11-13 14:34:04"
-        },
-        {
             "name": "sestep/settings-control",
             "version": "dev-master",
             "source": {
@@ -2947,7 +2908,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "sestep/navigation": 20,
-        "sestep/navigation-control": 20,
         "sestep/doctrine-model": 20,
         "sestep/general-settings": 20,
         "sestep/settings-doctrine": 20,
