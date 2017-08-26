@@ -8,11 +8,18 @@ use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
 use App\Common\Model\Entity\User;
 use App\Common\Services\Doctrine\Users;
 use App\Modules\Admin\Presenters\SettingsPresenter;
+use Kdyby\Translation\ITranslator;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use SeStep\SettingsInterface\Settings;
 
+/**
+ * Class BasePresenter
+ * @package App\Common
+ *
+ * @property-read Template $template
+ */
 abstract class BasePresenter extends Presenter
 {
 
@@ -34,9 +41,8 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        /** @var Template $template */
-        $template = $this->template;
-        $template->setTranslator($this->translator->domain(strtolower(str_replace(":", ".", $this->name))));
+        $domain = strtolower(str_replace(":", ".", $this->name));
+        $this->setTranslator($this->translator->domain($domain));
 
         $this->template->defaultTranslator = $this->translator;
 
@@ -99,5 +105,12 @@ abstract class BasePresenter extends Presenter
         return new Footer();
     }
 
+
+    protected function setTranslator(ITranslator $translator)
+    {
+        /** @var Template $template */
+        $template = $this->template;
+        $template->setTranslator($translator);
+    }
 
 }

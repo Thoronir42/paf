@@ -1,7 +1,7 @@
 <?php
 
 require __DIR__ . '/../vendor/autoload.php';
-(new \App\FactoryInterfaceAutoloader())->register();
+(new \App\Libs\FactoryInterfaceAutoloader())->register();
 
 \Tracy\Debugger::$showLocation = true;
 \Tracy\Debugger::$maxDepth = 4;
@@ -27,5 +27,7 @@ if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], array('
 }
 
 $container = $configurator->createContainer();
+
+\App\Common\Controls\Forms\FormFactory::adjustValidatorMessages();
 
 return $container;

@@ -16,16 +16,17 @@ class SignInForm extends BaseFormControl
     public function createComponentForm()
     {
         $form = $this->factory->create();
+        $form->setTranslator($this->translator);
 
-        $form->addText('login', 'Who?')
+        $form->addText('login', 'generic.login')
+            ->setRequired(true);
+
+        $form->addPassword('password', 'generic.password')
             ->setRequired();
 
-        $form->addPassword('password', 'U ? ? ???')
-            ->setRequired();
+        $form->addCheckbox('remember', 'generic.remember-me');
 
-        $form->addCheckbox('remember', 'Pls, remember');
-
-        $form->addSubmit('send', 'Whrrr?!');
+        $form->addSubmit('send', 'generic.submit');
 
         $form->onSuccess[] = [$this, 'processForm'];
 

@@ -18,6 +18,10 @@ class SignPresenter extends FrontPresenter
         $this->redirect('in');
     }
 
+    public function actionIn() {
+        $this->setTranslator($this->translator);
+    }
+
     public function actionOut()
     {
         $this->getUser()->logout(true);

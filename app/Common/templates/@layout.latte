@@ -40,10 +40,9 @@
             <div id="headder">{$title}</div>
         </div>
     </div>
-    <div id="body-container" class="row">
-        <div id="body-content" class="col-sm-offset-1 col-sm-10 well">
+    <div id="body-container">
+        <div>
             {include 'components/flashes.latte', flashes => $flashes}
-
             {include #content}
         </div>
     </div>
