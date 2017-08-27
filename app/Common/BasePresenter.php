@@ -3,6 +3,7 @@
 namespace App\Common;
 
 
+use App\Common\Auth\Authorizator;
 use App\Common\Controls\Footer\Footer;
 use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
 use App\Common\Model\Entity\User;
@@ -56,22 +57,28 @@ abstract class BasePresenter extends Presenter
     }
 
 
-    protected function authenticationCheck(
-        $message = 'Pro vstup do této části je přihlášení nezbytné.',
-        $allowedActions = ['default']
-    ) {
-        $action = $this->getAction();
-        if (in_array($action, $allowedActions) || $this->user->isLoggedIn()) {
-            return;
+    protected function validateAuthorization($resource, $privilege = Authorizator::ALL, $redirect = null)
+    {
+        if ($this->user->isAllowed($resource, $privilege)) {
+            return true;
         }
 
+        $msgArgs = ['resource' => $this->translator->translate('auth.resource.' . $resource)];
+        if ($privilege) {
+            $msgArgs['privilege'] = $this->translator->translate('auth.privilege.' . $privilege);
+            $message = $this->translator->translate('auth.resource-privilege-unauthorized', $msgArgs);
+        } else {
+            $message = $this->translator->translate('auth.resource-unauthorized', $msgArgs);
+        }
         $this->flashMessage($message);
-        if (empty($allowedActions)) {
+
+        if (!$redirect || $this->presenter->isLinkCurrent($redirect)) {
             $this->redirect(':Front:Default:');
+            return false;
         }
 
-        $action = array_shift($allowedActions);
-        $this->redirect($action);
+        $this->redirect($redirect);
+        return false;
     }
 
     public function formatLayoutTemplateFiles()
@@ -91,7 +98,7 @@ abstract class BasePresenter extends Presenter
 
         $menu->addLink(':Front:Quotes:', 'paf.views.quotes');
 
-        if ($this->user->isAllowed(SettingsPresenter::class)) {
+        if ($this->user->isAllowed('admin-settings')) {
             $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');
             $manage->addLink(':Admin:Settings:', 'paf.views.settings');
             $manage->addLink(':Admin:Cases:list', 'paf.views.cases');

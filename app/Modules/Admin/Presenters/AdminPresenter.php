@@ -12,5 +12,7 @@ abstract class AdminPresenter extends BasePresenter
         parent::startup();
 
         $this->template->background_color = '#7F007F';
+
+        $this->validateAuthorization('admin-section');
     }
 }

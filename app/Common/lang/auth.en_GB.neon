@@ -1,0 +1,14 @@
+resource-privilege-unauthorized: "You are not authorize to %privilege% %resource%"
+resource-unauthorized: "You are not authorized to access %resource%"
+
+privilege:
+    create: "create"
+    read: "read"
+    update: "update"
+    delete: "delete"
+
+resource:
+    admin-section: "Administration"
+    admin-settings: "Settings"
+
+

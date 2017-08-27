@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Presenters;
 
 
+use App\Common\Auth\Authorizator;
 use SeStep\SettingsControl\ISettingsControlFactory;
 
 class SettingsPresenter extends AdminPresenter
@@ -14,10 +15,8 @@ class SettingsPresenter extends AdminPresenter
     {
         parent::startup();
 
-        if (!$this->user->isAllowed(SettingsPresenter::class)) {
-            $this->flashMessage("Settings is not for your eyes");
-            $this->redirect('Default:');
-        }
+        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Front:Default:');
+
 
         $this->template->title = 'Settings';
     }
