@@ -4,28 +4,31 @@ namespace App\Common\Model\Entity;
 
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;
-use App\Common\Model\Exceptions\EnumValueException;
-use App\Common\Model\Traits\Slug;
+use App\Common\Model\Traits\FursuitEntity;
+use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette\Utils\DateTime;
-use Nette\Utils\Strings;
 use SeStep\FileAttachable\Model\FileThread;
 use SeStep\Model\BaseEntity;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="paf__quote")
- *
  */
 class Quote extends BaseEntity
 {
     const STATUS_NEW = 'new';
     const STATUS_ACCEPTED = 'accepted';
-    const STATUS_DENIED = 'denied';
+    const STATUS_REJECTED = 'rejected';
 
     use Identifier;
-    use Slug;
+    use FursuitEntity;
+
+    /**
+     * @var PafWrapper
+     * @ORM\OneToOne(targetEntity="PafWrapper", mappedBy="quote")
+     */
+    protected $wrapper;
 
     /*
      * @var User
@@ -60,17 +63,11 @@ class Quote extends BaseEntity
     protected $fursuit;
 
     /**
-     * @var integer
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $sleeveLength;
-
-    /**
      * @var FileThread
      * @ORM\OneToOne(targetEntity="SeStep\FileAttachable\Model\FileThread")
      * @ORM\JoinColumn(name="photos_file_thread_id", referencedColumnName="id")
      */
-    protected $referenes;
+    protected $references;
 
 
     protected $characterDescription;
@@ -117,19 +114,18 @@ class Quote extends BaseEntity
     public function setFursuit($fursuit)
     {
         $this->fursuit = $fursuit;
-        $this->setSlug(Strings::webalize($fursuit->getName()));
     }
 
     /** @return FileThread */
-    public function getReferenes()
+    public function getReferences()
     {
-        return $this->referenes;
+        return $this->references;
     }
 
     /** @param FileThread $thread */
     public function setReferences(FileThread $thread = null)
     {
-        $this->referenes = $thread;
+        $this->references = $thread;
     }
 
     public static function getStatuses()
@@ -137,7 +133,7 @@ class Quote extends BaseEntity
         return [
             self::STATUS_NEW,
             self::STATUS_ACCEPTED,
-            self::STATUS_DENIED,
+            self::STATUS_REJECTED,
         ];
     }
 

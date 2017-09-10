@@ -9,6 +9,7 @@ use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\Fursuits;
+use App\Common\Services\Doctrine\PafEntities;
 use App\Common\Services\Doctrine\Quotes;
 use App\Common\Services\Storage\PafImageStorage;
 use Nette\Forms\Form;
@@ -18,10 +19,13 @@ use SeStep\FileAttachable\Service\Files;
 class QuotesPresenter extends FrontPresenter
 {
     /** @var IQuoteFormFactory @inject */
-    public $form_factory;
+    public $quoteFormFactory;
 
     /** @var Quotes @inject */
     public $quotes;
+
+    /** @var PafEntities */
+    public $pafEntities;
 
     /** @var Fursuits @inject */
     public $fursuits;
@@ -55,30 +59,31 @@ class QuotesPresenter extends FrontPresenter
 
     public function createComponentQuoteForm()
     {
-        $form = $this->form_factory->create();
+        $form = $this->quoteFormFactory->create();
 
         $form->onSave[] = function (Quote $quote, Form $form, $references) {
-            /**@var FileUpload[] $references*/
-            if ($this->quotes->slugExists($quote->getSlug())) {
-                $form['fursuit']['name']->addError("Quote with this name already exists");
-                return;
-            }
-            if ($this->fursuits->slugExists($quote->getSlug())) {
-                $form['fursuit']['name']->addError("Fursuit with this name already exists");
-                return;
+            $entity = $this->pafEntities->findByName($quote->getSlug());
+            if ($entity) {
+                $entityProgress = $this->translator->translate('paf.entity.' . $entity->getMaxProgress());
+                $errorVariables = [
+                    'name'     => $quote->getSlug(),
+                    'progress' => $entityProgress,
+                ];
+                $errorMessage = $this->translator->translate('paf.entity.already-exists', $errorVariables);
+                $form['fursuit']['name']->addError($errorMessage);
             }
 
             $refs = $this->files->createThread(true);
             $quote->setReferences($refs);
+
+            /**@var FileUpload[] $references */
             foreach ($references as $file) {
                 $fileEntity = $this->pafImages->saveQuoteReference($quote, $file, $quote->getSlug());
                 $refs->addFile($fileEntity);
             }
 
-            $this->quotes->save($quote);
-//            $this->quotes->save($quote);
-            $this->flashMessage('todo: quote-saved'); // todo
-//            dump($quote); exit;
+            $this->pafEntities->createQuote($quote);
+            $this->flashTranslate('paf.quote.created');
         };
 
         return $form;

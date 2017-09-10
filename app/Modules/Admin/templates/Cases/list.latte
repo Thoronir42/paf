@@ -4,7 +4,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6 col-lg-4" n:foreach="$quotes as $quote">
-                    {control quote-{$quote->getSlug()}:overview}
+                    {control quote-{$quote->getFeName()}:overview}
                 </div>
             </div>
         </div>

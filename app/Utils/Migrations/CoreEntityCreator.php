@@ -5,6 +5,7 @@ namespace App\Utils\Migrations;
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Quote;
+use App\Common\Services\Doctrine\PafEntities;
 use App\Common\Services\Doctrine\Quotes;
 use App\Common\Services\Doctrine\Users;
 use Nette\Utils\Strings;
@@ -21,6 +22,10 @@ class CoreEntityCreator
     protected $options;
     /** @var Users */
     protected $users;
+
+    /** @var PafEntities */
+    protected $pafEntities;
+
     /** @var Quotes */
     protected $quotes;
 
@@ -37,6 +42,7 @@ class CoreEntityCreator
         $this->options = $provider->getService(DoctrineOptions::class);
         $this->users = $provider->getService(Users::class);
         $this->quotes = $provider->getService(Quotes::class);
+        $this->pafEntities = $provider->getService(PafEntities::class);
 
         $this->output = $output;
     }
@@ -94,10 +100,12 @@ class CoreEntityCreator
         $quote = new Quote($contact, $fursuit);
         $quote->setReferences($this->files->createThread(true));
 
-        if (!$this->quotes->saveNew($quote)) {
-            $this->output->writeln("Err- Quote {$quote->getSlug()} already exists.");
+        $name = $fursuit->getName();
+
+        if (!$this->pafEntities->createQuote($quote)) {
+            $this->output->writeln("Err- Quote {$name} already exists.");
         } else {
-            $this->output->writeln("Ok - Quote {$quote->getSlug()} created successfully.");
+            $this->output->writeln("Ok - Quote {$name} created successfully.");
         }
 
         return $quote;

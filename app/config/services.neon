@@ -19,10 +19,11 @@ services:
 
     - App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
 
-    - App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
-    - App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
 
+    - App\Common\Services\Doctrine\PafEntities(App\Common\Model\Entity\PafWrapper)
+    - App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
     - App\Common\Services\Doctrine\PafCases(App\Common\Model\Entity\PafCase)
+    - App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
 
     - SeStep\FileAttachable\Service\Files
 

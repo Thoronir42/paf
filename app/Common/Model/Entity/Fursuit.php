@@ -27,6 +27,12 @@ class Fursuit extends BaseEntity
     use Slug;
 
     /**
+     * @var PafWrapper
+     * @ORM\OneToOne(targetEntity="PafWrapper", mappedBy="fursuit")
+     */
+    protected $wrapper;
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $type;

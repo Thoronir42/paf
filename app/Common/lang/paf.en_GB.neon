@@ -26,6 +26,8 @@ quote-form:
 quote:
     references: "%count% references"
 
+    created: "Quote created"
+
 contact:
     name: "Name"
     email: "Email"

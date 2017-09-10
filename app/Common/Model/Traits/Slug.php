@@ -3,6 +3,7 @@
 namespace App\Common\Model\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Nette\Utils\Strings;
 
 trait Slug
 {
@@ -18,9 +19,15 @@ trait Slug
         return $this->slug;
     }
 
-    /** @param string $slug */
-    public function setSlug($slug = "")
+    /**
+     * @param string $slug
+     * @param bool   $format
+     */
+    public function setSlug($slug = "", $format = true)
     {
+        if ($format) {
+            $slug = Strings::webalize($slug);
+        }
         $this->slug = $slug;
     }
 
