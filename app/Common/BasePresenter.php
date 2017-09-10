@@ -120,4 +120,13 @@ abstract class BasePresenter extends Presenter
         $template->setTranslator($translator);
     }
 
+    protected function flashTranslate($placeholder, $variables = [], $level = 'info') {
+        if(is_string($variables)) {
+            $level = $variables;
+            $variables = [];
+        }
+
+        return $this->flashMessage($this->translator->translate($placeholder, null, $variables), $level);
+    }
+
 }

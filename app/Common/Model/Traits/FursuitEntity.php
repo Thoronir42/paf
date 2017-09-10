@@ -13,6 +13,12 @@ use App\Common\Model\Entity\PafWrapper;
  */
 trait FursuitEntity
 {
+    /** @return PafWrapper */
+    public function getWrapper() {
+        return $this->wrapper;
+    }
+
+    /** @return string */
     public function getFeName() {
         return $this->wrapper->getName();
     }

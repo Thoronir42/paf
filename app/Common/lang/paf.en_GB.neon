@@ -5,6 +5,14 @@ views:
     settings: "Settings"
     cases: "Cases"
 
+entity:
+    quote: 'Quote'
+    case: 'Case'
+    fursuit: 'Fursuit'
+
+    alerady-exists: "Name %name% already belongs to a %progress%"
+
+
 quote-form:
     group-contact: "Contact information"
     name: "Your name"
@@ -27,6 +35,12 @@ quote:
     references: "%count% references"
 
     created: "Quote created"
+    rejected: "Quote %name% has been rejected"
+
+case:
+    created: "Case %name% created successfully"
+    already-exists: "Case %name% already exists"
+    create-error: "Case could not be created"
 
 contact:
     name: "Name"

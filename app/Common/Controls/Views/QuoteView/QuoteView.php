@@ -8,6 +8,10 @@ use App\Common\Model\Entity\Quote;
 
 class QuoteView extends BaseView
 {
+    public $onAccept = [];
+
+    public $onReject = [];
+
     /** @var Quote */
     private $quote;
 
@@ -25,5 +29,13 @@ class QuoteView extends BaseView
         $this->template->setFile(__DIR__ . '/quoteOverview.latte');
 
         $this->template->render();
+    }
+
+    public function handleAccept() {
+        $this->onAccept($this->quote);
+    }
+
+    public function handleReject() {
+        $this->onReject($this->quote);
     }
 }

@@ -17,10 +17,9 @@ class Quotes extends BaseDoctrineService
         $offset = ($page - 1) * $limit;
 
         $qb = $this->repository->createQueryBuilder('q');
-        $qb
-            ->where("q.status = :status");
-        $qb
-            ->join(PafWrapper::class, 'pw', 'WHERE', 'q.id = pw.quote');
+        $qb->join('q.wrapper', 'pw')->addSelect('pw');
+        $qb->where("q.status = :status");
+
         /** @var Quote[] $result */
         $result = $qb->getQuery()
             ->setMaxResults($limit)
