@@ -6,6 +6,13 @@ namespace App\Common\Controls\Views\QuoteView;
 use App\Common\Controls\Views\BaseView;
 use App\Common\Model\Entity\Quote;
 
+/**
+ * Class QuoteView
+ * @package App\Common\Controls\Views\QuoteView
+ *
+ * @method onAccept(Quote $quote)
+ * @method onReject(Quote $quote)
+ */
 class QuoteView extends BaseView
 {
     public $onAccept = [];
@@ -22,7 +29,7 @@ class QuoteView extends BaseView
         $this->quote = $quote;
     }
 
-    public function renderOverview()
+    public function renderTile()
     {
         $this->template->quote = $this->quote;
 
@@ -31,11 +38,13 @@ class QuoteView extends BaseView
         $this->template->render();
     }
 
-    public function handleAccept() {
+    public function handleAccept()
+    {
         $this->onAccept($this->quote);
     }
 
-    public function handleReject() {
+    public function handleReject()
+    {
         $this->onReject($this->quote);
     }
 }

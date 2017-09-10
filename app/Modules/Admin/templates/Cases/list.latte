@@ -1,12 +1,10 @@
 {block content}
     <div class="panel panel-default">
-        <div class="panel-heading">Quotes</div>
+        <div class="panel-heading">
+            {control quotes:enableSwitch}
+        </div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-md-6 col-lg-4" n:foreach="$quotes as $quote">
-                    {control quote-{$quote->getFeName()}:overview}
-                </div>
-            </div>
+            {control quotes:tiles}
         </div>
     </div>
 {/block}

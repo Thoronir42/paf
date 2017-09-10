@@ -9,6 +9,7 @@ use App\Common\Model\Entity\Quote;
 use App\Common\Services\Doctrine\PafCases;
 use App\Common\Services\Doctrine\PafEntities;
 use App\Common\Services\Doctrine\Quotes;
+use App\Modules\Admin\Controls\QuotesControl\QuotesControl;
 use Nette\Application\UI\Multiplier;
 
 class CasesPresenter extends AdminPresenter
@@ -26,15 +27,14 @@ class CasesPresenter extends AdminPresenter
         $this->template->quotes = $this->quotes->findForOverview();
     }
 
-    public function createComponentQuote()
+    public function createComponentQuotes()
     {
-        return new Multiplier([$this, 'createQuoteView']);
-    }
+        $quotesComponent = new QuotesControl();
+        $quotesComponent->setQuotes($this->template->quotes);
 
-    public function createQuoteView($name)
-    {
-        $quoteView = new QuoteView($this->template->quotes[$name]);
-        $quoteView->onAccept[] = function (Quote $quote) {
+        $this->context->callInjects($quotesComponent);
+
+        $quotesComponent->onAccept[] = function (Quote $quote) {
             $error = $this->pafEntities->acceptQuote($quote);
 
             if (!$error) {
@@ -46,12 +46,13 @@ class CasesPresenter extends AdminPresenter
             $this->redirect('list');
         };
 
-        $quoteView->onReject[] = function (Quote $quote) {
+        $quotesComponent->onReject[] = function (Quote $quote) {
             $this->pafEntities->rejectQuote($quote);
             $this->flashTranslate('paf.quote.rejected', ['name' => $quote->getFeName()]);
 
             $this->redirect('list');
         };
-        return $quoteView;
+
+        return $quotesComponent;
     }
 }

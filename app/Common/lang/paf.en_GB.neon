@@ -37,6 +37,12 @@ quote:
     created: "Quote created"
     rejected: "Quote %name% has been rejected"
 
+quotes:
+    enabled: "Quotes are currently enabled"
+    enable: "Enable"
+    disabled: "Quotes are currently disabled"
+    disable: "Disable"
+
 case:
     created: "Case %name% created successfully"
     already-exists: "Case %name% already exists"
