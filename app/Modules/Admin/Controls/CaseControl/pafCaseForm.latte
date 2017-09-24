@@ -1,0 +1,39 @@
+<div>
+    {form form, class => form}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-5 col-sm-push-7">
+                    {label fursuit-name, class => 'control-label'}
+                    {input fursuit-name, class => 'form-control'}
+                    <br/>
+                    {label fursuit-type, class => 'control-label'}
+                    {input fursuit-type, class => 'form-control select2'}
+                    <br/>
+                    {label fursuit-characterDescription, class => 'control-label'}
+                    {input fursuit-characterDescription, class => 'form-control'}
+                </div>
+                <div class="col-sm-7 col-sm-pull-5">
+                    {label contact-name, class => 'control-label'}
+                    {input contact-name, class => 'form-control'}
+                    <br/>
+                    {label contact-telegram, class => 'control-label'}
+                    <div class="input-group">
+                        {input contact-telegram, class => 'form-control'}
+                        <div class="input-group-btn">
+                            <a class="btn btn-default" href="{$form['contact']['name']->value|contactUrl:'telegram'}">
+                                <i class="fa fa-telegram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {var $ahoj = 'toanir'}
+                    <a href="{$ahoj|contactUrl:'telegram'|noescape}" class="fixme">{$ahoj|contactUrl:'telegram'}</a>
+
+                    <br/>
+                    {label contact-email, class => 'control-label'}
+                    {input contact-email, class => 'form-control'}
+                </div>
+            </div>
+        </div>
+
+    {/form}
+</div>

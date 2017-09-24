@@ -1,0 +1,8 @@
+<ul class="list-group">
+    <li n:foreach="$cases as $case" class="list-group-item">
+        <span>{$case->getFursuit()->getName()}</span>
+        <a href="{plink detail $case->getFeName()}" class="btn btn-xs btn-info">
+            <i class="fa fa-wrench"></i>
+        </a>
+    </li>
+</ul>

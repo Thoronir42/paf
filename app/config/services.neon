@@ -17,6 +17,8 @@ services:
     - App\Common\Controls\Forms\SignInForm\ISignInFormFactory
     - App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
 
+    - App\Modules\Admin\Controls\CaseControl\IPafCaseFormFactory
+
     - App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
 
 

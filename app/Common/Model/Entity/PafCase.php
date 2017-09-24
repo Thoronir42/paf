@@ -6,6 +6,7 @@ namespace App\Common\Model\Entity;
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitProgress;
 use App\Common\Model\Embeddable\FursuitSpecification;
+use App\Common\Model\Traits\FursuitEntity;
 use App\Common\Model\Traits\Slug;
 use App\Common\Model\Traits\SoftDelete;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,8 +28,7 @@ class PafCase extends BaseEntity
     const STATUS_CANCELLED = "cancelled";
 
     use Identifier;
-    use Slug;
-    use SoftDelete;
+    use FursuitEntity;
 
     /**
      * @var PafWrapper
