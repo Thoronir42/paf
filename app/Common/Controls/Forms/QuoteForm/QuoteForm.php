@@ -4,6 +4,7 @@ namespace App\Common\Controls\Forms\QuoteForm;
 
 
 use App\Common\Controls\Forms\BaseFormControl;
+use App\Common\Helpers\LocalizationHelper;
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Fursuit;
@@ -65,9 +66,9 @@ class QuoteForm extends BaseFormControl
         $fursuitContainer->addText('name', 'fursuit-name');
         $fursuitContainer->addTextArea('characterDescription', 'character-description')
             ->setOption('help-text', 'character-description-help');
-        $fursuitContainer->addSelect('type', 'type', self::getFursuitTypes())
+        $fursuitContainer->addSelect('type', 'paf.fursuit.type', LocalizationHelper::getFursuitTypes())
             ->setAttribute('data-minimum-results-for-search', 'Infinity')
-            ->setTranslator($this->translator->domain('paf.fursuit'));
+            ->setTranslator($this->translator);
 
 
         $additionals = $form->addContainer('additionals');
@@ -101,16 +102,6 @@ class QuoteForm extends BaseFormControl
         $quote = $this->quote ?: new Quote($contact, $fursuitSpecification);
 
         $this->onSave($quote, $form, $values->reference);
-    }
-
-    private static function getFursuitTypes()
-    {
-        $types = [];
-        foreach (Fursuit::getTypes() as $type) {
-            $types[$type] = "types.$type";
-        }
-
-        return $types;
     }
 }
 

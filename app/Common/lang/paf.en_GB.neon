@@ -9,6 +9,7 @@ entity:
     quote: 'Quote'
     case: 'Case'
     fursuit: 'Fursuit'
+    contact: 'Contact'
 
     alerady-exists: "Name %name% already belongs to a %progress%"
 
@@ -48,13 +49,18 @@ case:
     already-exists: "Case %name% already exists"
     create-error: "Case could not be created"
 
+cases:
+    label: "Running cases"
+
 contact:
     name: "Name"
     email: "Email"
     telegram: "Telegram"
 
 fursuit:
+    name: "Fursuit name"
     type: "Fursuit type"
+    description: "Description"
     types:
         partial: "Partial"
         halfsuit: "Half-suit"

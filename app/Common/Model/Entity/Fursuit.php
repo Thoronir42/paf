@@ -68,9 +68,9 @@ class Fursuit extends BaseEntity
     public static function getTypes()
     {
         return [
-            self::TYPE_PARTIAL,
-            self::TYPE_HALF_SUIT,
-            self::TYPE_FULL_SUIT,
+            self::TYPE_PARTIAL   => self::TYPE_PARTIAL  ,
+            self::TYPE_HALF_SUIT => self::TYPE_HALF_SUIT,
+            self::TYPE_FULL_SUIT => self::TYPE_FULL_SUIT,
         ];
     }
 }

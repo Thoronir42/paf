@@ -1,4 +1,4 @@
-$(document).ready( function () {
+$(document).ready(function () {
     $.nette.init();
 
     initConfirmation();
@@ -23,7 +23,7 @@ function initConfirmation() {
     $('[data-toggle=confirmation]').confirmation(options);
 }
 
-function initTags(){
+function initTags() {
     var options = {
         tags: true
     };
@@ -44,7 +44,7 @@ function initEditable() {
     $('a.editable').each(function () {
         var $this = $(this);
         var specOpts = $.extend({}, options);
-        specOpts.url = function(params) {
+        specOpts.url = function (params) {
             var url = $this.data('url-set');
             var values = {},
                 name = $this.data('value-name');
@@ -59,6 +59,9 @@ function initEditable() {
 
 function initSelect2() {
     $('select:not(.no-select2)').each(function () {
-        $(this).select2();
+        var $element = $(this);
+        $element.select2({
+            theme: 'bootstrap'
+        });
     })
 }

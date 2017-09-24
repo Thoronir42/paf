@@ -2,14 +2,11 @@
 
 namespace App\Common\Services\Doctrine;
 
-use App\Common\Model\Entity\PafWrapper;
 use App\Common\Model\Entity\Quote;
-use Doctrine\ORM\Query\Lexer;
 use SeStep\Model\BaseDoctrineService;
 
 class Quotes extends BaseDoctrineService
 {
-
     use SlugService;
 
     public function findForOverview($limit = 10, $page = 1)

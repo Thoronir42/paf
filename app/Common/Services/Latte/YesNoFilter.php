@@ -10,11 +10,14 @@ namespace App\Common\Services\Latte;
 class YesNoFilter extends BaseFilter
 {
     /**
-     * @param bool $value
+     * @param bool $args
      * @return string
      */
-    public function useFilter($value)
+    public function useFilter(...$args)
     {
-        return $value ? 'Yes' : 'No';
+        if (!$args || !is_array($args) || sizeof($args) < 1 || !$args[0]) {
+            return 'No';
+        }
+        return 'Yes';
     }
 }

@@ -39,7 +39,10 @@ doctrine:
 translation:
     default: en_GB
     fallback: [en_GB]
-    dirs: ['%appDir%/Common/lang', '%appDir%/Modules/Front/lang']
+    dirs:
+        - '%appDir%/Common/lang'
+        - '%appDir%/Modules/Front/lang'
+        - '%appDir%/Modules/Admin/lang'
 
 includes:
     - services.neon

@@ -2,6 +2,7 @@
 
 namespace App\Common\Controls\Forms;
 
+use Kdyby\Translation\ITranslator;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls;
@@ -9,6 +10,13 @@ use Nette\Forms\Controls;
 
 class FormFactory extends Nette\Object
 {
+    /** @var ITranslator */
+    private $translator;
+
+    public function __construct(ITranslator $translator)
+    {
+        $this->translator = $translator;
+    }
 
     /**
      * @return Form
@@ -16,6 +24,7 @@ class FormFactory extends Nette\Object
     public function create()
     {
         $form = new Form();
+        $form->setTranslator($this->translator);
 
         $form->setRenderer(new BootstrapFormRenderer());
         $form->getElementPrototype()->class = 'bs-form';

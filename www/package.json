@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "bootstrap-editable": "^1.0.1",
     "bootstrap-confirmation": "^0.0.2",
+    "bootstrap-editable": "^1.0.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
-    "select2": "^4.0.3"
+    "select2": "^4.0.3",
+    "select2-bootstrap-theme": "0.1.0-beta.10"
   },
   "devDependencies": {},
-  "scripts": {
-  },
-  "author": "Thoronir42@Gmail.com",
+  "scripts": {},
+  "author": "Thoronir42@Gmail.com"
 }
