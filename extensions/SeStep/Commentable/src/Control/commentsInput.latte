@@ -1,0 +1,12 @@
+{form formInput}
+    <div class="row">
+        <div class="col-md-10">
+            {if $renderLabels}{label text, class => 'control-label'}{/if}
+            {input text, class => 'form-control'}
+        </div>
+        <div class="col-md-2">
+            {if $renderLabels}<label class="control-label"> </label><br/>{/if}
+            {input submit, class => 'btn btn-lg btn-primary'}
+        </div>
+    </div>
+{/form}

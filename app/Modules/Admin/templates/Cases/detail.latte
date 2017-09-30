@@ -2,5 +2,9 @@
 <h1>{_detail, ['name' => $case->getFursuit()->getName()]}</h1>
 <div class="well">
     {control caseForm}
+    {_'notes'}
+    {control comments:input, noLabels => true}
+
+    {control comments:stack}
 </div>
 

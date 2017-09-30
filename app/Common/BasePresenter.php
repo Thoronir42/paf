@@ -9,6 +9,7 @@ use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
 use App\Common\Model\Entity\User;
 use App\Common\Services\Doctrine\Users;
 use App\Modules\Admin\Presenters\SettingsPresenter;
+use Kdyby\Doctrine\EntityManager;
 use Kdyby\Translation\ITranslator;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Presenter;
@@ -23,6 +24,9 @@ use SeStep\SettingsInterface\Settings;
  */
 abstract class BasePresenter extends Presenter
 {
+
+    /** @var EntityManager @inject */
+    public $em;
 
     /** @var Users @inject */
     public $users;
@@ -120,8 +124,15 @@ abstract class BasePresenter extends Presenter
         $template->setTranslator($translator);
     }
 
-    protected function flashTranslate($placeholder, $variables = [], $level = 'info') {
-        if(is_string($variables)) {
+    /**
+     * @param string       $placeholder
+     * @param array|string $variables
+     * @param string       $level
+     * @return \stdClass
+     */
+    protected function flashTranslate($placeholder, $variables = [], $level = 'info')
+    {
+        if (is_string($variables)) {
             $level = $variables;
             $variables = [];
         }

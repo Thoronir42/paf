@@ -13,7 +13,12 @@ use App\Modules\Admin\Controls\CaseControl\PafCaseControl;
 use App\Modules\Admin\Controls\CaseControl\PafCaseForm;
 use App\Modules\Admin\Controls\CasesControl\CasesControl;
 use App\Modules\Admin\Controls\QuotesControl\QuotesControl;
+use SeStep\Commentable\Query\FindCommentsQuery;
 use Nette\Application\BadRequestException;
+use SeStep\Commentable\Control\CommentsControl;
+use SeStep\Commentable\Control\ICommentsControlFactory;
+use SeStep\Commentable\Model\Comment;
+use SeStep\Commentable\Model\CommentThread;
 
 class CasesPresenter extends AdminPresenter
 {
@@ -27,6 +32,8 @@ class CasesPresenter extends AdminPresenter
     /** @var IPafCaseFormFactory @inject */
     public $caseFormFactory;
 
+    /** @var ICommentsControlFactory @inject */
+    public $commentsControlFactory;
 
     private $case;
 
@@ -45,15 +52,32 @@ class CasesPresenter extends AdminPresenter
 
     public function actionDetail($name)
     {
-        $this->template->case = $this->case = $this->cases->getByName($name);
-        if (!$this->case) {
+        $this->template->case = $case = $this->cases->getByName($name);
+        if (!$case) {
             throw new BadRequestException('case-not-found');
         }
 
+
+        $thread = $case->getComments();
+        if (!$thread) {
+            $thread = new CommentThread();
+            $case->setComments($thread);
+            $this->cases->save($thread);
+        }
+
+        $comments = (new FindCommentsQuery($this->em))
+            ->byThread($thread)
+            ->orderByDateCreated()
+            ->execute();
+
         /** @var PafCaseForm $form */
         $form = $this['caseForm'];
+        $form->setEntity($case);
 
-        $form->setEntity($this->case);
+        /** @var CommentsControl $commentControl */
+        $commentControl = $this['comments'];
+        $commentControl->setComments($thread, $comments);
+
     }
 
     public function createComponentCases()
@@ -93,7 +117,7 @@ class CasesPresenter extends AdminPresenter
 
     public function createComponentCase()
     {
-        $caseControl = new PafCaseControl($this->case);
+        $caseControl = new PafCaseControl();
         $caseControl->onUpdate[] = function (PafCase $case) {
             dump($case);
             exit;
@@ -102,10 +126,39 @@ class CasesPresenter extends AdminPresenter
         return $caseControl;
     }
 
-    public function createComponentCaseForm() {
+    public function createComponentComments()
+    {
+        $comments = $this->commentsControlFactory->create();
+
+        $comments->onCommentAdd[] = function (Comment $comment, CommentThread $thread) {
+            $thread->addComment($comment);
+
+            $this->em->persist($comment);
+            $this->em->persist($thread);
+
+            $this->em->flush();
+
+            $this->redirect('this');
+        };
+
+        $comments->onCommentRemove[] = function (Comment $comment, CommentThread $thread) {
+            $this->em->remove($comment);
+            $this->em->flush();
+
+            $this->flashTranslate('comments.comment.removed');
+
+            $this->redirect('this');
+        };
+
+        return $comments;
+    }
+
+    public function createComponentCaseForm()
+    {
         $form = $this->caseFormFactory->create();
-        $form->onSave[] = function(PafCase $case) {
-            dump($case); exit;
+        $form->onSave[] = function (PafCase $case) {
+            dump($case);
+            exit;
         };
 
         return $form;

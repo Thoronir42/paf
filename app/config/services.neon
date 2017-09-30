@@ -28,6 +28,7 @@ services:
     - App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
 
     - SeStep\FileAttachable\Service\Files
+    - SeStep\Commentable\Control\ICommentsControlFactory
 
     -
         class: App\Common\Services\Storage\PafImageStorage

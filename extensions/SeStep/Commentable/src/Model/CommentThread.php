@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Skoro
- * Date: 03.07.2017
- * Time: 18:12
- */
 
 namespace SeStep\Commentable\Model;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use SeStep\Model\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,4 +17,20 @@ use Doctrine\ORM\Mapping as ORM;
 class CommentThread extends BaseEntity
 {
     use Identifier;
+
+    /**
+     * @var Collection|Comment[]
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
+
+    public function addComment($comment)
+    {
+        $this->comments->add($comment);
+    }
 }
