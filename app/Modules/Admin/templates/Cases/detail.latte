@@ -1,10 +1,23 @@
 {block content}
-<h1>{_detail, ['name' => $case->getFursuit()->getName()]}</h1>
+<h1>{_detailTitle, ['name' => $case->getFursuit()->getName()]}</h1>
 <div class="well">
-    {control caseForm}
-    {_'notes'}
-    {control comments:input, noLabels => true}
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a data-toggle="tab" role="tab" href="#detail">{_detail}</a>
+        </li>
+        <li role="presentation">
+            <a data-toggle="tab" role="tab" href="#notes">{_notes} ({$notesCount})</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="detail">
+            {control caseForm}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="notes">
+            {control comments:input, noLabels => true}
 
-    {control comments:stack}
+            {control comments:stack}
+        </div>
+    </div>
 </div>
 

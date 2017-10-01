@@ -78,6 +78,8 @@ class CasesPresenter extends AdminPresenter
         $commentControl = $this['comments'];
         $commentControl->setComments($thread, $comments);
 
+        $this->template->notesCount = count($comments);
+
     }
 
     public function createComponentCases()
