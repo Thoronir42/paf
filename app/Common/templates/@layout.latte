@@ -10,8 +10,9 @@
     <title>{ifset title}{include title|striptags} | {/ifset}{$appName}</title>
 
     <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap-editable/css/bootstrap-editable.css">
     <link rel="stylesheet" href="{$basePath}/node_modules/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap-editable/css/bootstrap-editable.css">
     <link rel="stylesheet" href="{$basePath}/node_modules/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="{$basePath}/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css">
 
@@ -34,13 +35,6 @@
 {control menu:top}
 
 <div class="container">
-
-
-    <div class="row" style="margin-top: 40px">
-        <div class="col-sm-offset-1 col-sm-10">
-            <div id="headder">{$title}</div>
-        </div>
-    </div>
     <div id="body-container">
         <div>
             {include 'components/flashes.latte', flashes => $flashes}
@@ -56,6 +50,7 @@
 
     <script src="{$basePath}/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="{$basePath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
     <script src="{$basePath}/node_modules/bootstrap-confirmation/bootstrap-confirmation.js"></script>
     <script src="{$basePath}/node_modules/bootstrap-editable/js/index.js"></script>
     <script src="{$basePath}/node_modules/select2/dist/js/select2.min.js"></script>

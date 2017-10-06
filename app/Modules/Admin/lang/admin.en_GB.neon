@@ -2,3 +2,6 @@ cases:
     detailTitle: "Detail of case %name%"
     detail: "Case"
     notes: "Notes"
+
+settings:
+    title: Settings

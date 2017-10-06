@@ -13,6 +13,11 @@ entity:
 
     alerady-exists: "Name %name% already belongs to a %progress%"
 
+forms:
+    groups:
+        fursuit-spec: "Fursuit specification"
+        contact: "Contact"
+        paf-case: "Case details"
 
 quote-form:
     group-contact: "Contact information"
@@ -48,6 +53,13 @@ case:
     created: "Case %name% created successfully"
     already-exists: "Case %name% already exists"
     create-error: "Case could not be created"
+    status: Status
+    statuses:
+        accepted: Accepted
+        wip: Work in progress
+        finished: Finished
+        cancelled: Cancelled
+    target-date: Target date
 
 cases:
     label: "Running cases"

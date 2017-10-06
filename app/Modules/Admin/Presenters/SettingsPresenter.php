@@ -16,9 +16,6 @@ class SettingsPresenter extends AdminPresenter
         parent::startup();
 
         $this->validateAuthorization('admin-settings', Authorizator::READ, ':Front:Default:');
-
-
-        $this->template->title = 'Settings';
     }
 
     public function actionDefault()

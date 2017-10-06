@@ -1,8 +1,11 @@
 <div>
-    {form form, class => form}
+    {form form}
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-5 col-sm-push-7">
+                <div class="col-xs-12">
+                    <h2>{_'paf.forms.groups.fursuit-spec'}</h2>
+                </div>
+                <div class="col-xs-12">
                     {label fursuit-name, class => 'control-label'}
                     {input fursuit-name, class => 'form-control'}
                     <br/>
@@ -12,28 +15,56 @@
                     {label fursuit-characterDescription, class => 'control-label'}
                     {input fursuit-characterDescription, class => 'form-control'}
                 </div>
-                <div class="col-sm-7 col-sm-pull-5">
-                    {label contact-name, class => 'control-label'}
-                    {input contact-name, class => 'form-control'}
-                    <br/>
-                    {label contact-telegram, class => 'control-label'}
-                    <div class="input-group">
-                        {input contact-telegram, class => 'form-control'}
-                        <div class="input-group-btn">
-                            <a class="btn btn-default" href="{$form['contact']['name']->value|contactUrl:'telegram'}">
-                                <i class="fa fa-telegram"></i>
-                            </a>
-                        </div>
-                    </div>
-                    {var $ahoj = 'toanir'}
-                    <a href="{$ahoj|contactUrl:'telegram'|noescape}" class="fixme">{$ahoj|contactUrl:'telegram'}</a>
 
-                    <br/>
-                    {label contact-email, class => 'control-label'}
-                    {input contact-email, class => 'form-control'}
+                <div class="col-xs-12">
+                    <h2>{_'paf.forms.groups.contact'}</h2>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {label contact-name, class => 'control-label'}
+                        {input contact-name, class => 'form-control'}
+                    </div>
+                    <div class="form-group">
+                        {label contact-telegram, class => 'control-label'}
+                        <div class="input-group">
+                            {input contact-telegram, class => 'form-control'}
+                            <div class="input-group-btn">
+                                <a class="btn btn-default"
+                                   href="{$form['contact']['name']->value|contactUrl:'telegram'}">
+                                    <i class="fa fa-telegram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {var $ahoj = 'toanir'}
+                        <a href="{$ahoj|contactUrl:'telegram'|noescape}" class="fixme">{$ahoj|contactUrl:'telegram'}</a>
+                    </div>
+                    <div class="form-group">
+                        {label contact-email, class => 'control-label'}
+                        {input contact-email, class => 'form-control'}
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <h2>{_'paf.forms.groups.paf-case'}</h2>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {label status, class => 'control-label'}
+                        {input status, class => 'form-control select2'}
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {label targetDate, class => 'control-label'}
+                        {input targetDate, class => 'form-control date'}
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {input submit, class => 'btn btn-primary'}
+                    </div>
+
                 </div>
             </div>
         </div>
-
     {/form}
 </div>
