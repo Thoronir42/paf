@@ -2,7 +2,7 @@
 
 namespace SeStep\Commentable\Control;
 
-use App\Common\Controls\Forms\FormFactory;
+use App\Common\Forms\FormFactory;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use SeStep\Commentable\Model\Comment;

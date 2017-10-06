@@ -28,6 +28,6 @@ if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], array('
 
 $container = $configurator->createContainer();
 
-\App\Common\Controls\Forms\FormFactory::adjustValidatorMessages();
+\App\Common\Forms\FormFactory::adjustValidatorMessages();
 
 return $container;

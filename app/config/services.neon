@@ -13,7 +13,8 @@ services:
 
     - SeStep\SettingsControl\ISettingsControlFactory
 
-    - App\Common\Controls\Forms\FormFactory
+    - App\Common\Forms\FormFactory
+
     - App\Common\Controls\Forms\SignInForm\ISignInFormFactory
     - App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
 

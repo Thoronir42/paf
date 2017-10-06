@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Controls\Forms;
+namespace App\Common\Forms;
 
 use Kdyby\Translation\ITranslator;
 use Nette;

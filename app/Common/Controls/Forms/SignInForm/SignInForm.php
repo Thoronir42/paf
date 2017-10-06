@@ -2,7 +2,7 @@
 
 namespace App\Common\Controls\Forms\SignInForm;
 
-use App\Common\Controls\Forms\BaseFormControl;
+use App\Common\Forms\BaseFormControl;
 use Nette\Application\UI\Form;
 
 class SignInForm extends BaseFormControl

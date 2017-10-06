@@ -3,7 +3,7 @@
 namespace App\Common\Controls\Forms\QuoteForm;
 
 
-use App\Common\Controls\Forms\BaseFormControl;
+use App\Common\Forms\BaseFormControl;
 use App\Common\Helpers\LocalizationHelper;
 use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;

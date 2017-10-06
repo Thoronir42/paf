@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Common\Controls\Forms;
+namespace App\Common\Forms;
 
 use Nette;
 use Nette\Forms\Controls\TextArea;
