@@ -2,15 +2,20 @@
 
 namespace App\Modules\Admin\Controls\CaseControl;
 
+use App\Common\Forms\Controls\DateInput;
 use App\Common\Helpers\LocalizationHelper;
-use App\Common\Model\Entity\Fursuit;
 use App\Common\Model\Entity\PafCase;
-use App\Common\Controls\Forms\BaseFormControl;
+use App\Common\Forms\BaseFormControl;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 
-
+/**
+ * Class PafCaseForm
+ * @package App\Modules\Admin\Controls\CaseControl
+ *
+ * @method onSave(PafCase $case, Form $form)
+ */
 class PafCaseForm extends BaseFormControl
 {
     /** @var PafCase */
@@ -49,6 +54,12 @@ class PafCaseForm extends BaseFormControl
         $this->setContainerDisabled($fursuit, true);
         $this->setContainerDisabled($contact, true);
 
+        $form->addSelect('status', 'paf.case.status', LocalizationHelper::getCaseStatuses());
+        $form->addDate('targetDate', 'paf.case.target-date', DateInput::FORMAT_DATETIME)
+            ->setPickerPosition(DateInput::POSITION_TOP_RIGHT);
+
+        $form->addSubmit('submit', 'generic.update');
+
         $form->onSuccess[] = [$this, 'processForm'];
 
         return $form;
@@ -57,8 +68,25 @@ class PafCaseForm extends BaseFormControl
     
 
     public function processForm(Form $form, $values) {
-        dump($this->case);
-        dump($values); exit;
+        $case = $this->case;
+
+        if(count($values->fursuit)) {
+            $fursuit = $this->case->getFursuit();
+            $fursuit->setType($values->fursuit->type);
+            $fursuit->setCharacterDescription($values->fursuit->characterDescription);
+        }
+
+        if(count($values->contact)) {
+            $contact = $case->getContact();
+            $contact->setTelegram($values->contact->telegram);
+            $contact->setEmail($values->contact->email);
+        }
+
+        $case->setStatus($values->status);
+        $case->setTargetDate($values->targetDate);
+
+        $this->onSave($case, $form);
+
     }
     
     private function setContainerDisabled(Container $container, $disabled = false) {

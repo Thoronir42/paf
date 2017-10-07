@@ -117,17 +117,6 @@ class CasesPresenter extends AdminPresenter
         return $quotesComponent;
     }
 
-    public function createComponentCase()
-    {
-        $caseControl = new PafCaseControl();
-        $caseControl->onUpdate[] = function (PafCase $case) {
-            dump($case);
-            exit;
-        };
-
-        return $caseControl;
-    }
-
     public function createComponentComments()
     {
         $comments = $this->commentsControlFactory->create();
@@ -159,8 +148,9 @@ class CasesPresenter extends AdminPresenter
     {
         $form = $this->caseFormFactory->create();
         $form->onSave[] = function (PafCase $case) {
-            dump($case);
-            exit;
+            $this->cases->save($case);
+            $this->flashTranslate('paf.case.updated', ['name' => $case->getFursuit()->getName()]);
+            $this->redirect('this');
         };
 
         return $form;

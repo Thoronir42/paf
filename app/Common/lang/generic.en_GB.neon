@@ -33,4 +33,5 @@ form-validator:
     image: 'The uploaded file must be image in format JPEG, GIF or PNG.'
     select-valid: 'Please select a valid option.'
     upload-valid: 'An error occurred during file upload.'
+    invalid-date-format: Date format is not valid
 

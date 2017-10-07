@@ -8,6 +8,8 @@ $(document).ready(function () {
     initEditable();
 
     initSelect2();
+
+    initDatePicker();
 });
 
 function initConfirmation() {
@@ -62,6 +64,16 @@ function initSelect2() {
         var $element = $(this);
         $element.select2({
             theme: 'bootstrap'
+        });
+    })
+}
+
+function initDatePicker() {
+    $('input.date').each(function () {
+        console.log(this);
+        $(this).datetimepicker({
+            weekstart: 1,
+            todayHighlight: true
         });
     })
 }

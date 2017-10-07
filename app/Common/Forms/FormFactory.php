@@ -4,7 +4,6 @@ namespace App\Common\Forms;
 
 use Kdyby\Translation\ITranslator;
 use Nette;
-use Nette\Application\UI\Form;
 use Nette\Forms\Controls;
 
 

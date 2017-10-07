@@ -50,9 +50,11 @@ quotes:
     disable: "Disable"
 
 case:
-    created: "Case %name% created successfully"
+    created: "Case %name% has been created"
     already-exists: "Case %name% already exists"
     create-error: "Case could not be created"
+    updated: Case %name% has been updated
+
     status: Status
     statuses:
         accepted: Accepted
