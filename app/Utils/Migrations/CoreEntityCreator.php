@@ -49,7 +49,7 @@ class CoreEntityCreator
 
     public function section($name, $caption = '', OptionsSection $parent = null)
     {
-        $section = $this->options->createSection($name, $caption, $parent);
+        $section = $this->options->findOrCreateSection($name, $caption, $parent);
 
         $this->options->save($section);
 

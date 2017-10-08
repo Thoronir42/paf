@@ -5,6 +5,8 @@ namespace App\Modules\Admin\Presenters;
 
 use App\Common\Auth\Authorizator;
 use SeStep\SettingsControl\ISettingsControlFactory;
+use SeStep\SettingsControl\SettingsControl;
+use SeStep\SettingsInterface\LazySettingsIterator;
 
 class SettingsPresenter extends AdminPresenter
 {
@@ -20,16 +22,19 @@ class SettingsPresenter extends AdminPresenter
 
     public function actionDefault()
     {
+        $container = new LazySettingsIterator($this->options);
+
+        /** @var SettingsControl $settings */
+        $settings = $this['settings'];
+        $settings->setSection($container);
     }
 
     public function createComponentSettings()
     {
-        $container = $this->settings->findAll();
-
-        $control = $this->settingControlFactory->create($container);
+        $control = $this->settingControlFactory->create(5);
         $control->onSetValue[] = function ($name, $value) {
             try {
-                $this->settings->setValue($name, $value);
+                $this->options->setValue($value, $name);
             } catch (\Exception $e) {
                 $this->sendJson([
                     'status' => 'error',

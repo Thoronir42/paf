@@ -7,7 +7,6 @@ services:
     authorizator: App\Common\Auth\Authorizator
 
     options: SeStep\SettingsDoctrine\DoctrineOptions
-    settings: SeStep\SettingsInterface\Settings
 
     - App\Common\Controls\NavigationMenu\INavigationMenuFactory
 

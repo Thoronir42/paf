@@ -14,6 +14,7 @@ use Kdyby\Translation\ITranslator;
 use Kdyby\Translation\Translator;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
+use SeStep\SettingsInterface\Options\IOptions;
 use SeStep\SettingsInterface\Settings;
 
 /**
@@ -30,8 +31,8 @@ abstract class BasePresenter extends Presenter
 
     /** @var Users @inject */
     public $users;
-    /** @var Settings @inject */
-    public $settings;
+    /** @var IOptions @inject */
+    public $options;
 
     /** @var  INavigationMenuFactory @inject */
     public $navigationMenuFactory;

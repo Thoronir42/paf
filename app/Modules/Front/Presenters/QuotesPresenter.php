@@ -43,7 +43,7 @@ class QuotesPresenter extends FrontPresenter
 
     public function actionDefault()
     {
-        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable_quotes');
+        $this->template->enableQuotes = $this->options->getValue('paf.quotes.enable_quotes');
 
         /*$contact = (new Contact("Karel"))
             ->setEmail("ka@ta.lan")
