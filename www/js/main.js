@@ -10,6 +10,9 @@ $(document).ready(function () {
     initSelect2();
 
     initDatePicker();
+
+    replaceTelegramUrls();
+    
 });
 
 function initConfirmation() {
@@ -70,10 +73,22 @@ function initSelect2() {
 
 function initDatePicker() {
     $('input.date').each(function () {
-        console.log(this);
         $(this).datetimepicker({
             weekstart: 1,
             todayHighlight: true
         });
-    })
+    });
+}
+
+
+function replaceTelegramUrls() {
+    var pattern = /https:\/\/t\.me\/(.+)\/?/;
+    $('a').each(function () {
+        var href = this.href;
+        var result = pattern.exec(href);
+        if(result) {
+            this.href = "tg:resolve?domain=" + result[1];
+        }
+
+    });
 }

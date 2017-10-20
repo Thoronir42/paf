@@ -118,7 +118,6 @@ class PafCase extends BaseEntity
     public function setFursuit($fursuit)
     {
         $this->fursuit = $fursuit;
-        $this->setSlug($fursuit->getName(), true);
     }
 
     /**

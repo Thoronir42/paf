@@ -30,13 +30,11 @@
                             {input contact-telegram, class => 'form-control'}
                             <div class="input-group-btn">
                                 <a class="btn btn-default"
-                                   href="{$form['contact']['name']->value|contactUrl:'telegram'}">
+                                   href="{$form['contact']['telegram']->value|contactUrl:'telegram'}">
                                     <i class="fa fa-telegram"></i>
                                 </a>
                             </div>
                         </div>
-                        {var $ahoj = 'toanir'}
-                        <a href="{$ahoj|contactUrl:'telegram'|noescape}" class="fixme">{$ahoj|contactUrl:'telegram'}</a>
                     </div>
                     <div class="form-group">
                         {label contact-email, class => 'control-label'}

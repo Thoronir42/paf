@@ -6,7 +6,7 @@ namespace App\Common\Services\Latte;
 class ContactUrlFilter extends BaseFilter
 {
     private static $FORMATS = [
-        'telegram' => 'tg://?to=%s'
+        'telegram' => 'https://t.me/%s'
     ];
 
 

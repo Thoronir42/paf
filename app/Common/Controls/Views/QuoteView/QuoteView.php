@@ -33,7 +33,7 @@ class QuoteView extends BaseView
     {
         $this->template->quote = $this->quote;
 
-        $this->template->setFile(__DIR__ . '/quoteOverview.latte');
+        $this->template->setFile(__DIR__ . '/quoteTile.latte');
 
         $this->template->render();
     }
