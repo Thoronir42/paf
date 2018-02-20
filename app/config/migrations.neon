@@ -6,3 +6,4 @@ migrations:
 			arguments:
 				modules:
 					- App\Utils\Migrations\CoreInitializerModule
+					- App\Utils\Migrations\SettingsInitializerModule

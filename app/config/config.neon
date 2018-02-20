@@ -4,6 +4,7 @@
 #
 parameters:
     appName: 'Pretty Acceptable Fursuits'
+    powerUsers: []
 
 php:
 	date.timezone: Europe/Prague

@@ -7,8 +7,6 @@ use App\Common\Model\Embeddable\Contact;
 use App\Common\Model\Embeddable\FursuitSpecification;
 use App\Common\Model\Entity\Fursuit;
 use SeStep\Migrations\Base\InitializerModuleBase;
-use SeStep\SettingsDoctrine\Options\OptionsSection;
-use SeStep\SettingsInterface\Options\IOptions;
 
 class CoreInitializerModule extends InitializerModuleBase
 {
@@ -22,32 +20,8 @@ class CoreInitializerModule extends InitializerModuleBase
 
     public function run()
     {
-        $sections = $this->addSections();
-        $this->addOptions($sections);
         $this->addUsers();
         $this->addQoutes();
-    }
-
-    private function addSections()
-    {
-        $sections = [
-            'paf.quotes' => $this->add->section('paf.quotes', 'Quotes related settings'),
-            'paf.priceList' => $this->add->section('paf.priceList', 'Price list'),
-        ];
-
-        return $sections;
-    }
-
-    /**
-     * @param OptionsSection[] $sections
-     */
-    private function addOptions($sections = [])
-    {
-        $this->add->option(IOptions::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']);
-        $this->add->option(IOptions::TYPE_STRING, 'Preffered species', '', null, $sections['paf.quotes']);
-
-        $this->add->option(IOptions::TYPE_INT, 'Base suit price', 420, null, $sections['paf.priceList']);
-        $this->add->option(IOptions::TYPE_INT, 'Extra feature', 50, null, $sections['paf.priceList']);
     }
 
     private function addUsers()
