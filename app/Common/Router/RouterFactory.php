@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Router;
+namespace PAF\Common\Router;
+
 
 use Nette;
 use Nette\Application\Routers\Route;
@@ -9,25 +10,34 @@ use Nette\Application\Routers\RouteList;
 
 class RouterFactory
 {
+    /** @var array */
+    private $modules;
+
+    public function __construct($modules = [])
+    {
+        $this->modules = $modules;
+    }
+
 
     /**
      * @return Nette\Application\IRouter
      */
-    public static function createRouter()
+    public function createRouter()
     {
-        $router = new RouteList;
+        $router = new RouteList();
 
-        $adminRouteList = $router[] = new RouteList('Admin');
+        $router[] = $this->createCmsModule();
 
-        $adminRouteList[] = new Route('admin/<presenter>/<action>[/<id>]', [
-            'presenter' => 'settings',
-            'action' => 'default'
-        ]);
+        $modules = implode("|", $this->modules);
 
-        $frontRouteList = $router[] = new RouteList('Front');
+        $router[] = new Route("<presenter>/<action>[/<id>]", 'Common:Homepage:default');
 
-        $frontRouteList[] = new Route('utilities/migrate-<key>', 'Utilities:migrate');
-        $frontRouteList[] = new Route('<presenter>/<action>[/<id>]', 'Default:default');
+        return $router;
+    }
+
+    public function createCmsModule(): Nette\Routing\Router
+    {
+        $router = new RouteList('cms');
 
         return $router;
     }

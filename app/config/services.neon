@@ -1,36 +1,64 @@
 services:
-    router: App\Common\Router\RouterFactory::createRouter
+    routerFactory:
+        class: PAF\Common\Router\RouterFactory
+        arguments:
+            modules:
+                - Cms
+                - Commission
+                - Common
+                - Portfolio
+                - Quote
+                - Settings
+    router: @routerFactory::createRouter()
     authenticator:
-        class: App\Common\Auth\Authenticator
+        class: PAF\Common\Security\Authenticator
         arguments:
             powerUsers: %powerUsers%
-    authorizator: App\Common\Auth\Authorizator
+    authorizator: PAF\Common\Security\Authorizator
+    translator: Libs\NoTranslator
 
-    options: SeStep\SettingsDoctrine\DoctrineOptions
+    - PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory
+    - PAF\Modules\SettingsModule\Components\SettingsControl\ISettingsControlFactory
 
-    - App\Common\Controls\NavigationMenu\INavigationMenuFactory
+    - PAF\Common\Forms\FormFactory
 
-    - SeStep\SettingsControl\ISettingsControlFactory
+    - PAF\Modules\CommonModule\Components\SignInForm\ISignInFormFactory
+    - PAF\Modules\QuoteModule\Components\QuoteForm\IQuoteFormFactory
 
-    - App\Common\Forms\FormFactory
+    - PAF\Modules\CommissionModule\Components\PafCaseForm\IPafCaseFormFactory
 
-    - App\Common\Controls\Forms\SignInForm\ISignInFormFactory
-    - App\Common\Controls\Forms\QuoteForm\IQuoteFormFactory
+    - PAF\Modules\CommonModule\Repository\UserRepository
+    - PAF\Modules\CommissionModule\Facade\PafEntities
+    - PAF\Modules\QuoteModule\Repository\QuoteRepository
+    - PAF\Modules\CommissionModule\Repository\PafCaseRepository
+    - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
-    - App\Modules\Admin\Controls\CaseControl\IPafCaseFormFactory
+    - SeStep\FileAttachable\Files
+    - SeStep\FileAttachable\Service\UserFileRepository
+    - SeStep\FileAttachable\Service\UserFileThreadRepository
 
-    - App\Common\Services\Doctrine\Users(App\Common\Model\Entity\User)
-
-
-    - App\Common\Services\Doctrine\PafEntities(App\Common\Model\Entity\PafWrapper)
-    - App\Common\Services\Doctrine\Quotes(App\Common\Model\Entity\Quote)
-    - App\Common\Services\Doctrine\PafCases(App\Common\Model\Entity\PafCase)
-    - App\Common\Services\Doctrine\Fursuits(App\Common\Model\Entity\Fursuit)
-
-    - SeStep\FileAttachable\Service\Files
     - SeStep\Commentable\Control\ICommentsControlFactory
 
+    # todo: replace with persisted options
     -
-        class: App\Common\Services\Storage\PafImageStorage
+        factory: SeStep\GeneralSettings\Settings(SeStep\GeneralSettingsInMemory\InMemoryOptions())
+        setup:
+            - setValue('paf.quotes.enable_quotes', true)
+
+    -
+        class: PAF\Common\Storage\PafImageStorage
         arguments:
-            fileStorage: App\Common\Services\Storage\FileStorage(%wwwDir%/images)
+            fileStorage: PAF\Common\Storage\FileStorage(%wwwDir%/images)
+
+    nette.latteFactory:
+        setup:
+            - addFilter(yesno, @yesNoFilter)
+            - addFilter(contactUrl, @contactUrlFilter)
+
+    yesNoFilter: PAF\Common\Latte\YesNoFilter
+    contactUrlFilter:
+        class: PAF\Common\Latte\ContactUrlFilter
+        arguments:
+            formats:
+                telegram: 'https://t.me/%s'
+

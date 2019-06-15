@@ -1,13 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Utils\Migrations;
+namespace PAF\Utils\Migrations;
 
-use App\Common\Model\Embeddable\Contact;
-use App\Common\Model\Embeddable\FursuitSpecification;
-use App\Common\Model\Entity\Quote;
-use App\Common\Services\Doctrine\PafEntities;
-use App\Common\Services\Doctrine\Quotes;
-use App\Common\Services\Doctrine\Users;
+use PAF\Common\Model\Embeddable\Contact;
+use PAF\Common\Model\Embeddable\FursuitSpecification;
+use PAF\Common\Model\Entity\Quote;
+use PAF\Common\Services\Doctrine\PafEntities;
+use PAF\Common\Services\Doctrine\QuoteRepository;
+use PAF\Common\Services\Doctrine\Users;
 use SeStep\FileAttachable\Service\Files;
 use SeStep\Migrations\IServiceProvider;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,7 +20,7 @@ class CoreEntityCreator
     /** @var PafEntities */
     protected $pafEntities;
 
-    /** @var Quotes */
+    /** @var QuoteRepository */
     protected $quotes;
 
     /** @var Files */
@@ -33,7 +33,7 @@ class CoreEntityCreator
     {
         $this->files = $provider->getService(Files::class);
         $this->users = $provider->getService(Users::class);
-        $this->quotes = $provider->getService(Quotes::class);
+        $this->quotes = $provider->getService(QuoteRepository::class);
         $this->pafEntities = $provider->getService(PafEntities::class);
 
         $this->output = $output;

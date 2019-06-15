@@ -1,14 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms;
+namespace PAF\Common\Forms;
 
-use Kdyby\Translation\ITranslator;
-use Nette;
+
 use Nette\Forms\Controls;
+use Nette\Localization\ITranslator;
+use Nette\SmartObject;
 
 
-class FormFactory extends Nette\Object
+class FormFactory
 {
+    use SmartObject;
+
     /** @var ITranslator */
     private $translator;
 
@@ -33,8 +36,7 @@ class FormFactory extends Nette\Object
 
     public static function adjustValidatorMessages()
     {
-        Nette\Forms\Validator::$messages = [
-            Form::PROTECTION              => 'generic.form-validator.csrf',
+        \Nette\Forms\Validator::$messages = [
             Form::EQUAL                   => 'generic.form-validator.equal',
             Form::NOT_EQUAL               => 'generic.form-validator.not-equal',
             Form::FILLED                  => 'generic.form-validator.filled',

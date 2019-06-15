@@ -1,8 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms;
+namespace PAF\Common\Forms;
+
 
 class Form extends \Nette\Application\UI\Form
 {
-    use FormExtender;
+    use FormCustomControls;
 }

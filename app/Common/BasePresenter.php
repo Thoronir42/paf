@@ -1,43 +1,37 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common;
+namespace PAF\Common;
 
 
-use App\Common\Auth\Authorizator;
-use App\Common\Controls\Footer\Footer;
-use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
-use App\Common\Model\Entity\User;
-use App\Common\Services\Doctrine\Users;
-use App\Modules\Admin\Presenters\SettingsPresenter;
-use Kdyby\Doctrine\EntityManager;
-use Kdyby\Translation\ITranslator;
-use Kdyby\Translation\Translator;
+use Nette\Localization\ITranslator;
+use PAF\Common\Security\Authorizator;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
-use SeStep\SettingsInterface\Options\IOptions;
-use SeStep\SettingsInterface\Settings;
+use PAF\Modules\CommonModule\Components\Footer\Footer;
+use PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory;
+use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Repository\UserRepository;
+use SeStep\GeneralSettings\Settings;
 
 /**
  * Class BasePresenter
- * @package App\Common
+ * @package PAF\Common
  *
  * @property-read Template $template
  */
 abstract class BasePresenter extends Presenter
 {
 
-    /** @var EntityManager @inject */
-    public $em;
-
-    /** @var Users @inject */
+    /** @var UserRepository @inject */
     public $users;
-    /** @var IOptions @inject */
-    public $options;
+
+    /** @var Settings @inject */
+    public $settings;
 
     /** @var  INavigationMenuFactory @inject */
     public $navigationMenuFactory;
 
-    /** @var Translator @inject */
+    /** @var ITranslator @inject */
     public $translator;
 
     /** @var User */
@@ -48,7 +42,7 @@ abstract class BasePresenter extends Presenter
         parent::startup();
 
         $domain = strtolower(str_replace(":", ".", $this->name));
-        $this->setTranslator($this->translator->domain($domain));
+        $this->template->setTranslator($this->translator->domain($domain));
 
         $this->template->defaultTranslator = $this->translator;
 
@@ -56,6 +50,7 @@ abstract class BasePresenter extends Presenter
         $this->template->background_color = '#25c887';
         $this->template->title = '';
 
+        // todo: move this to LiveUserStorage
         if ($this->user->isLoggedIn()) {
             $this->eUser = $this->users->find($this->user->id);
         }
@@ -78,7 +73,7 @@ abstract class BasePresenter extends Presenter
         $this->flashMessage($message);
 
         if (!$redirect || $this->presenter->isLinkCurrent($redirect)) {
-            $this->redirect(':Front:Default:');
+            $this->redirect(':Common:Homepage:default');
             return false;
         }
 
@@ -86,7 +81,7 @@ abstract class BasePresenter extends Presenter
         return false;
     }
 
-    public function formatLayoutTemplateFiles()
+    public function formatLayoutTemplateFiles(): array
     {
         $fileCandidates = parent::formatLayoutTemplateFiles();
         array_unshift($fileCandidates, __DIR__ . '/templates/@layout.latte');
@@ -98,10 +93,10 @@ abstract class BasePresenter extends Presenter
     {
         $menu = $this->navigationMenuFactory->create();
 
-        $menu->setBrandTarget(':Front:Default:');
+        $menu->setBrandTarget(':Common:Homepage:default');
         $menu->setTitle($this->context->parameters['appName']);
 
-        $menu->addLink(':Front:Quotes:', 'paf.views.quotes');
+        $menu->addLink(':Quote:Quotes:default', 'paf.views.quotes');
 
         if ($this->user->isAllowed('admin-settings')) {
             $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');
@@ -118,17 +113,10 @@ abstract class BasePresenter extends Presenter
     }
 
 
-    protected function setTranslator(ITranslator $translator)
-    {
-        /** @var Template $template */
-        $template = $this->template;
-        $template->setTranslator($translator);
-    }
-
     /**
-     * @param string       $placeholder
+     * @param string $placeholder
      * @param array|string $variables
-     * @param string       $level
+     * @param string $level
      * @return \stdClass
      */
     protected function flashTranslate($placeholder, $variables = [], $level = 'info')

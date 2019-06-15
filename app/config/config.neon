@@ -5,6 +5,11 @@
 parameters:
     appName: 'Pretty Acceptable Fursuits'
     powerUsers: []
+    database:
+        driver: mysqli
+        host: localhost
+        user:
+        password:
 
 php:
 	date.timezone: Europe/Prague
@@ -14,7 +19,7 @@ application:
 	catchExceptions: %productionMode%
 	errorPresenter: Front:Error
 	mapping:
-		*: App\Modules\*\Presenters\*Presenter
+		*: PAF\Modules\*Module\Presenters\*Presenter
 
 
 session:
@@ -23,29 +28,19 @@ session:
 
 
 extensions:
-    annotations: Kdyby\Annotations\DI\AnnotationsExtension
-    console: Kdyby\Console\DI\ConsoleExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
-    events: Kdyby\Events\DI\EventsExtension
-    migrations: SeStep\Migrations\DI\MigrationsExtension
-    translation: Kdyby\Translation\DI\TranslationExtension
+    leanMapper: Libs\LeanMapperExtension
 
-doctrine:
-    metadata:
-        App: %appDir%
-        SeStep\Settings: %appDir%/../vendor/sestep/settings-doctrine/src
-        SeStep\Commentable: %appDir%/../extensions/SeStep/Commentable/src
-        SeStep\FileAttachable: %appDir%/../extensions/SeStep/FileAttachable/src
+leanMapper:
+    db: %database%
+    scanDirs: false
 
-translation:
-    default: en_GB
-    fallback: [en_GB]
-    dirs:
-        - '%appDir%/Common/lang'
-        - '%appDir%/Modules/Front/lang'
-        - '%appDir%/Modules/Admin/lang'
+#translation:
+#    default: en_GB
+#    fallback: [en_GB]
+#    dirs:
+#        - '%appDir%/Common/lang'
+#        - '%appDir%/Modules/Front/lang'
+#        - '%appDir%/Modules/Admin/lang'
 
 includes:
     - services.neon
-    - latte.neon
-    - migrations.neon

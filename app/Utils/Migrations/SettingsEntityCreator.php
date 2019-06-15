@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Utils\Migrations;
+namespace PAF\Utils\Migrations;
 
 
 use Nette\Utils\Strings;
@@ -27,7 +27,7 @@ class SettingsEntityCreator
 
     public function section($name, $caption = '', OptionsSection $parent = null)
     {
-        $section = $this->options->findOrCreateSection($name, $caption, $parent);
+        $section = $this->options->createSection($name, $caption, $parent);
 
         $this->options->save($section);
 

@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Utils\Migrations;
+namespace PAF\Utils\Migrations;
 
 
-use App\Common\Model\Embeddable\Contact;
-use App\Common\Model\Embeddable\FursuitSpecification;
-use App\Common\Model\Entity\Fursuit;
+use PAF\Common\Model\Embeddable\Contact;
+use PAF\Common\Model\Embeddable\FursuitSpecification;
+use PAF\Common\Model\Entity\Fursuit;
 use SeStep\Migrations\Base\InitializerModuleBase;
 
 class CoreInitializerModule extends InitializerModuleBase

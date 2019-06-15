@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SeStep\Commentable\Control;
 
-use App\Common\Forms\FormFactory;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use PAF\Common\Forms\FormFactory;
 use SeStep\Commentable\Model\Comment;
 use SeStep\Commentable\Model\CommentThread;
+use UnexpectedValueException;
 
 /**
  * Class CommentsControl
@@ -31,15 +32,14 @@ class CommentsControl extends Control
 
     public function __construct(FormFactory $formFactory)
     {
-        parent::__construct();
         $this->formFactory = $formFactory;
     }
 
-    public function renderInput($noLabels = false) {
+    public function renderInput($withLabels = true) {
         $template = $this->createTemplate();
 
         $template->setFile(__DIR__ . '/commentsInput.latte');
-        $template->renderLabels = !$noLabels;
+        $template->renderLabels = $withLabels;
 
         $template->render();
     }
@@ -62,7 +62,7 @@ class CommentsControl extends Control
     {
         foreach ($comments as $comment) {
             if (!($comment instanceof Comment)) {
-                throw new \UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
+                throw new UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
             }
         }
 

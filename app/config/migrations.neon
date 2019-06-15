@@ -1,9 +1,0 @@
-migrations:
-	command: 'app:migrate'
-	list:
-		init:
-			class: SeStep\Migrations\ProjectInitializerMigration
-			arguments:
-				modules:
-					- App\Utils\Migrations\CoreInitializerModule
-					- App\Utils\Migrations\SettingsInitializerModule

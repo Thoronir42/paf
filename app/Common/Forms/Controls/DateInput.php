@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms\Controls;
+namespace PAF\Common\Forms\Controls;
 
 
 use Nette\Forms\Controls\TextInput;
@@ -29,7 +29,7 @@ class DateInput extends TextInput
 
     protected $position;
 
-    public function __construct($label = null, $format = null)
+    public function __construct(string $label = null, string $format = null)
     {
         parent::__construct($label);
         $this->setOption('type', 'datetime');

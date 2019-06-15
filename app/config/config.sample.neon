@@ -1,4 +1,4 @@
 doctrine:
     user: ''
     password: ''
-    dbname: debtr
+    dbname: paf

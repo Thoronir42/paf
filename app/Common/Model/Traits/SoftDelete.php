@@ -1,32 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Model\Traits;
+namespace PAF\Common\Model\Traits;
 
-use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @property bool $deleted
+ */
 trait SoftDelete
 {
-    /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    protected $deleted = false;
-
-    /**
-     * @return bool
-     */
-    public function isDeleted()
-    {
-        return $this->deleted;
-    }
-
-    /**
-     * @param bool $deleted
-     */
-    public function setDeleted($deleted)
-    {
-        $this->deleted = $deleted;
-    }
-
-
 }

@@ -1,0 +1,23 @@
+<div id="settings-{$control->getName()}" class="panel panel-{$class}" n:if="$options">
+    <div class="panel-heading">
+        <small class="pull-right text-muted">{$fqn}</small>
+        <h3>{$caption}</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            {*<div class="col-sm-2">Option</div>
+            <div class="col-sm-10">Value</div>*}
+            {foreach $options as $option}
+                <div class="col-sm-2">{$option->getCaption()}</div>
+                <div class="col-sm-10">
+                    {control option-{$option->getName()}}
+                </div>
+                <div class="clearfix"></div>
+            {/foreach}
+        </div>
+    </div>
+</div>
+
+{foreach $subsections as $name => $subsection}
+    {control section-{$name}:bootstrap}
+{/foreach}

@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Utils\Migrations;
+namespace PAF\Utils\Migrations;
 
 
-use SeStep\Migrations\Base\InitializerModuleBase;
-use SeStep\SettingsDoctrine\Options\OptionsSection;
-use SeStep\SettingsInterface\Options\IOptions;
+use SeStep\GeneralSettings\Options\IOption;
 
-class SettingsInitializerModule extends InitializerModuleBase
+class SettingsInitializerModule
 {
     /** @var SettingsEntityCreator */
     private $add;
@@ -38,10 +36,9 @@ class SettingsInitializerModule extends InitializerModuleBase
      */
     private function addOptions($sections = [])
     {
-        $this->add->option(IOptions::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']);
-        $this->add->option(IOptions::TYPE_STRING, 'Preffered species', '', null, $sections['paf.quotes']);
-
-        $this->add->option(IOptions::TYPE_INT, 'Base suit price', 420, null, $sections['paf.priceList']);
-        $this->add->option(IOptions::TYPE_INT, 'Extra feature', 50, null, $sections['paf.priceList']);
+        $this->add->option(IOption::TYPE_BOOL, 'Enable quotes', true, null, $sections['paf.quotes']);
+        $this->add->option(IOption::TYPE_STRING, 'Preffered species', '', null, $sections['paf.quotes']);
+        $this->add->option(IOption::TYPE_INT, 'Base suit price', 420, null, $sections['paf.priceList']);
+        $this->add->option(IOption::TYPE_INT, 'Extra feature', 50, null, $sections['paf.priceList']);
     }
 }

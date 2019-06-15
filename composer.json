@@ -1,12 +1,9 @@
 {
   "name": "thoronir42/paf",
   "description": "Portfolio application with quote functionality",
-  "homepage": "https://paf.feline.lol",
   "type": "project",
   "license": [
-    "BSD-3-Clause",
-    "GPL-2.0",
-    "GPL-3.0"
+    "MIT"
   ],
   "authors": [
     {
@@ -14,56 +11,49 @@
       "email": "Thoronir42@Gmail.com"
     }
   ],
+  "minimum-stability": "beta",
+  "prefer-stable": true,
   "require": {
-    "php": ">=5.6.0",
+    "php": "^7.3.0",
 
-    "nette/application": "^2.4",
-    "nette/bootstrap": "^2.4.1",
-    "nette/caching": "^2.5",
-    "nette/database": "^2.4",
-    "nette/di": "^2.4",
-    "nette/finder": "^2.4",
-    "nette/forms": "^2.4",
-    "nette/http": "^2.4",
-    "nette/mail": "^2.4",
-    "nette/robot-loader": "^2.4",
-    "nette/safe-stream": "^2.3",
-    "nette/security": "^2.4",
-    "nette/utils": "^2.4",
-    "latte/latte": "^2.4",
-    "tracy/tracy": "^2.4",
-    "kdyby/doctrine": "^3.1",
+    "nette/application": "^3.0",
+    "nette/bootstrap": "^3.0",
+    "nette/caching": "^3.0",
+    "nette/database": "^3.0",
+    "nette/di": "^3.0-RC5",
+    "nette/finder": "^2.5|^3.0",
+    "nette/forms": "^3.0",
+    "nette/http": "^3.0",
+    "nette/mail": "^3.0",
+    "nette/robot-loader": "^3.0",
+    "nette/safe-stream": "^2.4",
+    "nette/security": "^3.0",
+    "nette/utils": "^3.0",
+    "latte/latte": "^3.0",
+    "tracy/tracy": "^2.6",
+    "tharos/leanmapper": "^3.4",
 
     "sestep/navigation": "dev-master",
-    "sestep/doctrine-model": "dev-master",
-    "sestep/general-settings": "dev-master",
-    "sestep/settings-doctrine": "dev-master",
-    "sestep/settings-control": "dev-master",
-    "sestep/entity-migrations": "dev-master",
-    "kdyby/translation": "^2.4"
-  },
-  "require-dev": {
-    "nette/tester": "~1.3"
+    "sestep/modular-lean-mapper": "dev-master"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/",
+      "PAF\\": "app/",
+      "Libs\\": "libs/",
       "SeStep\\Commentable\\": "extensions/SeStep/Commentable/src/",
-      "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/"
+      "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
+      "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
+      "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/general-settings.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/settings-doctrine.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:SeStep/settings-control.git"
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\PAF\\": "test/",
+      "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
+      "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/"
     }
-  ]
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.2"
+  }
 }
