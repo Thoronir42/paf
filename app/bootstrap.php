@@ -1,7 +1,5 @@
 <?php declare(strict_types=1);
 
-use Nette\Configurator;
-
 require __DIR__ . '/../vendor/autoload.php';
 
 return call_user_func(function () {
@@ -17,7 +15,7 @@ return call_user_func(function () {
         'nobody watches over me',
     ];
 
-    $configurator->setDebugMode($debugList); // enable for your remote IP
+    $configurator->setDebugMode(defined('TEST_RUN') ? true : $debugList); // enable for your remote IP
     $configurator->enableDebugger(__DIR__ . '/../log');
 
 

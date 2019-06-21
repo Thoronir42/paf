@@ -4,6 +4,7 @@
 namespace SeStep\GeneralSettingsInMemory;
 
 
+use Nette\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
@@ -35,7 +36,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection
     }
 
     /** @return INode[] */
-    public function getNodes()
+    public function getNodes(): array
     {
         $result = [];
         foreach (array_keys($this->data['nodes']) as $node) {
@@ -63,9 +64,33 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection
 
     public function addSection($name): InMemoryOptionSection
     {
-        $this->data['nodes'][$name] = [];
+        $section = $this;
 
-        return $this->nodes[$name] = new InMemoryOptionSection($this, $name, $this->data['nodes'][$name]);
+        if (strpos($name, self::DOMAIN_DELIMITER)) {
+            $dl = new DomainLocator($name);
+
+            while ($dl->getDomain()) {
+                $child = $dl->shiftDomain();
+                if (!isset($section[$child])) {
+                    $section = $section->addSection($child);
+                    continue;
+                }
+
+                if ($section[$child] instanceof IOption) {
+                    $optNode = new DomainLocator($child, $section->getFQN());
+                    throw new InvalidStateException("Can not add section '$name'. $optNode is an option node");
+                }
+
+                $section = $section[$child];
+            }
+
+            $name = $dl->getName();
+        }
+
+
+        $section->data['nodes'][$name] = [];
+
+        return $section->nodes[$name] = new InMemoryOptionSection($section, $name, $section->data['nodes'][$name]);
     }
 
 

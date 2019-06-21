@@ -4,13 +4,25 @@
 namespace Libs;
 
 
+use Nette;
 use Nette\DI\CompilerExtension;
+use Nette\Schema\Expect;
 
 class LeanMapperExtension extends \LeanMapper\Bridges\Nette\DI\LeanMapperExtension
 {
+    public function getConfigSchema(): Nette\Schema\Schema
+    {
+        return Expect::structure([
+            'db' => Expect::array()->default([]),
+            'profiler' => Expect::bool(true),
+            'logFile' => Expect::string(),
+        ])->castTo('array');
+    }
+
+
     public function getConfig()
     {
-        return CompilerExtension::getConfig() + $this->defaults;
+        return CompilerExtension::getConfig();
     }
 
     public function loadConfiguration()

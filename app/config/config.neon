@@ -29,10 +29,10 @@ session:
 
 extensions:
     leanMapper: Libs\LeanMapperExtension
+    leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
 
 leanMapper:
     db: %database%
-    scanDirs: false
 
 #translation:
 #    default: en_GB

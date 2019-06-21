@@ -12,15 +12,9 @@ interface IOptionSection extends INode, ArrayAccess, IteratorAggregate, Countabl
     const TYPE_SECTION = 'section';
 
     /** @return INode[] */
-    public function getNodes();
+    public function getNodes(): array;
 
     public function getValue(string $name, $domain);
-
-    /**
-     * @param mixed $name
-     * @return IOptionSection
-     */
-    public function addSection($name);
 
     /**
      * @param mixed $offset

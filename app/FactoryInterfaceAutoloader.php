@@ -12,7 +12,7 @@ class FactoryInterfaceAutoloader {
         $parts = explode('\\', $fullyQualifiedName);
 
         $className = array_pop($parts);
-        if($className[0] === 'I') {
+        if($className && $className[0] === 'I') {
             // strips 'I' from beginning and 'Factory' from end of class, which is
             // a naming convention for interface factories
             $parts[] = substr($className, 1, -7);

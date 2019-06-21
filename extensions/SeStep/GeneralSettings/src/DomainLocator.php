@@ -16,7 +16,7 @@ class DomainLocator
     /** @var string */
     protected $domain;
 
-    private function __construct(string $name, $domain = '')
+    public function __construct(string $name, $domain = '')
     {
         $this->fqn = $fqn = self::concatFQN($name, $domain);
 
@@ -31,6 +31,7 @@ class DomainLocator
      * @param $name
      * @param string|INode $domain
      * @return DomainLocator
+     * @deprecated - use constructor
      */
     public static function create(string $name, $domain = ''): self
     {
@@ -86,5 +87,10 @@ class DomainLocator
     public function getFQN(): string
     {
         return $this->fqn;
+    }
+
+    public function __toString()
+    {
+        return $this->getFQN();
     }
 }

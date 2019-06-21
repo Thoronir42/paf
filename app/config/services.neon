@@ -17,6 +17,13 @@ services:
     authorizator: PAF\Common\Security\Authorizator
     translator: Libs\NoTranslator
 
+    leanMapper.mapper:
+        class: SeStep\ModularLeanMapper\ModularMapper
+        arguments:
+            mapper: PAF\Common\Model\UnderscoreMapper()
+            modules:
+                ss__settings__: 'SeStep\LeanSettings'
+
     - PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory
     - PAF\Modules\SettingsModule\Components\SettingsControl\ISettingsControlFactory
 
