@@ -10,18 +10,16 @@ use SeStep\GeneralSettings\Options\INode;
 
 class DomainLocatorTest extends TestCase
 {
-    public function testNoDomain()
+    public function testConstruct()
     {
-        $dl = DomainLocator::create('prague');
+        $dl = new DomainLocator('prague');
 
         $this->assertEquals('prague', $dl->getName());
         $this->assertEquals('', $dl->getDomain());
         $this->assertEquals('prague', $dl->getFQN());
-    }
 
-    public function testStringDomain()
-    {
-        $dl = DomainLocator::create('prague', 'czechia');
+
+        $dl = new DomainLocator('prague', 'czechia');
 
         $this->assertEquals('prague', $dl->getName());
         $this->assertEquals('czechia', $dl->getDomain());
@@ -30,7 +28,7 @@ class DomainLocatorTest extends TestCase
 
     public function testParentDomain()
     {
-        $dl = DomainLocator::create('prague', new CzechiaNode());
+        $dl = new DomainLocator('prague', new CzechiaNode());
 
         $this->assertEquals('prague', $dl->getName());
         $this->assertEquals('earth.continents.europe.czechia', $dl->getDomain());
@@ -39,7 +37,7 @@ class DomainLocatorTest extends TestCase
 
     public function testDomainShifting()
     {
-        $dl = DomainLocator::create('a.bb.ccc.dddd');
+        $dl = new DomainLocator('a.bb.ccc.dddd');
 
         $this->assertEquals('a', $dl->shiftDomain());
         $this->assertEquals('bb.ccc', $dl->getDomain());
@@ -57,7 +55,30 @@ class DomainLocatorTest extends TestCase
         $this->assertEquals('', $dl->getDomain());
         $this->assertEquals('dddd', $dl->getName());
 
+        // do nothing when domain is empty
+        $this->assertEquals('', $dl->shiftDomain());
+        $this->assertEquals('', $dl->getDomain());
+        $this->assertEquals('dddd', $dl->getName());
 
+    }
+
+    public function testPop()
+    {
+        $dl = new DomainLocator("human.body.skeleton.fabella");
+
+        $this->assertEquals('fabella', $dl->pop());
+        $this->assertEquals('human.body', $dl->getDomain());
+        $this->assertEquals('skeleton', $dl->getName());
+
+        $this->assertEquals('skeleton', $dl->pop());
+        $this->assertEquals('body', $dl->pop());
+
+        $this->assertEquals('', $dl->getDomain());
+        $this->assertEquals('human', $dl->getName());
+
+        $this->assertEquals('human', $dl->pop());
+
+        $this->assertEquals('', $dl->getFQN());
     }
 }
 
