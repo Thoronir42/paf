@@ -4,18 +4,30 @@
 namespace Test\SeStep\LeanSettings;
 
 
+use LeanMapper\DefaultEntityFactory;
 use SeStep\GeneralSettings\IOptions;
 use SeStep\LeanSettings\LeanOptions;
-use Test\PAF\Utils\TestUtils;
+use SeStep\LeanSettings\Model\OptionNode;
+use SeStep\LeanSettings\Repository\OptionNodeRepository;
+use Test\PAF\Utils\TestDBUtils;
 use Test\SeStep\GeneralSettings\GenericOptionsTest;
 
 class LeanOptionsTest extends GenericOptionsTest
 {
+    protected function setUp(): void
+    {
+        $table = TestDBUtils::getLeanMapper()->getTable(OptionNode::class);
+        TestDBUtils::getLeanConnection()->nativeQuery("TRUNCATE $table;");
+    }
+
     protected function getOptions(): IOptions
     {
-        /** @var LeanOptions $instance */
-        $instance = TestUtils::getContainer()->getService('leanSettings.options');
+        $connection = TestDBUtils::getLeanConnection();
+        $mapper = TestDBUtils::getLeanMapper();
+        $entityFactory = new DefaultEntityFactory();
 
-        return $instance;
+        $repo = new OptionNodeRepository($connection, $mapper, $entityFactory);
+
+        return new LeanOptions($repo);
     }
 }

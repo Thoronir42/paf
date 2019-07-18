@@ -13,12 +13,14 @@ class BaseRepository extends Repository
         true => [
             'IN' => 'IN',
             'NULL' => 'IS NULL',
-            '=' => '=',
+            'LIKE' => 'LIKE',
+            'EQ' => '=',
         ],
         false => [
             'IN' => 'NOT IN',
             'NULL' => 'IS NOT NULL',
-            '=' => '!=',
+            'LIKE' => 'NOT LIKE',
+            'EQ' => '!=',
         ],
     ];
 
@@ -45,11 +47,13 @@ class BaseRepository extends Repository
             }
 
             if (is_array($value)) {
-                $fluent->where($key . ' ' . $conditions['IN'] . '%in', $value);
+                $fluent->where("$key $conditions[IN] %in", $value);
             } elseif (is_null($value)) {
-                $fluent->where($key . ' ' . $conditions['NULL']);
+                $fluent->where("$key $conditions[NULL]");
+            } elseif (is_string($value) && strpos($value, '%') !== false) {
+                $fluent->where("$key $conditions[LIKE] ?", $value);
             } else {
-                $fluent->where($key . ' ' . $conditions['='] . ' %s', $value);
+                $fluent->where("$key $conditions[EQ] %s", $value);
             }
         }
     }
