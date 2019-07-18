@@ -3,7 +3,7 @@
 namespace PAF\Modules\PortfolioModule;
 
 
-use PAF\Common\Model\Entity\Fursuit;
+use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 class Localization
 {

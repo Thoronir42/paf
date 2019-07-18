@@ -1,14 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Helpers;
+namespace PAF\Modules\CommissionModule;
 
 
-use PAF\Common\Model\Entity\Fursuit;
-use PAF\Common\Model\Entity\PafCase;
+use PAF\Modules\CommissionModule\Model\PafCase;
 
 class Localization
 {
-
     public static function getCaseStatuses()
     {
         $statuses = [];

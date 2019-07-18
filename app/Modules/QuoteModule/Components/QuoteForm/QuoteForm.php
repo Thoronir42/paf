@@ -4,13 +4,13 @@ namespace PAF\Modules\QuoteModule\Components\QuoteForm;
 
 
 use PAF\Common\Forms\FormWrapperControl;
-use PAF\Common\Helpers\Localization;
 use PAF\Common\Model\Contact;
-use PAF\Common\Model\Entity\Quote;
-use PAF\Common\Services\Doctrine\QuoteRepository;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use PAF\Modules\CommissionModule\Model\FursuitSpecification;
+use PAF\Modules\PortfolioModule\Localization;
+use PAF\Modules\QuoteModule\Model\Quote;
+use PAF\Modules\QuoteModule\Repository\QuoteRepository;
 
 /**
  * Class QuoteForm
