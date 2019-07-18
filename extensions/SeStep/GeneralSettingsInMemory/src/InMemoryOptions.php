@@ -26,30 +26,6 @@ final class InMemoryOptions extends InMemoryOptionSection implements IOptions
         return '';
     }
 
-    public function setValue($value, string $name, string $domain = '')
-    {
-        $dl = DomainLocator::create($name, $domain);
-
-        $section = $this;
-        while ($dl->getDomain()) {
-            $domainPart = $dl->shiftDomain();
-
-            if (!isset($section[$domainPart])) {
-                $section = $section->addSection($domainPart);
-
-                continue;
-            }
-
-            if (!$section[$domainPart] instanceof IOptionSection) {
-                throw new SectionNotFoundException(DomainLocator::concatFQN($section->getFQN(), $domainPart));
-            }
-
-            $section = $section[$domainPart];
-        }
-
-        $section[$dl->getName()] = $value;
-    }
-
 
     /** @internal */
     function &getData()
