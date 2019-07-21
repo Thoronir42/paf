@@ -62,7 +62,7 @@ class Section extends OptionNode implements IOptionSection
     public function getNodes(): array
     {
         $byFqn = [];
-        $ownFqnLength = $this->fqn === '.' ? 0 : strlen($this->fqn) + 1;
+        $ownFqnLength = $this->fqn === INode::DOMAIN_DELIMITER ? 1 : strlen($this->fqn) + 1;
         foreach ($this->childNodes as $node) {
             $key = substr($node->fqn, $ownFqnLength);
             $byFqn[$key] = $node;
@@ -71,17 +71,20 @@ class Section extends OptionNode implements IOptionSection
         return $byFqn;
     }
 
-    public function getValue(string $name, $domain = '')
+    public function getValue(string $name)
     {
-        $dl = new DomainLocator($name, $domain);
+        $dl = new DomainLocator($name);
 
         $parent = $this;
         while ($dl->getDomain()) {
-            $subSectionName = $dl->shiftDomain();
             if(!$parent instanceof Section) {
-                throw new InvalidStateException("'" . DomainLocator::concatFQN($parent->getFQN(), $subSectionName) . "' is not a Section node");
+                throw new InvalidStateException("'" . DomainLocator::concatFQN($parent->getFQN()) . "' is not a Section node");
             }
 
+            $subSectionName = $dl->shiftDomain();
+            if(!$parent->hasNode($subSectionName)) {
+
+            }
             $parent = $parent->getNodes()[$subSectionName];
         }
 

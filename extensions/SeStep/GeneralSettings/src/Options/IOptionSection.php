@@ -14,7 +14,7 @@ interface IOptionSection extends INode, IteratorAggregate, Countable
     /** @return INode[] */
     public function getNodes(): array;
 
-    public function getValue(string $name, $domain = '');
+    public function getValue(string $name);
 
     /**
      * @param mixed $offset

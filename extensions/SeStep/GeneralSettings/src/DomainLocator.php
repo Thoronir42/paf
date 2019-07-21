@@ -15,20 +15,9 @@ class DomainLocator
     /** @var int */
     protected $lastDelimiter;
 
-    public function __construct(string $name, $domain = '')
+    public function __construct(string $name, $domain = null)
     {
         $this->setFQN(self::concatFQN($name, $domain));
-    }
-
-    /**
-     * @param $name
-     * @param string|INode $domain
-     * @return DomainLocator
-     * @deprecated - use constructor
-     */
-    public static function create(string $name, $domain = ''): self
-    {
-        return new DomainLocator($name, $domain);
     }
 
     public function getName(): string
@@ -36,6 +25,7 @@ class DomainLocator
         if ($this->lastDelimiter === false) {
             return $this->fqn;
         }
+
         return substr($this->fqn, $this->lastDelimiter + 1);
     }
 
@@ -107,16 +97,17 @@ class DomainLocator
      * @param string|INode $domain
      * @return string
      */
-    public static function concatFQN(string $name, $domain = ''): string
+    public static function concatFQN(string $name, $domain = null): string
     {
         if ($domain && !is_string($domain)) {
-            if (!($domain instanceof INode)) {
+            if (($domain instanceof INode)) {
+                $domain = $domain->getFQN();
+            } else {
                 throw new InvalidArgumentException('Argument domain expected to be string or instance of ' .
                     INode::class . ', ' . gettype($domain) . ' given');
             }
-            $domain = $domain = $domain->getFQN();
         }
 
-        return $domain ? ($domain . INode::DOMAIN_DELIMITER . $name) : $name;
+        return !is_null($domain) ? ($domain . INode::DOMAIN_DELIMITER . $name) : $name;
     }
 }
