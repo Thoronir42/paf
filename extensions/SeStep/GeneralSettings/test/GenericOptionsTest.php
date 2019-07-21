@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use SeStep\GeneralSettings\IOptions;
 use SeStep\GeneralSettings\Options\IOption;
 use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\Options\IOptionSectionWritable;
 
 abstract class GenericOptionsTest extends TestCase
 {
@@ -32,7 +33,8 @@ abstract class GenericOptionsTest extends TestCase
         $this->assertEquals(IOption::TYPE_BOOL, $nodes['respawns']->getType());
     }
 
-    private function setEntrances(IOptions $options) {
+    private function setEntrances(IOptions $options)
+    {
         $entrancesSection = $options->addSection('entrances');
 
         $this->assertInstanceOf(IOptionSection::class, $entrancesSection);
@@ -40,14 +42,14 @@ abstract class GenericOptionsTest extends TestCase
 
         $options->setValue('broken window', 'entrances.main');
         $options->setValue('hole in a wall', 'entrances.side');
+
+        $this->assertCount(1, $options->getNodes());
     }
 
     public function testSetNode()
     {
         $options = $this->getOptions();
         $this->setEntrances($options);
-
-        $this->assertCount(1, $options->getNodes());
 
         $entrancesSection = $options->getNodes()['entrances'];
         $this->assertInstanceOf(IOptionSection::class, $entrancesSection);
@@ -59,7 +61,8 @@ abstract class GenericOptionsTest extends TestCase
         $options = $this->getOptions();
         $this->setEntrances($options);
 
-        $entrancesSection = $options->getNodes()['entrances'];
+        $entrancesSection = $options->getNode('entrances');
+        $this->assertInstanceOf(IOptionSection::class, $entrancesSection);
 
         $this->assertEquals('broken window', $entrancesSection->getNodes()['main']->getValue());
     }
@@ -73,7 +76,7 @@ abstract class GenericOptionsTest extends TestCase
 
     }
 
-    public function testUnset()
+    public function testAddValue()
     {
         $options = $this->getOptions();
 
@@ -82,8 +85,17 @@ abstract class GenericOptionsTest extends TestCase
         $options->addValue('the dance');
 
         $this->assertCount(3, $options);
+    }
 
-        unset($options[1]);
+    public function testUnset()
+    {
+        $options = $this->getOptions();
+
+        $options->addValue('Huey');
+        $options->addValue('Dewey');
+        $options->addValue('Louie');
+
+        $options->removeNode(1);
 
         $this->assertCount(2, $options);
 
@@ -94,17 +106,69 @@ abstract class GenericOptionsTest extends TestCase
     {
         $options = $this->getOptions();
 
-        $options->setValue(42, 'answers.lifeUniverseAndEverything.result');
+        $options->setValue(42, 'answers.lifeUniverseAndEverything.ultimateAnswer.intValue');
 
-        $this->assertEquals(42, $options['answers']['lifeUniverseAndEverything']['result']->getValue());
+        $answersSection = $this->getSectionNode($options, 'answers');
+        $luaeSection = $this->getSectionNode($answersSection, 'lifeUniverseAndEverything');
+        $ultimateAnswerSection = $this->getSectionNode($luaeSection, 'ultimateAnswer');
+        $valueNode = $this->getOptionNode($ultimateAnswerSection, 'intValue');
+
+        $this->assertEquals(42, $valueNode->getValue());
     }
 
     public function testGetNestedValue()
     {
         $options = $this->getOptions();
 
-        $options->addSection('room.table')['drawer'] = 'full';
+        /** @var IOptionSection|IOptionSectionWritable $tableSection */
+        $tableSection = $options->addSection('room.table');
+        $this->skipIfSectionUnwritable($tableSection);
+
+        $tableSection->setValue('full', 'drawer');
 
         $this->assertEquals('full', $options->getValue('room.table.drawer'));
+    }
+
+    public function testPropagationThroughSections()
+    {
+        $options = $this->getOptions();
+
+        /** @var IOptionSection|IOptionSectionWritable $section */
+        $section = $options->addSection('entertainment');
+        $this->skipIfSectionUnwritable($section);
+
+        $section->setValue('SPIELSTATION', 'console');
+
+        $this->assertEquals('SPIELSTATION', $section->getValue('console'));
+
+        $options->setValue('X-CRATE', 'entertainment.console');
+        $this->assertEquals('X-CRATE', $options->getValue('entertainment.console'));
+        $this->assertEquals('X-CRATE', $section->getValue('console'));
+    }
+
+    /**
+     * @param IOptionSection|IOptionSectionWritable $section
+     */
+    protected function skipIfSectionUnwritable(IOptionSection $section)
+    {
+        if (!$section instanceof IOptionSectionWritable) {
+            $this->markTestSkipped("Section not writable");
+        }
+    }
+
+    protected function getSectionNode(IOptionSection $parent, $name): IOptionSection
+    {
+        $section = $parent->getNode($name);
+        $this->assertInstanceOf(IOptionSection::class, $section);
+
+        return $section;
+    }
+
+    protected function getOptionNode(IOptionSection $parent, $name): IOption
+    {
+        $section = $parent->getNode($name);
+        $this->assertInstanceOf(IOption::class, $section);
+
+        return $section;
     }
 }

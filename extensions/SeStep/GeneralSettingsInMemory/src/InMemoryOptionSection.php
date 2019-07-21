@@ -89,7 +89,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
         return $section[$dl->getName()]->getValue();
     }
 
-    public function addSection($name): InMemoryOptionSection
+    public function addSection(string $name): InMemoryOptionSection
     {
         $dl = new DomainLocator($name);
         /** @var InMemoryOptionSection $section */

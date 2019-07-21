@@ -3,12 +3,12 @@
 namespace SeStep\LeanSettings;
 
 
-use Dibi\NotImplementedException;
 use Nette\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\IOptions;
 use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\OptionTypeEnum;
+use SeStep\GeneralSettings\SectionNavigator;
 use SeStep\LeanSettings\Model\Option;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;
@@ -25,12 +25,17 @@ class LeanOptions implements IOptions
     public function __construct(OptionNodeRepository $nodeRepository)
     {
         $this->nodeRepository = $nodeRepository;
-        $this->rootSection = $this->nodeRepository->getRootSection();
+
+        $this->rootSection = $this->nodeRepository->findSection('.');
+        if(!$this->rootSection) {
+            $this->rootSection = $this->nodeRepository->createSection('.', 'Root entry for options');
+        }
     }
 
-    public function addSection($name)
+    public function addSection(string $name): ?Section
     {
-        return $this->getSection($name, true);
+        $dl = new DomainLocator($name, '');
+        return $this->nodeRepository->getSection(($dl), true);
     }
 
     public function addValue($value)
@@ -38,12 +43,13 @@ class LeanOptions implements IOptions
         $nodes = $this->getNodes();
         for ($freeIndex = 0; $freeIndex < count($nodes) && array_key_exists("$freeIndex", $nodes); $freeIndex++);
 
-        $this->setValue($value, ".$freeIndex");
+        $this->setValue($value, "$freeIndex");
     }
 
     public function setValue($value, string $name)
     {
-        $entry = $this->nodeRepository->find($name);
+        $fqn = DomainLocator::concatFQN($name, '');
+        $entry = $this->nodeRepository->find($fqn);
 
         if ($entry) {
             if ($entry instanceof Option) {
@@ -53,18 +59,33 @@ class LeanOptions implements IOptions
                 throw new InvalidStateException("Can not set value of a section '{$entry->getFQN()}'");
             }
         } else {
-            $parent = $this->getSection((new DomainLocator($name))->getDomain(), true);
+            $parent = $this->nodeRepository->getSection((new DomainLocator($fqn))->getDomain(), true);
 
             $option = new Option();
             $option->type = OptionTypeEnum::infer($value);
-            $option->fqn = $name;
+            $option->fqn = $fqn;
             $option->value = $value;
             $option->parentSection = $parent;
 
             $this->nodeRepository->persist($option);
             $parent->clearOptionsCache();
+            $this->rootSection->clearOptionsCache();
         }
     }
+
+    public function removeNode(string $name)
+    {
+        $dl = new DomainLocator($name);
+        $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
+        if(!$parent->hasNode($dl->getName())) {
+            // todo: notify error?
+            return;
+        }
+
+        $this->nodeRepository->delete($parent->getNode($dl->getName()));
+        $parent->clearOptionsCache();
+    }
+
 
 
     public function getIterator()
@@ -102,15 +123,28 @@ class LeanOptions implements IOptions
         return $this->rootSection->getCaption();
     }
 
-    /** @return INode[] */
+    public function hasNode($name): bool
+    {
+        return $this->rootSection->hasNode($name);
+    }
+
+
+    public function getNode($name): ?OptionNode
+    {
+        return $this->rootSection->getNode($name);
+    }
+
+
+    /** @return OptionNode[] */
     public function getNodes(): array
     {
+        $this->rootSection->clearOptionsCache();
         return $this->rootSection->getNodes();
     }
 
-    public function getValue(string $name, $domain = '')
+    public function getValue(string $name)
     {
-        return $this->rootSection->getValue($name, $domain);
+        return $this->rootSection->getValue($name);
     }
 
     public function offsetGet($offset)
@@ -125,64 +159,5 @@ class LeanOptions implements IOptions
     public function offsetSet($offset, $value)
     {
         $this->rootSection->offsetSet($offset, $value);
-    }
-
-    /**
-     * @param OptionNode|string $node
-     */
-    protected function findParent($node)
-    {
-        if ($node instanceof OptionNode) {
-            return $node->parentSection;
-        }
-
-        if (is_string($node)) {
-            return $this->getSection((new DomainLocator($node))->getDomain());
-        }
-
-        // todo, exception throwing
-        throw new \InvalidArgumentException();
-    }
-
-    protected function getSection($fqn, bool $create = false): ?Section
-    {
-        $section = $this->nodeRepository->find($fqn);
-        if (!$section) {
-            return $create ? $this->createSection($fqn) : null;
-        } else {
-            if (!$section instanceof Section) {
-                $err = "Option node '$fqn' is not instance of Section, got: " . get_class($section);
-                throw new InvalidStateException($err);
-            }
-        }
-
-
-        return $section;
-    }
-
-    protected function createSection($fqn)
-    {
-        $dl = new DomainLocator($fqn);
-
-        $section = new Section();
-        $section->fqn = $fqn;
-        if(!$dl->getDomain()) {
-            $section->parentSection = $this->rootSection;
-        } else {
-            $parentNames = [];
-
-            for (; $dl->getDomain(); $dl->pop()) {
-                $parentNames[] = $dl->getDomain();
-            }
-
-            $parents = $this->nodeRepository->findSections($parentNames);
-            $section->parentSection = null;
-
-            throw new NotImplementedException('Parent section not implemented');
-        }
-
-        $this->nodeRepository->persist($section);
-
-        return $section;
     }
 }

@@ -58,6 +58,21 @@ class Section extends OptionNode implements IOptionSection
         return count($this->childNodes);
     }
 
+    public function hasNode($name): bool
+    {
+        return isset($this->getNodes()[$name]);
+    }
+
+    /**
+     * @param $name
+     * @return OptionNode|null
+     */
+    public function getNode($name)
+    {
+        return $this->getNodes()[$name] ?? null;
+    }
+
+
     /** @return OptionNode[] */
     public function getNodes(): array
     {
@@ -104,6 +119,9 @@ class Section extends OptionNode implements IOptionSection
 
     public function clearOptionsCache()
     {
-        $this->row->cleanReferencedRowsCache($this->mapper->getTable(OptionNode::class), $this->mapper->getColumn(OptionNode::class, 'parentSection'));
+        $this->row->cleanReferencedRowsCache();
+        $this->row->cleanReferencingRowsCache();
+
+//        $this->row->cleanReferencedRowsCache($this->mapper->getTable(OptionNode::class), $this->mapper->getColumn(OptionNode::class, 'parentSection'));
     }
 }

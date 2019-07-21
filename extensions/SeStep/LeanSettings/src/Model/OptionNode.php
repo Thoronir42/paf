@@ -10,7 +10,7 @@ use SeStep\LeanSettings\Model\Option;
 /**
  * @property int $id
  * @property string $fqn
- * @property string $caption
+ * @property string|null $caption
  *
  * @property string $type
  *
@@ -26,11 +26,11 @@ abstract class OptionNode extends BaseEntity implements INode
      */
     public function getFQN(): string
     {
-        return $this->fqn;
+        return $this->row->fqn;
     }
 
     public function getCaption(): string
     {
-        return $this->caption;
+        return $this->row->caption;
     }
 }
