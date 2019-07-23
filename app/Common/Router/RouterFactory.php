@@ -37,7 +37,14 @@ class RouterFactory
 
     public function createCmsModule(): Nette\Routing\Router
     {
-        $router = new RouteList('cms');
+        $router = new RouteList('Cms');
+
+        $availablePages = ['terms-of-service'];
+        $pageList = implode('|', $availablePages);
+
+        $router[] = new Route("<pageName $pageList>[/<action=display>]", [
+            'presenter' => 'Page',
+        ]);
 
         return $router;
     }

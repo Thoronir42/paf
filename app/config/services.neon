@@ -40,6 +40,8 @@ services:
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
+    - PAF\Modules\CmsModule\Facade\CmsPages
+
     - SeStep\FileAttachable\Files
     - SeStep\FileAttachable\Service\UserFileRepository
     - SeStep\FileAttachable\Service\UserFileThreadRepository
