@@ -8,7 +8,6 @@ use PAF\Common\BasePresenter;
 use PAF\Common\Security\Authorizator;
 use PAF\Modules\SettingsModule\Components\SettingsControl\ISettingsControlFactory;
 use PAF\Modules\SettingsModule\Components\SettingsControl\SettingsControl;
-use SeStep\SettingsInterface\LazySettingsIterator;
 
 final class SettingsPresenter extends BasePresenter
 {
@@ -24,8 +23,6 @@ final class SettingsPresenter extends BasePresenter
 
     public function actionDefault()
     {
-        $container = new LazySettingsIterator($this->settings);
-
         /** @var SettingsControl $settings */
         $settings = $this['settings'];
         $settings->setSection($this->settings->getSection('.'));

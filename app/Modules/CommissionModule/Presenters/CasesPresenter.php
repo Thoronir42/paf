@@ -17,8 +17,9 @@ use SeStep\Commentable\Query\FindCommentsQuery;
 use Nette\Application\BadRequestException;
 use SeStep\Commentable\Control\CommentsControl;
 use SeStep\Commentable\Control\ICommentsControlFactory;
-use SeStep\Commentable\Model\Comment;
-use SeStep\Commentable\Model\CommentThread;
+use SeStep\Commentable\Lean\Model\Comment;
+use SeStep\Commentable\Lean\Model\CommentThread;
+use SeStep\Commentable\Service\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {
@@ -34,6 +35,9 @@ final class CasesPresenter extends BasePresenter
 
     /** @var ICommentsControlFactory @inject */
     public $commentsControlFactory;
+
+    /** @var CommentsService */
+    public $commentsService;
 
     private $case;
 
@@ -62,13 +66,13 @@ final class CasesPresenter extends BasePresenter
         if (!$thread) {
             $thread = new CommentThread();
             $case->comments = $thread;
-            $this->cases->save($thread);
+            $this->cases->persist($thread);
         }
 
-        $comments = (new FindCommentsQuery($this->em))
+        $comments = $this->commentsService->findComments()
             ->byThread($thread)
             ->orderByDateCreated()
-            ->execute();
+            ->fetchAll();
 
         /** @var PafCaseForm $form */
         $form = $this['caseForm'];

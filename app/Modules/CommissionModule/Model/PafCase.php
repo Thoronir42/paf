@@ -6,7 +6,7 @@ namespace PAF\Modules\CommissionModule\Model;
 use LeanMapper\Entity;
 use Nette\Utils\DateTime;
 use PAF\Common\Model\Contact;
-use SeStep\Commentable\Model\CommentThread;
+use SeStep\Commentable\Lean\Model\CommentThread;
 
 /**
  * @property string $status m:enum(self::STATUS_)

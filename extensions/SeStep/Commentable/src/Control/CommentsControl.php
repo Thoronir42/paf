@@ -5,8 +5,8 @@ namespace SeStep\Commentable\Control;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormFactory;
-use SeStep\Commentable\Model\Comment;
-use SeStep\Commentable\Model\CommentThread;
+use SeStep\Commentable\Lean\Model\Comment;
+use SeStep\Commentable\Lean\Model\CommentThread;
 use UnexpectedValueException;
 
 /**

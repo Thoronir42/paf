@@ -3,11 +3,11 @@
 namespace PAF\Common\Model;
 
 
+use Dibi\DataSource;
 use Dibi\Fluent;
 use LeanMapper\Repository;
-use PAF\Common\Model\Exceptions\EntityNotFoundException;
 
-class BaseRepository extends Repository
+class BaseRepository extends Repository implements IQueryable
 {
     private static $CONDITIONS = [
         true => [
@@ -94,9 +94,27 @@ class BaseRepository extends Repository
         return $this->createEntities($selection->fetchAll());
     }
 
-    public function getDataSource()
+    public function getDataSource(string $alias = null): DataSource
     {
-        return $this->connection->command()->from($this->getTable());
+        $from = $this->getTable() . ($alias ? " AS $alias" : '');
+        $select = $alias ? "$alias.*" : '*';
+
+        return $this->connection->dataSource("SELECT $select FROM $from");
     }
+
+    public function makeEntity($row)
+    {
+        if(!$row) {
+            return null;
+        }
+
+        return $this->createEntity($row);
+    }
+
+    public function makeEntities(array $rows): array
+    {
+        return $this->createEntities($rows);
+    }
+
 
 }
