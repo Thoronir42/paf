@@ -3,9 +3,15 @@
 namespace SeStep\GeneralSettings\Exceptions;
 
 
-class SectionNotFoundException extends NodeNotFoundException {
-    public function __construct($sectionFQN)
+use SeStep\GeneralSettings\Options\INode;
+
+class SectionNotFoundException extends NodeNotFoundException
+{
+    public function __construct($sectionFQN, INode $nodeIfExists = null)
     {
-        parent::__construct("Section '$sectionFQN' was not found");
+        $otherTypeMsg = $nodeIfExists ? ", the name contains an node of type {$nodeIfExists->getType()}." : '.';
+        $message = "Section '$sectionFQN' was not found" . $otherTypeMsg;
+
+        parent::__construct($sectionFQN, $message);
     }
 }

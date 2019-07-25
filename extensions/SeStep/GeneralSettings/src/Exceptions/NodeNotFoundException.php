@@ -7,9 +7,18 @@ use RuntimeException;
 
 class NodeNotFoundException extends RuntimeException
 {
-    public function __construct($nodeFQN)
+    /** @var string */
+    private $fqn;
+
+    public function __construct(string $nodeFQN, string $message = null)
     {
-        parent::__construct("Node '$nodeFQN' could not be found.");
+        $this->fqn = $nodeFQN;
+        parent::__construct($message ?: "Node '$nodeFQN' could not be found.");
+    }
+
+    public function getFqn(): string
+    {
+        return $this->fqn;
     }
 }
 

@@ -3,6 +3,9 @@
 namespace SeStep\GeneralSettings;
 
 
+use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
+use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
+
 class Settings implements \IteratorAggregate
 {
     /** @var IOptions */
@@ -15,7 +18,46 @@ class Settings implements \IteratorAggregate
 
     public function findNode($fullName, string $filterType = null)
     {
-        return $this->options->getOption($fullName);
+        $node = $this->options->getNode($fullName);
+        if($node) {
+            if($filterType && !$node instanceof $filterType) {
+                $node = null;
+            }
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param mixed $fullName
+     * @return Options\IOptionSection
+     * @throws SectionNotFoundException
+     */
+    public function getSection($fullName)
+    {
+        $node = $this->findNode($fullName);
+
+        if(!$node instanceof Options\IOptionSection) {
+            throw new SectionNotFoundException($fullName, $node);
+        }
+
+        return $node;
+    }
+
+    /**
+     * @param string $fullName
+     * @return Options\IOption
+     * @throws NodeNotFoundException
+     */
+    public function getOption(string $fullName)
+    {
+        $node = $this->findNode($fullName);
+
+        if(!$node instanceof Options\IOption) {
+            throw new NodeNotFoundException($fullName, $node);
+        }
+
+        return $node;
     }
 
     /**
@@ -25,7 +67,6 @@ class Settings implements \IteratorAggregate
     public function getValue($name)
     {
         return $this->options->getValue($name);
-
     }
 
     public function setValue($name, $value)
