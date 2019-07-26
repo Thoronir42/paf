@@ -2,18 +2,22 @@
 
 namespace PAF\Modules\CommissionModule\Components\PafCaseForm;
 
+use Nette\Application\UI\ITemplate;
 use PAF\Common\Forms\Controls\DateInput;
 use PAF\Common\Forms\FormWrapperControl;
-use PAF\Common\Helpers\Localization;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use PAF\Modules\CommissionModule\Model\PafCase;
+use PAF\Modules\CommissionModule;
+use PAF\Modules\PortfolioModule;
+use stdClass;
 
 /**
  * Class PafCaseForm
  * @package PAF\Modules\Admin\Controls\CaseControl
  *
+ * @method ITemplate|stdClass createTemplate
  * @method onSave(PafCase $case, Form $form)
  */
 class PafCaseForm extends FormWrapperControl
@@ -24,7 +28,7 @@ class PafCaseForm extends FormWrapperControl
     public function setEntity(PafCase $case)
     {
         $this->case = $case;
-        $this->form()->setDefaults($case->toArray());
+        $this->form()->setDefaults($case->getRowData());
     }
 
     public function render()
@@ -44,7 +48,7 @@ class PafCaseForm extends FormWrapperControl
         $fursuit = $form->addContainer('fursuit');
 
         $fursuit->addText('name', 'paf.fursuit.name');
-        $fursuit->addSelect('type', 'paf.fursuit.type', Localization::getFursuitTypes());
+        $fursuit->addSelect('type', 'paf.fursuit.type', PortfolioModule\Localization::getFursuitTypes());
         $fursuit->addTextarea('characterDescription', 'paf.fursuit.description');
 
         $form->addGroup('contact');
@@ -57,7 +61,7 @@ class PafCaseForm extends FormWrapperControl
         $this->setContainerDisabled($fursuit, true);
         $this->setContainerDisabled($contact, true);
 
-        $form->addSelect('status', 'paf.case.status', Localization::getCaseStatuses());
+        $form->addSelect('status', 'paf.case.status', CommissionModule\Localization::getCaseStatuses());
         $form->addDate('targetDate', 'paf.case.target-date', DateInput::FORMAT_DATETIME)
             ->setPickerPosition(DateInput::POSITION_TOP_RIGHT);
 

@@ -3,8 +3,8 @@
 namespace PAF\Modules\Admin\Controls\CasesControl;
 
 
-use PAF\Common\Model\Entity\PafCase;
 use Nette\Application\UI\Control;
+use PAF\Modules\CommissionModule\Model\PafCase;
 
 class CasesControl extends Control
 {
