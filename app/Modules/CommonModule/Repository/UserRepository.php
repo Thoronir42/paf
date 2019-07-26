@@ -29,6 +29,6 @@ class UserRepository extends BaseRepository
      */
     public function findOneByUsername($username)
     {
-        return $this->repository->findOneBy(['username' => $username]);
+        return $this->findOneBy(['username' => $username]);
     }
 }

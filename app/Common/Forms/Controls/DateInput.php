@@ -6,6 +6,7 @@ namespace PAF\Common\Forms\Controls;
 use Nette\Forms\Controls\TextInput;
 use Nette\UnexpectedValueException;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 class DateInput extends TextInput
 {
@@ -53,12 +54,14 @@ class DateInput extends TextInput
     /**
      * @param string|DateTime $value
      * @return static
+     * @internal
      */
     public function setValue($value)
     {
         if ($value instanceof \DateTime) {
             $value = $value->format($this->format);
         }
+        /** @noinspection PhpInternalEntityUsedInspection */
         parent::setValue($value);
         return $this;
     }
@@ -69,7 +72,7 @@ class DateInput extends TextInput
     }
 
 
-    public function getControl()
+    public function getControl(): Html
     {
         $element = parent::getControl();
         $view = $this->getMinView($this->format);

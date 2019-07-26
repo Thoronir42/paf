@@ -13,7 +13,6 @@ use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Modules\QuoteModule\Components\QuotesControl\QuotesControl;
 use PAF\Modules\QuoteModule\Model\Quote;
 use PAF\Modules\QuoteModule\Repository\QuoteRepository;
-use SeStep\Commentable\Query\FindCommentsQuery;
 use Nette\Application\BadRequestException;
 use SeStep\Commentable\Control\CommentsControl;
 use SeStep\Commentable\Control\ICommentsControlFactory;

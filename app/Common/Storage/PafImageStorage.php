@@ -8,6 +8,7 @@ use PAF\Modules\QuoteModule\Model\Quote;
 use SeStep\FileAttachable\Files;
 use SeStep\FileAttachable\Model\UserFile;
 
+// todo: implement properly
 class PafImageStorage
 {
     /** @var FileStorage */

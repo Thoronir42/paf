@@ -63,6 +63,7 @@ class SignPresenter extends BasePresenter
      */
     protected function createComponentSignUpForm()
     {
+        // fixme: move creation into facade
         $form = $this->up_factory->create();
 
         $form->onSave[] = function (Form $form, $values) {
@@ -71,7 +72,7 @@ class SignPresenter extends BasePresenter
 
             try {
                 $user = $this->users->create($login, $password);
-                $this->users->save($user);
+                $this->users->persist($user);
             } catch (Nette\InvalidStateException $ex) {
                 $form->addError('Uživatel se jménem' . $login . ' již existuje.');
 

@@ -6,6 +6,12 @@ namespace PAF\Modules\CommonModule\Components\SignInForm;
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormWrapperControl;
 
+/**
+ * Class SignInForm
+ * @package PAF\Modules\CommonModule\Components\SignInForm
+ *
+ * @method onSave($form, $values)
+ */
 class SignInForm extends FormWrapperControl
 {
     public function render()

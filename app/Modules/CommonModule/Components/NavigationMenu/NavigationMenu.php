@@ -46,6 +46,11 @@ class NavigationMenu extends UI\Control
         return $this->presenter->link($destination, $args);
     }
 
+    /**
+     * @param NavMenuLink $item
+     * @return bool
+     * @throws UI\InvalidLinkException
+     */
     public function itemCurrent(NavMenuLink $item): bool
     {
         /** @var NavMenuLink $subitem */

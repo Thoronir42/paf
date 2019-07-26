@@ -71,11 +71,11 @@ final class QuotesPresenter extends BasePresenter
         $form = $this->quoteFormFactory->create();
 
         $form->onSave[] = function (Quote $quote, Form $form, $references) {
-            $entity = $this->pafEntities->findByName($quote->getSlug());
+            $entity = $this->pafEntities->findByName($quote->slug);
             if ($entity) {
                 $entityProgress = $this->translator->translate('paf.entity.' . $entity->getMaxProgress());
                 $errorVariables = [
-                    'name' => $quote->getSlug(),
+                    'name' => $quote->slug,
                     'progress' => $entityProgress,
                 ];
                 $errorMessage = $this->translator->translate('paf.entity.already-exists', $errorVariables);
@@ -87,7 +87,7 @@ final class QuotesPresenter extends BasePresenter
 
             /**@var FileUpload[] $references */
             foreach ($references as $file) {
-                $fileEntity = $this->pafImages->saveQuoteReference($quote, $file, $quote->getSlug());
+                $fileEntity = $this->pafImages->saveQuoteReference($quote, $file, $quote->slug);
                 $refs->addFile($fileEntity);
             }
 

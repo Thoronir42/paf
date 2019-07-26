@@ -3,9 +3,10 @@
 namespace PAF\Modules\Front\Presenters;
 
 use Nette;
+use PAF\Common\BasePresenter;
 
 
-class Error4xxPresenter extends FrontPresenter
+class Error4xxPresenter extends BasePresenter
 {
 
     public function startup()

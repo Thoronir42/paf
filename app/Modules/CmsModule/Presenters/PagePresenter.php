@@ -3,9 +3,10 @@
 namespace PAF\Modules\CmsModule\Presenters;
 
 
+use Nette\Application\BadRequestException;
+use Nette\Http\IResponse;
 use PAF\Common\BasePresenter;
 use PAF\Modules\CmsModule\Facade\CmsPages;
-use PAF\Modules\CmsModule\Model\Page;
 
 final class PagePresenter extends BasePresenter
 {
@@ -15,6 +16,11 @@ final class PagePresenter extends BasePresenter
     public function actionDisplay(string $pageName)
     {
         $page = $this->pages->getPage($pageName);
+
+        if (!$page) {
+            $code = IResponse::S404_NOT_FOUND;
+            throw new BadRequestException("Page $pageName could not be found", $code);
+        }
 
         $this->template->page = $page;
     }

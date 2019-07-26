@@ -4,6 +4,7 @@ namespace PAF\Common\Forms;
 
 
 use Nette\Forms\Controls;
+use Nette\Forms\Validator;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
 
@@ -35,7 +36,7 @@ class FormFactory
 
     public static function adjustValidatorMessages()
     {
-        \Nette\Forms\Validator::$messages = [
+        Validator::$messages = [
             Form::EQUAL                   => 'generic.form-validator.equal',
             Form::NOT_EQUAL               => 'generic.form-validator.not-equal',
             Form::FILLED                  => 'generic.form-validator.filled',

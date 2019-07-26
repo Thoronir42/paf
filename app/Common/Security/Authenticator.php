@@ -30,11 +30,12 @@ class Authenticator implements IAuthenticator
     }
 
 
-	/**
-	 * Performs an authentication.
-	 * @return Identity
-	 * @throws AuthenticationException
-	 */
+    /**
+     * Performs an authentication.
+     * @param array $credentials
+     * @return Identity
+     * @throws AuthenticationException
+     */
 	public function authenticate(array $credentials): IIdentity
 	{
 		list($login, $password) = $credentials;
@@ -48,7 +49,8 @@ class Authenticator implements IAuthenticator
 			throw new AuthenticationException('Entered password did not match the login.', self::INVALID_CREDENTIAL);
 		}
 
-		$arr = $user->toArray();
+		// todo: use live-data instead of snapshot via custom UserStorage class
+		$arr = $user->getRowData();
 		unset($arr['password']);
 
 		$role = in_array($user->username, $this->powerUsers) ? 'power-user' : 'user';

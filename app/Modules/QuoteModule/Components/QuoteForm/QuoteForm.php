@@ -31,7 +31,7 @@ class QuoteForm extends FormWrapperControl
         $this->quote = $quote;
 
         $form = $this->form();
-        $form->setDefaults($quote->toArray());
+        $form->setDefaults($quote->getRowData());
     }
 
     public function render()

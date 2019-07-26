@@ -10,7 +10,9 @@ use PAF\Modules\CommonModule\Model\User;
 use SeStep\FileAttachable\Model\UserFileThread;
 
 /**
+ * @property int $id
  * @property User $issuer
+ * @property string $slug
  * @property string status m:column(self::STATUS_*)
  * @property DateTime $dateCreated
  * @property Contact $contact

@@ -4,17 +4,12 @@ namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
 
 use Nette\Application\UI;
-use Nette\Application\UI\Multiplier;
-use Nette\Bridges\ApplicationLatte\Template;
 use Nette\ComponentModel\IComponent;
-use RuntimeException;
 use SeStep\GeneralSettings\Options\IOption;
 use SeStep\GeneralSettings\Options\IOptionSection;
 
 /**
  * @method onSetValue($name, $value)
- *
- * @property Template $template
  */
 class SettingsControl extends UI\Control
 {

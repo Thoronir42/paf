@@ -30,13 +30,13 @@ class BaseRepository extends Repository implements IQueryable
             ->from($this->getTable() . " AS $alias");
 
         if ($criteria) {
-            $this->applyCriteria($fluent, $criteria, $alias);
+            $this->applyCriteria($fluent, $criteria);
         }
 
         return $fluent;
     }
 
-    private function applyCriteria(Fluent $fluent, array &$criteria, string $alias = null)
+    private function applyCriteria(Fluent $fluent, array &$criteria)
     {
         foreach ($criteria as $key => $value) {
             if ($key[0] === '!') {

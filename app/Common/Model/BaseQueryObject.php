@@ -5,7 +5,6 @@ namespace PAF\Common\Model;
 
 
 use Dibi\DataSource;
-use SeStep\Commentable\Lean\Model\Comment;
 
 abstract class BaseQueryObject
 {
@@ -16,7 +15,9 @@ abstract class BaseQueryObject
 
     /**
      * BaseQueryObject constructor.
-     * @param DataSource $dataSource
+     *
+     * @param IQueryable $queryable
+     * @param string|null $tableAlias
      */
     public function __construct(IQueryable $queryable, string $tableAlias = null)
     {

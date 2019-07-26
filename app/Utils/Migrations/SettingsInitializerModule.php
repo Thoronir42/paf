@@ -4,6 +4,7 @@ namespace PAF\Utils\Migrations;
 
 
 use SeStep\GeneralSettings\Options\IOption;
+use SeStep\GeneralSettings\Options\IOptionSection;
 
 class SettingsInitializerModule
 {
@@ -32,7 +33,7 @@ class SettingsInitializerModule
     }
 
     /**
-     * @param OptionsSection[] $sections
+     * @param IOptionSection[] $sections
      */
     private function addOptions($sections = [])
     {

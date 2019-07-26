@@ -9,6 +9,12 @@ use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Modules\QuoteModule\Model\Quote;
 use PAF\Modules\QuoteModule\Repository\QuoteRepository;
 
+/**
+ * Class PafEntities
+ * @package PAF\Modules\CommissionModule\Facade
+ *
+ * todo: reimplement or remove
+ */
 class PafEntities
 {
     /** @var QuoteRepository */
@@ -25,12 +31,12 @@ class PafEntities
 
     public function createQuote(Quote $quote)
     {
-        $slug = self::sluggify($quote->getFursuit()->getName());
+        $slug = self::sluggify($quote->specification->name);
         if ($this->entityExists($slug)) {
             return false;
         }
 
-        $this->save($quote, false);
+        $this->quotes->persist($quote);
 
         return true;
     }
@@ -62,25 +68,30 @@ class PafEntities
 
     /**
      * @param Quote $quote
-     * @return string
+     * @return string - error code
      */
     public function acceptQuote(Quote $quote)
     {
         $wrapper = $quote->getWrapper();
 
-        $quote->setStatus(Quote::STATUS_ACCEPTED);
-        $this->quotes->save($quote, false);
+        $quote->status = Quote::STATUS_ACCEPTED;
+        $this->quotes->persist($quote);
 
         if($wrapper->getCase()) {
             $this->flushAll();
             return 'already-exists';
         }
 
-        $case = new PafCase($quote->getContact(), $quote->getFursuit());
+        $case = new PafCase();
+        $case->contact = $quote->contact;
+        $case->specification = $quote->specification;
+
         $wrapper->setCase($case);
 
         $this->cases->save($case, false);
         $this->save($wrapper);
+
+        return null;
     }
 
     public function rejectQuote(Quote $quote)

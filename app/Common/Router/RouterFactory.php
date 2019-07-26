@@ -32,8 +32,6 @@ class RouterFactory
             'presenter' => 'Settings',
         ]);
 
-        $modules = implode("|", $this->modules);
-
         $router[] = new Route("<presenter>/<action>[/<id>]", 'Common:Homepage:default');
 
         return $router;

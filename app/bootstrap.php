@@ -3,10 +3,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 return call_user_func(function () {
-    (new \PAF\FactoryInterfaceAutoloader())->register();
+    (new PAF\FactoryInterfaceAutoloader())->register();
 
-    \Tracy\Debugger::$showLocation = true;
-    \Tracy\Debugger::$maxDepth = 4;
+    Tracy\Debugger::$showLocation = true;
+    Tracy\Debugger::$maxDepth = 4;
 
     $configurator = new Nette\Configurator();
 
@@ -29,7 +29,7 @@ return call_user_func(function () {
         $configurator->addConfig(__DIR__ . '/config/config.production.neon');
     }
 
-    \PAF\Common\Forms\FormFactory::adjustValidatorMessages();
+    PAF\Common\Forms\FormFactory::adjustValidatorMessages();
 
 
     $container = $configurator->createContainer();

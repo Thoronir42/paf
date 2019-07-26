@@ -4,9 +4,11 @@ namespace PAF\Modules\QuoteModule\Repository;
 
 
 use PAF\Common\Model\BaseRepository;
+use PAF\Modules\QuoteModule\Model\Quote;
 
 class QuoteRepository extends BaseRepository
 {
+    // todo: reimplement
     public function findForOverview($limit = 10, $page = 1)
     {
         $offset = ($page - 1) * $limit;
