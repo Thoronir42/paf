@@ -22,6 +22,10 @@ use SeStep\GeneralSettings\Settings;
 abstract class BasePresenter extends Presenter
 {
 
+    /** @var string @persistent */
+    public $lang = 'en';
+
+
     /** @var UserRepository @inject */
     public $users;
 
@@ -56,7 +60,15 @@ abstract class BasePresenter extends Presenter
         }
     }
 
+    protected function createTemplate(): ITemplate
+    {
+        $template = parent::createTemplate();
+        $template->lang = $this->lang;
 
+        return $template;
+    }
+
+    // todo: rewrite into (?)PresenterAuthorizator
     protected function validateAuthorization($resource, $privilege = Authorizator::ALL, $redirect = null)
     {
         if ($this->user->isAllowed($resource, $privilege)) {
