@@ -3,21 +3,22 @@
 namespace PAF\Common;
 
 
-use Nette\Localization\ITranslator;
-use PAF\Common\Security\Authorizator;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
-use PAF\Modules\CommonModule\Components\Footer\Footer;
+use Nette\Localization\ITranslator;
+use PAF\Common\Security\Authorizator;
 use PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory;
 use PAF\Modules\CommonModule\Model\User;
 use PAF\Modules\CommonModule\Repository\UserRepository;
 use SeStep\GeneralSettings\Settings;
+use stdClass;
 
 /**
  * Class BasePresenter
  * @package PAF\Common
  *
- * @property-read Template $template
+ * @property-read Template|stdClass $template
  */
 abstract class BasePresenter extends Presenter
 {
@@ -119,17 +120,12 @@ abstract class BasePresenter extends Presenter
         return $menu;
     }
 
-    public function createComponentFooter()
-    {
-        return new Footer();
-    }
-
 
     /**
      * @param string $placeholder
      * @param array|string $variables
      * @param string $level
-     * @return \stdClass
+     * @return stdClass
      */
     protected function flashTranslate($placeholder, $variables = [], $level = 'info')
     {
