@@ -1,4 +1,4 @@
 {block contents}
-{foreach $quotes as $quote}
-	{control quote, $quote}
+{foreach $quotes as $name => $quote}
+	{control quote-$name:tile}
 {/foreach}

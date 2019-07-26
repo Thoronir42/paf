@@ -3,6 +3,7 @@
 namespace PAF\Modules\QuoteModule\Presenters;
 
 
+use Nette\Application\UI\Multiplier;
 use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 use PAF\Common\BasePresenter;
@@ -53,7 +54,16 @@ final class QuotesPresenter extends BasePresenter
 
     public function createComponentQuote()
     {
-        return new QuoteView();
+        return new Multiplier(function ($name) {
+            $quoteView = new QuoteView($this->template->quotes[$name]);
+            $quoteView->onAccept[] = function(Quote $quote) {
+                dump('accept', $quote);exit;
+            };
+            $quoteView->onReject[] = function(Quote $quote) {
+                dump('reject', $quote);exit;
+            };
+            return $quoteView;
+        });
     }
 
     public function createComponentQuoteForm()
