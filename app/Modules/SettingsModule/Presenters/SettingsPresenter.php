@@ -5,32 +5,27 @@ namespace PAF\Modules\SettingsModule\Presenters;
 
 use Exception;
 use PAF\Common\BasePresenter;
-use PAF\Common\Security\Authorizator;
-use PAF\Modules\SettingsModule\Components\SettingsControl\ISettingsControlFactory;
 use PAF\Modules\SettingsModule\Components\SettingsControl\SettingsControl;
 
 final class SettingsPresenter extends BasePresenter
 {
-    /** @var ISettingsControlFactory @inject */
-    public $settingControlFactory;
-
     public function startup()
     {
         parent::startup();
 
-        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Front:Default:');
+//        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Common:Homepage:');
     }
 
     public function actionDefault()
     {
-        /** @var SettingsControl $settings */
-        $settings = $this['settings'];
-        $settings->setSection($this->settings->getSection('.'));
+        $control = new SettingsControl($this->settings->getSection('.'), 2);
+        $this->addCallbacks($control);
+
+        $this['settings'] = $control;
     }
 
-    public function createComponentSettings()
+    private function addCallbacks(SettingsControl $control)
     {
-        $control = $this->settingControlFactory->create(5);
         $control->onSetValue[] = function ($name, $value) {
             try {
                 $this->settings->setValue($value, $name);

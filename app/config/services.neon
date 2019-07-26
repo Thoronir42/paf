@@ -25,7 +25,6 @@ services:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
 
     - PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory
-    - PAF\Modules\SettingsModule\Components\SettingsControl\ISettingsControlFactory
 
     - PAF\Common\Forms\FormFactory
 

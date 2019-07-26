@@ -27,6 +27,10 @@ class RouterFactory
         $router = new RouteList();
 
         $router[] = $this->createCmsModule();
+        $router[] = new Route('settings', [
+            'module' => 'Settings',
+            'presenter' => 'Settings',
+        ]);
 
         $modules = implode("|", $this->modules);
 
