@@ -17,6 +17,8 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 
     public function render(Nette\Forms\Form $form, string $mode = null): string
     {
+        $form->getElementPrototype()->appendAttribute('class', 'bs-form');
+
         foreach ($form->getControls() as $control) {
             if ($control instanceof TextArea) {
                 $control->getControlPrototype()->class[] = 'form-control';

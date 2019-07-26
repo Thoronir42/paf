@@ -29,7 +29,6 @@ class FormFactory
         $form->setTranslator($this->translator);
 
         $form->setRenderer(new BootstrapFormRenderer());
-        $form->getElementPrototype()->class = 'bs-form';
 
         return $form;
     }
