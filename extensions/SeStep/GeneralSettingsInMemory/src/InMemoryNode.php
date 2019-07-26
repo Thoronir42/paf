@@ -33,22 +33,28 @@ abstract class InMemoryNode implements INode
         return DomainLocator::concatFQN($this->name, $this->parent);
     }
 
+    protected function getName(): string
+    {
+        return $this->name;
+    }
+
     public function getType(): string
     {
         return $this->data['type'];
     }
 
-    public function getCaption(): string
+    public function getCaption(): ?string
     {
-        return $this->data['caption'];
+        return $this->data['caption'] ?? null;
     }
 
     protected final function getRoot(): InMemoryOptions
     {
-        if ($this->parent instanceof InMemoryOptions) {
-            return $this->parent;
+        $section = $this;
+        while (!($section instanceof InMemoryOptions) && $section->parent) {
+            $section = $section->parent;
         }
 
-        return $this->parent->getRoot();
+        return $section;
     }
 }

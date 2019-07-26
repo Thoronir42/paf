@@ -29,7 +29,7 @@ abstract class OptionNode extends BaseEntity implements INode
         return $this->row->fqn;
     }
 
-    public function getCaption(): string
+    public function getCaption(): ?string
     {
         return $this->row->caption;
     }

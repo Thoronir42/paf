@@ -15,5 +15,5 @@ interface INode
 
     public function getType(): string;
 
-    public function getCaption(): string;
+    public function getCaption(): ?string;
 }

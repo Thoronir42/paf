@@ -1,13 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 
 namespace SeStep\GeneralSettingsInMemory;
 
 
-use Nette\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
-use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
 use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\IOptionSection;
 use SeStep\GeneralSettings\Options\IOptionSectionWritable;
@@ -51,9 +49,9 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
 
             $type = $this->data['nodes'][$name]['type'];
             if ($type == IOptionSection::TYPE_SECTION) {
-                $node = new InMemoryOptionSection($this, $name, $this->data['nodes'][$name]);
+                $node = new InMemoryOptionSection($this, "$name", $this->data['nodes'][$name]);
             } else {
-                $node = new InMemoryOption($this, $name, $this->data['nodes'][$name]);
+                $node = new InMemoryOption($this, "$name", $this->data['nodes'][$name]);
             }
 
             $this->nodes[$name] = $node;
@@ -77,14 +75,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
     {
         $dl = new DomainLocator($name);
 
-        $section = $this;
-        while ($dl->getDomain()) {
-            if (!$section instanceof IOptionSection) {
-                throw new SectionNotFoundException(DomainLocator::concatFQN($section->getFQN(), $dl->getDomain()));
-            }
-
-            $section = $section[$dl->shiftDomain()];
-        }
+        $section = SectionNavigator::getSectionByDomain($this, $dl);
 
         return $section[$dl->getName()]->getValue();
     }
@@ -93,7 +84,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
     {
         $dl = new DomainLocator($name);
         /** @var InMemoryOptionSection $section */
-        $section = SectionNavigator::getSectionByDomain($this, $dl, true);
+        $section = SectionNavigator::getSectionByDomain($this, $dl, SectionNavigator::CREATE_IF_MISSING);
 
         $name = $dl->getName();
         $section->data['nodes'][$name] = [];
@@ -105,7 +96,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
     {
         $dl = new DomainLocator($name);
         /** @var InMemoryOptionSection $section */
-        $section = SectionNavigator::getSectionByDomain($this, $dl, true);
+        $section = SectionNavigator::getSectionByDomain($this, $dl, SectionNavigator::CREATE_IF_MISSING);
 
         $name = $dl->getName();
         if ($value instanceof InMemoryNode) {
@@ -132,7 +123,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
     public function addValue($value)
     {
         $offset = $this->data['maxIntOffset']++;
-        $this->setValue($value, $offset);
+        $this->setValue($value, "$offset");
     }
 
     public function removeNode($name)

@@ -99,7 +99,7 @@ class CzechiaNode implements INode
         return 'container';
     }
 
-    public function getCaption(): string
+    public function getCaption(): ?string
     {
         return 'The silly country';
     }

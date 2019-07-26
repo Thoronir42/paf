@@ -6,7 +6,6 @@ namespace SeStep\LeanSettings;
 use Nette\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\IOptions;
-use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 use SeStep\LeanSettings\Model\Option;
@@ -118,7 +117,7 @@ class LeanOptions implements IOptions
         return $this->rootSection->getType();
     }
 
-    public function getCaption(): string
+    public function getCaption(): ?string
     {
         return $this->rootSection->getCaption();
     }
@@ -147,17 +146,4 @@ class LeanOptions implements IOptions
         return $this->rootSection->getValue($name);
     }
 
-    public function offsetGet($offset)
-    {
-        return $this->rootSection->offsetGet($offset);
-    }
-
-    /**
-     * @param mixed $offset
-     * @param INode $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->rootSection->offsetSet($offset, $value);
-    }
 }

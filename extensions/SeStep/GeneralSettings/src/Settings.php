@@ -13,12 +13,7 @@ class Settings implements \IteratorAggregate
         $this->options = $options;
     }
 
-    public function findAll(): LazySectionVisitor
-    {
-        return new LazySectionVisitor($this->options);
-    }
-
-    public function getOption(string $fullName): Options\IOption
+    public function findNode($fullName, string $filterType = null)
     {
         return $this->options->getOption($fullName);
     }

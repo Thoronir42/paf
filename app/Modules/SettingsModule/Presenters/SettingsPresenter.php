@@ -28,7 +28,7 @@ final class SettingsPresenter extends BasePresenter
 
         /** @var SettingsControl $settings */
         $settings = $this['settings'];
-        $settings->setSection($container);
+        $settings->setSection($this->settings->getSection('.'));
     }
 
     public function createComponentSettings()
@@ -37,6 +37,9 @@ final class SettingsPresenter extends BasePresenter
         $control->onSetValue[] = function ($name, $value) {
             try {
                 $this->settings->setValue($value, $name);
+                $this->sendJson([
+                    'status' => 'success'
+                ]);
             } catch (Exception $e) {
                 $this->sendJson([
                     'status' => 'error',

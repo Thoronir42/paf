@@ -11,22 +11,21 @@ interface IOptionSection extends INode, IteratorAggregate, Countable
 {
     const TYPE_SECTION = 'section';
 
+    /**
+     * @param mixed $name
+     * @return bool
+     */
     public function hasNode($name): bool;
 
     /**
-     * @param $name
-     * @return INode
+     * @param mixed $name
+     * @return INode|null
      */
     public function getNode($name);
 
     /** @return INode[] */
     public function getNodes(): array;
 
-    public function getValue(string $name);
 
-    /**
-     * @param mixed $offset
-     * @return INode
-     */
-    public function offsetGet($offset);
+    public function getValue(string $name);
 }

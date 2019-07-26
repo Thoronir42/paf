@@ -7,7 +7,9 @@ namespace SeStep\GeneralSettingsInMemory;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
 use SeStep\GeneralSettings\IOptions;
+use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\Options\IValuePool;
 
 final class InMemoryOptions extends InMemoryOptionSection implements IOptions
 {
@@ -23,7 +25,16 @@ final class InMemoryOptions extends InMemoryOptionSection implements IOptions
 
     public function getFQN(): string
     {
-        return '';
+        return $this->getName();
+    }
+
+    public function getNode($name): INode
+    {
+        if ($name == INode::DOMAIN_DELIMITER) {
+            return $this;
+        }
+
+        return parent::getNode($name);
     }
 
 
@@ -37,5 +48,11 @@ final class InMemoryOptions extends InMemoryOptionSection implements IOptions
     function setData(&$data)
     {
         $this->rootData = $data;
+    }
+
+    public function getPool(string $name): ?IValuePool
+    {
+        // todo: implement
+        return null;
     }
 }

@@ -8,6 +8,7 @@ use LeanMapper\Exception\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\SectionNavigator;
 
 /**
  * @property OptionNode[] $childNodes m:belongsToMany(parent_section_id)
@@ -90,21 +91,9 @@ class Section extends OptionNode implements IOptionSection
     {
         $dl = new DomainLocator($name);
 
-        $parent = $this;
-        while ($dl->getDomain()) {
-            if(!$parent instanceof Section) {
-                throw new InvalidStateException("'" . DomainLocator::concatFQN($parent->getFQN()) . "' is not a Section node");
-            }
+        $parent = SectionNavigator::getSectionByDomain($this, $dl);
 
-            $subSectionName = $dl->shiftDomain();
-            if(!$parent->hasNode($subSectionName)) {
-
-            }
-            $parent = $parent->getNodes()[$subSectionName];
-        }
-
-
-        $valueNode = $parent->getNodes()[$dl->getName()];
+        $valueNode = $parent->getNode($dl->getName());
         if(!$valueNode instanceof Option) {
             throw new InvalidStateException("'" . DomainLocator::concatFQN($parent->getFQN(), $dl->getName()) . "' is not an Option section");
         }
@@ -114,7 +103,7 @@ class Section extends OptionNode implements IOptionSection
 
     public function offsetGet($offset)
     {
-        return $this->getNodes()[$offset];
+        return $this->getNode($offset);
     }
 
     public function clearOptionsCache()
