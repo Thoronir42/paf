@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Forms\Controls;
 
-
 use Nette\Forms\Controls\TextInput;
 use Nette\UnexpectedValueException;
 use Nette\Utils\DateTime;
@@ -78,8 +77,8 @@ class DateInput extends TextInput
         $view = $this->getMinView($this->format);
         $attrs = [
             'data-date-format' => $this->getBootstrapFormat($this->format),
-            'data-min-view'    => $view,
-            'data-start-view'  => self::VIEW_DAY,
+            'data-min-view' => $view,
+            'data-start-view' => self::VIEW_DAY,
         ];
         if ($this->position) {
             $attrs['data-picker-position'] = $this->position;
@@ -117,12 +116,10 @@ class DateInput extends TextInput
     {
         $stringValue = parent::getValue();
 
-        if(!$stringValue) {
+        if (!$stringValue) {
             return true;
         }
 
         return $this->getValue() instanceof \DateTime;
     }
-
-
 }

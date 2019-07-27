@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model\Exceptions;
 
-
 use Nette\InvalidStateException;
 
 class SlugAlreadyExistsException extends InvalidStateException

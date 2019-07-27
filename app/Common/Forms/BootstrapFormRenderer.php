@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Forms;
 
-
 use Nette;
 use Nette\Forms\Controls\TextArea;
 use Nette\Forms\Rendering\DefaultFormRenderer;
@@ -115,6 +114,4 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 
         return $pair->render(0);
     }
-
-
 }

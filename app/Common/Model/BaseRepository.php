@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model;
 
-
 use Dibi\DataSource;
 use Dibi\Fluent;
 use LeanMapper\Repository;
@@ -104,7 +103,7 @@ class BaseRepository extends Repository implements IQueryable
 
     public function makeEntity($row)
     {
-        if(!$row) {
+        if (!$row) {
             return null;
         }
 
@@ -115,6 +114,4 @@ class BaseRepository extends Repository implements IQueryable
     {
         return $this->createEntities($rows);
     }
-
-
 }

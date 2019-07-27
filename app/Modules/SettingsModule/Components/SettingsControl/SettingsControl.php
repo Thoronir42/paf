@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
-
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
 use SeStep\GeneralSettings\Options\IOption;
@@ -56,10 +55,10 @@ class SettingsControl extends UI\Control
     public function createComponent($name): ?IComponent
     {
         $node = $this->section->getNode($name);
-        if($node instanceof IOption) {
+        if ($node instanceof IOption) {
             return new OptionNodeControl($node);
         }
-        if($node instanceof IOptionSection && $this->canExpandSubSections()) {
+        if ($node instanceof IOptionSection && $this->canExpandSubSections()) {
             return new SettingsControl($node, $this->expandDepth - 1);
         }
 

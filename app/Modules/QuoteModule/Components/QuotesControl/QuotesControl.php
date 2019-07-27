@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\QuoteModule\Components\QuotesControl;
 
-
 use Nette\ComponentModel\IComponent;
 use Nette\Application\UI\Control;
 use Nette\InvalidStateException;

@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CmsModule\Presenters;
 
-
 use Nette\Application\BadRequestException;
 use Nette\Http\IResponse;
 use PAF\Common\BasePresenter;

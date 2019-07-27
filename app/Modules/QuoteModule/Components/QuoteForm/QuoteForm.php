@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\QuoteModule\Components\QuoteForm;
 
-
 use PAF\Common\Forms\FormWrapperControl;
 use PAF\Common\Model\Contact;
 use Nette\Application\UI\Form;
@@ -104,10 +103,4 @@ class QuoteForm extends FormWrapperControl
 
         $this->onSave($quote, $form, $values->reference);
     }
-}
-
-interface IQuoteFormFactory
-{
-    /** @return QuoteForm */
-    public function create();
 }

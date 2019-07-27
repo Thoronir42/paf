@@ -2,7 +2,6 @@
 
 namespace PAF\Utils\Migrations;
 
-
 use Nette\Utils\Strings;
 use SeStep\Migrations\IServiceProvider;
 use SeStep\SettingsDoctrine\DoctrineOptions;

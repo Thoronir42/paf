@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
-
 use Nette\Application\UI;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
@@ -63,7 +62,6 @@ class OptionNodeControl extends UI\Control
         }
 
         $this->presenter->sendJson($editableValues);
-
     }
 
     public function handleSet($value = null)
@@ -132,6 +130,4 @@ class OptionNodeControl extends UI\Control
                 return $label;
         }
     }
-
-
 }

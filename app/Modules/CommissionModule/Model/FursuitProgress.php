@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Model;
 
-
 use LeanMapper\Entity;
 
 /**

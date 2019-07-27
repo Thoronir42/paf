@@ -24,14 +24,12 @@ services:
             modules:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
 
-    - PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory
-
     - PAF\Common\Forms\FormFactory
 
-    - PAF\Modules\CommonModule\Components\SignInForm\ISignInFormFactory
-    - PAF\Modules\QuoteModule\Components\QuoteForm\IQuoteFormFactory
+    - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
+    - PAF\Modules\QuoteModule\Components\QuoteForm\QuoteFormFactory
 
-    - PAF\Modules\CommissionModule\Components\PafCaseForm\IPafCaseFormFactory
+    - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
     - PAF\Modules\CommonModule\Repository\UserRepository
     - PAF\Modules\CommissionModule\Facade\PafEntities

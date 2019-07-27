@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\QuoteModule\Presenters;
 
-
 use Nette\Application\UI\Multiplier;
 use Nette\Forms\Form;
 use Nette\Http\FileUpload;
@@ -10,7 +9,7 @@ use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
-use PAF\Modules\QuoteModule\Components\QuoteForm\IQuoteFormFactory;
+use PAF\Modules\QuoteModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\QuoteModule\Components\QuoteView\QuoteView;
 use PAF\Modules\QuoteModule\Model\Quote;
 use PAF\Modules\QuoteModule\Repository\QuoteRepository;
@@ -21,7 +20,7 @@ final class QuotesPresenter extends BasePresenter
     /** @var QuoteRepository @inject */
     public $quotes;
 
-    /** @var IQuoteFormFactory @inject */
+    /** @var QuoteFormFactory @inject */
     public $quoteFormFactory;
 
     /** @var PafEntities @inject */
@@ -44,7 +43,6 @@ final class QuotesPresenter extends BasePresenter
     public function actionDefault()
     {
         $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable_quotes');
-
     }
 
     public function actionList()
@@ -56,11 +54,13 @@ final class QuotesPresenter extends BasePresenter
     {
         return new Multiplier(function ($name) {
             $quoteView = new QuoteView($this->template->quotes[$name]);
-            $quoteView->onAccept[] = function(Quote $quote) {
-                dump('accept', $quote);exit;
+            $quoteView->onAccept[] = function (Quote $quote) {
+                dump('accept', $quote);
+                exit;
             };
-            $quoteView->onReject[] = function(Quote $quote) {
-                dump('reject', $quote);exit;
+            $quoteView->onReject[] = function (Quote $quote) {
+                dump('reject', $quote);
+                exit;
             };
             return $quoteView;
         });
@@ -97,6 +97,4 @@ final class QuotesPresenter extends BasePresenter
 
         return $form;
     }
-
-
 }

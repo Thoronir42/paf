@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model\Exceptions;
 
-
 use InvalidArgumentException;
 
 class EnumValueException extends InvalidArgumentException

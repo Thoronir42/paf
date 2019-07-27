@@ -2,13 +2,12 @@
 
 namespace PAF\Common;
 
-
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use PAF\Common\Security\Authorizator;
-use PAF\Modules\CommonModule\Components\NavigationMenu\INavigationMenuFactory;
+use PAF\Modules\CommonModule\Components\NavigationMenu\NavigationMenu;
 use PAF\Modules\CommonModule\Model\User;
 use PAF\Modules\CommonModule\Repository\UserRepository;
 use SeStep\GeneralSettings\Settings;
@@ -32,9 +31,6 @@ abstract class BasePresenter extends Presenter
 
     /** @var Settings @inject */
     public $settings;
-
-    /** @var  INavigationMenuFactory @inject */
-    public $navigationMenuFactory;
 
     /** @var ITranslator @inject */
     public $translator;
@@ -104,7 +100,7 @@ abstract class BasePresenter extends Presenter
 
     public function createComponentMenu()
     {
-        $menu = $this->navigationMenuFactory->create();
+        $menu = new NavigationMenu($this->translator);
 
         $menu->setBrandTarget(':Common:Homepage:default');
         $menu->setTitle($this->context->parameters['appName']);
@@ -136,5 +132,4 @@ abstract class BasePresenter extends Presenter
 
         return $this->flashMessage($this->translator->translate($placeholder, null, $variables), $level);
     }
-
 }

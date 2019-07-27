@@ -3,7 +3,6 @@
 
 namespace PAF\Modules\CmsModule\Facade;
 
-
 use PAF\Modules\CmsModule\Model\Page;
 
 class CmsPages

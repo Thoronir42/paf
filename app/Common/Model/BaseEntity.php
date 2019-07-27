@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model;
 
-
 use LeanMapper\Entity;
 
 abstract class BaseEntity extends Entity

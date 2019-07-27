@@ -2,12 +2,10 @@
 
 namespace PAF\Modules\CommonModule\Components\NavigationMenu;
 
-
 use Nette\Application\UI;
 use Nette\Localization\ITranslator;
 use SeStep\Navigation\Menu\Items\NavMenuLink;
 use SeStep\Navigation\Menu\NavigationMenuSubitems;
-
 
 class NavigationMenu extends UI\Control
 {
@@ -80,9 +78,4 @@ class NavigationMenu extends UI\Control
 
         $this->template->render();
     }
-}
-
-interface INavigationMenuFactory
-{
-    public function create(): NavigationMenu;
 }

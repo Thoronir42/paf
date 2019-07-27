@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommonModule\Components\SignInForm;
 
-
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormWrapperControl;
 
@@ -45,10 +44,4 @@ class SignInForm extends FormWrapperControl
     {
         $this->onSave($form, $values);
     }
-}
-
-interface ISignInFormFactory
-{
-    /** @return SignInForm */
-    function create();
 }

@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Repository;
 
-
 use PAF\Common\Model\BaseRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 
@@ -58,6 +57,5 @@ class PafCaseRepository extends BaseRepository
                 'deleted' => $deleted,
             ])
             ->getOneOrNullResult();
-
     }
 }

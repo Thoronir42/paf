@@ -92,7 +92,6 @@ class PafCaseForm extends FormWrapperControl
         $case->targetDate = $values->targetDate;
 
         $this->onSave($case, $form);
-
     }
 
     private function setContainerDisabled(Container $container, $disabled = false)
@@ -102,12 +101,4 @@ class PafCaseForm extends FormWrapperControl
             $component->setDisabled($disabled);
         }
     }
-}
-
-interface IPafCaseFormFactory
-{
-    /**
-     * @return PafCaseForm
-     */
-    public function create();
 }

@@ -2,10 +2,9 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
-
 use PAF\Common\BasePresenter;
 use PAF\Modules\Admin\Controls\CasesControl\CasesControl;
-use PAF\Modules\CommissionModule\Components\PafCaseForm\IPafCaseFormFactory;
+use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\CommissionModule\Model\PafCase;
@@ -29,7 +28,7 @@ final class CasesPresenter extends BasePresenter
     /** @var PafEntities @inject */
     public $pafEntities;
 
-    /** @var IPafCaseFormFactory @inject */
+    /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
 
     /** @var ICommentsControlFactory @inject */
@@ -82,7 +81,6 @@ final class CasesPresenter extends BasePresenter
         $commentControl->setComments($thread, $comments);
 
         $this->template->notesCount = count($comments);
-
     }
 
     public function createComponentCases()

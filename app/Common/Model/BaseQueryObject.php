@@ -3,7 +3,6 @@
 
 namespace PAF\Common\Model;
 
-
 use Dibi\DataSource;
 
 abstract class BaseQueryObject
@@ -34,7 +33,8 @@ abstract class BaseQueryObject
         $this->queryable->makeEntity($this->dataSource->fetch());
     }
 
-    public function fetchAll() {
+    public function fetchAll()
+    {
 
         return $this->queryable->makeEntities($this->dataSource->fetchAll());
     }

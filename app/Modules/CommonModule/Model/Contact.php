@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model;
 
-
 /**
  * @property int $id
  * @property string $name

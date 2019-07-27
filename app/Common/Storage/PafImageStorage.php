@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Storage;
 
-
 use Nette\Http\FileUpload;
 use PAF\Modules\QuoteModule\Model\Quote;
 use SeStep\FileAttachable\Files;

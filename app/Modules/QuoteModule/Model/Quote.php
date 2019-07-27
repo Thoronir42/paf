@@ -34,5 +34,4 @@ class Quote extends BaseEntity
             self::STATUS_REJECTED,
         ];
     }
-
 }

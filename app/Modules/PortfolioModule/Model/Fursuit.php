@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\PortfolioModule\Model;
 
-
 use PAF\Common\Model\BaseEntity;
 use PAF\Common\Model\Traits\Slug;
 use Nette\Utils\DateTime;

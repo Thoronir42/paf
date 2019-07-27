@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\QuoteModule\Repository;
 
-
 use PAF\Common\Model\BaseRepository;
 use PAF\Modules\QuoteModule\Model\Quote;
 

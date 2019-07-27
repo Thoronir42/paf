@@ -2,12 +2,10 @@
 
 namespace PAF\Common\Forms;
 
-
 use Nette\Forms\Controls;
 use Nette\Forms\Validator;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
-
 
 class FormFactory
 {
@@ -59,5 +57,4 @@ class FormFactory
             Controls\UploadControl::VALID => 'generic.form-validator.upload-valid',
         ];
     }
-
 }

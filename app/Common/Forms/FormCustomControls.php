@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Forms;
 
-
 trait FormCustomControls
 {
     public function addDate(string $name, string $label = null, $format = null): Controls\DateInput

@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\QuoteModule\Components\QuoteView;
 
-
 use Nette\Application\UI\Control;
 use PAF\Modules\QuoteModule\Model\Quote;
 

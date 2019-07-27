@@ -2,12 +2,10 @@
 
 namespace PAF\Common\Forms;
 
-
 use Nette\Application\UI as UI;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
 use Nette\Utils\ArrayHash;
-
 
 abstract class FormWrapperControl extends UI\Control
 {
@@ -28,13 +26,13 @@ abstract class FormWrapperControl extends UI\Control
     /**
      * @return mixed
      */
-    public abstract function createComponentForm();
+    abstract public function createComponentForm();
 
     /**
      * @param Form $form
      * @param ArrayHash $values
      */
-    public abstract function processForm(Form $form, $values);
+    abstract public function processForm(Form $form, $values);
 
     /** @return Form */
     protected function form()

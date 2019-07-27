@@ -5,7 +5,6 @@ namespace PAF\Modules\Front\Presenters;
 use Nette;
 use Tracy\ILogger;
 
-
 class ErrorPresenter implements Nette\Application\IPresenter
 {
     use Nette\SmartObject;
@@ -29,7 +28,6 @@ class ErrorPresenter implements Nette\Application\IPresenter
         $e = $request->getParameter('exception');
 
         if ($e instanceof Nette\Application\BadRequestException) {
-            // $this->logger->log("HTTP code {$e->getCode()}: {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", 'access');
             return new Nette\Application\Responses\ForwardResponse($request->setPresenterName('Front:Error4xx'));
         }
 
@@ -39,5 +37,4 @@ class ErrorPresenter implements Nette\Application\IPresenter
             require __DIR__ . '/../templates/Error/500.phtml';
         });
     }
-
 }

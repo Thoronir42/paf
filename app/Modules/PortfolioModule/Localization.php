@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\PortfolioModule;
 
-
 use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 class Localization
@@ -16,5 +15,4 @@ class Localization
 
         return $types;
     }
-
 }

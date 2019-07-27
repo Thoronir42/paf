@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
-
 use Nette\Utils\DateTime;
 use PAF\Common\Model\BaseEntity;
 use PAF\Modules\PortfolioModule\Model\Fursuit;

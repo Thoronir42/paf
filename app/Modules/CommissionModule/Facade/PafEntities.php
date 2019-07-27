@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Facade;
 
-
 use Nette\Utils\Strings;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
@@ -62,7 +61,8 @@ class PafEntities
      * @param $name
      * @return PafWrapper|null
      */
-    public function findByName($name) {
+    public function findByName($name)
+    {
         return $this->repository->findOneBy(['name' => $name]);
     }
 
@@ -77,7 +77,7 @@ class PafEntities
         $quote->status = Quote::STATUS_ACCEPTED;
         $this->quotes->persist($quote);
 
-        if($wrapper->getCase()) {
+        if ($wrapper->getCase()) {
             $this->flushAll();
             return 'already-exists';
         }
@@ -103,10 +103,10 @@ class PafEntities
 
         $this->quotes->save($quote, false);
         $this->save($wrapper);
-
     }
 
-    protected static function sluggify($name) {
+    protected static function sluggify($name)
+    {
         return Strings::webalize($name);
     }
 }

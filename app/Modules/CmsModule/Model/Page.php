@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CmsModule\Model;
 
-
 class Page
 {
     /** @var string */

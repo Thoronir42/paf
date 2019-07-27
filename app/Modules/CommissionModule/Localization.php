@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule;
 
-
 use PAF\Modules\CommissionModule\Model\PafCase;
 
 class Localization

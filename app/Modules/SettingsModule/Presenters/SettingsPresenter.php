@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\Presenters;
 
-
 use Exception;
 use PAF\Common\BasePresenter;
 use PAF\Modules\SettingsModule\Components\SettingsControl\SettingsControl;

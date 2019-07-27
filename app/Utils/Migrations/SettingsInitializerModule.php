@@ -2,7 +2,6 @@
 
 namespace PAF\Utils\Migrations;
 
-
 use SeStep\GeneralSettings\Options\IOption;
 use SeStep\GeneralSettings\Options\IOptionSection;
 

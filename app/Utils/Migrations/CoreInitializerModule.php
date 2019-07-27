@@ -2,7 +2,6 @@
 
 namespace PAF\Utils\Migrations;
 
-
 use PAF\Common\Model\Embeddable\Contact;
 use PAF\Common\Model\Embeddable\FursuitSpecification;
 use PAF\Common\Model\Entity\Fursuit;

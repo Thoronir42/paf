@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model\Traits;
 
-
 /**
  * @property bool $deleted
  */

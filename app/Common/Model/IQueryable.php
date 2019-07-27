@@ -3,7 +3,6 @@
 
 namespace PAF\Common\Model;
 
-
 use Dibi\DataSource;
 
 interface IQueryable

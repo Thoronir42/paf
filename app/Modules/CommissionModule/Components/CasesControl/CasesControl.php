@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\Admin\Controls\CasesControl;
 
-
 use Nette\Application\UI\Control;
 use PAF\Modules\CommissionModule\Model\PafCase;
 

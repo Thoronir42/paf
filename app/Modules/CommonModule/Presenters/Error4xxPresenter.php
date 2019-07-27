@@ -5,7 +5,6 @@ namespace PAF\Modules\Front\Presenters;
 use Nette;
 use PAF\Common\BasePresenter;
 
-
 class Error4xxPresenter extends BasePresenter
 {
 
@@ -24,5 +23,4 @@ class Error4xxPresenter extends BasePresenter
         $file = __DIR__ . "/../templates/Error/{$exception->getCode()}.latte";
         $this->template->setFile(is_file($file) ? $file : __DIR__ . '/../templates/Error/4xx.latte');
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Security;
 
-
 use Nette\Security\IAuthorizator;
 use Nette\Security\IResource;
 use Nette\Security\IRole;
@@ -35,7 +34,7 @@ class Authorizator extends Permission implements IAuthorizator
      * @param    string           $privilege
      * @return bool
      */
-    function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL): bool
+    public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL): bool
     {
         return parent::isAllowed($role, $resource, $privilege);
     }

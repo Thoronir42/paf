@@ -6,12 +6,11 @@ use PAF\Common\BasePresenter;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
-use PAF\Modules\CommonModule\Components\SignInForm\ISignInFormFactory;
-
+use PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory;
 
 class SignPresenter extends BasePresenter
 {
-    /** @var ISignInFormFactory @inject */
+    /** @var SignInFormFactory @inject */
     public $in_factory;
 
     public function actionDefault()
@@ -19,8 +18,8 @@ class SignPresenter extends BasePresenter
         $this->redirect('in');
     }
 
-    public function actionIn() {
-
+    public function actionIn()
+    {
     }
 
     public function actionOut()
@@ -86,5 +85,4 @@ class SignPresenter extends BasePresenter
 
         return $form;
     }
-
 }

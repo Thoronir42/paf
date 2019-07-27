@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Latte;
 
-
 use Nette\InvalidArgumentException;
 
 final class ContactUrlFilter extends BaseFilter

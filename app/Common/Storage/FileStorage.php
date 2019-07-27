@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Storage;
 
-
 use Nette\Http\FileUpload;
 
 class FileStorage
@@ -40,7 +39,8 @@ class FileStorage
         return $destFile;
     }
 
-    public function delete($fileName) {
+    public function delete($fileName)
+    {
         return unlink($this->directory . $fileName);
     }
 }

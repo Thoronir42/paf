@@ -2,13 +2,11 @@
 
 namespace PAF\Modules\CommonModule\Presenters;
 
-
 use PAF\Common\BasePresenter;
 
 class HomepagePresenter extends BasePresenter
 {
     public function actionDefault()
     {
-        
     }
 }
