@@ -4,7 +4,6 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use Nette\Utils\DateTime;
 use PAF\Common\Model\BaseEntity;
-use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Model\User;
 use SeStep\FileAttachable\Model\UserFileThread;
 

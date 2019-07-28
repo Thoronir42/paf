@@ -11,6 +11,7 @@ call_user_func(function () {
         dirname(__DIR__) . '/Modules/CommonModule/Model/database/initialize.sql',
         dirname(__DIR__) . '/Modules/CommissionModule/Model/database/initialize.sql',
         dirname(__DIR__) . '/Modules/PortfolioModule/Model/database/initialize.sql',
+        dirname(__DIR__) . '/Modules/CmsModule/Model/database/initialize.sql',
         dirname(__DIR__) . '/../extensions/SeStep/LeanSettings/database/initialize.sql',
     ]);
 

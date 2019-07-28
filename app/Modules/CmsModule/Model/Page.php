@@ -2,10 +2,15 @@
 
 namespace PAF\Modules\CmsModule\Model;
 
-class Page
+use PAF\Common\Model\BaseEntity;
+
+/**
+ * @property int $id
+ * @property string $slug
+ * @property string $title
+ * @property string $content
+ */
+class Page extends BaseEntity
 {
-    /** @var string */
-    public $title;
-    /** @var string */
-    public $content;
+
 }
