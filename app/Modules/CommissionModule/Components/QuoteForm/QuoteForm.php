@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Components\QuoteForm;
+namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
 use PAF\Common\Forms\FormWrapperControl;
 use PAF\Modules\CommonModule\Model\Contact;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
-use PAF\Modules\CommissionModule\Model\FursuitSpecification;
+use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\PortfolioModule\Localization;
-use PAF\Modules\QuoteModule\Model\Quote;
-use PAF\Modules\QuoteModule\Repository\QuoteRepository;
+use PAF\Modules\CommissionModule\Model\Quote;
+use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 
 /**
  * Class QuoteForm
@@ -92,7 +92,7 @@ class QuoteForm extends FormWrapperControl
         $contact->email = $values->contact->email;
         $contact->telegram = $values->contact->telegram;
 
-        $fursuitSpecification = new FursuitSpecification();
+        $fursuitSpecification = new Specification();
         $fursuitSpecification->name = $values->fursuit->name;
         $fursuitSpecification->type = $values->fursuit;
         $fursuitSpecification->characterDescription = $values->fursuit->characterDescription;

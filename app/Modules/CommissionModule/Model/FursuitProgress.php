@@ -5,6 +5,9 @@ namespace PAF\Modules\CommissionModule\Model;
 use LeanMapper\Entity;
 
 /**
+ * @property int $id
+ * @property PafCase $case m:hasOne(case_id)
+ *
  * @property int $head
  * @property int $body
  * @property int $armSleeves

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Components\QuoteView;
+namespace PAF\Modules\CommissionModule\Components\QuoteView;
 
 use Nette\Application\UI\Control;
-use PAF\Modules\QuoteModule\Model\Quote;
+use PAF\Modules\CommissionModule\Model\Quote;
 
 /**
  * Class QuoteView

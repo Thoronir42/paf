@@ -27,13 +27,13 @@ services:
     - PAF\Common\Forms\FormFactory
 
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
-    - PAF\Modules\QuoteModule\Components\QuoteForm\QuoteFormFactory
+    - PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
 
     - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
     - PAF\Modules\CommonModule\Repository\UserRepository
     - PAF\Modules\CommissionModule\Facade\PafEntities
-    - PAF\Modules\QuoteModule\Repository\QuoteRepository
+    - PAF\Modules\CommissionModule\Repository\QuoteRepository
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 

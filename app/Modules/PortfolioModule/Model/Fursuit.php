@@ -8,6 +8,7 @@ use Nette\Utils\DateTime;
 use PAF\Modules\CommonModule\Model\User;
 
 /**
+ * @property int $id
  * @property string $name
  * @property string $type m:enum(self::TYPE_*)
  * @property User $owner

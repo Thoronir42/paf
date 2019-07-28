@@ -1,11 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Model;
+namespace PAF\Modules\CommissionModule\Model;
 
 use Nette\Utils\DateTime;
 use PAF\Common\Model\BaseEntity;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommissionModule\Model\FursuitSpecification;
+use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Model\User;
 use SeStep\FileAttachable\Model\UserFileThread;
 
@@ -15,8 +14,7 @@ use SeStep\FileAttachable\Model\UserFileThread;
  * @property string $slug
  * @property string status m:column(self::STATUS_*)
  * @property DateTime $dateCreated
- * @property Contact $contact
- * @property FursuitSpecification $specification
+ * @property Specification $specification
  * @property UserFileThread $references
  */
 class Quote extends BaseEntity

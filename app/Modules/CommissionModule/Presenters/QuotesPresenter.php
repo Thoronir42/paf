@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Presenters;
+namespace PAF\Modules\CommissionModule\Presenters;
 
 use Nette\Application\UI\Multiplier;
 use Nette\Forms\Form;
@@ -9,10 +9,10 @@ use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
-use PAF\Modules\QuoteModule\Components\QuoteForm\QuoteFormFactory;
-use PAF\Modules\QuoteModule\Components\QuoteView\QuoteView;
-use PAF\Modules\QuoteModule\Model\Quote;
-use PAF\Modules\QuoteModule\Repository\QuoteRepository;
+use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
+use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
+use PAF\Modules\CommissionModule\Model\Quote;
+use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use SeStep\FileAttachable\Files;
 
 final class QuotesPresenter extends BasePresenter

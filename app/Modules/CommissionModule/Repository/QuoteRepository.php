@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Repository;
+namespace PAF\Modules\CommissionModule\Repository;
 
 use PAF\Common\Model\BaseRepository;
-use PAF\Modules\QuoteModule\Model\Quote;
+use PAF\Modules\CommissionModule\Model\Quote;
 
 class QuoteRepository extends BaseRepository
 {

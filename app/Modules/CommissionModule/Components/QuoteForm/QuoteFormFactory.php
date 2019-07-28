@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Components\QuoteForm;
+namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
 interface QuoteFormFactory
 {

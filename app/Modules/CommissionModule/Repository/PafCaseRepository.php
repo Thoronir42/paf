@@ -8,7 +8,6 @@ use PAF\Modules\CommissionModule\Model\PafCase;
 // todo: reimplement
 class PafCaseRepository extends BaseRepository
 {
-
     public function getCasesByStatus($status = null)
     {
         if (!$status) {

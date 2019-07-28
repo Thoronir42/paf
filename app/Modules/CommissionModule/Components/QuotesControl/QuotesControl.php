@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\QuoteModule\Components\QuotesControl;
+namespace PAF\Modules\CommissionModule\Components\QuotesControl;
 
 use Nette\ComponentModel\IComponent;
 use Nette\Application\UI\Control;
 use Nette\InvalidStateException;
-use PAF\Modules\QuoteModule\Components\QuoteView\QuoteView;
-use PAF\Modules\QuoteModule\Model\Quote;
+use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
+use PAF\Modules\CommissionModule\Model\Quote;
 
 /**
  * Class QuotesControl

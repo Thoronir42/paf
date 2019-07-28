@@ -49,7 +49,7 @@ class InitDatabaseCommand extends BaseCommand
             }
         }
 
-        return 1;
+        return 0;
     }
 
     private function executeCurrentFile()

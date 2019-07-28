@@ -5,8 +5,8 @@ namespace PAF\Modules\CommissionModule\Facade;
 use Nette\Utils\Strings;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
-use PAF\Modules\QuoteModule\Model\Quote;
-use PAF\Modules\QuoteModule\Repository\QuoteRepository;
+use PAF\Modules\CommissionModule\Model\Quote;
+use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 
 /**
  * Class PafEntities
