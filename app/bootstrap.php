@@ -19,16 +19,18 @@ return call_user_func(static function () {
 
     $configurator = new Nette\Configurator();
 
-    $debugList = [
-        'whoop whoop',
-        'nobody watches over me',
-    ];
+    if (getenv('DEBUG_MODE') || defined('DEBUG_MODE')) {
+        $configurator->setDebugMode(true);
+    } else {
+        $debugList = [
+            'whoop whoop',
+            'nobody watches over me',
+        ];
 
-    $debugMode = defined('TEST_RUN') ? true : $debugList;
-    $configurator->setDebugMode($debugMode);
+        $configurator->setDebugMode($debugList);
+    }
+
     $configurator->enableDebugger(__DIR__ . '/../log');
-
-
     $configurator->setTempDirectory(__DIR__ . '/../temp');
 
     $configurator->addConfig(__DIR__ . '/config/config.neon');

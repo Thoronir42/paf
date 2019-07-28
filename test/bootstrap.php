@@ -1,6 +1,6 @@
 <?php
 
-define('TEST_RUN', true);
+define('DEBUG_MODE', true);
 
 call_user_func(function () {
     $container = include __DIR__ . "/../app/bootstrap.php";
