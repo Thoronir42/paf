@@ -8,6 +8,10 @@ CREATE TABLE `ss_settings__option_node`
     string_value      varchar(120) NULL,
     int_value         int          NULL,
 
-    CONSTRAINT ss_settings_option_node_pk
-        PRIMARY KEY (id)
+    CONSTRAINT `ss_settings_option_node_pk`
+        PRIMARY KEY (id),
+
+    CONSTRAINT `ss_settings__option_parent_fk` FOREIGN KEY
+        `parent` (parent_section_id) REFERENCES ss_settings__option_node (id)
+        ON DELETE RESTRICT
 );
