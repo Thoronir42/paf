@@ -5,6 +5,7 @@ namespace Test\PAF\Utils;
 
 use LeanMapper\Connection;
 use LeanMapper\IMapper;
+use PAF\Commands\InitDatabaseCommand;
 
 final class TestDBUtils
 {
@@ -32,28 +33,6 @@ final class TestDBUtils
     public static function setLeanMapper(IMapper $leanMapper): void
     {
         self::$leanMapper = $leanMapper;
-    }
-
-    public static function initDatabase(array $scriptsPaths = [])
-    {
-        echo "Initializing database ... \n";
-        foreach ($scriptsPaths as $path) {
-            echo "  - $path ...";
-            if(!file_exists($path)) {
-                echo " file not found\n";
-                return;
-            }
-
-            $script = file_get_contents($path);
-            try {
-                self::$leanConnection->nativeQuery($script);
-
-                echo " ok \n";
-            } catch (\Throwable $ex) {
-                echo " error \n";
-                throw $ex;
-            }
-        }
     }
 
 

@@ -15,10 +15,13 @@ call_user_func(function () {
         'database' => 'paf_test',
     ]));
 
-    \Test\PAF\Utils\TestDBUtils::initDatabase([
+    $command = new \PAF\Commands\InitDatabaseCommand(\Test\PAF\Utils\TestDBUtils::getLeanConnection());
+    $command->setFiles([
         dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/drop.sql',
         dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/initialize.sql',
     ]);
+
+    $command->run();
 
     $mapper = new \SeStep\ModularLeanMapper\ModularMapper(new \PAF\Common\Model\UnderscoreMapper(), [
         'ss_settings__' => new \SeStep\LeanSettings\LeanOptionsMapperModule(),
