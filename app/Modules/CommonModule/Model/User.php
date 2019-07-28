@@ -12,7 +12,7 @@ use PAF\Modules\PortfolioModule\Model\Fursuit;
  * @property string $password
  * @property DateTime $registered
  * @property DateTime $lastActivity
- * @property string $status
+ * @property Contact[] $contact m:belongsToMany(user_id)
  *
  * @property Fursuit[] $fursuits
  */

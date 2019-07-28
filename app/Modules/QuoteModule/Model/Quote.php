@@ -4,7 +4,7 @@ namespace PAF\Modules\QuoteModule\Model;
 
 use Nette\Utils\DateTime;
 use PAF\Common\Model\BaseEntity;
-use PAF\Common\Model\Contact;
+use PAF\Modules\CommonModule\Model\Contact;
 use PAF\Modules\CommissionModule\Model\FursuitSpecification;
 use PAF\Modules\CommonModule\Model\User;
 use SeStep\FileAttachable\Model\UserFileThread;

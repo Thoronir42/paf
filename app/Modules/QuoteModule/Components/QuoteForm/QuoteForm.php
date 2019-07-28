@@ -3,7 +3,7 @@
 namespace PAF\Modules\QuoteModule\Components\QuoteForm;
 
 use PAF\Common\Forms\FormWrapperControl;
-use PAF\Common\Model\Contact;
+use PAF\Modules\CommonModule\Model\Contact;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use PAF\Modules\CommissionModule\Model\FursuitSpecification;

@@ -4,7 +4,7 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use LeanMapper\Entity;
 use Nette\Utils\DateTime;
-use PAF\Common\Model\Contact;
+use PAF\Modules\CommonModule\Model\Contact;
 use SeStep\Commentable\Lean\Model\CommentThread;
 
 /**
