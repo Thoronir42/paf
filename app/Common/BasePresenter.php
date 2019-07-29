@@ -42,11 +42,6 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        $domain = strtolower(str_replace(":", ".", $this->name));
-        $this->template->setTranslator($this->translator->domain($domain));
-
-        $this->template->defaultTranslator = $this->translator;
-
         $this->template->appName = $this->context->parameters['appName'];
         $this->template->background_color = '#25c887';
         $this->template->title = '';
@@ -60,6 +55,7 @@ abstract class BasePresenter extends Presenter
     protected function createTemplate(): ITemplate
     {
         $template = parent::createTemplate();
+        $template->setTranslator($this->translator);
         $template->lang = $this->lang;
 
         return $template;
@@ -105,7 +101,7 @@ abstract class BasePresenter extends Presenter
         $menu->setBrandTarget(':Common:Homepage:default');
         $menu->setTitle($this->context->parameters['appName']);
 
-        $menu->addLink(':Quote:Quotes:default', 'paf.views.quotes');
+        $menu->addLink(':Commission:Quotes:default', 'paf.views.quotes');
 
         if ($this->user->isAllowed('admin-settings')) {
             $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');

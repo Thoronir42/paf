@@ -30,9 +30,17 @@ session:
 extensions:
     leanMapper: Libs\LeanMapperExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
+    translation: Contributte\Translation\DI\TranslationExtension
 
 leanMapper:
     db: %database%
+
+translation:
+    locales:
+        default: 'en'
+
+    dirs:
+        - %rootDir%/Common/lang
 
 #translation:
 #    default: en_GB

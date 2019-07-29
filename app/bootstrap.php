@@ -30,6 +30,10 @@ return call_user_func(static function () {
         $configurator->setDebugMode($debugList);
     }
 
+    $configurator->addParameters([
+        'rootDir' => __DIR__,
+    ]);
+
     $configurator->enableDebugger(__DIR__ . '/../log');
     $configurator->setTempDirectory(__DIR__ . '/../temp');
 

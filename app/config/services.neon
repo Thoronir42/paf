@@ -15,7 +15,6 @@ services:
         arguments:
             powerUsers: %powerUsers%
     authorizator: PAF\Common\Security\Authorizator
-    translator: Libs\NoTranslator
 
     leanMapper.mapper:
         class: SeStep\ModularLeanMapper\ModularMapper
