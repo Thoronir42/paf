@@ -1,0 +1,10 @@
+extensions:
+    console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+
+console:
+    version: v1.0
+    lazy: true
+
+services:
+    command.initDatabase:
+        class: PAF\Common\Commands\InitDatabaseCommand

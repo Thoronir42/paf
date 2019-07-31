@@ -1,13 +1,17 @@
 <?php
 
-namespace PAF\Commands;
+namespace PAF\Common\Commands;
 
 use Dibi\Connection;
 use Nette\FileNotFoundException;
-use PAF\Utils\BaseCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-class InitDatabaseCommand extends BaseCommand
+class InitDatabaseCommand extends Command
 {
+    protected static $defaultName = 'app:database:init';
+
     /** @var Connection */
     private $connection;
 
@@ -20,20 +24,47 @@ class InitDatabaseCommand extends BaseCommand
 
     private $maxLengthProgress;
 
+    /** @var OutputInterface */
+    private $out;
+
     public function __construct(Connection $connection)
     {
+        parent::__construct();
+
         $this->connection = $connection;
     }
 
-    /** @param string[] $files */
-    public function setFiles(array $files): void
+    public function configure()
     {
-        $this->files = $files;
+        $this->addOption('default-files', 'd', null, "Use predefined database initialize files");
     }
 
-    public function run(): int
+    public function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->writeln("Initializing database ... \n");
+        if($input->getOption('default-files')) {
+            $root = dirname(dirname(__DIR__));
+            $this->files = [
+                $root . '/Modules/CommonModule/Model/database/initialize.sql',
+                $root . '/Modules/CommissionModule/Model/database/initialize.sql',
+                $root . '/Modules/PortfolioModule/Model/database/initialize.sql',
+                $root . '/Modules/CmsModule/Model/database/initialize.sql',
+                $root . '/../extensions/SeStep/LeanSettings/database/initialize.sql',
+            ];
+        }
+
+        $output->writeln('BASD');
+    }
+
+
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->out = $output;
+        if(empty($this->files)) {
+            $output->writeln("No files specified!");
+            return 1;
+        }
+
+        $output->writeln("Initializing database ...");
 
         foreach ($this->files as $path) {
             try {
@@ -45,7 +76,7 @@ class InitDatabaseCommand extends BaseCommand
                 $this->writeFileProgress($this->getQueryProgress() . ' error');
                 throw $ex;
             } finally {
-                $this->writeln();
+                $output->writeln("");
             }
         }
 
@@ -81,13 +112,13 @@ class InitDatabaseCommand extends BaseCommand
 
     private function writeFileProgress($progress)
     {
-        $this->write("\r");
+        $this->out->write("\r");
         $progressStr = "  - $this->currentFile $progress";
-        $this->write($progressStr);
+        $this->out->write($progressStr);
 
         $len = mb_strlen($progressStr);
         if ($len < $this->maxLengthProgress) {
-            $this->write(str_repeat(" ", $this->maxLengthProgress - $len));
+            $this->out->write(str_repeat(" ", $this->maxLengthProgress - $len));
         } else {
             $this->maxLengthProgress = $len;
         }

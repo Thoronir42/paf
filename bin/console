@@ -1,0 +1,9 @@
+<?php
+
+call_user_func(static function () {
+    /** @var \Nette\DI\Container $container */
+    $container = require dirname(__DIR__) . '/app/bootstrap.php';
+
+    $application = $container->getByType(\Contributte\Console\Application::class);
+    $application->run();
+});

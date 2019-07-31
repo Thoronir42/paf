@@ -35,11 +35,13 @@
 
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
-    "contributte/translation": "^0.4.1"
+    "contributte/translation": "^0.4.1",
+    "contributte/console": "^0.7.1"
   },
   "autoload": {
     "psr-4": {
       "PAF\\": "app/",
+      "PAFData\\": "data/",
       "Libs\\": "libs/",
       "SeStep\\Commentable\\": "extensions/SeStep/Commentable/src/",
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
