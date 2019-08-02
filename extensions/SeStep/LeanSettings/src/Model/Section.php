@@ -95,7 +95,7 @@ class Section extends OptionNode implements IOptionSection
 
         $valueNode = $parent->getNode($dl->getName());
         if(!$valueNode instanceof Option) {
-            throw new InvalidStateException("'" . DomainLocator::concatFQN($parent->getFQN(), $dl->getName()) . "' is not an Option section");
+            throw new InvalidStateException("'" . DomainLocator::concatFQN($dl->getName(), $parent->getFQN()) . "' is not an Option section");
         }
 
         return $valueNode->getValue();

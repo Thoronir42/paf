@@ -3,10 +3,12 @@
 namespace SeStep\GeneralSettings;
 
 
+use IteratorAggregate;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
+use SeStep\GeneralSettings\Options\INode;
 
-class Settings implements \IteratorAggregate
+class Settings implements IteratorAggregate
 {
     /** @var IOptions */
     public $options;
@@ -19,8 +21,8 @@ class Settings implements \IteratorAggregate
     public function findNode($fullName, string $filterType = null)
     {
         $node = $this->options->getNode($fullName);
-        if($node) {
-            if($filterType && !$node instanceof $filterType) {
+        if ($node) {
+            if ($filterType && !$node instanceof $filterType) {
                 $node = null;
             }
         }
@@ -37,7 +39,7 @@ class Settings implements \IteratorAggregate
     {
         $node = $this->findNode($fullName);
 
-        if(!$node instanceof Options\IOptionSection) {
+        if (!$node instanceof Options\IOptionSection) {
             throw new SectionNotFoundException($fullName, $node);
         }
 
@@ -53,7 +55,7 @@ class Settings implements \IteratorAggregate
     {
         $node = $this->findNode($fullName);
 
-        if(!$node instanceof Options\IOption) {
+        if (!$node instanceof Options\IOption) {
             throw new NodeNotFoundException($fullName, $node);
         }
 
@@ -71,9 +73,20 @@ class Settings implements \IteratorAggregate
 
     public function setValue($name, $value)
     {
+        if (is_array($value)) {
+            foreach ($value as $key => $item) {
+                $this->setValue(DomainLocator::concatFQN($key, $name), $item);
+            }
+
+            return;
+        }
+
         $this->options->setValue($value, $name);
     }
 
+    /**
+     * @return INode[]|\Traversable
+     */
     public function getIterator()
     {
         return $this->options->getIterator();

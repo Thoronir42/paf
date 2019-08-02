@@ -102,6 +102,8 @@ class DomainLocator
         if ($domain && !is_string($domain)) {
             if (($domain instanceof INode)) {
                 $domain = $domain->getFQN();
+            } elseif (is_scalar($domain)) {
+                $domain = (string)$domain;
             } else {
                 throw new InvalidArgumentException('Argument domain expected to be string or instance of ' .
                     INode::class . ', ' . gettype($domain) . ' given');
