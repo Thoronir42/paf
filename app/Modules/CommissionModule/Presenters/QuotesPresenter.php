@@ -42,7 +42,7 @@ final class QuotesPresenter extends BasePresenter
 
     public function actionDefault()
     {
-        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable_quotes');
+        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable');
     }
 
     public function actionList()

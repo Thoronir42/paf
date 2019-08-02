@@ -8,3 +8,9 @@ console:
 services:
     command.initDatabase:
         class: PAF\Common\Commands\InitDatabaseCommand
+    command.initFixtures:
+        class: PAFData\Fixtures\InitializeFixturesCommand
+        arguments:
+            modules:
+                - PAFData\Fixtures\Modules\CommonModule\CommonInitializer(PAFData\Fixtures\Modules\CommonModule\CommonEntityCreator())
+                - PAFData\Fixtures\Modules\CommissionModule\CommissionInitializer()
