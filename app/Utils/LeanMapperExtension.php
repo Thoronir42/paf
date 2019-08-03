@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace PAF\Utils;
-
 
 use Nette;
 use Nette\DI\CompilerExtension;

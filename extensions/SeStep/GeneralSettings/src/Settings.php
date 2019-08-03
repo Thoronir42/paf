@@ -1,7 +1,5 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettings;
-
 
 use IteratorAggregate;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;

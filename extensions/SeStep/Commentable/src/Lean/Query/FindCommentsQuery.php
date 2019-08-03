@@ -2,7 +2,6 @@
 
 namespace SeStep\Commentable\Query;
 
-
 use Dibi\DataSource;
 use PAF\Common\Model\BaseQueryObject;
 use PAF\Common\Model\IQueryable;
@@ -23,7 +22,8 @@ class FindCommentsQuery extends BaseQueryObject
         parent::__construct($queryable, 'c');
     }
 
-    public function orderByDateCreated($order = 'ASC') {
+    public function orderByDateCreated($order = 'ASC')
+    {
         $this->dataSource->orderBy('c.createdOn', $order);
 
         return $this;
@@ -34,7 +34,8 @@ class FindCommentsQuery extends BaseQueryObject
      *
      * @return $this
      */
-    public function byThread($thread) {
+    public function byThread($thread)
+    {
         $threadId = $thread instanceof CommentThread ? $thread->id : $thread;
         $this->dataSource->where('c.thread = ?', $threadId);
 

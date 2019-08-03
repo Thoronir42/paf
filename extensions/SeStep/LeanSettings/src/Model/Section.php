@@ -2,10 +2,10 @@
 
 namespace SeStep\LeanSettings\Model;
 
-
 use Dibi\NotSupportedException;
 use LeanMapper\Exception\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
+use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\Options\INode;
 use SeStep\GeneralSettings\Options\IOptionSection;
 use SeStep\GeneralSettings\SectionNavigator;
@@ -22,7 +22,7 @@ class Section extends OptionNode implements IOptionSection
 
     public function setType(string $type)
     {
-        if($type !== self::TYPE_SECTION) {
+        if ($type !== self::TYPE_SECTION) {
             throw new NotSupportedException("Changing type of section to '$type' is not valid operation");
         }
         
@@ -49,7 +49,7 @@ class Section extends OptionNode implements IOptionSection
 
     public function offsetUnset($offset)
     {
-        if($this->offsetExists($offset)) {
+        if ($this->offsetExists($offset)) {
             $this->removeFromChildNodes($this->childNodes[$offset]);
         }
     }
@@ -94,8 +94,9 @@ class Section extends OptionNode implements IOptionSection
         $parent = SectionNavigator::getSectionByDomain($this, $dl);
 
         $valueNode = $parent->getNode($dl->getName());
-        if(!$valueNode instanceof Option) {
-            throw new InvalidStateException("'" . DomainLocator::concatFQN($dl->getName(), $parent->getFQN()) . "' is not an Option section");
+        if (!$valueNode instanceof Option) {
+            $fqn = DomainLocator::concatFQN($dl->getName(), $parent->getFQN());
+            throw new OptionNotFoundException($fqn, $valueNode);
         }
 
         return $valueNode->getValue();
@@ -109,8 +110,5 @@ class Section extends OptionNode implements IOptionSection
     public function clearOptionsCache()
     {
         $this->row->cleanReferencedRowsCache();
-        $this->row->cleanReferencingRowsCache();
-
-//        $this->row->cleanReferencedRowsCache($this->mapper->getTable(OptionNode::class), $this->mapper->getColumn(OptionNode::class, 'parentSection'));
     }
 }

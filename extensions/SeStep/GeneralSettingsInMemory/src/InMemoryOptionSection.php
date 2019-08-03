@@ -3,7 +3,6 @@
 
 namespace SeStep\GeneralSettingsInMemory;
 
-
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Options\INode;
@@ -24,7 +23,8 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
             $this->data['nodes'] = [];
         }
 
-        if (!isset($this->data['maxIntOffset']) || !is_finite($this->data['maxIntOffset']) || $this->data['maxIntOffset'] < 0) {
+        $maxIntOffset = $this->data['maxIntOffset'] ?? -1;
+        if (!is_finite($maxIntOffset) || $maxIntOffset < 0) {
             $this->data['maxIntOffset'] = 0;
         }
     }
@@ -162,7 +162,6 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
         }
 
         $this->setValue($value, $offset);
-
     }
 
     public function count()

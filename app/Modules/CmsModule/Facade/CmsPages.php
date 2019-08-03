@@ -1,6 +1,4 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace PAF\Modules\CmsModule\Facade;
 
 use PAF\Modules\CmsModule\Model\Page;

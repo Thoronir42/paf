@@ -2,11 +2,9 @@
 
 namespace SeStep\LeanSettings\Model;
 
-
 use PAF\Common\Model\BaseEntity;
 use SeStep\GeneralSettings\Options\IValuePool;
 use SeStep\LeanSettings\Exceptions\InvalidPoolValueException;
-
 
 /**
  * @property ValuePoolItem[] $valueItems m:belongsToMany
@@ -31,7 +29,7 @@ class ValuePool extends BaseEntity implements IValuePool
      */
     public function validate($value)
     {
-        if(!$this->isValid($value)) {
+        if (!$this->isValid($value)) {
             throw new InvalidPoolValueException($value, $this->getValues());
         }
     }

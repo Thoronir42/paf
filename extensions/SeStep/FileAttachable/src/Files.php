@@ -2,7 +2,6 @@
 
 namespace SeStep\FileAttachable;
 
-
 use SeStep\FileAttachable\Model\UserFileThread;
 use SeStep\FileAttachable\Service\UserFileRepository;
 use SeStep\FileAttachable\Service\UserFileThreadRepository;
@@ -20,7 +19,8 @@ class Files
         $this->threadRepository = $threadRepository;
     }
 
-    public function findFile(int $id) {
+    public function findFile(int $id)
+    {
         return $this->fileRepository->get($id);
     }
 
@@ -32,9 +32,9 @@ class Files
     public function createThread($persist = false, $flush = false)
     {
         $thread = new UserFileThread();
-        if($persist) {
+        if ($persist) {
             $this->em->persist($thread);
-            if($flush) {
+            if ($flush) {
                 $this->em->flush();
             }
         }
@@ -45,15 +45,17 @@ class Files
     /**
      * @param FileEntity|UserFileThread $entity
      */
-    public function save($entity, $flushImmediatelly = true) {
+    public function save($entity, $flushImmediatelly = true)
+    {
         $this->em->persist($entity);
-        if($flushImmediatelly) {
+        if ($flushImmediatelly) {
             $this->em->flush($entity);
         }
     }
 
 
-    public function flushAll() {
+    public function flushAll()
+    {
         $this->em->flush();
     }
 }

@@ -1,7 +1,5 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace SeStep\LeanSettings\DI;
-
 
 use Nette\DI\CompilerExtension;
 use SeStep\LeanSettings\LeanOptions;

@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettingsInMemory;
-
 
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
@@ -39,13 +36,13 @@ final class InMemoryOptions extends InMemoryOptionSection implements IOptions
 
 
     /** @internal */
-    function &getData()
+    public function &getData()
     {
         return $this->rootData;
     }
 
     /** @internal */
-    function setData(&$data)
+    public function setData(&$data)
     {
         $this->rootData = $data;
     }

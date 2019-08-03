@@ -1,7 +1,5 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettings\Exceptions;
-
 
 use RuntimeException;
 
@@ -21,4 +19,3 @@ class NodeNotFoundException extends RuntimeException
         return $this->fqn;
     }
 }
-

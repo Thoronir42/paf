@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace Test\SeStep\GeneralSettingsInMemory;
-
 
 use SeStep\GeneralSettings\IOptions;
 use SeStep\GeneralSettingsInMemory\InMemoryOptions;
@@ -15,6 +12,4 @@ class InMemoryOptionsTest extends GenericOptionsTest
     {
         return new InMemoryOptions();
     }
-
-
 }

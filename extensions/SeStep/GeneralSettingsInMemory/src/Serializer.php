@@ -1,13 +1,11 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettingsJson;
-
 
 use SeStep\GeneralSettingsInMemory\InMemoryOptions;
 
 class Serializer
 {
-    public final function save(InMemoryOptions $options, string $filename)
+    final public function save(InMemoryOptions $options, string $filename)
     {
         $serialized = $this->serialize($options->getData());
 
@@ -19,7 +17,8 @@ class Serializer
         return json_encode($data, JSON_PRETTY_PRINT);
     }
 
-    public final function load(InMemoryOptions $options, string $filename) {
+    final public function load(InMemoryOptions $options, string $filename)
+    {
         $serialized = file_get_contents($filename);
 
         $options->setData($this->deserialize($serialized));

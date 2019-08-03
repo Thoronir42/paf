@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace Test\SeStep\LeanSettings;
-
 
 use LeanMapper\DefaultEntityFactory;
 use SeStep\GeneralSettings\IOptions;

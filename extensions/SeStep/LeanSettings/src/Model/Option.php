@@ -2,7 +2,6 @@
 
 namespace SeStep\LeanSettings\Model;
 
-
 use SeStep\GeneralSettings\Options\IOption;
 use SeStep\GeneralSettings\Options\IValuePool;
 
@@ -19,7 +18,7 @@ class Option extends OptionNode implements IOption
 
     public function setValue($value)
     {
-        if($this->hasValuePool()) {
+        if ($this->hasValuePool()) {
             $this->valuePool->validate($value);
         }
 

@@ -1,10 +1,7 @@
-<?php
-
+<?php declare(strict_types=1);
 
 namespace SeStep\LeanSettings\Repository;
 
-
-use Dibi\NotImplementedException;
 use Nette\InvalidStateException;
 use PAF\Common\Model\BaseRepository;
 use PAF\Common\Model\Exceptions\EntityNotFoundException;
@@ -39,12 +36,12 @@ class OptionNodeRepository extends BaseRepository
 
     public function get(string $name = null, string $domain = null): OptionNode
     {
-        if ($result = $this->find($name, $domain)) {
+        $fqn = DomainLocator::concatFQN($name, $domain);
+        if ($result = $this->find($fqn)) {
             return $result;
         }
 
         throw new EntityNotFoundException();
-
     }
 
     public function getRootSection(): Section
@@ -61,7 +58,7 @@ class OptionNodeRepository extends BaseRepository
         return $section;
     }
 
-    function getSection($fqn, bool $create = false): ?Section
+    public function getSection($fqn, bool $create = false): ?Section
     {
         $section = $this->find($fqn);
         if (!$section) {
@@ -150,8 +147,5 @@ class OptionNodeRepository extends BaseRepository
             ->fetchAssoc('fqn');
 
         return array_map([$this, 'createEntity'], $selection);
-
     }
-
-
 }

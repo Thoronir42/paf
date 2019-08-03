@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettingsInMemory;
-
 
 use SeStep\GeneralSettings\Options\IOption;
 use SeStep\GeneralSettings\Options\IValuePool;
@@ -14,7 +11,7 @@ class InMemoryOption extends InMemoryNode implements IOption
         return $this->data['value'];
     }
 
-    function setValue($value)
+    public function setValue($value)
     {
         $this->data['value'] = $value;
     }
@@ -30,6 +27,6 @@ class InMemoryOption extends InMemoryNode implements IOption
             return null;
         }
 
-        $this->getRoot()->getPool($this->data['pool']);
+        return $this->getRoot()->getPool($this->data['pool']);
     }
 }

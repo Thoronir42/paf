@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace Test\SeStep\GeneralSettings;
-
 
 use PHPUnit\Framework\TestCase;
 use SeStep\GeneralSettings\IOptions;
@@ -12,7 +9,7 @@ use SeStep\GeneralSettings\Options\IOptionSectionWritable;
 
 abstract class GenericOptionsTest extends TestCase
 {
-    protected abstract function getOptions(): IOptions;
+    abstract protected function getOptions(): IOptions;
 
     public function testSetOptions()
     {
@@ -73,7 +70,6 @@ abstract class GenericOptionsTest extends TestCase
         $this->setEntrances($options);
 
         $this->assertEquals('hole in a wall', $options->getValue('entrances.side'));
-
     }
 
     public function testAddValue()

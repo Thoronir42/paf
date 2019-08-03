@@ -2,7 +2,6 @@
 
 namespace SeStep\FileAttachable\Model;
 
-
 use Nette\InvalidArgumentException;
 use PAF\Common\Model\BaseEntity;
 

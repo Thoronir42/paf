@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace SeStep\Commentable\Service;
-
 
 use SeStep\Commentable\Lean\Repository\CommentRepository;
 use SeStep\Commentable\Lean\Repository\CommentThreadRepository;

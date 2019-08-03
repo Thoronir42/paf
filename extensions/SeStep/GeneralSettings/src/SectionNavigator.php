@@ -3,8 +3,8 @@
 
 namespace SeStep\GeneralSettings;
 
-
 use Nette\InvalidStateException;
+use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
 use SeStep\GeneralSettings\Options\IOptionSection;
 use SeStep\GeneralSettings\Options\IOptionSectionWritable;
 
@@ -50,11 +50,12 @@ class SectionNavigator
                     return null;
                 }
 
-                throw new InvalidStateException("Could not find section '" . DomainLocator::concatFQN($subSectionName,
-                        $section->getFQN()) . "''");
+                $fqn = DomainLocator::concatFQN($subSectionName, $section->getFQN());
+                throw new SectionNotFoundException($fqn);
             }
             if (!$section instanceof IOptionSectionWritable) {
-                throw new InvalidStateException("Tried to create subSection in section that is not '" . IOptionSectionWritable::class . "'");
+                $message = "Tried to create subSection in section that is not '" . IOptionSectionWritable::class . "'";
+                throw new InvalidStateException($message);
             }
 
             $subSection = $section->addSection($subSectionName);

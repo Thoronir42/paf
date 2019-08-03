@@ -2,7 +2,6 @@
 
 namespace SeStep\FileAttachable\Model;
 
-
 use PAF\Common\Model\BaseEntity;
 
 /**
@@ -12,11 +11,13 @@ use PAF\Common\Model\BaseEntity;
 class UserFileThread extends BaseEntity implements \IteratorAggregate, \Countable
 {
 
-    public function getIterator() {
+    public function getIterator()
+    {
         return new \ArrayIterator($this->files);
     }
 
-    public function count() {
+    public function count()
+    {
         return count($this->files);
     }
 }

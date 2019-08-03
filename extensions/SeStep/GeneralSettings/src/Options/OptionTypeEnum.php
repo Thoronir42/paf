@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettings\Options;
-
 
 class OptionTypeEnum
 {
@@ -18,8 +15,10 @@ class OptionTypeEnum
     {
         $type = gettype($value);
         switch ($type) {
-            case 'integer': return IOption::TYPE_INT;
-            case 'boolean': return IOption::TYPE_BOOL;
+            case 'integer':
+                return IOption::TYPE_INT;
+            case 'boolean':
+                return IOption::TYPE_BOOL;
         }
 
         return $type;

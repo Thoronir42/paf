@@ -2,7 +2,6 @@
 
 namespace SeStep\LeanSettings;
 
-
 use Nette\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\IOptions;
@@ -26,7 +25,7 @@ class LeanOptions implements IOptions
         $this->nodeRepository = $nodeRepository;
 
         $this->rootSection = $this->nodeRepository->findSection('.');
-        if(!$this->rootSection) {
+        if (!$this->rootSection) {
             $this->rootSection = $this->nodeRepository->createSection('.', 'Root entry for options');
         }
     }
@@ -40,7 +39,8 @@ class LeanOptions implements IOptions
     public function addValue($value)
     {
         $nodes = $this->getNodes();
-        for ($freeIndex = 0; $freeIndex < count($nodes) && array_key_exists("$freeIndex", $nodes); $freeIndex++);
+        for ($freeIndex = 0; $freeIndex < count($nodes) && array_key_exists("$freeIndex", $nodes); $freeIndex++) {
+        }
 
         $this->setValue($value, "$freeIndex");
     }
@@ -76,7 +76,7 @@ class LeanOptions implements IOptions
     {
         $dl = new DomainLocator($name);
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
-        if(!$parent->hasNode($dl->getName())) {
+        if (!$parent->hasNode($dl->getName())) {
             // todo: notify error?
             return;
         }
@@ -145,5 +145,4 @@ class LeanOptions implements IOptions
     {
         return $this->rootSection->getValue($name);
     }
-
 }

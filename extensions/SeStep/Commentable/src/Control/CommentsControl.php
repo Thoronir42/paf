@@ -35,7 +35,8 @@ class CommentsControl extends Control
         $this->formFactory = $formFactory;
     }
 
-    public function renderInput($withLabels = true) {
+    public function renderInput($withLabels = true)
+    {
         $template = $this->createTemplate();
 
         $template->setFile(__DIR__ . '/commentsInput.latte');
@@ -44,7 +45,8 @@ class CommentsControl extends Control
         $template->render();
     }
 
-    public function renderStack() {
+    public function renderStack()
+    {
         $template = $this->createTemplate();
 
         $template->comments = $this->comments;
@@ -83,24 +85,26 @@ class CommentsControl extends Control
         return $form;
     }
 
-    public function processFormInput(Form $form, $values) {
+    public function processFormInput(Form $form, $values)
+    {
         $comment = new Comment($this->thread, $values['text']);
         $this->onCommentAdd($comment, $this->thread);
     }
 
-    public function handleDelete($id) {
+    public function handleDelete($id)
+    {
         $found = null;
         foreach ($this->comments as $comment) {
-            if($comment->getId() == $id) {
+            if ($comment->getId() == $id) {
                 $found = $comment;
                 break;
             }
         }
-        if(!$found) {
+        if (!$found) {
             $this->presenter->flashMessage('comment_not_found', 'warning');
             return;
         }
 
-        $this->onCommentRemove($found,  $this->thread);
+        $this->onCommentRemove($found, $this->thread);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace SeStep\Commentable\Lean\Model;
 
-
 use DateTime;
 use PAF\Common\Model\BaseEntity;
 

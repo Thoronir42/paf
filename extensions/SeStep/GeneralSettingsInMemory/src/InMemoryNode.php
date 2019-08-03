@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettingsInMemory;
-
 
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Options\INode;
@@ -48,7 +45,7 @@ abstract class InMemoryNode implements INode
         return $this->data['caption'] ?? null;
     }
 
-    protected final function getRoot(): InMemoryOptions
+    final protected function getRoot(): InMemoryOptions
     {
         $section = $this;
         while (!($section instanceof InMemoryOptions) && $section->parent) {

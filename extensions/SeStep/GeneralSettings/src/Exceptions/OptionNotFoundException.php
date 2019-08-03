@@ -1,7 +1,5 @@
-<?php
-
+<?php declare(strict_types=1);
 namespace SeStep\GeneralSettings\Exceptions;
-
 
 use SeStep\GeneralSettings\Options\INode;
 

@@ -1,8 +1,5 @@
-<?php
-
-
+<?php declare(strict_types=1);
 namespace Test\SeStep\GeneralSettings;
-
 
 use PHPUnit\Framework\TestCase;
 use SeStep\GeneralSettings\DomainLocator;
@@ -59,7 +56,6 @@ class DomainLocatorTest extends TestCase
         $this->assertEquals('', $dl->shiftDomain());
         $this->assertEquals('', $dl->getDomain());
         $this->assertEquals('dddd', $dl->getName());
-
     }
 
     public function testPop()
@@ -79,28 +75,5 @@ class DomainLocatorTest extends TestCase
         $this->assertEquals('human', $dl->pop());
 
         $this->assertEquals('', $dl->getFQN());
-    }
-}
-
-class CzechiaNode implements INode
-{
-
-    /**
-     * Returns fully qualified name. That is in most cases concatenated getDomain() and getName().
-     * @return mixed
-     */
-    public function getFQN(): string
-    {
-        return 'earth.continents.europe.czechia';
-    }
-
-    public function getType(): string
-    {
-        return 'container';
-    }
-
-    public function getCaption(): ?string
-    {
-        return 'The silly country';
     }
 }
