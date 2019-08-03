@@ -33,6 +33,11 @@ final class RepositoryFixtureDao implements FixtureDao
         $this->repository->persist($entity);
     }
 
+    public function findBy($value)
+    {
+        return $this->repository->find($value);
+    }
+
 
     public function getPropertyRelatedClasses(): array
     {
@@ -46,7 +51,9 @@ final class RepositoryFixtureDao implements FixtureDao
             return $propertyReflection->isWritable() && $propertyReflection->hasRelationship();
         });
 
-        return $modifiableRelatedProperties;
+        return array_map(function(Property $property) {
+            return $property->getType();
+        }, $modifiableRelatedProperties);
     }
 
     public function get($value)

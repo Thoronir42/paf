@@ -37,6 +37,11 @@ class UserFixtureDao implements FixtureDao
         $this->repoDao->create($entityData);
     }
 
+    public function findBy($value)
+    {
+        return $this->repoDao->findBy($value);
+    }
+
     public function getPropertyRelatedClasses(): array
     {
         return $this->repoDao->getPropertyRelatedClasses();

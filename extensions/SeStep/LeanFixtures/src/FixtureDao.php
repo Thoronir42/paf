@@ -9,6 +9,8 @@ interface FixtureDao
 
     public function create($entityData);
 
+    public function findBy($value);
+
     /**
      * Returns associative array of
      *  - property => classname

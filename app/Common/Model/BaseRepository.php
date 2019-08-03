@@ -4,6 +4,9 @@ namespace PAF\Common\Model;
 
 use Dibi\DataSource;
 use Dibi\Fluent;
+use LeanMapper\Connection;
+use LeanMapper\IEntityFactory;
+use LeanMapper\IMapper;
 use LeanMapper\Repository;
 
 class BaseRepository extends Repository implements IQueryable
@@ -24,7 +27,14 @@ class BaseRepository extends Repository implements IQueryable
     ];
 
     /** @var string */
-    protected $index;
+    private $index;
+
+    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, string $index = null)
+    {
+        parent::__construct($connection, $mapper, $entityFactory);
+        $this->index = $index;
+    }
+
 
     protected function select($what = "t.*", $alias = "t", array $criteria = null)
     {

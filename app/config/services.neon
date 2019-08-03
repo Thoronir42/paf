@@ -23,7 +23,13 @@ services:
 
     - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
-    - PAF\Modules\CommonModule\Repository\UserRepository
+    common.userRepository:
+        class: PAF\Modules\CommonModule\Repository\UserRepository
+        arguments:
+            index: 'username'
+
+    common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
+
     - PAF\Modules\CommissionModule\Facade\PafEntities
     - PAF\Modules\CommissionModule\Repository\QuoteRepository
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
@@ -61,3 +67,4 @@ services:
     leanFixtures.entityFixtures:
         setup:
             - addFixtureDao(PAF\Modules\CommonModule\Fixtures\UserFixtureDao())
+            - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository))

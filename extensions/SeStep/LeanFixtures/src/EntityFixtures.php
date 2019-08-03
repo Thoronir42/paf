@@ -3,6 +3,7 @@
 namespace SeStep\LeanFixtures;
 
 use Nette\InvalidStateException;
+use Nette\UnexpectedValueException;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -48,7 +49,19 @@ final class EntityFixtures
 
         $i = 0;
         foreach ($group->entities() as $n => $entityData) {
+            if (!is_array($entityData) || (is_object($entityData) && !$entityData instanceof \ArrayAccess)) {
+                $output->writeln("Error: Group value '$n' is not an associative array");
+                continue;
+            }
+
             try {
+                foreach ($entityData as $property => $value) {
+                    if (array_key_exists($property, $propertyClasses)) {
+                        $entityData[$property] = $this->findEntityByValue($propertyClasses[$property], $value,
+                            $property);
+                    }
+                }
+
                 $dao->create($entityData);
                 $i++;
             } catch (\Throwable $ex) {
@@ -66,5 +79,18 @@ final class EntityFixtures
         }
 
         return $this->daoByClass[$class];
+    }
+
+    private function findEntityByValue(string $class, $value, string $property)
+    {
+        $propertyDao = $this->getDaoByEntityClass($class);
+        $relatedEntity = $propertyDao->findBy($value);
+        if (!$relatedEntity instanceof $class) {
+            $type = is_object($relatedEntity) ? get_class($relatedEntity) : gettype($relatedEntity);
+            $msg = "Related value of property '$property' expected to be instance of $class, got: $type";
+            throw new UnexpectedValueException($msg);
+        }
+
+        return $relatedEntity;
     }
 }

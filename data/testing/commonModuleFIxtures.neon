@@ -8,3 +8,10 @@ users:
             username: 'T-boi'
             password: 'test'
 
+userContact:
+    class: PAF\Modules\CommonModule\Model\Contact
+    data:
+        -
+            user: T-boi
+            type: email
+            value: ohaio@gozaimasu.chan
