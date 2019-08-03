@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms\Controls;
-
+namespace PAF\Common\Forms\Controls;
 
 use Nette\Forms\Controls\TextInput;
 use Nette\UnexpectedValueException;
 use Nette\Utils\DateTime;
+use Nette\Utils\Html;
 
 class DateInput extends TextInput
 {
@@ -29,7 +29,7 @@ class DateInput extends TextInput
 
     protected $position;
 
-    public function __construct($label = null, $format = null)
+    public function __construct(string $label = null, string $format = null)
     {
         parent::__construct($label);
         $this->setOption('type', 'datetime');
@@ -53,12 +53,14 @@ class DateInput extends TextInput
     /**
      * @param string|DateTime $value
      * @return static
+     * @internal
      */
     public function setValue($value)
     {
         if ($value instanceof \DateTime) {
             $value = $value->format($this->format);
         }
+        /** @noinspection PhpInternalEntityUsedInspection */
         parent::setValue($value);
         return $this;
     }
@@ -69,14 +71,14 @@ class DateInput extends TextInput
     }
 
 
-    public function getControl()
+    public function getControl(): Html
     {
         $element = parent::getControl();
         $view = $this->getMinView($this->format);
         $attrs = [
             'data-date-format' => $this->getBootstrapFormat($this->format),
-            'data-min-view'    => $view,
-            'data-start-view'  => self::VIEW_DAY,
+            'data-min-view' => $view,
+            'data-start-view' => self::VIEW_DAY,
         ];
         if ($this->position) {
             $attrs['data-picker-position'] = $this->position;
@@ -114,12 +116,10 @@ class DateInput extends TextInput
     {
         $stringValue = parent::getValue();
 
-        if(!$stringValue) {
+        if (!$stringValue) {
             return true;
         }
 
         return $this->getValue() instanceof \DateTime;
     }
-
-
 }

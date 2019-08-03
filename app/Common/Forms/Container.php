@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms;
-
+namespace PAF\Common\Forms;
 
 class Container extends \Nette\Forms\Container
 {
-    use FormExtender;
+    use FormCustomControls;
 }

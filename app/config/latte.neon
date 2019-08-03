@@ -1,8 +1,0 @@
-services:
-    nette.latteFactory:
-        setup:
-            - addFilter(yesno, @App\Common\Services\Latte\YesNoFilter)
-            - addFilter(contactUrl, @App\Common\Services\Latte\ContactUrlFilter)
-
-    - App\Common\Services\Latte\YesNoFilter
-    - App\Common\Services\Latte\ContactUrlFilter

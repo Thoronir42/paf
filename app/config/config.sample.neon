@@ -1,4 +1,5 @@
-doctrine:
-    user: ''
-    password: ''
-    dbname: debtr
+parameters:
+    database:
+        database: paf_2019
+        user: ''
+        password: ''

@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS  `ss_settings__option_node`;

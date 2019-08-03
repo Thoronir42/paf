@@ -1,6 +1,6 @@
 {
-  "description": "",
-  "license": "",
+  "description": "PAF, the interactive portfolio",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrap-confirmation": "^0.0.2",

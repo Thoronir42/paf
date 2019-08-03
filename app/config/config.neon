@@ -5,6 +5,11 @@
 parameters:
     appName: 'Pretty Acceptable Fursuits'
     powerUsers: []
+    database:
+        driver: mysqli
+        host: localhost
+        user:
+        password:
 
 php:
 	date.timezone: Europe/Prague
@@ -14,7 +19,7 @@ application:
 	catchExceptions: %productionMode%
 	errorPresenter: Front:Error
 	mapping:
-		*: App\Modules\*\Presenters\*Presenter
+		*: PAF\Modules\*Module\Presenters\*Presenter
 
 
 session:
@@ -23,29 +28,43 @@ session:
 
 
 extensions:
-    annotations: Kdyby\Annotations\DI\AnnotationsExtension
-    console: Kdyby\Console\DI\ConsoleExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
-    events: Kdyby\Events\DI\EventsExtension
-    migrations: SeStep\Migrations\DI\MigrationsExtension
-    translation: Kdyby\Translation\DI\TranslationExtension
+    leanMapper: PAF\Utils\LeanMapperExtension
+    leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
+    translation: Contributte\Translation\DI\TranslationExtension
+    moment: PAF\Utils\Moment\MomentProviderExtension
+    leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
 
-doctrine:
-    metadata:
-        App: %appDir%
-        SeStep\Settings: %appDir%/../vendor/sestep/settings-doctrine/src
-        SeStep\Commentable: %appDir%/../extensions/SeStep/Commentable/src
-        SeStep\FileAttachable: %appDir%/../extensions/SeStep/FileAttachable/src
+leanMapper:
+    db: %database%
+
+leanFixtures:
+    initFiles:
+        - %rootDir%/data/testing/commonModuleFixtures.neon
+
+services:
+    leanMapper.mapper:
+        class: SeStep\ModularLeanMapper\ModularMapper
+        arguments:
+            mapper: PAF\Common\Model\UnderscoreMapper()
+            modules:
+                ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
+                common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
 
 translation:
-    default: en_GB
-    fallback: [en_GB]
+    locales:
+        default: 'en'
+
     dirs:
-        - '%appDir%/Common/lang'
-        - '%appDir%/Modules/Front/lang'
-        - '%appDir%/Modules/Admin/lang'
+        - %appDir%/Common/lang
+
+#translation:
+#    default: en_GB
+#    fallback: [en_GB]
+#    dirs:
+#        - '%appDir%/Common/lang'
+#        - '%appDir%/Modules/Front/lang'
+#        - '%appDir%/Modules/Admin/lang'
 
 includes:
     - services.neon
-    - latte.neon
-    - migrations.neon
+    - console.neon

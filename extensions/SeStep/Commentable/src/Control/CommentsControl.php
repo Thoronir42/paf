@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace SeStep\Commentable\Control;
 
-use App\Common\Forms\FormFactory;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
-use SeStep\Commentable\Model\Comment;
-use SeStep\Commentable\Model\CommentThread;
+use PAF\Common\Forms\FormFactory;
+use SeStep\Commentable\Lean\Model\Comment;
+use SeStep\Commentable\Lean\Model\CommentThread;
+use UnexpectedValueException;
 
 /**
  * Class CommentsControl
@@ -31,20 +32,21 @@ class CommentsControl extends Control
 
     public function __construct(FormFactory $formFactory)
     {
-        parent::__construct();
         $this->formFactory = $formFactory;
     }
 
-    public function renderInput($noLabels = false) {
+    public function renderInput($withLabels = true)
+    {
         $template = $this->createTemplate();
 
         $template->setFile(__DIR__ . '/commentsInput.latte');
-        $template->renderLabels = !$noLabels;
+        $template->renderLabels = $withLabels;
 
         $template->render();
     }
 
-    public function renderStack() {
+    public function renderStack()
+    {
         $template = $this->createTemplate();
 
         $template->comments = $this->comments;
@@ -62,7 +64,7 @@ class CommentsControl extends Control
     {
         foreach ($comments as $comment) {
             if (!($comment instanceof Comment)) {
-                throw new \UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
+                throw new UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
             }
         }
 
@@ -83,35 +85,26 @@ class CommentsControl extends Control
         return $form;
     }
 
-    public function processFormInput(Form $form, $values) {
+    public function processFormInput(Form $form, $values)
+    {
         $comment = new Comment($this->thread, $values['text']);
         $this->onCommentAdd($comment, $this->thread);
     }
 
-    public function handleDelete($id) {
+    public function handleDelete($id)
+    {
         $found = null;
         foreach ($this->comments as $comment) {
-            if($comment->getId() == $id) {
+            if ($comment->getId() == $id) {
                 $found = $comment;
                 break;
             }
         }
-        if(!$found) {
+        if (!$found) {
             $this->presenter->flashMessage('comment_not_found', 'warning');
             return;
         }
 
-        $this->onCommentRemove($found,  $this->thread);
+        $this->onCommentRemove($found, $this->thread);
     }
 }
-
-interface ICommentsControlFactory
-{
-
-    /**
-     * @return CommentsControl
-     */
-    public function create();
-}
-
-

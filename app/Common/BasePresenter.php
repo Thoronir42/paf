@@ -1,43 +1,38 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common;
+namespace PAF\Common;
 
-
-use App\Common\Auth\Authorizator;
-use App\Common\Controls\Footer\Footer;
-use App\Common\Controls\NavigationMenu\INavigationMenuFactory;
-use App\Common\Model\Entity\User;
-use App\Common\Services\Doctrine\Users;
-use App\Modules\Admin\Presenters\SettingsPresenter;
-use Kdyby\Doctrine\EntityManager;
-use Kdyby\Translation\ITranslator;
-use Kdyby\Translation\Translator;
+use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
-use SeStep\SettingsInterface\Options\IOptions;
-use SeStep\SettingsInterface\Settings;
+use Nette\Localization\ITranslator;
+use PAF\Common\Security\Authorizator;
+use PAF\Modules\CommonModule\Components\NavigationMenu\NavigationMenu;
+use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Repository\UserRepository;
+use SeStep\GeneralSettings\Settings;
+use stdClass;
 
 /**
  * Class BasePresenter
- * @package App\Common
+ * @package PAF\Common
  *
- * @property-read Template $template
+ * @property-read Template|stdClass $template
  */
 abstract class BasePresenter extends Presenter
 {
 
-    /** @var EntityManager @inject */
-    public $em;
+    /** @var string @persistent */
+    public $lang = 'en';
 
-    /** @var Users @inject */
+
+    /** @var UserRepository @inject */
     public $users;
-    /** @var IOptions @inject */
-    public $options;
 
-    /** @var  INavigationMenuFactory @inject */
-    public $navigationMenuFactory;
+    /** @var Settings @inject */
+    public $settings;
 
-    /** @var Translator @inject */
+    /** @var ITranslator @inject */
     public $translator;
 
     /** @var User */
@@ -47,21 +42,26 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        $domain = strtolower(str_replace(":", ".", $this->name));
-        $this->setTranslator($this->translator->domain($domain));
-
-        $this->template->defaultTranslator = $this->translator;
-
         $this->template->appName = $this->context->parameters['appName'];
         $this->template->background_color = '#25c887';
         $this->template->title = '';
 
+        // todo: move this to LiveUserStorage
         if ($this->user->isLoggedIn()) {
             $this->eUser = $this->users->find($this->user->id);
         }
     }
 
+    protected function createTemplate(): ITemplate
+    {
+        $template = parent::createTemplate();
+        $template->setTranslator($this->translator);
+        $template->lang = $this->lang;
 
+        return $template;
+    }
+
+    // todo: rewrite into (?)PresenterAuthorizator
     protected function validateAuthorization($resource, $privilege = Authorizator::ALL, $redirect = null)
     {
         if ($this->user->isAllowed($resource, $privilege)) {
@@ -78,7 +78,7 @@ abstract class BasePresenter extends Presenter
         $this->flashMessage($message);
 
         if (!$redirect || $this->presenter->isLinkCurrent($redirect)) {
-            $this->redirect(':Front:Default:');
+            $this->redirect(':Common:Homepage:default');
             return false;
         }
 
@@ -86,7 +86,7 @@ abstract class BasePresenter extends Presenter
         return false;
     }
 
-    public function formatLayoutTemplateFiles()
+    public function formatLayoutTemplateFiles(): array
     {
         $fileCandidates = parent::formatLayoutTemplateFiles();
         array_unshift($fileCandidates, __DIR__ . '/templates/@layout.latte');
@@ -96,12 +96,12 @@ abstract class BasePresenter extends Presenter
 
     public function createComponentMenu()
     {
-        $menu = $this->navigationMenuFactory->create();
+        $menu = new NavigationMenu($this->translator);
 
-        $menu->setBrandTarget(':Front:Default:');
+        $menu->setBrandTarget(':Common:Homepage:default');
         $menu->setTitle($this->context->parameters['appName']);
 
-        $menu->addLink(':Front:Quotes:', 'paf.views.quotes');
+        $menu->addLink(':Commission:Quotes:default', 'paf.views.quotes');
 
         if ($this->user->isAllowed('admin-settings')) {
             $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');
@@ -112,24 +112,12 @@ abstract class BasePresenter extends Presenter
         return $menu;
     }
 
-    public function createComponentFooter()
-    {
-        return new Footer();
-    }
-
-
-    protected function setTranslator(ITranslator $translator)
-    {
-        /** @var Template $template */
-        $template = $this->template;
-        $template->setTranslator($translator);
-    }
 
     /**
-     * @param string       $placeholder
+     * @param string $placeholder
      * @param array|string $variables
-     * @param string       $level
-     * @return \stdClass
+     * @param string $level
+     * @return stdClass
      */
     protected function flashTranslate($placeholder, $variables = [], $level = 'info')
     {
@@ -140,5 +128,4 @@ abstract class BasePresenter extends Presenter
 
         return $this->flashMessage($this->translator->translate($placeholder, null, $variables), $level);
     }
-
 }

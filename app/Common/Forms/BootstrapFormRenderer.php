@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms;
+namespace PAF\Common\Forms;
 
 use Nette;
 use Nette\Forms\Controls\TextArea;
-use Nette\Forms\Form;
 use Nette\Forms\Rendering\DefaultFormRenderer;
 
 class BootstrapFormRenderer extends DefaultFormRenderer
@@ -15,13 +14,14 @@ class BootstrapFormRenderer extends DefaultFormRenderer
     }
 
 
-    public function render(Form $form, $mode = null)
+    public function render(Nette\Forms\Form $form, string $mode = null): string
     {
+        $form->getElementPrototype()->appendAttribute('class', 'bs-form');
+
         foreach ($form->getControls() as $control) {
             if ($control instanceof TextArea) {
                 $control->getControlPrototype()->class[] = 'form-control';
             }
-
         }
 
         return parent::render($form, $mode);
@@ -90,7 +90,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
         ];
     }
 
-    public function renderPair(Nette\Forms\IControl $control)
+    public function renderPair(Nette\Forms\IControl $control): string
     {
         if (!($control instanceof Nette\Forms\Controls\BaseControl)) {
             return parent::renderPair($control);
@@ -100,10 +100,10 @@ class BootstrapFormRenderer extends DefaultFormRenderer
         $pair->addHtml($this->renderLabel($control));
         $controlHtml = $this->renderControl($control);
         if ($help = $control->getOption('help-text')) {
-            $controlHtml->addHtml('<p class="help-block">'.$control->translate($help).'</p>');
+            $controlHtml->addHtml('<p class="help-block">' . $control->translate($help) . '</p>');
         }
         $pair->addHtml($controlHtml);
-        
+
         $pair->class($this->getValue($control->isRequired() ? 'pair .required' : 'pair .optional'), true);
         $pair->class($control->hasErrors() ? $this->getValue('pair .error') : null, true);
         $pair->class($control->getOption('class'), true);
@@ -111,8 +111,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
             $pair->class($this->getValue('pair .odd'), true);
         }
         $pair->id = $control->getOption('id');
+
         return $pair->render(0);
     }
-
-
 }

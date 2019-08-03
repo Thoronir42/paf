@@ -1,14 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace App\Common\Forms;
+namespace PAF\Common\Forms;
 
-use Kdyby\Translation\ITranslator;
-use Nette;
 use Nette\Forms\Controls;
+use Nette\Forms\Validator;
+use Nette\Localization\ITranslator;
+use Nette\SmartObject;
 
-
-class FormFactory extends Nette\Object
+class FormFactory
 {
+    use SmartObject;
+
     /** @var ITranslator */
     private $translator;
 
@@ -26,15 +28,13 @@ class FormFactory extends Nette\Object
         $form->setTranslator($this->translator);
 
         $form->setRenderer(new BootstrapFormRenderer());
-        $form->getElementPrototype()->class = 'bs-form';
 
         return $form;
     }
 
     public static function adjustValidatorMessages()
     {
-        Nette\Forms\Validator::$messages = [
-            Form::PROTECTION              => 'generic.form-validator.csrf',
+        Validator::$messages = [
             Form::EQUAL                   => 'generic.form-validator.equal',
             Form::NOT_EQUAL               => 'generic.form-validator.not-equal',
             Form::FILLED                  => 'generic.form-validator.filled',
@@ -57,5 +57,4 @@ class FormFactory extends Nette\Object
             Controls\UploadControl::VALID => 'generic.form-validator.upload-valid',
         ];
     }
-
 }

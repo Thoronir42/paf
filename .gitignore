@@ -3,6 +3,8 @@
 log/*
 temp/*
 /vendor/
+www/node_modules/
+
 !.gitignore
 !.htaccess
 !web.config
@@ -11,4 +13,6 @@ app/config/config.*.neon
 app/config/users.neon
 
 www/ref/
-/www/images/quotes/*
+www/images/quotes/*
+www/node_modules/
+

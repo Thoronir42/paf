@@ -35,3 +35,5 @@ form-validator:
     upload-valid: 'An error occurred during file upload.'
     invalid-date-format: Date format is not valid
 
+static:
+    tos: "Terms of service"
