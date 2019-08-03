@@ -2,7 +2,6 @@
 
 namespace PAF\Utils;
 
-
 use SeStep\GeneralSettings\Settings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,6 +32,4 @@ class InitDefaultSettingsCommand extends Command
             'extraFeature' => 69
         ]);
     }
-
-
 }

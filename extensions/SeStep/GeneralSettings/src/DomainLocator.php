@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace SeStep\GeneralSettings;
 
 use InvalidArgumentException;
@@ -30,6 +31,10 @@ class DomainLocator
 
     public function getDomain(): string
     {
+        if ($this->lastDelimiter === false) {
+            return '';
+        }
+
         return substr($this->fqn, 0, $this->lastDelimiter);
     }
 
