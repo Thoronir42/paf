@@ -104,14 +104,3 @@ class CommentsControl extends Control
         $this->onCommentRemove($found,  $this->thread);
     }
 }
-
-interface ICommentsControlFactory
-{
-
-    /**
-     * @return CommentsControl
-     */
-    public function create();
-}
-
-

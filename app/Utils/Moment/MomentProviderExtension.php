@@ -15,7 +15,7 @@ class MomentProviderExtension extends CompilerExtension
             ->setType(MomentProvider::class);
 
         foreach ($builder->getDefinitions() as $definition) {
-            if(!$definition instanceof ServiceDefinition) {
+            if (!$definition instanceof ServiceDefinition) {
                 continue;
             }
             $class = $definition->getType();
@@ -29,5 +29,4 @@ class MomentProviderExtension extends CompilerExtension
             $definition->addSetup('setMomentProvider');
         }
     }
-
 }

@@ -41,7 +41,7 @@ class InitDatabaseCommand extends Command
 
     public function initialize(InputInterface $input, OutputInterface $output)
     {
-        if($input->getOption('default-files')) {
+        if ($input->getOption('default-files')) {
             $root = dirname(dirname(__DIR__));
             $this->files = [
                 $root . '/Modules/CommonModule/Model/database/initialize.sql',
@@ -59,7 +59,7 @@ class InitDatabaseCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->out = $output;
-        if(empty($this->files)) {
+        if (empty($this->files)) {
             $output->writeln("No files specified!");
             return 1;
         }

@@ -2,7 +2,6 @@
 
 namespace PAF\Utils\Moment;
 
-
 class MomentProvider
 {
     /** @var \DateTime */

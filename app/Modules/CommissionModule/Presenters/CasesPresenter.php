@@ -14,7 +14,7 @@ use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use Nette\Application\BadRequestException;
 use SeStep\Commentable\Control\CommentsControl;
-use SeStep\Commentable\Control\ICommentsControlFactory;
+use SeStep\Commentable\Control\CommentsControlFactory;
 use SeStep\Commentable\Lean\Model\Comment;
 use SeStep\Commentable\Lean\Model\CommentThread;
 use SeStep\Commentable\Service\CommentsService;
@@ -31,7 +31,7 @@ final class CasesPresenter extends BasePresenter
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
 
-    /** @var ICommentsControlFactory @inject */
+    /** @var CommentsControlFactory @inject */
     public $commentsControlFactory;
 
     /** @var CommentsService */

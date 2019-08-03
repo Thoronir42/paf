@@ -28,7 +28,7 @@ session:
 
 
 extensions:
-    leanMapper: Libs\LeanMapperExtension
+    leanMapper: PAF\Utils\LeanMapperExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
     translation: Contributte\Translation\DI\TranslationExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
@@ -50,7 +50,7 @@ translation:
         default: 'en'
 
     dirs:
-        - %rootDir%/Common/lang
+        - %appDir%/Common/lang
 
 #translation:
 #    default: en_GB

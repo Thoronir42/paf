@@ -22,7 +22,7 @@ use SeStep\LeanSettings\Model\Section;
  */
 class OptionNodeRepository extends BaseRepository
 {
-    public function find(string $fqn): ?OptionNode
+    public function find($fqn): ?OptionNode
     {
         if (!$fqn) {
             $fqn = '.';

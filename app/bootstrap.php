@@ -12,8 +12,6 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 return call_user_func(static function () {
-    (new PAF\FactoryInterfaceAutoloader())->register();
-
     Tracy\Debugger::$showLocation = true;
     Tracy\Debugger::$maxDepth = 4;
 
@@ -31,7 +29,7 @@ return call_user_func(static function () {
     }
 
     $configurator->addParameters([
-        'rootDir' => __DIR__,
+        'rootDir' => dirname(__DIR__),
     ]);
 
     $configurator->enableDebugger(__DIR__ . '/../log');

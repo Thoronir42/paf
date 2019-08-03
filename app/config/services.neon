@@ -35,7 +35,7 @@ services:
     - SeStep\FileAttachable\Service\UserFileRepository
     - SeStep\FileAttachable\Service\UserFileThreadRepository
 
-    - SeStep\Commentable\Control\ICommentsControlFactory
+    - SeStep\Commentable\Control\CommentsControlFactory
 
     # todo: replace with persisted options
     generalSettings:

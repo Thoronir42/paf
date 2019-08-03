@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Libs;
+namespace PAF\Utils;
 
 
 use Nette;
