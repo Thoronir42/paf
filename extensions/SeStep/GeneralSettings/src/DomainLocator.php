@@ -96,7 +96,7 @@ class DomainLocator
      * @param string|INode $domain
      * @return string
      */
-    public static function concatFQN(string $name, $domain = null): string
+    public static function concatFQN($name, $domain = null): string
     {
         if ($domain && !is_string($domain)) {
             if (($domain instanceof INode)) {

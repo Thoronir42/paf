@@ -1,30 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace PAFData\Fixtures\Modules\CommissionModule;
+namespace PAF\Utils;
 
-use PAFData\Fixtures\InitializerModule;
+
 use SeStep\GeneralSettings\Settings;
-use Tracy\Debugger;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
-final class CommissionInitializer extends InitializerModule
+class InitDefaultSettingsCommand extends Command
 {
+    protected static $defaultName = 'app:settings:setDefaults';
+
     /** @var Settings */
     private $settings;
 
     public function __construct(Settings $settings)
     {
+        parent::__construct();
         $this->settings = $settings;
     }
 
-    public function run(): int
-    {
-        $this->setOptions();
-
-        return 0;
-    }
-
-
-    private function setOptions()
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->settings->setValue('paf.quotes.enable', true);
         $this->settings->setValue('paf.quotes.preferedSpecies', [
@@ -36,4 +33,6 @@ final class CommissionInitializer extends InitializerModule
             'extraFeature' => 69
         ]);
     }
+
+
 }

@@ -41,7 +41,6 @@
   "autoload": {
     "psr-4": {
       "PAF\\": "app/",
-      "PAFData\\": "data/",
       "SeStep\\Commentable\\": "extensions/SeStep/Commentable/src/",
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
