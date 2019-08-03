@@ -1,0 +1,10 @@
+users:
+    class: PAF\Modules\CommonModule\Model\User
+    data:
+        -
+            username: 'the-y'
+            password: 'test'
+        -
+            username: 'T-boi'
+            password: 'test'
+

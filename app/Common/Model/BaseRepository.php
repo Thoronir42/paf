@@ -23,6 +23,9 @@ class BaseRepository extends Repository implements IQueryable
         ],
     ];
 
+    /** @var string */
+    protected $index;
+
     protected function select($what = "t.*", $alias = "t", array $criteria = null)
     {
         $fluent = $this->connection->command()->select($what)
@@ -55,6 +58,14 @@ class BaseRepository extends Repository implements IQueryable
                 $fluent->where("$key $conditions[EQ] %s", $value);
             }
         }
+    }
+
+    public function find($primaryKeyValue)
+    {
+        $index = $this->index ?: $this->getPrimaryKey();
+        return $this->findOneBy([
+            $index => $primaryKeyValue
+        ]);
     }
 
     public function findOneBy(array $criteria)
@@ -113,5 +124,10 @@ class BaseRepository extends Repository implements IQueryable
     public function makeEntities(array $rows): array
     {
         return $this->createEntities($rows);
+    }
+
+    protected function getPrimaryKey(): string
+    {
+        return $this->mapper->getPrimaryKey($this->getTable());
     }
 }

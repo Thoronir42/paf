@@ -46,7 +46,8 @@
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
-      "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/"
+      "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
+      "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/"
     }
   },
   "autoload-dev": {

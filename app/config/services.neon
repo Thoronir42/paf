@@ -58,3 +58,6 @@ services:
             formats:
                 telegram: 'https://t.me/%s'
 
+    leanFixtures.entityFixtures:
+        setup:
+            - addFixtureDao(PAF\Modules\CommonModule\Fixtures\UserFixtureDao())
