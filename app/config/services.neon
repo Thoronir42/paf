@@ -10,11 +10,9 @@ services:
                 - Quote
                 - Settings
     router: @routerFactory::createRouter()
-    authenticator:
-        class: PAF\Common\Security\Authenticator
-        arguments:
-            powerUsers: %powerUsers%
+    authenticator: PAF\Common\Security\Authenticator
     authorizator: PAF\Common\Security\Authorizator
+    security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
     - PAF\Common\Forms\FormFactory
 
@@ -30,6 +28,11 @@ services:
 
     common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
 
+    common.users:
+        class: PAF\Modules\CommonModule\Services\Users
+        arguments:
+            powerUsers: %powerUsers%
+
     - PAF\Modules\CommissionModule\Facade\PafEntities
     - PAF\Modules\CommissionModule\Repository\QuoteRepository
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
@@ -43,7 +46,6 @@ services:
 
     - SeStep\Commentable\Control\CommentsControlFactory
 
-    # todo: replace with persisted options
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptions())
 

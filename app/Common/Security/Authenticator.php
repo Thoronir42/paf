@@ -8,23 +8,19 @@ use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\Passwords;
 use PAF\Modules\CommonModule\Model\User;
-use PAF\Modules\CommonModule\Repository\UserRepository;
+use PAF\Modules\CommonModule\Services\Users;
 
-class Authenticator implements IAuthenticator
+final class Authenticator implements IAuthenticator
 {
-    /** @var UserRepository */
-    private $userRepository;
+    /** @var Users */
+    private $users;
     /** @var Passwords */
     private $passwords;
-    /** @var string[] */
-    private $powerUsers;
 
-
-    public function __construct(UserRepository $userRepository, Passwords $passwords, $powerUsers = [])
+    public function __construct(Users $users, Passwords $passwords)
     {
-        $this->userRepository = $userRepository;
+        $this->users = $users;
         $this->passwords = $passwords;
-        $this->powerUsers = $powerUsers;
     }
 
 
@@ -39,20 +35,19 @@ class Authenticator implements IAuthenticator
         list($login, $password) = $credentials;
 
         /** @var User $user */
-        $user = $this->userRepository->findOneBy(['username' => $login]);
+        $user = $this->users->findOneByLogin($login);
 
         if (!$user) {
-            throw new AuthenticationException('Login was not recognised.', self::IDENTITY_NOT_FOUND);
+            // run a hash test to delay response to prevent exposure of existing accounts
+            $this->passwords->hash('Wait up, yo');
+            throw new AuthenticationException('authentication.incorrect-login', self::IDENTITY_NOT_FOUND);
         } elseif (!$this->passwords->verify($password, $user->password)) {
-            throw new AuthenticationException('Entered password did not match the login.', self::INVALID_CREDENTIAL);
+            throw new AuthenticationException('authentication.incorrect-password', self::INVALID_CREDENTIAL);
         }
 
-        // todo: use live-data instead of snapshot via custom UserStorage class
-        $arr = $user->getRowData();
-        unset($arr['password']);
+        $identity = new LiveUserIdentity($user->id);
+        $identity->initialize($user, $this->users->getRoles($user));
 
-        $role = in_array($user->username, $this->powerUsers) ? 'power-user' : 'user';
-
-        return new Identity($user->id, $role, $arr);
+        return $identity;
     }
 }
