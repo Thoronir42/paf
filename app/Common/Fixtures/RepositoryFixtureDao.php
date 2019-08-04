@@ -51,7 +51,7 @@ final class RepositoryFixtureDao implements FixtureDao
             return $propertyReflection->isWritable() && $propertyReflection->hasRelationship();
         });
 
-        return array_map(function(Property $property) {
+        return array_map(function (Property $property) {
             return $property->getType();
         }, $modifiableRelatedProperties);
     }

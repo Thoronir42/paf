@@ -8,8 +8,6 @@ use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use PAF\Common\Security\Authorizator;
 use PAF\Modules\CommonModule\Components\NavigationMenu\NavigationMenu;
-use PAF\Modules\CommonModule\Model\User;
-use PAF\Modules\CommonModule\Repository\UserRepository;
 use SeStep\GeneralSettings\Settings;
 use stdClass;
 
@@ -25,18 +23,11 @@ abstract class BasePresenter extends Presenter
     /** @var string @persistent */
     public $lang = 'en';
 
-
-    /** @var UserRepository @inject */
-    public $users;
-
     /** @var Settings @inject */
     public $settings;
 
     /** @var ITranslator @inject */
     public $translator;
-
-    /** @var User */
-    protected $eUser;
 
     protected function startup()
     {
@@ -45,11 +36,6 @@ abstract class BasePresenter extends Presenter
         $this->template->appName = $this->context->parameters['appName'];
         $this->template->background_color = '#25c887';
         $this->template->title = '';
-
-        // todo: move this to LiveUserStorage
-        if ($this->user->isLoggedIn()) {
-            $this->eUser = $this->users->find($this->user->id);
-        }
     }
 
     protected function createTemplate(): ITemplate
@@ -104,9 +90,9 @@ abstract class BasePresenter extends Presenter
         $menu->addLink(':Commission:Quotes:default', 'paf.views.quotes');
 
         if ($this->user->isAllowed('admin-settings')) {
-            $manage = $menu->addLink(':Admin:Settings:', 'paf.views.manage');
-            $manage->addLink(':Admin:Settings:', 'paf.views.settings');
-            $manage->addLink(':Admin:Cases:list', 'paf.views.cases');
+            $manage = $menu->addLink(':Settings:Settings:', 'paf.views.manage');
+            $manage->addLink(':Settings:Settings:', 'paf.views.settings');
+            $manage->addLink(':Commission:Cases:list', 'paf.views.cases');
         }
 
         return $menu;

@@ -57,8 +57,11 @@ final class EntityFixtures
             try {
                 foreach ($entityData as $property => $value) {
                     if (array_key_exists($property, $propertyClasses)) {
-                        $entityData[$property] = $this->findEntityByValue($propertyClasses[$property], $value,
-                            $property);
+                        $entityData[$property] = $this->findEntityByValue(
+                            $propertyClasses[$property],
+                            $value,
+                            $property
+                        );
                     }
                 }
 
@@ -66,6 +69,7 @@ final class EntityFixtures
                 $i++;
             } catch (\Throwable $ex) {
                 $output->writeln("Failed to load item $n: " . $ex->getMessage());
+                $output->writeln($ex->getTraceAsString(), OutputInterface::VERBOSITY_VERY_VERBOSE);
             }
         }
 
