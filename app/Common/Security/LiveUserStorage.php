@@ -106,9 +106,4 @@ final class LiveUserStorage implements IUserStorage
 
         return true;
     }
-
-    public function getData()
-    {
-        
-    }
 }

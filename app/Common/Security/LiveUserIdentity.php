@@ -45,6 +45,9 @@ class LiveUserIdentity implements IIdentity
 
     public function initialize(User $user, array $roles = [])
     {
+        $user->detach();
+        $user->unsetProperty('password');
+
         $this->user = $user;
         $this->roles = $roles;
     }
@@ -53,10 +56,6 @@ class LiveUserIdentity implements IIdentity
     {
         if (!$key) {
             return $this->user->getRowData();
-        }
-
-        if ($key == 'roles') {
-            return $this->roles;
         }
 
         return $this->user->$key;
