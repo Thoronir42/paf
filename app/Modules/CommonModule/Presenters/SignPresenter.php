@@ -7,9 +7,13 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\AuthenticationException;
 use PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory;
+use PAF\Modules\CommonModule\Repository\UserRepository;
 
 class SignPresenter extends BasePresenter
 {
+    /** @var UserRepository @inject */
+    public $users;
+
     /** @var SignInFormFactory @inject */
     public $in_factory;
 
@@ -25,7 +29,7 @@ class SignPresenter extends BasePresenter
     public function actionOut()
     {
         $this->getUser()->logout(true);
-        $this->redirect('Default:');
+        $this->redirect('Homepage:');
     }
 
     protected function createComponentSignInForm()
@@ -38,19 +42,18 @@ class SignPresenter extends BasePresenter
             $remember = $values->remember;
 
             if ($remember) {
-                $this->user->setExpiration('14 days', false);
+                $this->user->setExpiration('14 days');
             } else {
-                $this->user->setExpiration('30 minutes', true);
+                $this->user->setExpiration('30 minutes', Nette\Security\IUserStorage::CLEAR_IDENTITY);
             }
 
             try {
                 $this->user->login($login, $password);
-            } catch (AuthenticationException $e) {
-                $form->addError('Nesprávné jméno nebo heslo.');
 
-                return;
+                $this->redirect('Homepage:');
+            } catch (AuthenticationException $e) {
+                $form->addError($this->translator->translate('authentication.invalid-attempt'));
             }
-            $this->redirect('Default:');
         };
 
         return $form;
