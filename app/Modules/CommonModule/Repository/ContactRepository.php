@@ -14,5 +14,4 @@ class ContactRepository extends BaseRepository
 
         return is_null($this->findOneBy($data));
     }
-
 }

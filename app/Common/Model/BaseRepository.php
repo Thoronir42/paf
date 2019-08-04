@@ -41,7 +41,7 @@ class BaseRepository extends Repository implements IQueryable
     ) {
         parent::__construct($connection, $mapper, $entityFactory);
         $this->index = $index;
-        if($index) {
+        if ($index) {
             $this->uniqueColumns = [$index];
         }
     }
@@ -128,7 +128,7 @@ class BaseRepository extends Repository implements IQueryable
     public function persist(Entity $entity)
     {
         if ($entity->isDetached()) {
-            if(!$this->isUnique($entity)) {
+            if (!$this->isUnique($entity)) {
                 throw new UniqueConstraintViolationException("Entity fails unique check");
             }
         }
@@ -166,7 +166,7 @@ class BaseRepository extends Repository implements IQueryable
 
     protected function isUnique(Entity $entity)
     {
-        if(empty($this->uniqueColumns)) {
+        if (empty($this->uniqueColumns)) {
             return true;
         }
 

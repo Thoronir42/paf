@@ -21,18 +21,13 @@ class LiveUserIdentity implements IIdentity
         $this->id = $id;
     }
 
-    /**
-     * Returns the ID of user.
-     * @return mixed
-     */
+    /** @inheritDoc */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Returns a list of roles that the user is a member of.
-     */
+    /** @inheritDoc */
     public function getRoles(): array
     {
         return $this->isInitialized() ? $this->roles : [];

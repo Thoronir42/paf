@@ -57,8 +57,11 @@ final class EntityFixtures
             try {
                 foreach ($entityData as $property => $value) {
                     if (array_key_exists($property, $propertyClasses)) {
-                        $entityData[$property] = $this->findEntityByValue($propertyClasses[$property], $value,
-                            $property);
+                        $entityData[$property] = $this->findEntityByValue(
+                            $propertyClasses[$property],
+                            $value,
+                            $property
+                        );
                     }
                 }
 

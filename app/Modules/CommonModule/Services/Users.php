@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommonModule\Services;
 
-
 use PAF\Modules\CommonModule\Model\User;
 use PAF\Modules\CommonModule\Repository\UserRepository;
 

@@ -24,29 +24,21 @@ final class LiveUserStorage implements IUserStorage
         $this->users = $users;
     }
 
-    /**
-     * Sets the authenticated status of this user.
-     * @return static
-     */
-    function setAuthenticated(bool $state)
+    /** @inheritDoc */
+    public function setAuthenticated(bool $state)
     {
         $this->userStorage->setAuthenticated($state);
         return $this;
     }
 
-    /**
-     * Is this user authenticated?
-     */
-    function isAuthenticated(): bool
+    /** @inheritDoc */
+    public function isAuthenticated(): bool
     {
         return $this->userStorage->isAuthenticated();
     }
 
-    /**
-     * Sets the user identity.
-     * @return static
-     */
-    function setIdentity(?IIdentity $identity)
+    /** @inheritDoc */
+    public function setIdentity(?IIdentity $identity)
     {
         if ($identity && !$identity instanceof LiveUserIdentity) {
             $identity = new LiveUserIdentity($identity->getId());
@@ -58,10 +50,8 @@ final class LiveUserStorage implements IUserStorage
         return $this;
     }
 
-    /**
-     * Returns current user identity, if any.
-     */
-    function getIdentity(): ?IIdentity
+    /** @inheritDoc */
+    public function getIdentity(): ?IIdentity
     {
         /** @var LiveUserIdentity $identity */
         $identity = $this->userStorage->getIdentity();
@@ -73,20 +63,15 @@ final class LiveUserStorage implements IUserStorage
         return $identity;
     }
 
-    /**
-     * Enables log out from the persistent storage after inactivity (like '20 minutes'). Accepts flag IUserStorage::CLEAR_IDENTITY.
-     * @return static
-     */
-    function setExpiration(?string $expire, int $flags = 0)
+    /** @inheritDoc */
+    public function setExpiration(?string $expire, int $flags = 0)
     {
         $this->userStorage->setExpiration($expire, $flags);
         return $this;
     }
 
-    /**
-     * Why was user logged out?
-     */
-    function getLogoutReason(): ?int
+    /** @inheritDoc */
+    public function getLogoutReason(): ?int
     {
         return $this->userStorage->getLogoutReason();
     }
