@@ -4,7 +4,9 @@ namespace PAF\Common\Model;
 
 use Dibi\DataSource;
 use Dibi\Fluent;
+use Dibi\UniqueConstraintViolationException;
 use LeanMapper\Connection;
+use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
@@ -29,10 +31,19 @@ class BaseRepository extends Repository implements IQueryable
     /** @var string */
     private $index;
 
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory, string $index = null)
-    {
+    private $uniqueColumns = [];
+
+    public function __construct(
+        Connection $connection,
+        IMapper $mapper,
+        IEntityFactory $entityFactory,
+        string $index = null
+    ) {
         parent::__construct($connection, $mapper, $entityFactory);
         $this->index = $index;
+        if($index) {
+            $this->uniqueColumns = [$index];
+        }
     }
 
 
@@ -114,6 +125,18 @@ class BaseRepository extends Repository implements IQueryable
         return $this->createEntities($selection->fetchAll());
     }
 
+    public function persist(Entity $entity)
+    {
+        if ($entity->isDetached()) {
+            if(!$this->isUnique($entity)) {
+                throw new UniqueConstraintViolationException("Entity fails unique check");
+            }
+        }
+
+        return parent::persist($entity);
+    }
+
+
     public function getDataSource(string $alias = null): DataSource
     {
         $from = $this->getTable() . ($alias ? " AS $alias" : '');
@@ -139,5 +162,32 @@ class BaseRepository extends Repository implements IQueryable
     protected function getPrimaryKey(): string
     {
         return $this->mapper->getPrimaryKey($this->getTable());
+    }
+
+    protected function isUnique(Entity $entity)
+    {
+        if(empty($this->uniqueColumns)) {
+            return true;
+        }
+
+        $primary = $this->getPrimaryKey();
+
+        $orClauses = [];
+        $orArgs = [];
+        foreach ($this->uniqueColumns as $column) {
+            $value = $entity->$column;
+            if (!$value) {
+                continue;
+            }
+
+            $orClauses[] = "$column = ?";
+            $orArgs[] = $value;
+        }
+
+        $check = $this->select("COUNT($primary)")
+            ->where(implode(' OR ', $orClauses), $orArgs)
+            ->fetchSingle();
+
+        return $check === 0;
     }
 }

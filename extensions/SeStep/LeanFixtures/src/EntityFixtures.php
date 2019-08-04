@@ -66,6 +66,7 @@ final class EntityFixtures
                 $i++;
             } catch (\Throwable $ex) {
                 $output->writeln("Failed to load item $n: " . $ex->getMessage());
+                $output->writeln($ex->getTraceAsString(), OutputInterface::VERBOSITY_VERY_VERBOSE);
             }
         }
 
