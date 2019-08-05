@@ -33,6 +33,7 @@ extensions:
     translation: Contributte\Translation\DI\TranslationExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
+    navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
 
 leanMapper:
     db: %database%
@@ -40,6 +41,11 @@ leanMapper:
 leanFixtures:
     initFiles:
         - %rootDir%/data/testing/commonModuleFixtures.neon
+
+navigationMenu:
+    brandTitle: %appName%
+    brandTarget: :Common:Homepage:default
+    itemsFile: %appDir%/config/navigation.neon
 
 services:
     leanMapper.mapper:

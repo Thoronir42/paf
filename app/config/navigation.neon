@@ -1,0 +1,15 @@
+items:
+    quotes:
+        target: ':Commission:Quotes:default'
+        caption: paf.views.quotes
+    configuration:
+        caption: paf.views.manage
+        requiredPermission: admin-settings
+        subItems:
+            settings:
+                target: ':Settings:Settings:'
+                caption: paf.views.settings
+            cases:
+                target: :Commission:Cases:list
+                caption: paf.views.cases
+

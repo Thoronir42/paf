@@ -1,0 +1,7 @@
+{dump $control}
+{var $link = $control->link($item->getTarget(), $item->getParameters())}
+<li n:class="$control->linkCurrent ? active">
+    <a href="{$link}">{_$item->getCaption()}</a>
+    {var $label = $item->getLabel()}
+    <span n:if="$label" class="label label-{$label->level}">{$label->text}</span>
+</li>

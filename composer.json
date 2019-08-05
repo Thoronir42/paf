@@ -46,7 +46,8 @@
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
-      "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/"
+      "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
+      "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/"
     }
   },
   "autoload-dev": {

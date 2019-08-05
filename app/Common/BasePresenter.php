@@ -7,8 +7,8 @@ use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use PAF\Common\Security\Authorizator;
-use PAF\Modules\CommonModule\Components\NavigationMenu\NavigationMenu;
 use SeStep\GeneralSettings\Settings;
+use SeStep\NavigationMenuComponent\NavigationMenu;
 use stdClass;
 
 /**
@@ -82,20 +82,10 @@ abstract class BasePresenter extends Presenter
 
     public function createComponentMenu()
     {
-        $menu = new NavigationMenu($this->translator);
+        /** @var NavigationMenu $navMenu */
+        $navMenu = $this->context->getService('navigationMenu.control');
 
-        $menu->setBrandTarget(':Common:Homepage:default');
-        $menu->setTitle($this->context->parameters['appName']);
-
-        $menu->addLink(':Commission:Quotes:default', 'paf.views.quotes');
-
-        if ($this->user->isAllowed('admin-settings')) {
-            $manage = $menu->addLink(':Settings:Settings:', 'paf.views.manage');
-            $manage->addLink(':Settings:Settings:', 'paf.views.settings');
-            $manage->addLink(':Commission:Cases:list', 'paf.views.cases');
-        }
-
-        return $menu;
+        return $navMenu;
     }
 
 
