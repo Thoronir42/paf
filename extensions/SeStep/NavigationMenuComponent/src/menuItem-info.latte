@@ -1,0 +1,5 @@
+<li style="margin: 5px 15px">
+    <span>{$subitem->getCaption()}</span>
+    {var $label = $subitem->getLabel()}
+    <span n:if="$label" class="label {$label->getClass()} pull-right">{$label->getText()}</span>
+</li>

@@ -3,10 +3,13 @@
 namespace SeStep\NavigationMenuComponent;
 
 use Nette\Application\UI;
+use Nette\ComponentModel\IComponent;
+use Nette\InvalidStateException;
 use Nette\Localization\ITranslator;
 use SeStep\Navigation\Menu\Items\ANavMenuItem;
+use SeStep\Navigation\Menu\Items\INavMenuItem;
 use SeStep\Navigation\Menu\Items\NavMenuLink;
-use SeStep\NavigationMenuComponent\Loader\NavigationItemsProvider;
+use SeStep\Navigation\Provider\NavigationItemsProvider;
 
 class NavigationMenu extends UI\Control
 {
@@ -55,9 +58,10 @@ class NavigationMenu extends UI\Control
      */
     public function itemCurrent(NavMenuLink $item): bool
     {
-        if ($this->presenter->isLinkCurrent($item->getTarget())) {
-            return true;
+        if ($item->getRole() === INavMenuItem::ROLE_LINK) {
+            return $this->presenter->isLinkCurrent($item->getTarget());
         }
+
 
         if ($item->hasItems()) {
             foreach ($item->getItems() as $subItem) {
@@ -77,12 +81,21 @@ class NavigationMenu extends UI\Control
     public function renderTop()
     {
         $this->template->setTranslator($this->translator);
-        $this->template->setFile(__DIR__ . "/topMenu.latte");
+        $this->template->setFile(__DIR__ . "/navigationMenuTop.latte");
 
         $this->template->title = $this->title;
-        $this->template->brand_code = $this->brandTarget;
+        $this->template->brandTarget = $this->brandTarget;
         $this->template->items = $this->items;
 
         $this->template->render();
+    }
+
+    public function createComponent($name): IComponent
+    {
+        if (!isset($this->items[$name])) {
+            throw new InvalidStateException("Menu item $name not found");
+        }
+
+        return new MenuItemControl($this->items[$name]);
     }
 }

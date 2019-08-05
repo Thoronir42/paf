@@ -1637,23 +1637,27 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/navigation.git",
-                "reference": "a687271b57c4a0f86602dbc09fe73815b7f291e9"
+                "reference": "75a576cce026c119214993fc8e0ff5d528f80a63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/navigation/zipball/a687271b57c4a0f86602dbc09fe73815b7f291e9",
-                "reference": "a687271b57c4a0f86602dbc09fe73815b7f291e9",
+                "url": "https://api.github.com/repos/SeStep/navigation/zipball/75a576cce026c119214993fc8e0ff5d528f80a63",
+                "reference": "75a576cce026c119214993fc8e0ff5d528f80a63",
                 "shasum": ""
             },
             "require": {
-                "php": ">5.4"
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
             "autoload": {
-                "classmap": [
-                    "src/"
-                ]
+                "psr-4": {
+                    "SeStep\\Navigation\\": "src/"
+                }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1664,11 +1668,7 @@
                 }
             ],
             "description": "Small library that is all about links and menus",
-            "support": {
-                "source": "https://github.com/SeStep/navigation/tree/master",
-                "issues": "https://github.com/SeStep/navigation/issues"
-            },
-            "time": "2016-11-13T15:19:39+00:00"
+            "time": "2019-08-05T21:44:23+00:00"
         },
         {
             "name": "symfony/config",

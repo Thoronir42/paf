@@ -10,6 +10,8 @@ use SeStep\Navigation\Menu\Items\ANavMenuItem;
 use SeStep\Navigation\Menu\Items\INavMenuItem;
 use SeStep\Navigation\Menu\Items\NavMenuLink;
 use SeStep\Navigation\Menu\Items\NavMenuSeparator;
+use SeStep\Navigation\Provider\AssociativeArrayProvider;
+use SeStep\Navigation\Provider\NavigationItemsProvider;
 
 final class NeonProvider implements NavigationItemsProvider
 {
@@ -33,52 +35,18 @@ final class NeonProvider implements NavigationItemsProvider
     {
         $data = Neon::decode(file_get_contents($this->file));
 
-        return $this->parseItems($data['items']);
+        return iterator_to_array(new AssociativeArrayProvider($data['items'], [$this, 'isUserAllowed']));
     }
 
-    /**
-     * @param array
-     * @return ANavMenuItem[]
-     */
-    protected function parseItems($itemsData)
+    public function isUserAllowed($item)
     {
-        $items = [];
-        foreach ($itemsData as $name => $item) {
-            $requiredPermission = $item['requiredPermission'] ?? null;
-            if ($requiredPermission) {
-                if (!$this->user->isAllowed($requiredPermission)) {
-                    continue;
-                }
-            }
-
-            $items[$name] = $this->parseItem($item);
+        $requiredPermission = $item['requiredPermission'] ?? null;
+        if ($requiredPermission && !$this->user->isAllowed($requiredPermission)) {
+            return false;
         }
 
-        return $items;
+        return true;
     }
 
-    private function parseItem($data): INavMenuItem
-    {
-        if (is_string($data)) {
-            if ($data == '|') {
-                return new NavMenuSeparator();
-            }
-        }
-        if (is_array($data)) {
-            $target = $data['target'] ?? '';
-            $caption = $data['caption'];
-            $icon = $data['icon'] ?? null;
-            $params = $data['params'] ?? [];
 
-            $navMenuLink = new NavMenuLink($target, $caption, $icon, $params);
-            if (isset($data['subItems'])) {
-                $subItems = $this->parseItems($data['subItems']);
-                $navMenuLink->setItems($subItems);
-            }
-
-            return $navMenuLink;
-        }
-
-        throw new UnexpectedValueException("Unrecognized NavigationMenu item: " . gettype($data));
-    }
 }
