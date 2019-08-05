@@ -43,7 +43,6 @@ final class LiveUserStorage implements IUserStorage
         if ($identity && !$identity instanceof LiveUserIdentity) {
             $identity = new LiveUserIdentity($identity->getId());
         }
-        bdump($identity);
 
         $this->userStorage->setIdentity($identity);
 
@@ -56,7 +55,7 @@ final class LiveUserStorage implements IUserStorage
         /** @var LiveUserIdentity $identity */
         $identity = $this->userStorage->getIdentity();
 
-        if (!$identity->isInitialized()) {
+        if ($identity && !$identity->isInitialized()) {
             $this->initializeIdentity($identity);
         }
 

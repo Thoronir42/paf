@@ -1,4 +1,3 @@
-{dump $control}
 {var $link = $control->link($item->getTarget(), $item->getParameters())}
 <li n:class="$control->linkCurrent ? active">
     <a href="{$link}">{_$item->getCaption()}</a>
