@@ -47,6 +47,4 @@ final class NeonProvider implements NavigationItemsProvider
 
         return true;
     }
-
-
 }

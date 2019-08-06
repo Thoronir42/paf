@@ -37,7 +37,7 @@ class MenuItemControl extends Control
     public function createComponent($name): IComponent
     {
         $subItems = $this->item->getItems();
-        if(!isset($subItems[$name])) {
+        if (!isset($subItems[$name])) {
             throw new InvalidStateException("Menu item $name not found");
         }
 
@@ -53,6 +53,4 @@ class MenuItemControl extends Control
     {
         return $this->parent->itemCurrent($item);
     }
-
-
 }
