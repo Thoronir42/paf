@@ -3,6 +3,7 @@
 namespace SeStep\LeanSettings;
 
 use Nette\InvalidStateException;
+use Nette\Utils\Strings;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\IOptions;
 use SeStep\GeneralSettings\Options\OptionTypeEnum;
@@ -47,7 +48,13 @@ class LeanOptions implements IOptions
 
     public function setValue($value, string $name)
     {
+        // todo: remove necessity for '.' as root name
+        if (Strings::startsWith($name, $this->getFQN())) {
+            $name = substr($name, strlen($this->getFQN()));
+        }
         $fqn = DomainLocator::concatFQN($name, '');
+
+
         $entry = $this->nodeRepository->find($fqn);
 
         if ($entry) {
@@ -84,7 +91,6 @@ class LeanOptions implements IOptions
         $this->nodeRepository->delete($parent->getNode($dl->getName()));
         $parent->clearOptionsCache();
     }
-
 
 
     public function getIterator()
@@ -130,6 +136,10 @@ class LeanOptions implements IOptions
 
     public function getNode($name): ?OptionNode
     {
+        if ($name == $this->rootSection->getFQN()) {
+            return $this->rootSection;
+        }
+
         return $this->rootSection->getNode($name);
     }
 

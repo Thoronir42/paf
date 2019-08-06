@@ -9,11 +9,15 @@ use SeStep\GeneralSettings\Options\IOptionSection;
 
 /**
  * @method onSetValue($name, $value)
+ * @method onExpand(string $fqn)
  */
 class SettingsControl extends UI\Control
 {
     /** @var callback[] */
     public $onSetValue = [];
+
+    /** @var callable[] */
+    public $onExpand = [];
 
     /** @var int */
     private $expandDepth;
@@ -21,7 +25,7 @@ class SettingsControl extends UI\Control
     /** @var IOptionSection */
     private $section;
 
-    public function __construct(IOptionSection $section, int $expandDepth = 2)
+    public function __construct(IOptionSection $section, int $expandDepth)
     {
         $this->section = $section;
         $this->expandDepth = $expandDepth;
@@ -56,13 +60,24 @@ class SettingsControl extends UI\Control
     {
         $node = $this->section->getNode($name);
         if ($node instanceof IOption) {
-            return new OptionNodeControl($node);
+            $optionNodeControl = new OptionNodeControl($node);
+            $optionNodeControl->onSetValue = &$this->onSetValue;
+            return $optionNodeControl;
         }
         if ($node instanceof IOptionSection && $this->canExpandSubSections()) {
-            return new SettingsControl($node, $this->expandDepth - 1);
+            $settingsControl = new SettingsControl($node, $this->expandDepth - 1);
+            $settingsControl->onExpand = &$this->onExpand;
+            $settingsControl->onSetValue = &$this->onSetValue;
+
+            return $settingsControl;
         }
 
         return null;
+    }
+
+    public function handleExpand(string $fqn)
+    {
+        $this->onExpand($fqn);
     }
 
     public function canExpandSubSections(): bool

@@ -3,6 +3,7 @@
 namespace PAF\Modules\SettingsModule\Presenters;
 
 use Exception;
+use Nette\Application\AbortException;
 use PAF\Common\BasePresenter;
 use PAF\Modules\SettingsModule\Components\SettingsControl\SettingsControl;
 
@@ -15,22 +16,17 @@ final class SettingsPresenter extends BasePresenter
 //        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Common:Homepage:');
     }
 
-    public function actionDefault()
+    public function actionDefault(string $fqn = '.')
     {
-        $control = new SettingsControl($this->settings->getSection('.'), 2);
-        $this->addCallbacks($control);
+        $section = $this->settings->getSection($fqn);
+
+        $control = new SettingsControl($section, 4);
 
         $this['settings'] = $control;
-    }
 
-    private function addCallbacks(SettingsControl $control)
-    {
         $control->onSetValue[] = function ($name, $value) {
             try {
-                $this->settings->setValue($value, $name);
-                $this->sendJson([
-                    'status' => 'success'
-                ]);
+                $this->settings->setValue($name, $value);
             } catch (Exception $e) {
                 $this->sendJson([
                     'status' => 'error',
@@ -39,9 +35,13 @@ final class SettingsPresenter extends BasePresenter
                 ]);
             }
 
-            $this->sendJson(['status' => 'success']);
+            $this->sendJson([
+                'status' => 'success'
+            ]);
         };
 
-        return $control;
+        $control->onExpand[] = function ($expandFqn) {
+            $this->redirect('this', ['fqn' => $expandFqn]);
+        };
     }
 }
