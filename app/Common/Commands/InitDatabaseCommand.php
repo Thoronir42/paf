@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace PAF\Common\Commands;
 
 use Dibi\Connection;
@@ -13,6 +14,8 @@ class InitDatabaseCommand extends Command
 
     /** @var Connection */
     private $connection;
+    /** @var string[] */
+    private $defaultFiles;
 
     /** @var string[] */
     private $files = [];
@@ -25,39 +28,41 @@ class InitDatabaseCommand extends Command
 
     /** @var OutputInterface */
     private $out;
+    /** @var string */
+    private $databaseName;
 
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, string $databaseName, array $defaultFiles = [])
     {
         parent::__construct();
 
         $this->connection = $connection;
+        $this->defaultFiles = $defaultFiles;
+        $this->databaseName = $databaseName;
     }
 
     public function configure()
     {
         $this->addOption('default-files', 'd', null, "Use predefined database initialize files");
+        $this->addOption('drop-all-tables', null, null, "Drop tables before initialization");
     }
 
     public function initialize(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('default-files')) {
-            $root = dirname(dirname(__DIR__));
-            $this->files = [
-                $root . '/Modules/CommonModule/Model/database/initialize.sql',
-                $root . '/Modules/CommissionModule/Model/database/initialize.sql',
-                $root . '/Modules/PortfolioModule/Model/database/initialize.sql',
-                $root . '/Modules/CmsModule/Model/database/initialize.sql',
-                $root . '/../extensions/SeStep/LeanSettings/database/initialize.sql',
-            ];
+            $output->writeln("Using default files");
+            $this->files = $this->defaultFiles;
         }
-
-        $output->writeln('BASD');
     }
 
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->out = $output;
+
+        if ($input->getOption('drop-all-tables')) {
+            $this->dropAllTables($output);
+        }
+
         if (empty($this->files)) {
             $output->writeln("No files specified!");
             return 1;
@@ -79,6 +84,7 @@ class InitDatabaseCommand extends Command
             }
         }
 
+        $output->writeln("Database initialized");
         return 0;
     }
 
@@ -121,5 +127,31 @@ class InitDatabaseCommand extends Command
         } else {
             $this->maxLengthProgress = $len;
         }
+    }
+
+    private function dropAllTables(OutputInterface $output)
+    {
+        $tables = $this->connection->query('SELECT t.table_name FROM information_schema.tables t WHERE t.table_schema = %s',
+            $this->databaseName)
+            ->fetchPairs();
+
+        $output->writeln('Removing ' . count($tables) . ' tables');
+        try {
+            $output->writeln("Disabling foreign key checks");
+            $this->connection->query('SET FOREIGN_KEY_CHECKS = 0;');
+            foreach ($tables as $table) {
+                $output->write(" - deleting table $table... ");
+                $this->connection->query('DROP TABLE %n', $table);
+                $output->writeln("ok");
+            }
+        } catch (\Throwable $ex) {
+            $output->writeln("error");
+            $output->writeln($ex->getMessage());
+        } finally {
+            $output->writeln("Enabling foreign key checks");
+            $this->connection->query('SET FOREIGN_KEY_CHECKS = 1;');
+        }
+
+        $output->writeln("Here be nothing");
     }
 }

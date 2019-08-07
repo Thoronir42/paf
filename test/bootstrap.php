@@ -13,14 +13,16 @@ call_user_func(function () {
     \Test\PAF\Utils\TestUtils::setContainer($container);
     \Test\PAF\Utils\TestDBUtils::setLeanConnection($container->getByType(\LeanMapper\Connection::class));
 
+    $initCommand = "app:database:init --default-files";
+    if (isset($testingParameters['dropAllTables']) && $testingParameters['dropAllTables']) {
+        $initCommand .= ' --drop-all-tables';
+    }
 
-    $command = new \PAF\Commands\InitDatabaseCommand(\Test\PAF\Utils\TestDBUtils::getLeanConnection());
-    $command->setFiles([
-        dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/drop.sql',
-        dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/initialize.sql',
-    ]);
+    /** @var \Contributte\Console\Application $app */
+    $app = $container->getByType(\Contributte\Console\Application::class);
+    $app->setAutoExit(false);
 
-    $command->run();
+    $app->run(new \Symfony\Component\Console\Input\StringInput($initCommand));
 
     /** @var \LeanMapper\IMapper $mapper */
     $mapper = $container->getService('leanMapper.mapper');
