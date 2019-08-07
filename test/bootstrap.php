@@ -3,17 +3,16 @@
 define('DEBUG_MODE', true);
 
 call_user_func(function () {
+    define('ADDITIONAL_CONFIG', 'testing.neon');
+
+    /** @var \Nette\DI\Container $container */
     $container = include __DIR__ . "/../app/bootstrap.php";
 
-    \Test\PAF\Utils\TestUtils::setContainer($container);
+    $testingParameters = $container->getParameters()['testing'];
 
-    \Test\PAF\Utils\TestDBUtils::setLeanConnection(new \LeanMapper\Connection([
-        'host' => 'localhost',
-        'driver' => 'mysqli',
-        'user' => 'tester',
-        'password' => 'QjpebVnpAKBQaKMr',
-        'database' => 'paf_test',
-    ]));
+    \Test\PAF\Utils\TestUtils::setContainer($container);
+    \Test\PAF\Utils\TestDBUtils::setLeanConnection($container->getByType(\LeanMapper\Connection::class));
+
 
     $command = new \PAF\Commands\InitDatabaseCommand(\Test\PAF\Utils\TestDBUtils::getLeanConnection());
     $command->setFiles([
@@ -23,11 +22,10 @@ call_user_func(function () {
 
     $command->run();
 
-    $mapper = new \SeStep\ModularLeanMapper\ModularMapper(new \PAF\Common\Model\UnderscoreMapper(), [
-        'ss_settings__' => new \SeStep\LeanSettings\LeanOptionsMapperModule(),
-    ]);
-
+    /** @var \LeanMapper\IMapper $mapper */
+    $mapper = $container->getService('leanMapper.mapper');
     \Test\PAF\Utils\TestDBUtils::setLeanMapper($mapper);
+
 });
 
 

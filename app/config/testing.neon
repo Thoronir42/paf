@@ -1,0 +1,8 @@
+parameters:
+    database:
+        host: localhost
+        driver: mysqli
+        user: tester
+        password: QjpebVnpAKBQaKMr
+        database: paf_test
+    testing:
