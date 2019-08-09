@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettings\Options;
+
+namespace SeStep\GeneralSettings\Model;
 
 class OptionTypeEnum
 {

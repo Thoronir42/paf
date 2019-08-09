@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettings\Options;
+namespace SeStep\GeneralSettings\Model;
 
 interface IOption extends INode
 {

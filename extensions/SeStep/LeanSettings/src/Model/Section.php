@@ -5,8 +5,8 @@ namespace SeStep\LeanSettings\Model;
 use Dibi\NotSupportedException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
-use SeStep\GeneralSettings\Options\INode;
-use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\Model\INode;
+use SeStep\GeneralSettings\Model\IOptionSection;
 use SeStep\GeneralSettings\SectionNavigator;
 
 /**

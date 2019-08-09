@@ -4,8 +4,8 @@ namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IOptionSection;
 
 /**
  * @method onSetValue($name, $value)

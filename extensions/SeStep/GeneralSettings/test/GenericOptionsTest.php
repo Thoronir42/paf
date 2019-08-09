@@ -3,9 +3,9 @@ namespace Test\SeStep\GeneralSettings;
 
 use PHPUnit\Framework\TestCase;
 use SeStep\GeneralSettings\IOptionsAdapter;
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IOptionSection;
-use SeStep\GeneralSettings\Options\IOptionSectionWritable;
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IOptionSection;
+use SeStep\GeneralSettings\Model\IOptionSectionWritable;
 
 abstract class GenericOptionsTest extends TestCase
 {

@@ -6,7 +6,7 @@ use Nette\Application\UI;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
-use SeStep\GeneralSettings\Options\IOption;
+use SeStep\GeneralSettings\Model\IOption;
 
 /**
  * Class OptionControl

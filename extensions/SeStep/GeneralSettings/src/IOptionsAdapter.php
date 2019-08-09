@@ -2,7 +2,7 @@
 
 namespace SeStep\GeneralSettings;
 
-interface IOptionsAdapter extends Options\IOptionSection, Options\IOptionSectionWritable
+interface IOptionsAdapter extends Model\IOptionSection, Model\IOptionSectionWritable
 {
 
 }

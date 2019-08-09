@@ -3,9 +3,9 @@
 namespace SeStep\GeneralSettingsInMemory;
 
 use SeStep\GeneralSettings\IOptionsAdapter;
-use SeStep\GeneralSettings\Options\IValuePool;
+use SeStep\GeneralSettings\Model\IValuePool;
 
-final class InMemoryOptionsAdapter extends InMemoryOptionSection implements IOptionsAdapter
+final class InMemoryOptionsAdapter extends Model\InMemoryOptionSection implements IOptionsAdapter
 {
 
     private $rootData;

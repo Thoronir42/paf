@@ -2,8 +2,8 @@
 
 namespace SeStep\LeanSettings\Model;
 
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IValuePool;
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IValuePool;
 
 /**
  * @property string $value m:column(string_value)

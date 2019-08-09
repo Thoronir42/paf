@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettings\Options;
 
-use ArrayAccess;
+namespace SeStep\GeneralSettings\Model;
+
 use Countable;
 use IteratorAggregate;
 

@@ -9,7 +9,7 @@ use Nette\InvalidStateException;
 use PAF\Common\Model\BaseRepository;
 use PAF\Common\Model\Exceptions\EntityNotFoundException;
 use SeStep\GeneralSettings\DomainLocator;
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;
 

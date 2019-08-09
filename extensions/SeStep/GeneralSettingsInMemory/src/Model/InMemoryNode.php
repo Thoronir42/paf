@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettingsInMemory;
+
+namespace SeStep\GeneralSettingsInMemory\Model;
 
 use SeStep\GeneralSettings\DomainLocator;
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 
 abstract class InMemoryNode implements INode
 {

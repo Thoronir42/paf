@@ -2,7 +2,7 @@
 
 namespace Test\SeStep\GeneralSettings;
 
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 
 class CzechiaNode implements INode
 {

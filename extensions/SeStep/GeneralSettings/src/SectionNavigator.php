@@ -5,8 +5,8 @@ namespace SeStep\GeneralSettings;
 
 use Nette\InvalidStateException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
-use SeStep\GeneralSettings\Options\IOptionSection;
-use SeStep\GeneralSettings\Options\IOptionSectionWritable;
+use SeStep\GeneralSettings\Model\IOptionSection;
+use SeStep\GeneralSettings\Model\IOptionSectionWritable;
 
 class SectionNavigator
 {

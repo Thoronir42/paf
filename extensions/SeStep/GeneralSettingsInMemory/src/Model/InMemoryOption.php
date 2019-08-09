@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettingsInMemory;
 
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IValuePool;
+namespace SeStep\GeneralSettingsInMemory\Model;
+
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IValuePool;
 
 class InMemoryOption extends InMemoryNode implements IOption
 {

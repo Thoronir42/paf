@@ -3,7 +3,7 @@
 namespace SeStep\LeanSettings\Model;
 
 use PAF\Common\Model\BaseEntity;
-use SeStep\GeneralSettings\Options\IValuePool;
+use SeStep\GeneralSettings\Model\IValuePool;
 use SeStep\LeanSettings\Exceptions\InvalidPoolValueException;
 
 /**

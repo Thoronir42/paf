@@ -5,11 +5,8 @@ namespace SeStep\LeanSettings;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\IOptionsAdapter;
-use SeStep\GeneralSettings\Options\OptionTypeEnum;
+use SeStep\GeneralSettings\Model\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
-use SeStep\LeanSettings\Model\Option;
-use SeStep\LeanSettings\Model\OptionNode;
-use SeStep\LeanSettings\Model\Section;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
 class LeanOptionsAdapter implements IOptionsAdapter
@@ -17,7 +14,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
     /** @var OptionNodeRepository */
     private $nodeRepository;
 
-    /** @var Section */
+    /** @var Model\Section */
     private $rootSection;
     /**
      * @var int
@@ -35,7 +32,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         }
     }
 
-    public function addSection(string $name): ?Section
+    public function addSection(string $name): ?Model\Section
     {
         return $this->nodeRepository->getSection($name, true);
     }
@@ -46,11 +43,12 @@ class LeanOptionsAdapter implements IOptionsAdapter
         for ($freeIndex = 0; $freeIndex < $this->maxSectionItems && $parent->hasNode($freeIndex); $freeIndex++) {
         }
 
-        if($freeIndex >= $this->maxSectionItems) {
+        if ($freeIndex >= $this->maxSectionItems) {
             return false;
         }
 
         $this->setValue($value, "$freeIndex");
+        return true;
     }
 
     public function setValue($value, string $name)
@@ -58,7 +56,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         $entry = $this->nodeRepository->find($name);
 
         if ($entry) {
-            if (!$entry instanceof Option) {
+            if (!$entry instanceof Model\Option) {
                 throw new OptionNotFoundException($name, $entry);
             }
 
@@ -67,7 +65,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         } else {
             $parent = $this->nodeRepository->getSection((new DomainLocator($name))->getDomain(), true);
 
-            $option = new Option();
+            $option = new Model\Option();
             $option->type = OptionTypeEnum::infer($value);
             $option->fqn = $name;
             $option->value = $value;
@@ -82,7 +80,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
     public function removeNode(string $name)
     {
         $dl = new DomainLocator($name);
-        /** @var Section $parent */
+        /** @var Model\Section $parent */
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
         if (!$parent->hasNode($dl->getName())) {
             // todo: notify error?
@@ -126,13 +124,13 @@ class LeanOptionsAdapter implements IOptionsAdapter
     }
 
 
-    public function getNode($name): ?OptionNode
+    public function getNode($name): ?Model\OptionNode
     {
         return $this->rootSection->getNode($name);
     }
 
 
-    /** @return OptionNode[] */
+    /** @return Model\OptionNode[] */
     public function getNodes(): array
     {
         return $this->rootSection->getNodes();
