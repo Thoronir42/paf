@@ -131,8 +131,10 @@ class InitDatabaseCommand extends Command
 
     private function dropAllTables(OutputInterface $output)
     {
-        $tables = $this->connection->query('SELECT t.table_name FROM information_schema.tables t WHERE t.table_schema = %s',
-            $this->databaseName)
+        $tables = $this->connection->query(
+            'SELECT t.table_name FROM information_schema.tables t WHERE t.table_schema = %s',
+            $this->databaseName
+        )
             ->fetchPairs();
 
         $output->writeln('Removing ' . count($tables) . ' tables');
