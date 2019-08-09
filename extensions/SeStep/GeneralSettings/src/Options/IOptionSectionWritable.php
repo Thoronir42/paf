@@ -11,7 +11,7 @@ interface IOptionSectionWritable
 
     public function setValue($value, string $name);
 
-    public function addValue($value);
+    public function addValue($value, string $section = '');
 
     public function removeNode(string $name);
 }

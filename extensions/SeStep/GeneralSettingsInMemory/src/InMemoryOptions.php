@@ -22,16 +22,7 @@ final class InMemoryOptions extends InMemoryOptionSection implements IOptions
 
     public function getFQN(): string
     {
-        return $this->getName();
-    }
-
-    public function getNode($name): INode
-    {
-        if ($name == INode::DOMAIN_DELIMITER) {
-            return $this;
-        }
-
-        return parent::getNode($name);
+        return '';
     }
 
 

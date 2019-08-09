@@ -16,7 +16,7 @@ final class SettingsPresenter extends BasePresenter
 //        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Common:Homepage:');
     }
 
-    public function actionDefault(string $fqn = '.')
+    public function actionDefault(string $fqn = 'paf')
     {
         $section = $this->settings->getSection($fqn);
 

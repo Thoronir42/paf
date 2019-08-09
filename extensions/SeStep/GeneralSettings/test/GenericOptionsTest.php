@@ -91,7 +91,7 @@ abstract class GenericOptionsTest extends TestCase
         $options->addValue('Dewey');
         $options->addValue('Louie');
 
-        $options->removeNode(1);
+        $options->removeNode("1");
 
         $this->assertCount(2, $options);
 

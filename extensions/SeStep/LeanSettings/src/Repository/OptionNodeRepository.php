@@ -2,6 +2,9 @@
 
 namespace SeStep\LeanSettings\Repository;
 
+use LeanMapper\Connection;
+use LeanMapper\IEntityFactory;
+use LeanMapper\IMapper;
 use Nette\InvalidStateException;
 use PAF\Common\Model\BaseRepository;
 use PAF\Common\Model\Exceptions\EntityNotFoundException;
@@ -19,19 +22,9 @@ use SeStep\LeanSettings\Model\Section;
  */
 class OptionNodeRepository extends BaseRepository
 {
-    public function find($fqn): ?OptionNode
+    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory)
     {
-        if (!$fqn) {
-            $fqn = '.';
-        }
-
-        if ($fqn[0] !== '.') {
-            $term = '%' . $fqn;
-        } else {
-            $term = $fqn;
-        }
-
-        return $this->findOneBy(['fqn' => $term]);
+        parent::__construct($connection, $mapper, $entityFactory, 'fqn');
     }
 
     public function get(string $name = null, string $domain = null): OptionNode
@@ -49,7 +42,7 @@ class OptionNodeRepository extends BaseRepository
         $section = $this->findSection('.');
         if (!$section) {
             $section = new Section();
-            $section->fqn = '.';
+            $section->fqn = '';
             $section->caption = 'Root entry of options';
 
             $this->persist($section);
@@ -80,13 +73,12 @@ class OptionNodeRepository extends BaseRepository
             throw new InvalidStateException("Section '$fqn' already exists");
         }
 
-        $dl = new DomainLocator($fqn);
-
         $parentNames = [];
 
-        for (; $dl->getFQN(); $dl->pop()) {
+        for ($dl = new DomainLocator($fqn); $dl->getFQN(); $dl->pop()) {
             array_unshift($parentNames, $dl->getFQN());
         }
+        array_unshift($parentNames, '');
 
         $rootSection = $this->getSection(INode::DOMAIN_DELIMITER);
         $section = $this->resolveSectionChain($parentNames, $rootSection);

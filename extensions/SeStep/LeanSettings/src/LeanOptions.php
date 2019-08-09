@@ -2,9 +2,8 @@
 
 namespace SeStep\LeanSettings;
 
-use Nette\InvalidStateException;
-use Nette\Utils\Strings;
 use SeStep\GeneralSettings\DomainLocator;
+use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\IOptions;
 use SeStep\GeneralSettings\Options\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
@@ -20,27 +19,35 @@ class LeanOptions implements IOptions
 
     /** @var Section */
     private $rootSection;
+    /**
+     * @var int
+     */
+    private $maxSectionItems;
 
-    public function __construct(OptionNodeRepository $nodeRepository)
+    public function __construct(OptionNodeRepository $nodeRepository, int $maxSectionItems = 99)
     {
         $this->nodeRepository = $nodeRepository;
+        $this->maxSectionItems = $maxSectionItems;
 
-        $this->rootSection = $this->nodeRepository->findSection('.');
+        $this->rootSection = $this->nodeRepository->findSection('');
         if (!$this->rootSection) {
-            $this->rootSection = $this->nodeRepository->createSection('.', 'Root entry for options');
+            $this->rootSection = $this->nodeRepository->createSection('', 'Root entry for options');
         }
     }
 
     public function addSection(string $name): ?Section
     {
-        $dl = new DomainLocator($name, '');
-        return $this->nodeRepository->getSection(($dl), true);
+        return $this->nodeRepository->getSection($name, true);
     }
 
-    public function addValue($value)
+    public function addValue($value, string $section = '')
     {
-        $nodes = $this->getNodes();
-        for ($freeIndex = 0; $freeIndex < count($nodes) && array_key_exists("$freeIndex", $nodes); $freeIndex++) {
+        $parent = $this->nodeRepository->getSection($section);
+        for ($freeIndex = 0; $freeIndex < $this->maxSectionItems && $parent->hasNode($freeIndex); $freeIndex++) {
+        }
+
+        if($freeIndex >= $this->maxSectionItems) {
+            return false;
         }
 
         $this->setValue($value, "$freeIndex");
@@ -48,28 +55,21 @@ class LeanOptions implements IOptions
 
     public function setValue($value, string $name)
     {
-        // todo: remove necessity for '.' as root name
-        if (Strings::startsWith($name, $this->getFQN())) {
-            $name = substr($name, strlen($this->getFQN()));
-        }
-        $fqn = DomainLocator::concatFQN($name, '');
-
-
-        $entry = $this->nodeRepository->find($fqn);
+        $entry = $this->nodeRepository->find($name);
 
         if ($entry) {
-            if ($entry instanceof Option) {
-                $entry->value = $value;
-                $this->nodeRepository->persist($entry);
-            } else {
-                throw new InvalidStateException("Can not set value of a section '{$entry->getFQN()}'");
+            if (!$entry instanceof Option) {
+                throw new OptionNotFoundException($name, $entry);
             }
+
+            $entry->value = $value;
+            $this->nodeRepository->persist($entry);
         } else {
-            $parent = $this->nodeRepository->getSection((new DomainLocator($fqn))->getDomain(), true);
+            $parent = $this->nodeRepository->getSection((new DomainLocator($name))->getDomain(), true);
 
             $option = new Option();
             $option->type = OptionTypeEnum::infer($value);
-            $option->fqn = $fqn;
+            $option->fqn = $name;
             $option->value = $value;
             $option->parentSection = $parent;
 
@@ -82,13 +82,15 @@ class LeanOptions implements IOptions
     public function removeNode(string $name)
     {
         $dl = new DomainLocator($name);
+        /** @var Section $parent */
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
         if (!$parent->hasNode($dl->getName())) {
             // todo: notify error?
             return;
         }
 
-        $this->nodeRepository->delete($parent->getNode($dl->getName()));
+        $toDelete = $parent->getNode($dl->getName());
+        $this->nodeRepository->delete($toDelete);
         $parent->clearOptionsCache();
     }
 
@@ -96,16 +98,6 @@ class LeanOptions implements IOptions
     public function getIterator()
     {
         return $this->rootSection->getIterator();
-    }
-
-    public function offsetExists($offset)
-    {
-        return $this->rootSection->offsetExists($offset);
-    }
-
-    public function offsetUnset($offset)
-    {
-        return $this->rootSection->offsetUnset($offset);
     }
 
     public function count()
@@ -136,10 +128,6 @@ class LeanOptions implements IOptions
 
     public function getNode($name): ?OptionNode
     {
-        if ($name == $this->rootSection->getFQN()) {
-            return $this->rootSection;
-        }
-
         return $this->rootSection->getNode($name);
     }
 
@@ -147,7 +135,6 @@ class LeanOptions implements IOptions
     /** @return OptionNode[] */
     public function getNodes(): array
     {
-        $this->rootSection->clearOptionsCache();
         return $this->rootSection->getNodes();
     }
 

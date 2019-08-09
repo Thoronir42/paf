@@ -3,7 +3,6 @@
 namespace SeStep\LeanSettings\Model;
 
 use Dibi\NotSupportedException;
-use LeanMapper\Exception\InvalidStateException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\Options\INode;
@@ -25,7 +24,7 @@ class Section extends OptionNode implements IOptionSection
         if ($type !== self::TYPE_SECTION) {
             throw new NotSupportedException("Changing type of section to '$type' is not valid operation");
         }
-        
+
         $this->row->type = $type;
     }
 
@@ -78,7 +77,11 @@ class Section extends OptionNode implements IOptionSection
     public function getNodes(): array
     {
         $byFqn = [];
-        $ownFqnLength = $this->fqn === INode::DOMAIN_DELIMITER ? 1 : strlen($this->fqn) + 1;
+        $ownFqnLength = strlen($this->fqn);
+        if ($ownFqnLength > 0) {
+            $ownFqnLength += 1;
+        }
+
         foreach ($this->childNodes as $node) {
             $key = substr($node->fqn, $ownFqnLength);
             $byFqn[$key] = $node;
@@ -110,5 +113,6 @@ class Section extends OptionNode implements IOptionSection
     public function clearOptionsCache()
     {
         $this->row->cleanReferencedRowsCache();
+        $this->row->cleanReferencingRowsCache();
     }
 }

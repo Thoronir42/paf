@@ -120,9 +120,12 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
         }
     }
 
-    public function addValue($value)
+    public function addValue($value, $name = '')
     {
-        $offset = $this->data['maxIntOffset']++;
+        $dl = new DomainLocator($name, $this->getFQN());
+        /** @var self $section */
+        $section = SectionNavigator::getSectionByDomain($this, $dl);
+        $offset = $section->data['maxIntOffset']++;
         $this->setValue($value, "$offset");
     }
 
