@@ -3,8 +3,8 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
-use SeStep\GeneralSettings\IOptions;
-use SeStep\LeanSettings\LeanOptions;
+use SeStep\GeneralSettings\IOptionsAdapter;
+use SeStep\LeanSettings\LeanOptionsAdapter;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 use Test\PAF\Utils\TestDBUtils;
@@ -17,7 +17,7 @@ class LeanOptionsTest extends GenericOptionsTest
         TestDBUtils::truncateEntityTable(OptionNode::class);
     }
 
-    protected function getOptions(): IOptions
+    protected function getOptions(): IOptionsAdapter
     {
         $connection = TestDBUtils::getLeanConnection();
         $mapper = TestDBUtils::getLeanMapper();
@@ -25,6 +25,6 @@ class LeanOptionsTest extends GenericOptionsTest
 
         $repo = new OptionNodeRepository($connection, $mapper, $entityFactory);
 
-        return new LeanOptions($repo);
+        return new LeanOptionsAdapter($repo);
     }
 }

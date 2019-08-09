@@ -4,7 +4,7 @@ namespace SeStep\LeanSettings;
 
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
-use SeStep\GeneralSettings\IOptions;
+use SeStep\GeneralSettings\IOptionsAdapter;
 use SeStep\GeneralSettings\Options\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 use SeStep\LeanSettings\Model\Option;
@@ -12,7 +12,7 @@ use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
-class LeanOptions implements IOptions
+class LeanOptionsAdapter implements IOptionsAdapter
 {
     /** @var OptionNodeRepository */
     private $nodeRepository;

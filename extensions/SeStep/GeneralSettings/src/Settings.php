@@ -8,10 +8,10 @@ use SeStep\GeneralSettings\Options\INode;
 
 class Settings implements IteratorAggregate
 {
-    /** @var IOptions */
+    /** @var IOptionsAdapter */
     public $options;
 
-    public function __construct(IOptions $options)
+    public function __construct(IOptionsAdapter $options)
     {
         $this->options = $options;
     }

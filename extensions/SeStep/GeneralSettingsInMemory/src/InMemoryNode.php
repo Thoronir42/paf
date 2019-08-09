@@ -45,10 +45,10 @@ abstract class InMemoryNode implements INode
         return $this->data['caption'] ?? null;
     }
 
-    final protected function getRoot(): InMemoryOptions
+    final protected function getRoot(): InMemoryOptionsAdapter
     {
         $section = $this;
-        while (!($section instanceof InMemoryOptions) && $section->parent) {
+        while (!($section instanceof InMemoryOptionsAdapter) && $section->parent) {
             $section = $section->parent;
         }
 
