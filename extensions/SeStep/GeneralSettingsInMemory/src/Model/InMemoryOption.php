@@ -17,6 +17,15 @@ class InMemoryOption extends InMemoryNode implements IOption
         $this->data['value'] = $value;
     }
 
+    public function setValuePool(?string $name)
+    {
+        if ($name) {
+            $this->data['pool'] = $name;
+        } else {
+            unset($this->data['pool']);
+        }
+    }
+    
     public function hasValuePool(): bool
     {
         return isset($this->data['pool']);

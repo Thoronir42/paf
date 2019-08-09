@@ -5,4 +5,6 @@ namespace SeStep\GeneralSettings\Model;
 interface IValuePool
 {
     public function getValues(): array;
+
+    public function isValueValid($value): bool;
 }
