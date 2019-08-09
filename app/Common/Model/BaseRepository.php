@@ -176,7 +176,7 @@ class BaseRepository extends Repository implements IQueryable
         $orArgs = [];
         foreach ($this->uniqueColumns as $column) {
             $value = $entity->$column;
-            if (!$value) {
+            if (is_null($value)) {
                 continue;
             }
 
