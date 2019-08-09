@@ -1,4 +1,5 @@
 <?php declare(strict_types=1);
+
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
@@ -13,8 +14,7 @@ class LeanOptionsTest extends GenericOptionsTest
 {
     protected function setUp(): void
     {
-        $table = TestDBUtils::getLeanMapper()->getTable(OptionNode::class);
-        TestDBUtils::getLeanConnection()->nativeQuery("TRUNCATE $table;");
+        TestDBUtils::truncateEntityTable(OptionNode::class);
     }
 
     protected function getOptions(): IOptions
