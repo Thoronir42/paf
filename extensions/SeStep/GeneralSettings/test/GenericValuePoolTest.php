@@ -49,6 +49,7 @@ abstract class GenericValuePoolTest extends TestCase
 
         $pool = $pools->createPool('bigMath', [1, 2, 3]);
         $this->assertNotNull($pool);
+        $this->assertCount(3, $pool);
 
         $pools->deletePool('bigMath');
         $this->assertNull($pools->getPool('bigMath'));

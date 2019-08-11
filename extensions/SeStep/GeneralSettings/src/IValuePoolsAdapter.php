@@ -31,7 +31,7 @@ interface IValuePoolsAdapter
      *
      * @param Model\IValuePool $pool
      * @param array $values
-     * @return mixed
+     * @return bool
      */
     public function updateValues(Model\IValuePool $pool, array $values);
 

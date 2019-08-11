@@ -2,7 +2,7 @@
 
 namespace SeStep\GeneralSettings\Model;
 
-interface IValuePool
+interface IValuePool extends \Countable
 {
     public function getValues(): array;
 

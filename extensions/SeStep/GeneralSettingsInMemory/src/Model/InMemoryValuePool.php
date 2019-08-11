@@ -41,4 +41,9 @@ class InMemoryValuePool implements IValuePool
     {
         return isset($this->values[$value]);
     }
+
+    public function count()
+    {
+        return count($this->values);
+    }
 }
