@@ -190,4 +190,9 @@ class BaseRepository extends Repository implements IQueryable
 
         return $check === 0;
     }
+
+    public function deleteMany(array $entities)
+    {
+        return array_map([$this, 'delete'], $entities);
+    }
 }

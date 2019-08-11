@@ -5,14 +5,13 @@ namespace SeStep\LeanSettings\Model;
 use Dibi\NotSupportedException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
-use SeStep\GeneralSettings\Model\INode;
-use SeStep\GeneralSettings\Model\IOptionSection;
+use SeStep\GeneralSettings\Model as GeneralModel;
 use SeStep\GeneralSettings\SectionNavigator;
 
 /**
  * @property OptionNode[] $childNodes m:belongsToMany(parent_section_id)
  */
-class Section extends OptionNode implements IOptionSection
+final class Section extends OptionNode implements GeneralModel\IOptionSection
 {
     protected function initDefaults()
     {
@@ -30,7 +29,7 @@ class Section extends OptionNode implements IOptionSection
 
     public function getType(): string
     {
-        return IOptionSection::TYPE_SECTION;
+        return GeneralModel\IOptionSection::TYPE_SECTION;
     }
 
 
