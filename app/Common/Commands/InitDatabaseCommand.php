@@ -26,8 +26,6 @@ class InitDatabaseCommand extends Command
 
     private $maxLengthProgress;
 
-    /** @var OutputInterface */
-    private $out;
     /** @var string */
     private $databaseName;
 
@@ -57,8 +55,6 @@ class InitDatabaseCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->out = $output;
-
         if ($input->getOption('drop-all-tables')) {
             $this->dropAllTables($output);
         }
@@ -73,11 +69,11 @@ class InitDatabaseCommand extends Command
         foreach ($this->files as $path) {
             try {
                 $this->currentFile = $path;
-                $this->executeCurrentFile();
+                $this->executeCurrentFile($output);
 
-                $this->writeFileProgress(' ok');
+                $this->writeFileProgress($output, ' ok');
             } catch (\Throwable $ex) {
-                $this->writeFileProgress($this->getQueryProgress() . ' error');
+                $this->writeFileProgress($output, $this->getQueryProgress() . ' error');
                 throw $ex;
             } finally {
                 $output->writeln("");
@@ -88,10 +84,10 @@ class InitDatabaseCommand extends Command
         return 0;
     }
 
-    private function executeCurrentFile()
+    private function executeCurrentFile(OutputInterface $output)
     {
         if (!file_exists($this->currentFile)) {
-            $this->writeFileProgress("file not found");
+            $this->writeFileProgress($output, "file not found");
             throw new FileNotFoundException("File '$this->currentFile' could not be found");
         }
 
@@ -103,7 +99,7 @@ class InitDatabaseCommand extends Command
         $this->maxLengthProgress = 0;
 
         while ($this->currentQueryIndex < count($this->currentQueries)) {
-            $this->writeFileProgress($this->getQueryProgress());
+            $this->writeFileProgress($output, $this->getQueryProgress());
             $this->connection->nativeQuery($this->currentQueries[$this->currentQueryIndex] . ';');
 
             $this->currentQueryIndex++;
@@ -115,15 +111,18 @@ class InitDatabaseCommand extends Command
         return '[' . $this->currentQueryIndex . '/' . count($this->currentQueries) . ']';
     }
 
-    private function writeFileProgress($progress)
+    private function writeFileProgress(OutputInterface $output, $progress)
     {
-        $this->out->write("\r");
+        $options = OutputInterface::VERBOSITY_VERBOSE;
+
+        $output->write("\r", false, $options);
         $progressStr = "  - $this->currentFile $progress";
-        $this->out->write($progressStr);
+        $output->write($progressStr, false, $options);
 
         $len = mb_strlen($progressStr);
         if ($len < $this->maxLengthProgress) {
-            $this->out->write(str_repeat(" ", $this->maxLengthProgress - $len));
+            $spaceCleaner = str_repeat(" ", $this->maxLengthProgress - $len);
+            $output->write($spaceCleaner, false, $options);
         } else {
             $this->maxLengthProgress = $len;
         }
@@ -142,9 +141,9 @@ class InitDatabaseCommand extends Command
             $output->writeln("Disabling foreign key checks");
             $this->connection->query('SET FOREIGN_KEY_CHECKS = 0;');
             foreach ($tables as $table) {
-                $output->write(" - deleting table $table... ");
+                $output->write(" - deleting table $table... ", false, OutputInterface::VERBOSITY_VERBOSE);
                 $this->connection->query('DROP TABLE %n', $table);
-                $output->writeln("ok");
+                $output->writeln("ok", OutputInterface::VERBOSITY_VERBOSE);
             }
         } catch (\Throwable $ex) {
             $output->writeln("error");
@@ -154,6 +153,6 @@ class InitDatabaseCommand extends Command
             $this->connection->query('SET FOREIGN_KEY_CHECKS = 1;');
         }
 
-        $output->writeln("Here be nothing");
+        $output->writeln("Dropped " . count($tables) . ' tables');
     }
 }
