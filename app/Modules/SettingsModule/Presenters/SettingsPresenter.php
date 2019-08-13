@@ -5,7 +5,9 @@ namespace PAF\Modules\SettingsModule\Presenters;
 use Exception;
 use Nette\Application\AbortException;
 use PAF\Common\BasePresenter;
-use PAF\Modules\SettingsModule\Components\SettingsControl\SettingsControl;
+use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
+use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
+use SeStep\GeneralSettings\Model\INode;
 
 final class SettingsPresenter extends BasePresenter
 {
@@ -18,30 +20,9 @@ final class SettingsPresenter extends BasePresenter
 
     public function actionDefault(string $fqn = 'paf')
     {
-        $section = $this->settings->getSection($fqn);
+        $this->template->fqnComponent = str_replace(INode::DOMAIN_DELIMITER, '-', $fqn);
 
-        $control = new SettingsControl($section, 4);
+        $this['settings'] = $this->createComponentOption();
 
-        $this['settings'] = $control;
-
-        $control->onSetValue[] = function ($name, $value) {
-            try {
-                $this->settings->setValue($name, $value);
-            } catch (Exception $e) {
-                $this->sendJson([
-                    'status' => 'error',
-                    'message' => get_class($e) . ': ' . $e->getMessage(),
-                    'source' => $e->getFile() . ':' . $e->getLine(),
-                ]);
-            }
-
-            $this->sendJson([
-                'status' => 'success'
-            ]);
-        };
-
-        $control->onExpand[] = function ($expandFqn) {
-            $this->redirect('this', ['fqn' => $expandFqn]);
-        };
     }
 }

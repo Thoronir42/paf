@@ -1,4 +1,5 @@
 {block content}
+{control option-paf-quotes-enable:editable}
 <h1>{_'title'}{if !$enableQuotes} {_'currently-closed'}{/if}</h1>
 {if !$enableQuotes}
     <div class="text-info">{_'currently-closed-text'}</div>

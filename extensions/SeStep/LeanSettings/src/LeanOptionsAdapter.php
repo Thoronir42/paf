@@ -170,7 +170,14 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
 
     public function getNode($name): ?Model\OptionNode
     {
-        return $this->rootSection->getNode($name);
+        $dl = new DomainLocator($name);
+
+        /** @var Model\Section $parent */
+        $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
+
+        $optionNode = $parent->getNode($dl->getName());
+
+        return $optionNode;
     }
 
 

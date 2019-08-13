@@ -1,4 +1,4 @@
-<div id="settings-{$control->getName()}" class="panel panel-{$class}" n:if="$control->getOptions($section)">
+<div id="settings-{$control->getName()}" class="panel panel-{$class}" n:if="!empty($options)">
     <div class="panel-heading">
         <small class="pull-right text-muted">{$section->getFQN()}</small>
         <h3>{$section->getCaption()}</h3>
@@ -7,10 +7,10 @@
         <div class="row">
             {*<div class="col-sm-2">Option</div>
             <div class="col-sm-10">Value</div>*}
-            {foreach $control->getOptions($section) as $name => $option}
-                <div class="col-sm-2">{$option->getCaption()}<small>{$section->getFQN().'.'.$name}</small></div>
+            {foreach $options as $name => $option}
+                <div class="col-sm-2">{$option->getCaption()}<small>{$option->getFQN()}</small></div>
                 <div class="col-sm-10">
-                    {control $name}
+                    {control $name:editable}
                 </div>
                 <div class="clearfix"></div>
             {/foreach}
@@ -18,9 +18,9 @@
     </div>
 </div>
 
-{foreach $control->getSubSections($section) as $name => $subSection}
+{foreach $subSections as $name => $subSection}
     {if $canExpandSubSections}
-        {control $name:bootstrap}
+        {control $name:section}
     {else}
         <a n:href="!expand $name">{$subSection->getFQN()}</a>
     {/if}

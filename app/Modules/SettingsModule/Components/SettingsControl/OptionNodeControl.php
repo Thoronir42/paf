@@ -2,39 +2,71 @@
 
 namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
+
 use Nette\Application\UI;
+use Nette\ComponentModel\IComponent;
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
+use PAF\Modules\SettingsModule\InlineOption\OptionAccessor;
+use SeStep\GeneralSettings\DomainLocator;
+use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
+use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
+use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
+use SeStep\GeneralSettings\Model\INode;
 use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IOptionSection;
 
 /**
  * Class OptionControl
  *
  * @package SeStep\SettingsControl
- *
- * @method onSetValue(string $name, $value)
  */
-class OptionNodeControl extends UI\Control
+final class OptionNodeControl extends UI\Control implements OptionAccessor
 {
-    /** @var callable[] */
-    public $onSetValue = [];
-
-    /** @var IOption */
-    private $node;
-
     /** @var ITranslator */
     private $translator;
 
+    /** @var OptionAccessor */
+    private $optionAccessor;
+    /** @var string */
+    private $optionFqn;
 
-    public function __construct(IOption $node)
+    public function __construct(OptionAccessor $optionAccessor, string $optionFqn)
     {
-        $this->node = $node;
+        $this->optionAccessor = $optionAccessor;
+        $this->optionFqn = $optionFqn;
     }
 
-    public function render()
+    public function render(string $fqn = null)
     {
-        $el = $this->createElement($this->node);
+        if($fqn) {
+
+        }
+        $node = $this->getNode($this->optionFqn);
+        if(!$node) {
+            throw new NodeNotFoundException($this->optionFqn);
+        }
+
+        if ($node instanceof IOptionSection) {
+            $this->renderSectionTemplate($node);
+
+        } elseif ($node instanceof IOption) {
+            echo $node->getValue();
+
+        } else {
+            throw new \UnexpectedValueException('Node type ' . $node->getType() . ' could not be rendered');
+        }
+    }
+
+    public function renderEditable()
+    {
+        $node = $this->getNode($this->optionFqn);
+        if (!$node instanceof IOption) {
+            throw new OptionNotFoundException($this->optionFqn, $node);
+        }
+
+        $el = $this->createElement($node);
 
         $el->data('url-set', $this->link('set!'));
         $el->data('value-name', $this->getUniqueId() . '-value');
@@ -42,11 +74,46 @@ class OptionNodeControl extends UI\Control
         echo $el->render();
     }
 
+    public function renderSection()
+    {
+        $node = $this->getNode($this->optionFqn);
+        if (!$node instanceof IOptionSection) {
+            throw new SectionNotFoundException($this->optionFqn, $node);
+        }
+
+        $this->renderSectionTemplate($node);
+    }
+
+    private function renderSectionTemplate(IOptionSection $section)
+    {
+        $this->template->class = 'default';
+
+        $this->template->section = $section;
+        // todo: replace by more sophisticated check
+        $this->template->canExpandSubSections = count(explode(INode::DOMAIN_DELIMITER, $this->optionFqn)) <= 2;
+
+        $childNodes = $section->getNodes();
+        $this->template->options = array_filter($childNodes, function ($node) {
+            return $node instanceof IOption;
+        });
+        $this->template->subSections = array_filter($childNodes, function ($node) {
+            return $node instanceof IOptionSection;
+        });
+
+        $this->template->setFile(__DIR__ . '/optionNodeControl-section.latte');
+        $this->template->render();
+    }
+
     public function handleListAvailableValues()
     {
-        if ($this->node->hasValuePool()) {
-            $values = $this->node->getValuePool()->getValues();
-        } elseif ($this->node->getType() === IOption::TYPE_BOOL) {
+        $node = $this->getNode($this->optionFqn);
+        if(!$node instanceof IOption) {
+            throw new \UnexpectedValueException("Node must be an IOption");
+        }
+
+        if ($node->hasValuePool()) {
+            $values = $node->getValuePool()->getValues();
+        } elseif ($node->getType() === IOption::TYPE_BOOL) {
             $values = [1 => 'yes', 0 => 'no'];
         } else {
             $this->presenter->sendJson(['status' => 'error', 'message' => 'This option does not support values']);
@@ -66,9 +133,21 @@ class OptionNodeControl extends UI\Control
 
     public function handleSet($value = null)
     {
-        $this->onSetValue($this->node->getFQN(), $value);
+        $this->optionAccessor->setValue($this->optionFqn, $value);
     }
 
+    public function createComponent($name): ?IComponent
+    {
+        $childFqn = $this->optionFqn ? DomainLocator::concatFQN($name, $this->optionFqn) : $name;
+
+        $node = $this->getNode($childFqn);
+        if (!$node) {
+            throw new NodeNotFoundException($childFqn);
+        }
+
+        return new OptionNodeControl($this->optionAccessor, $childFqn);
+    }
+    
     private function createElement(IOption $option): Html
     {
         $el = Html::el('a');
@@ -129,5 +208,15 @@ class OptionNodeControl extends UI\Control
 
                 return $label;
         }
+    }
+
+    public function getNode(string $fqn): ?INode
+    {
+        return $this->optionAccessor->getNode($fqn);
+    }
+
+    public function setValue(string $fqn, $value): bool
+    {
+        return $this->optionAccessor->setValue($fqn, $value);
     }
 }
