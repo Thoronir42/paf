@@ -110,7 +110,7 @@ abstract class BasePresenter extends Presenter
             ]);
         };
 
-        return new OptionNodeControl($optionAccessor, '');
+        return new OptionNodeControl($optionAccessor, '', $this->translator);
     }
 
 

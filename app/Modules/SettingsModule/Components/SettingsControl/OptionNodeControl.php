@@ -32,19 +32,17 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
     /** @var string */
     private $optionFqn;
 
-    public function __construct(OptionAccessor $optionAccessor, string $optionFqn)
+    public function __construct(OptionAccessor $optionAccessor, string $optionFqn, ITranslator $translator = null)
     {
         $this->optionAccessor = $optionAccessor;
         $this->optionFqn = $optionFqn;
+        $this->translator = $translator;
     }
 
-    public function render(string $fqn = null)
+    public function render()
     {
-        if($fqn) {
-
-        }
         $node = $this->getNode($this->optionFqn);
-        if(!$node) {
+        if (!$node) {
             throw new NodeNotFoundException($this->optionFqn);
         }
 
@@ -72,6 +70,22 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
         $el->data('value-name', $this->getUniqueId() . '-value');
 
         echo $el->render();
+    }
+
+    public function renderLabel()
+    {
+        $text = $this->translator ? $this->translator->translate($this->optionFqn) : $this->optionFqn;
+
+        echo '<label class="option-inline-label" title="' . $this->optionFqn . '">' . $text . '</label>';
+    }
+
+    public function renderPair(bool $editable = true)
+    {
+        echo '<div class="well well-sm well-inline option-inline-pair">';
+        $this->renderLabel();
+        $this->renderEditable();
+        echo '</div>';
+
     }
 
     public function renderSection()
@@ -107,7 +121,7 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
     public function handleListAvailableValues()
     {
         $node = $this->getNode($this->optionFqn);
-        if(!$node instanceof IOption) {
+        if (!$node instanceof IOption) {
             throw new \UnexpectedValueException("Node must be an IOption");
         }
 
@@ -145,9 +159,9 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
             throw new NodeNotFoundException($childFqn);
         }
 
-        return new OptionNodeControl($this->optionAccessor, $childFqn);
+        return new OptionNodeControl($this->optionAccessor, $childFqn, $this->translator);
     }
-    
+
     private function createElement(IOption $option): Html
     {
         $el = Html::el('a');
