@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\Components\SettingsControl;
 
-
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
 use Nette\InvalidArgumentException;
@@ -48,10 +47,8 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
 
         if ($node instanceof IOptionSection) {
             $this->renderSectionTemplate($node);
-
         } elseif ($node instanceof IOption) {
             echo $node->getValue();
-
         } else {
             throw new \UnexpectedValueException('Node type ' . $node->getType() . ' could not be rendered');
         }
@@ -85,7 +82,6 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
         $this->renderLabel();
         $this->renderEditable();
         echo '</div>';
-
     }
 
     public function renderSection()

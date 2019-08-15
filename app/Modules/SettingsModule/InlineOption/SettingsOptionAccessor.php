@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\InlineOption;
 
-
 use Nette\Application\AbortException;
 use Nette\SmartObject;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
@@ -50,7 +49,7 @@ class SettingsOptionAccessor implements OptionAccessor
             $this->onValueChanged($fqn, $value);
             return true;
         } catch (\Throwable $ex) {
-            if($ex instanceof AbortException) {
+            if ($ex instanceof AbortException) {
                 throw $ex;
             }
 

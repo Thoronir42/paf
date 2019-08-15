@@ -102,7 +102,7 @@ abstract class BasePresenter extends Presenter
                 $this->flashMessage("Value of $fqn changed");
             }
         };
-        $optionAccessor->onError[] = function($ex) {
+        $optionAccessor->onError[] = function ($ex) {
             $this->sendJson([
                 'status' => 'error',
                 'message' => get_class($ex) . ': ' . $ex->getMessage(),

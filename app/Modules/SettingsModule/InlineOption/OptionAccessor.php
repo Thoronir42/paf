@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\SettingsModule\InlineOption;
 
-
 use SeStep\GeneralSettings\Model\INode;
 
 interface OptionAccessor

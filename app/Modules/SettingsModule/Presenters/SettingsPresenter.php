@@ -23,6 +23,5 @@ final class SettingsPresenter extends BasePresenter
         $this->template->fqnComponent = str_replace(INode::DOMAIN_DELIMITER, '-', $fqn);
 
         $this['settings'] = $this->createComponentOption();
-
     }
 }
