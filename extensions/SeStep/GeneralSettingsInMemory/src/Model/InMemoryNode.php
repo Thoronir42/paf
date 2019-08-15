@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettingsInMemory;
+
+namespace SeStep\GeneralSettingsInMemory\Model;
 
 use SeStep\GeneralSettings\DomainLocator;
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 
 abstract class InMemoryNode implements INode
 {
@@ -45,10 +46,10 @@ abstract class InMemoryNode implements INode
         return $this->data['caption'] ?? null;
     }
 
-    final protected function getRoot(): InMemoryOptions
+    final protected function getRoot(): InMemoryOptionsAdapter
     {
         $section = $this;
-        while (!($section instanceof InMemoryOptions) && $section->parent) {
+        while (!($section instanceof InMemoryOptionsAdapter) && $section->parent) {
             $section = $section->parent;
         }
 

@@ -7,6 +7,8 @@ use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
 use PAF\Common\Security\Authorizator;
+use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
+use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
 use SeStep\GeneralSettings\Settings;
 use SeStep\NavigationMenuComponent\NavigationMenu;
 use stdClass;
@@ -86,6 +88,29 @@ abstract class BasePresenter extends Presenter
         $navMenu = $this->context->getService('navigationMenu.control');
 
         return $navMenu;
+    }
+
+    public function createComponentOption()
+    {
+        $optionAccessor = new SettingsOptionAccessor($this->settings);
+        $optionAccessor->onValueChanged[] = function ($fqn) {
+            if ($this->isAjax()) {
+                $this->sendJson([
+                    'status' => 'success'
+                ]);
+            } else {
+                $this->flashMessage("Value of $fqn changed");
+            }
+        };
+        $optionAccessor->onError[] = function ($ex) {
+            $this->sendJson([
+                'status' => 'error',
+                'message' => get_class($ex) . ': ' . $ex->getMessage(),
+                'source' => $ex->getFile() . ':' . $ex->getLine(),
+            ]);
+        };
+
+        return new OptionNodeControl($optionAccessor, '', $this->translator);
     }
 
 

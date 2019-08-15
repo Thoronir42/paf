@@ -140,6 +140,18 @@ form .error {
     font-weight: bold;
 }
 
+.option-inline-label::after {
+    content: ':';
+}
+
+.option-inline-label {
+    margin-right: 0.33em;
+}
+
+.well-inline {
+    display: inline-block;
+}
+
 .quote-overview .references {
     height: 80px;
     overflow-y: scroll;

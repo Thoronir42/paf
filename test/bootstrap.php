@@ -3,31 +3,31 @@
 define('DEBUG_MODE', true);
 
 call_user_func(function () {
+    define('ADDITIONAL_CONFIG', 'testing.neon');
+
+    /** @var \Nette\DI\Container $container */
     $container = include __DIR__ . "/../app/bootstrap.php";
 
+    $testingParameters = $container->getParameters()['testing'];
+
     \Test\PAF\Utils\TestUtils::setContainer($container);
+    \Test\PAF\Utils\TestDBUtils::setLeanConnection($container->getByType(\LeanMapper\Connection::class));
 
-    \Test\PAF\Utils\TestDBUtils::setLeanConnection(new \LeanMapper\Connection([
-        'host' => 'localhost',
-        'driver' => 'mysqli',
-        'user' => 'tester',
-        'password' => 'QjpebVnpAKBQaKMr',
-        'database' => 'paf_test',
-    ]));
+    $initCommand = "app:database:init --default-files";
+    if (isset($testingParameters['dropAllTables']) && $testingParameters['dropAllTables']) {
+        $initCommand .= ' --drop-all-tables';
+    }
 
-    $command = new \PAF\Commands\InitDatabaseCommand(\Test\PAF\Utils\TestDBUtils::getLeanConnection());
-    $command->setFiles([
-        dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/drop.sql',
-        dirname(__DIR__) . '/extensions/SeStep/LeanSettings/database/initialize.sql',
-    ]);
+    /** @var \Contributte\Console\Application $app */
+    $app = $container->getByType(\Contributte\Console\Application::class);
+    $app->setAutoExit(false);
 
-    $command->run();
+    $app->run(new \Symfony\Component\Console\Input\StringInput($initCommand));
 
-    $mapper = new \SeStep\ModularLeanMapper\ModularMapper(new \PAF\Common\Model\UnderscoreMapper(), [
-        'ss_settings__' => new \SeStep\LeanSettings\LeanOptionsMapperModule(),
-    ]);
-
+    /** @var \LeanMapper\IMapper $mapper */
+    $mapper = $container->getService('leanMapper.mapper');
     \Test\PAF\Utils\TestDBUtils::setLeanMapper($mapper);
+
 });
 
 

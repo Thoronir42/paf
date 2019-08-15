@@ -3,7 +3,7 @@
 namespace SeStep\LeanSettings\Model;
 
 use PAF\Common\Model\BaseEntity;
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 use SeStep\LeanSettings\Model\Option;
 
 /**

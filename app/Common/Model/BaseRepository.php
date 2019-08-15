@@ -176,7 +176,7 @@ class BaseRepository extends Repository implements IQueryable
         $orArgs = [];
         foreach ($this->uniqueColumns as $column) {
             $value = $entity->$column;
-            if (!$value) {
+            if (is_null($value)) {
                 continue;
             }
 
@@ -189,5 +189,10 @@ class BaseRepository extends Repository implements IQueryable
             ->fetchSingle();
 
         return $check === 0;
+    }
+
+    public function deleteMany(array $entities)
+    {
+        return array_map([$this, 'delete'], $entities);
     }
 }

@@ -47,7 +47,7 @@ services:
     - SeStep\Commentable\Control\CommentsControlFactory
 
     generalSettings:
-        factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptions())
+        factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())
 
     -
         class: PAF\Common\Storage\PafImageStorage

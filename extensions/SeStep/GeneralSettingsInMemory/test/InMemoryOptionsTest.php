@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 namespace Test\SeStep\GeneralSettingsInMemory;
 
-use SeStep\GeneralSettings\IOptions;
-use SeStep\GeneralSettingsInMemory\InMemoryOptions;
+use SeStep\GeneralSettings\IOptionsAdapter;
+use SeStep\GeneralSettingsInMemory\InMemoryOptionsAdapter;
 use Test\SeStep\GeneralSettings\GenericOptionsTest;
 
 class InMemoryOptionsTest extends GenericOptionsTest
 {
 
-    protected function getOptions(): IOptions
+    protected function getOptions(): IOptionsAdapter
     {
-        return new InMemoryOptions();
+        return new InMemoryOptionsAdapter();
     }
 }

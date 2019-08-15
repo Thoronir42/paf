@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
-namespace SeStep\GeneralSettings\Options;
+
+namespace SeStep\GeneralSettings\Model;
 
 interface IOptionSectionWritable
 {
@@ -11,7 +12,7 @@ interface IOptionSectionWritable
 
     public function setValue($value, string $name);
 
-    public function addValue($value);
+    public function addValue($value, string $section = '');
 
     public function removeNode(string $name);
 }

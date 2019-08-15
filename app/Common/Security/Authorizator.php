@@ -24,7 +24,10 @@ class Authorizator extends Permission implements IAuthorizator
 
         $this->addResource("admin-settings", 'admin-section');
 
+        $this->addResource('option');
+
         $this->allow('power-user', 'admin-section');
+        $this->allow('power-user', 'option');
     }
 
     /**

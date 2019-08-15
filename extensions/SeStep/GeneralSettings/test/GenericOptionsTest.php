@@ -2,14 +2,14 @@
 namespace Test\SeStep\GeneralSettings;
 
 use PHPUnit\Framework\TestCase;
-use SeStep\GeneralSettings\IOptions;
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IOptionSection;
-use SeStep\GeneralSettings\Options\IOptionSectionWritable;
+use SeStep\GeneralSettings\IOptionsAdapter;
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IOptionSection;
+use SeStep\GeneralSettings\Model\IOptionSectionWritable;
 
 abstract class GenericOptionsTest extends TestCase
 {
-    abstract protected function getOptions(): IOptions;
+    abstract protected function getOptions(): IOptionsAdapter;
 
     public function testSetOptions()
     {
@@ -30,7 +30,7 @@ abstract class GenericOptionsTest extends TestCase
         $this->assertEquals(IOption::TYPE_BOOL, $nodes['respawns']->getType());
     }
 
-    private function setEntrances(IOptions $options)
+    private function setEntrances(IOptionsAdapter $options)
     {
         $entrancesSection = $options->addSection('entrances');
 
@@ -91,7 +91,7 @@ abstract class GenericOptionsTest extends TestCase
         $options->addValue('Dewey');
         $options->addValue('Louie');
 
-        $options->removeNode(1);
+        $options->removeNode("1");
 
         $this->assertCount(2, $options);
 

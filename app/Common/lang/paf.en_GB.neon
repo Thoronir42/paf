@@ -45,7 +45,7 @@ quote:
 
 quotes:
     enabled: "Quotes are currently enabled"
-    enable: "Enable"
+    enable: "Enable quotes"
     disabled: "Quotes are currently disabled"
     disable: "Disable"
 

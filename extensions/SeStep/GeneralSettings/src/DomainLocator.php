@@ -3,7 +3,7 @@
 namespace SeStep\GeneralSettings;
 
 use InvalidArgumentException;
-use SeStep\GeneralSettings\Options\INode;
+use SeStep\GeneralSettings\Model\INode;
 
 class DomainLocator
 {

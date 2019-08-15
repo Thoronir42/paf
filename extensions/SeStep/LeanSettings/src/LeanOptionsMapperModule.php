@@ -2,7 +2,7 @@
 namespace SeStep\LeanSettings;
 
 use LeanMapper\Row;
-use SeStep\GeneralSettings\Options\IOptionSection;
+use SeStep\GeneralSettings\Model\IOptionSection;
 use SeStep\LeanSettings\Model\Option;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;

@@ -2,7 +2,7 @@
 namespace SeStep\LeanSettings\DI;
 
 use Nette\DI\CompilerExtension;
-use SeStep\LeanSettings\LeanOptions;
+use SeStep\LeanSettings\LeanOptionsAdapter;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
 class LeanSettingsExtensions extends CompilerExtension
@@ -15,6 +15,6 @@ class LeanSettingsExtensions extends CompilerExtension
             ->setFactory(OptionNodeRepository::class);
 
         $builder->addDefinition($this->prefix('options'))
-            ->setFactory(LeanOptions::class);
+            ->setFactory(LeanOptionsAdapter::class);
     }
 }

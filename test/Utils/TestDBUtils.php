@@ -6,6 +6,7 @@ namespace Test\PAF\Utils;
 use LeanMapper\Connection;
 use LeanMapper\IMapper;
 use PAF\Commands\InitDatabaseCommand;
+use PAF\Common\Model\BaseEntity;
 
 final class TestDBUtils
 {
@@ -33,6 +34,12 @@ final class TestDBUtils
     public static function setLeanMapper(IMapper $leanMapper): void
     {
         self::$leanMapper = $leanMapper;
+    }
+
+    public static function truncateEntityTable(string $entityClass)
+    {
+        $table = self::$leanMapper->getTable($entityClass);
+        TestDBUtils::$leanConnection->nativeQuery("TRUNCATE $table;");
     }
 
 

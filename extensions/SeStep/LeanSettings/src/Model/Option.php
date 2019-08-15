@@ -2,12 +2,12 @@
 
 namespace SeStep\LeanSettings\Model;
 
-use SeStep\GeneralSettings\Options\IOption;
-use SeStep\GeneralSettings\Options\IValuePool;
+use SeStep\GeneralSettings\Model\IOption;
+use SeStep\GeneralSettings\Model\IValuePool;
 
 /**
  * @property string $value m:column(string_value)
- * @property ValuePool|null $valuePool m:hasOne
+ * @property Section|null $valuePool m:hasOne
  */
 class Option extends OptionNode implements IOption
 {
@@ -33,14 +33,21 @@ class Option extends OptionNode implements IOption
 
     public function hasValuePool(): bool
     {
-        return !!$this->valuePool;
+        return isset($this->getRowData()['valuePool']);
     }
 
+    public function setValuePool(?SectionValuePool $pool): self
+    {
+        $this->valuePool = $pool->getSection();
+        return $this;
+    }
+    
     public function getValuePool(): ?IValuePool
     {
-        // todo: implementValuePools
-//        return $this->row->referenced('valuePool');
+        if (!$this->hasValuePool()) {
+            return null;
+        }
 
-        return null;
+        return new SectionValuePool($this->valuePool);
     }
 }

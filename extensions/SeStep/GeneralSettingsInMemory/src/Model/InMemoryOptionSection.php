@@ -1,14 +1,13 @@
 <?php declare(strict_types=1);
 
-
-namespace SeStep\GeneralSettingsInMemory;
+namespace SeStep\GeneralSettingsInMemory\Model;
 
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
-use SeStep\GeneralSettings\Options\INode;
-use SeStep\GeneralSettings\Options\IOptionSection;
-use SeStep\GeneralSettings\Options\IOptionSectionWritable;
-use SeStep\GeneralSettings\Options\OptionTypeEnum;
+use SeStep\GeneralSettings\Model\INode;
+use SeStep\GeneralSettings\Model\IOptionSection;
+use SeStep\GeneralSettings\Model\IOptionSectionWritable;
+use SeStep\GeneralSettings\Model\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 
 class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOptionSectionWritable, \ArrayAccess
@@ -120,9 +119,12 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
         }
     }
 
-    public function addValue($value)
+    public function addValue($value, $name = '')
     {
-        $offset = $this->data['maxIntOffset']++;
+        $dl = new DomainLocator($name, $this->getFQN());
+        /** @var self $section */
+        $section = SectionNavigator::getSectionByDomain($this, $dl);
+        $offset = $section->data['maxIntOffset']++;
         $this->setValue($value, "$offset");
     }
 
