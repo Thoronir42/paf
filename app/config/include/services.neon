@@ -1,15 +1,4 @@
 services:
-    routerFactory:
-        class: PAF\Common\Router\RouterFactory
-        arguments:
-            modules:
-                - Cms
-                - Commission
-                - Common
-                - Portfolio
-                - Quote
-                - Settings
-    router: @routerFactory::createRouter()
     authenticator: PAF\Common\Security\Authenticator
     authorizator: PAF\Common\Security\Authorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())

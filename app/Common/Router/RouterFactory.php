@@ -2,49 +2,42 @@
 
 namespace PAF\Common\Router;
 
-use Nette;
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
+use Nette\InvalidStateException;
+use Nette\Routing\Router;
 
-class RouterFactory
+final class RouterFactory
 {
-    /** @var array */
-    private $modules;
+    /** @var RouterModule[] */
+    private $modules = [];
+    /** @var Router */
+    private $fallbackRouter;
 
-    public function __construct($modules = [])
+    public function __construct(Router $fallbackRouter)
     {
-        $this->modules = $modules;
+
+        $this->fallbackRouter = $fallbackRouter;
     }
 
+    public function addModule(string $name, RouterModule $module)
+    {
+        if (isset($this->modules[$name])) {
+            throw new InvalidStateException("Router module '$name' already exists");
+        }
 
-    /**
-     * @return Nette\Application\IRouter
-     */
-    public function createRouter()
+        $this->modules[$name] = $module;
+    }
+
+    /** @return Router */
+    public function create()
     {
         $router = new RouteList();
 
-        $router[] = $this->createCmsModule();
-        $router[] = new Route('settings', [
-            'module' => 'Settings',
-            'presenter' => 'Settings',
-        ]);
+        foreach ($this->modules as $module) {
+            $router[] = $module->getRoutes();
+        }
 
-        $router[] = new Route("<presenter>/<action>[/<id>]", 'Common:Homepage:default');
-
-        return $router;
-    }
-
-    public function createCmsModule(): Nette\Routing\Router
-    {
-        $router = new RouteList('Cms');
-
-        $availablePages = ['terms-of-service'];
-        $pageList = implode('|', $availablePages);
-
-        $router[] = new Route("<pageName $pageList>[/<action=display>]", [
-            'presenter' => 'Page',
-        ]);
+        $router[] = $this->fallbackRouter;
 
         return $router;
     }
