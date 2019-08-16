@@ -18,6 +18,11 @@ final class SettingsPresenter extends BasePresenter
 //        $this->validateAuthorization('admin-settings', Authorizator::READ, ':Common:Homepage:');
     }
 
+    /**
+     * @param string $fqn
+     *
+     * @authorize admin-settings
+     */
     public function actionDefault(string $fqn = 'paf')
     {
         $this->template->fqnComponent = str_replace(INode::DOMAIN_DELIMITER, '-', $fqn);
