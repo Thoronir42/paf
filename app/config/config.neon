@@ -45,7 +45,7 @@ leanFixtures:
 navigationMenu:
     brandTitle: %appName%
     brandTarget: :Common:Homepage:default
-    itemsFile: %appDir%/config/navigation.neon
+    itemsFile: %appDir%/config/include/navigation.neon
 
 services:
     leanMapper.mapper:
@@ -72,5 +72,5 @@ translation:
 #        - '%appDir%/Modules/Admin/lang'
 
 includes:
-    - services.neon
-    - console.neon
+    - include/services.neon
+    - include/console.neon
