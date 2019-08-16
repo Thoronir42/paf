@@ -28,6 +28,7 @@ session:
 
 
 extensions:
+    appRouting: PAF\Common\Router\RoutingExtension
     leanMapper: PAF\Utils\LeanMapperExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
     translation: Contributte\Translation\DI\TranslationExtension
@@ -46,6 +47,12 @@ navigationMenu:
     brandTitle: %appName%
     brandTarget: :Common:Homepage:default
     itemsFile: %appDir%/config/include/navigation.neon
+
+appRouting:
+    modules:
+        Cms: PAF\Modules\CmsModule\Routing\CmsRouterModule()
+        Commission: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
+        Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
 
 services:
     leanMapper.mapper:
