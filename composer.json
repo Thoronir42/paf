@@ -11,12 +11,12 @@
       "email": "Thoronir42@Gmail.com"
     }
   ],
-  "minimum-stability": "beta",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": "^7.3.0",
 
-    "nette/application": "^3.0",
+    "nette/application": "dev-master#c99c04ed665e69ca547df6c490d2ccc47d47855f",
     "nette/bootstrap": "^3.0",
     "nette/caching": "^3.0",
     "nette/database": "^3.0",
@@ -38,6 +38,12 @@
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Thoronir42/application"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "PAF\\": "app/",
