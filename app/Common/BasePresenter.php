@@ -4,11 +4,9 @@ namespace PAF\Common;
 
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\ITemplate;
-use Nette\Application\UI\MethodReflection;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
-use PAF\Common\Security\Authorizator;
 use PAF\Common\Security\ReflectionAuthorizator;
 use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
 use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
@@ -54,7 +52,7 @@ abstract class BasePresenter extends Presenter
     public function checkRequirements($element): void
     {
         parent::checkRequirements($element);
-        if ($element instanceof MethodReflection) {
+        if ($element instanceof \ReflectionMethod) {
             $result = $this->reflectionAuthorizator->checkMethod($element);
             if (!$result->isValid()) {
                 $args = [

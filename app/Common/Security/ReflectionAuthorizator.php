@@ -3,7 +3,6 @@
 namespace PAF\Common\Security;
 
 use LeanMapper\Reflection\AnnotationsParser;
-use Nette\Application\UI\MethodReflection;
 use Nette\Security\IAuthorizator;
 use Nette\Security\User;
 
@@ -17,7 +16,7 @@ final class ReflectionAuthorizator
         $this->user = $user;
     }
 
-    public function checkMethod(MethodReflection $ref)
+    public function checkMethod(\ReflectionMethod $ref)
     {
         $annotations = (array)AnnotationsParser::parseAnnotationValues('authorize', $ref->getDocComment());
 
