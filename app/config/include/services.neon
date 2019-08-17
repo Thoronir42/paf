@@ -1,6 +1,7 @@
 services:
     authenticator: PAF\Common\Security\Authenticator
     authorizator: PAF\Common\Security\Authorizator
+    - PAF\Common\Security\ReflectionAuthorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
     - PAF\Common\Forms\FormFactory

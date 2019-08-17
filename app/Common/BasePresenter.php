@@ -2,11 +2,12 @@
 
 namespace PAF\Common;
 
+use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
-use PAF\Common\Security\Authorizator;
+use PAF\Common\Security\ReflectionAuthorizator;
 use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
 use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
 use SeStep\GeneralSettings\Settings;
@@ -31,47 +32,40 @@ abstract class BasePresenter extends Presenter
     /** @var ITranslator @inject */
     public $translator;
 
-    protected function startup()
-    {
-        parent::startup();
+    /** @var ReflectionAuthorizator @inject */
+    public $reflectionAuthorizator;
 
-        $this->template->appName = $this->context->parameters['appName'];
-        $this->template->background_color = '#25c887';
-        $this->template->title = '';
-    }
 
     protected function createTemplate(): ITemplate
     {
         $template = parent::createTemplate();
         $template->setTranslator($this->translator);
+
         $template->lang = $this->lang;
+        $template->appName = $this->context->parameters['appName'];
+        $template->background_color = '#25c887';
+        $template->title = '';
 
         return $template;
     }
 
-    // todo: rewrite into (?)PresenterAuthorizator
-    protected function validateAuthorization($resource, $privilege = Authorizator::ALL, $redirect = null)
+    public function checkRequirements($element): void
     {
-        if ($this->user->isAllowed($resource, $privilege)) {
-            return true;
-        }
+        parent::checkRequirements($element);
+        if ($element instanceof \ReflectionMethod) {
+            $result = $this->reflectionAuthorizator->checkMethod($element);
+            if (!$result->isValid()) {
+                $args = [
+                    'resource' => $this->translator->translate('auth.resource.' . $result->getResource()),
+                ];
+                if (($privilege = $result->getPrivilege())) {
+                    $args['privilege'] = $this->translator->translate('auth.privilege.' . $privilege);
+                }
 
-        $msgArgs = ['resource' => $this->translator->translate('auth.resource.' . $resource)];
-        if ($privilege) {
-            $msgArgs['privilege'] = $this->translator->translate('auth.privilege.' . $privilege);
-            $message = $this->translator->translate('auth.resource-privilege-unauthorized', $msgArgs);
-        } else {
-            $message = $this->translator->translate('auth.resource-unauthorized', $msgArgs);
+                $message = $this->translator->translate($result->getMessage(), $args);
+                throw new ForbiddenRequestException($message);
+            }
         }
-        $this->flashMessage($message);
-
-        if (!$redirect || $this->presenter->isLinkCurrent($redirect)) {
-            $this->redirect(':Common:Homepage:default');
-            return false;
-        }
-
-        $this->redirect($redirect);
-        return false;
     }
 
     public function formatLayoutTemplateFiles(): array

@@ -126,8 +126,7 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
         } elseif ($node->getType() === IOption::TYPE_BOOL) {
             $values = [1 => 'yes', 0 => 'no'];
         } else {
-            $this->presenter->sendJson(['status' => 'error', 'message' => 'This option does not support values']);
-            return;
+            return ['status' => 'error', 'message' => 'This option does not support values'];
         }
 
         $editableValues = [];
@@ -138,7 +137,7 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
             ];
         }
 
-        $this->presenter->sendJson($editableValues);
+        return $editableValues;
     }
 
     public function handleSet($value = null)

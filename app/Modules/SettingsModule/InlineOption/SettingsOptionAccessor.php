@@ -46,15 +46,12 @@ class SettingsOptionAccessor implements OptionAccessor
     {
         try {
             $this->settings->setValue($fqn, $value);
-            $this->onValueChanged($fqn, $value);
-            return true;
         } catch (\Throwable $ex) {
-            if ($ex instanceof AbortException) {
-                throw $ex;
-            }
-
             $this->onError($ex, $fqn, $value);
             return false;
         }
+
+        $this->onValueChanged($fqn, $value);
+        return true;
     }
 }
