@@ -2,11 +2,10 @@
 
 namespace PAF\Common\Security;
 
-
 class AuthorizationResult
 {
     const STATUS_OK = 0;
-    CONST STATUS_FORBIDDEN = 1;
+    const STATUS_FORBIDDEN = 1;
 
     /** @var int */
     private $status;
@@ -41,6 +40,4 @@ class AuthorizationResult
     {
         return $this->args['privilege'] ?? null;
     }
-
-
 }

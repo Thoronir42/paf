@@ -26,7 +26,6 @@ final class ReflectionAuthorizator
             if ($result) {
                 return $result;
             }
-
         }
 
         return new AuthorizationResult(AuthorizationResult::STATUS_OK);

@@ -66,7 +66,6 @@ abstract class BasePresenter extends Presenter
                 throw new ForbiddenRequestException($message);
             }
         }
-
     }
 
     public function formatLayoutTemplateFiles(): array
