@@ -30,11 +30,13 @@ session:
 extensions:
     appRouting: PAF\Common\Router\RoutingExtension
     leanMapper: PAF\Utils\LeanMapperExtension
+    moment: PAF\Utils\Moment\MomentProviderExtension
+    appLogging: PAF\Common\Logging\LoggingExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
     translation: Contributte\Translation\DI\TranslationExtension
-    moment: PAF\Utils\Moment\MomentProviderExtension
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
+    monolog: Contributte\Monolog\DI\MonologExtension
 
 leanMapper:
     db: %database%
@@ -53,6 +55,18 @@ appRouting:
         Cms: PAF\Modules\CmsModule\Routing\CmsRouterModule()
         Commission: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
         Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
+
+monolog:
+    channel:
+        default:
+            handlers:
+                fileHandler:
+                    type: Monolog\Handler\RotatingFileHandler
+                    arguments:
+                        - %rootDir%/log/app.log
+                        - 5
+                    setup:
+                        - setFilenameFormat('{filename}-{date}', 'Y-m')
 
 services:
     leanMapper.mapper:

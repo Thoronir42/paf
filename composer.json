@@ -36,7 +36,8 @@
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
     "contributte/translation": "^0.4.1",
-    "contributte/console": "^0.7.1"
+    "contributte/console": "^0.7.1",
+    "contributte/monolog": "^0.3.0"
   },
   "repositories": [
     {

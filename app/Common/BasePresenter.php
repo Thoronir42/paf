@@ -10,6 +10,8 @@ use Nette\Localization\ITranslator;
 use PAF\Common\Security\ReflectionAuthorizator;
 use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
 use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use SeStep\GeneralSettings\Settings;
 use SeStep\NavigationMenuComponent\NavigationMenu;
 use stdClass;
@@ -20,8 +22,9 @@ use stdClass;
  *
  * @property-read Template|stdClass $template
  */
-abstract class BasePresenter extends Presenter
+abstract class BasePresenter extends Presenter implements LoggerAwareInterface
 {
+    use Logging\HasLogger;
 
     /** @var string @persistent */
     public $lang = 'en';
@@ -82,6 +85,11 @@ abstract class BasePresenter extends Presenter
         $navMenu = $this->context->getService('navigationMenu.control');
 
         return $navMenu;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function createComponentOption()
