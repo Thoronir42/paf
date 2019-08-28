@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap = "test/bootstrap.php"
+         colors                      = "true"
+         processIsolation            = "false"
+         stopOnFailure               = "false"
+         syntaxCheck                 = "false">
+
+    <testsuites>
+        <testsuite name="PAF Test suite">
+            <directory>test</directory>
+        </testsuite>
+        <testsuite name="SeStep/GeneralSettings Test suite">
+            <directory>extensions/SeStep/GeneralSettings/test</directory>
+        </testsuite>
+        <testsuite name="SeStep/GeneralSettingsInMemory Test suite">
+            <directory>extensions/SeStep/GeneralSettingsInMemory/test</directory>
+        </testsuite>
+        <testsuite name="SeStep/LeanSettings Test suite">
+            <directory>extensions/SeStep/LeanSettings/test</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
