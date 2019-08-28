@@ -3,6 +3,10 @@ language: php
 
 php:
   - "7.3"
+
+global:
+  - ADDITIONAL_CONFIG=config.travis.neon
+
 env:
   - DEBUG_MODE=1
 

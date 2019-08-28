@@ -3,7 +3,9 @@
 define('DEBUG_MODE', true);
 
 call_user_func(function () {
-    define('ADDITIONAL_CONFIG', 'testing.neon');
+    if(!getenv('ADDITIONAL_CONFIG')) {
+        putenv('ADDITIONAL_CONFIG=testing.neon');
+    }
 
     /** @var \Nette\DI\Container $container */
     $container = include __DIR__ . "/../app/bootstrap.php";

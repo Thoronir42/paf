@@ -41,8 +41,9 @@ return call_user_func(static function () {
     } else {
         $configurator->addConfig(__DIR__ . '/config/config.production.neon');
     }
-    if (defined('ADDITIONAL_CONFIG')) {
-        $configurator->addConfig(__DIR__ . '/config/' . ADDITIONAL_CONFIG);
+
+    if ($additionalConfig = getenv('ADDITIONAL_CONFIG')) {
+        $configurator->addConfig(__DIR__ . '/config/' . $additionalConfig);
     }
 
     PAF\Common\Forms\FormFactory::adjustValidatorMessages();
