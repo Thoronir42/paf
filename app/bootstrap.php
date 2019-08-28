@@ -36,15 +36,9 @@ return call_user_func(static function () {
     $configurator->setTempDirectory(dirname(__DIR__) . '/temp');
 
     $configurator->addConfig(__DIR__ . '/config/config.neon');
-    if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
-        $configurator->addConfig(__DIR__ . '/config/config.local.neon');
-    } else {
-        $configurator->addConfig(__DIR__ . '/config/config.production.neon');
-    }
 
-    if ($additionalConfig = getenv('ADDITIONAL_CONFIG')) {
-        $configurator->addConfig(__DIR__ . '/config/' . $additionalConfig);
-    }
+    $configFile = getenv('CONFIG_FILE') ?: 'config.local.neon';
+    $configurator->addConfig(__DIR__ . '/config/' . $configFile);
 
     PAF\Common\Forms\FormFactory::adjustValidatorMessages();
 
