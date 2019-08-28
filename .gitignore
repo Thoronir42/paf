@@ -6,6 +6,7 @@ temp/*
 www/node_modules/
 
 !.gitignore
+!*/.gitkeep
 !.htaccess
 !web.config
 app/config/config.*.neon

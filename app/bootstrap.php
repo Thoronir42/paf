@@ -32,8 +32,8 @@ return call_user_func(static function () {
         'rootDir' => dirname(__DIR__),
     ]);
 
-    $configurator->enableDebugger(__DIR__ . '/../log');
-    $configurator->setTempDirectory(__DIR__ . '/../temp');
+    $configurator->enableDebugger(dirname(__DIR__) . '/log');
+    $configurator->setTempDirectory(dirname(__DIR__) . '/temp');
 
     $configurator->addConfig(__DIR__ . '/config/config.neon');
     if (!isset($_SERVER['REMOTE_ADDR']) || in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1'])) {
