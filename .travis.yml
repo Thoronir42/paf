@@ -6,7 +6,7 @@ php:
 
 env:
   global:
-    - CONFIG%FILE=config.travis.neon
+    - CONFIG_FILE=config.travis.neon
     - DEBUG_MODE=1
 
 services:
