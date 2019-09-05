@@ -7,26 +7,19 @@ use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
 use SeStep\GeneralSettings\Exceptions\ValuePoolAlreadyExistsException;
 use SeStep\GeneralSettings\IOptionsAdapter;
-use SeStep\GeneralSettings\IValuePoolsAdapter;
-use SeStep\GeneralSettings\Model as GeneralModel;
 use SeStep\GeneralSettings\Model\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 
-use SeStep\LeanSettings\Model\SectionValuePool;
+use SeStep\LeanSettings\Model\Section;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
-class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
+class LeanOptionsAdapter implements IOptionsAdapter
 {
-    const POOLS_PREFIX = 'valuePools';
-
     /** @var OptionNodeRepository */
     private $nodeRepository;
 
     /** @var Model\Section */
     private $rootSection;
-
-    /** @var Model\Section */
-    private $poolsSection;
     /**
      * @var int
      */
@@ -34,26 +27,29 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
 
     public function __construct(OptionNodeRepository $nodeRepository, string $rootName = '', int $maxSectionItems = 99)
     {
-        if ($rootName === self::POOLS_PREFIX) {
-            throw new \InvalidArgumentException("Parameter rootName must not be " . self::POOLS_PREFIX);
-        }
-
         $this->nodeRepository = $nodeRepository;
         $this->maxSectionItems = $maxSectionItems;
 
         $this->rootSection = $this->findOrCreateSection($rootName, 'Root entry for options');
-        $poolFqn = $rootName ? DomainLocator::concatFQN($rootName, self::POOLS_PREFIX) : self::POOLS_PREFIX;
-        $this->poolsSection = $this->findOrCreateSection($poolFqn, 'Root entry of value pools');
     }
 
-    public function addSection(string $name): ?Model\Section
+    public function addSection(string $name): Model\Section
     {
-        return $this->nodeRepository->getSection($name, true);
+        if ($this->hasNode($name)) {
+            throw new ValuePoolAlreadyExistsException("Section $name already exists");
+        }
+
+        $fqn = DomainLocator::concatFQN($name, $this->getFQN());
+        return $this->nodeRepository->createSection($fqn);
     }
 
     public function addValue($value, string $section = '')
     {
-        $parent = $this->nodeRepository->getSection($section);
+        $parent = $this->getNode($section);
+        if (!$parent instanceof Section) {
+            throw new SectionNotFoundException($section, $parent);
+        }
+
         for ($freeIndex = 0; $freeIndex < $this->maxSectionItems && $parent->hasNode($freeIndex); $freeIndex++) {
         }
 
@@ -117,13 +113,18 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
 
         $parentFqn = $sec->getFQN();
         foreach ($values as $key => $value) {
-            $this->setValue($value, DomainLocator::concatFQN($key, $parentFqn));
+            $fqn = DomainLocator::concatFQN($key, $parentFqn);
+            $this->setValue($value, $fqn);
         }
     }
 
     public function removeNode(string $name)
     {
         $dl = new DomainLocator($name);
+        if ($dl->getTopDomain() === $this->getFQN()) {
+            $dl->shiftDomain();
+        }
+
         /** @var Model\Section $parent */
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
         if (!$parent->hasNode($dl->getName())) {
@@ -131,8 +132,7 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
             return;
         }
 
-        $toDelete = $parent->getNode($dl->getName());
-        $this->nodeRepository->delete($toDelete);
+        $this->nodeRepository->deleteNode(DomainLocator::concatFQN($dl->getFQN(), $parent), true);
         $parent->clearOptionsCache();
     }
 
@@ -175,7 +175,7 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
         /** @var Model\Section $parent */
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
 
-        $optionNode = $parent->getNode($dl->getName());
+        $optionNode = $dl->getName() ? $parent->getNode($dl->getName()) : $parent;
 
         return $optionNode;
     }
@@ -190,93 +190,6 @@ class LeanOptionsAdapter implements IOptionsAdapter, IValuePoolsAdapter
     public function getValue(string $name)
     {
         return $this->rootSection->getValue($name);
-    }
-
-    /**
-     * Retrieves value pool by its name
-     *
-     * @param string $name
-     * @return GeneralModel\IValuePool|null
-     */
-    public function getPool(string $name)
-    {
-        if (!$this->poolsSection->hasNode($name)) {
-            return null;
-        }
-
-        $node = $this->poolsSection->getNode($name);
-        if (!$node instanceof Model\Section) {
-            throw new SectionNotFoundException(DomainLocator::concatFQN($name, $this->poolsSection->getFQN()), $node);
-        }
-
-        return new Model\SectionValuePool($node);
-    }
-
-    /** @inheritDoc */
-    public function createPool(string $name, array $values): GeneralModel\IValuePool
-    {
-        if ($this->poolsSection->hasNode($name)) {
-            throw new ValuePoolAlreadyExistsException("Value pool $name already exists");
-        }
-
-        $fqn = DomainLocator::concatFQN($name, $this->poolsSection->getFQN());
-        $section = $this->addSection($fqn);
-
-        $this->setMultipleValues($section, $values);
-        $section->clearOptionsCache();
-        $this->poolsSection->clearOptionsCache();
-
-        return new SectionValuePool($section);
-    }
-
-    /** @inheritDoc */
-    public function updateValues(GeneralModel\IValuePool $pool, array $values)
-    {
-        if (!$pool instanceof Model\SectionValuePool) {
-            throw new \InvalidArgumentException("This adapter can only set values of "
-                . Model\SectionValuePool::class);
-        }
-
-        $this->setMultipleValues($pool->getSection(), $values);
-
-        return true;
-    }
-
-    /** @inheritDoc */
-    public function deletePool($pool): bool
-    {
-        if (is_string($pool)) {
-            $poolSection = $this->poolsSection->getNode($pool);
-        } elseif ($pool instanceof Model\SectionValuePool) {
-            $poolSection = $pool->getSection();
-        } else {
-            $type = is_object($pool) ? get_class($pool) : gettype($pool);
-            throw new \InvalidArgumentException("String or instance of " . Model\SectionValuePool::class
-                . " expected. Got " . $type);
-        }
-
-        $this->nodeRepository->deleteMany($poolSection->getNodes());
-        $this->nodeRepository->delete($poolSection);
-
-        $this->poolsSection->clearOptionsCache();
-
-        return true;
-    }
-
-    /** @inheritDoc */
-    public function setOptionsPool(GeneralModel\IOption $option, ?GeneralModel\IValuePool $pool)
-    {
-        if (!$option instanceof Model\Option) {
-            throw new \InvalidArgumentException("Parameter option expected to be instance of "
-                . Model\Option::class);
-        }
-        if (!$pool instanceof Model\SectionValuePool) {
-            throw new \InvalidArgumentException("Parameter pool expected to be instance of "
-                . Model\SectionValuePool::class);
-        }
-
-        $option->setValuePool($pool);
-        return true;
     }
 
     private function findOrCreateSection(string $fqn, string $caption)

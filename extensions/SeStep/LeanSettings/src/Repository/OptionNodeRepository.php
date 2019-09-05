@@ -140,4 +140,26 @@ class OptionNodeRepository extends BaseRepository
 
         return array_map([$this, 'createEntity'], $selection);
     }
+
+    public function deleteNode(string $fqn, bool $removeChildren = false)
+    {
+        $table = $this->getTable();
+
+        $this->connection->begin();
+
+        $rows = 0;
+        if ($removeChildren) {
+            $rows += $this->connection->delete($table)
+                ->where('fqn LIKE ?', $fqn .'.%')
+                ->execute();
+        }
+
+        $rows += $this->connection->delete($table)
+            ->where('fqn = ?', $fqn)
+            ->execute();
+
+        $this->connection->commit();
+
+        return $rows;
+    }
 }

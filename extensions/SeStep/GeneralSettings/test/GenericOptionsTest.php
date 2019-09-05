@@ -58,8 +58,10 @@ abstract class GenericOptionsTest extends TestCase
         $options = $this->getOptions();
         $this->setEntrances($options);
 
+        /** @var IOptionSection $entrancesSection */
         $entrancesSection = $options->getNode('entrances');
         $this->assertInstanceOf(IOptionSection::class, $entrancesSection);
+        $this->assertCount(2, $entrancesSection);
 
         $this->assertEquals('broken window', $entrancesSection->getNodes()['main']->getValue());
     }
@@ -76,10 +78,15 @@ abstract class GenericOptionsTest extends TestCase
     {
         $options = $this->getOptions();
 
-        $options->addValue('can');
-        $options->addValue('can');
-        $options->addValue('the dance');
+        $this->assertCount(0, $options);
 
+        $options->addValue('can');
+        $this->assertCount(1, $options);
+
+        $options->addValue('can can');
+        $this->assertCount(2, $options);
+
+        $options->addValue('can can dance');
         $this->assertCount(3, $options);
     }
 
