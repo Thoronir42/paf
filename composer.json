@@ -11,6 +11,10 @@
       "email": "Thoronir42@Gmail.com"
     }
   ],
+  "scripts": {
+    "phpcs": "phpcs app/ test/ extensions/",
+    "phpcbf": "phpcbf app/ test/ extensions/"
+  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {

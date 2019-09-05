@@ -3,5 +3,3 @@ parameters:
         database: paf_2019
         user: ''
         password: ''
-    testing:
-        dropAllTables: false

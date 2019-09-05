@@ -38,6 +38,15 @@ class DomainLocator
         return substr($this->fqn, 0, $this->lastDelimiter);
     }
 
+    public function getTopDomain()
+    {
+        if ($this->firstDelimiter === false) {
+            return '';
+        }
+
+        return substr($this->fqn, 0, $this->firstDelimiter);
+    }
+
     public function shiftDomain(): string
     {
         if ($this->firstDelimiter === false) {
@@ -103,10 +112,10 @@ class DomainLocator
      */
     public static function concatFQN($name, $domain = null): string
     {
-        if ($domain && !is_string($domain)) {
-            if (($domain instanceof INode)) {
-                $domain = $domain->getFQN();
-            } elseif (is_scalar($domain)) {
+        if ($domain instanceof INode) {
+            $domain = $domain->getFQN();
+        } elseif ($domain && !is_string($domain)) {
+            if (is_scalar($domain)) {
                 $domain = (string)$domain;
             } else {
                 throw new InvalidArgumentException('Argument domain expected to be string or instance of ' .
@@ -114,6 +123,17 @@ class DomainLocator
             }
         }
 
-        return !is_null($domain) ? ($domain . INode::DOMAIN_DELIMITER . $name) : $name;
+        $fqn = '';
+        if ($domain) {
+            $fqn .= $domain;
+        }
+        if (is_string($name) && strlen($name) > 0 || is_numeric($name)) {
+            if ($domain) {
+                $fqn .= INode::DOMAIN_DELIMITER;
+            }
+            $fqn .= $name;
+        }
+
+        return $fqn;
     }
 }

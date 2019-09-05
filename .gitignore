@@ -1,4 +1,5 @@
 .idea
+.phpunit.result.cache
 
 log/*
 temp/*
@@ -6,13 +7,14 @@ temp/*
 www/node_modules/
 
 !.gitignore
+!*/.gitkeep
 !.htaccess
 !web.config
 app/config/config.*.neon
 !app/config/config.sample.neon
+!app/config/config.travis.neon
 app/config/users.neon
 
 www/ref/
 www/images/quotes/*
-www/node_modules/
 

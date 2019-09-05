@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Logging;
 
-
 use Nette;
 use Nette\Application\IPresenter;
 use Nette\DI\CompilerExtension;
@@ -49,10 +48,8 @@ PHP;
 
     public static function setPresenterLogger(IPresenter $presenter, LoggerInterface $logger)
     {
-        if($presenter instanceof LoggerAwareInterface) {
+        if ($presenter instanceof LoggerAwareInterface) {
             $presenter->setLogger($logger);
         }
     }
-
-
 }

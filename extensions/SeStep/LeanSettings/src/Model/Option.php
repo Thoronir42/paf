@@ -19,7 +19,7 @@ class Option extends OptionNode implements IOption
     public function setValue($value)
     {
         if ($this->hasValuePool()) {
-            $this->valuePool->validate($value);
+            $this->getValuePool()->validate($value);
         }
 
         // todo: distinguish value type

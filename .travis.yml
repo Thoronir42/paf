@@ -1,0 +1,33 @@
+# see http://about.travis-ci.org/docs/user/languages/php/ for more hints
+language: php
+
+php:
+  - "7.3"
+cache:
+  - directories:
+      - $HOME/.composer/cache/files
+
+env:
+  global:
+    - CONFIG_FILE=config.travis.neon
+    - DEBUG_MODE=1
+
+services:
+  - mysql
+
+
+install:
+  - travis_retry composer install --no-progress --prefer-dist
+
+# execute any number of scripts before the test run, custom env's are available as variables
+before_script:
+  - mysql -e "create database IF NOT EXISTS paf_test;" -uroot
+  - php bin/console app:database:init --drop-all-tables -d
+
+script:
+  - phpunit --configuration phpunit.xml --coverage-text
+  - composer run phpcs
+
+notifications:
+  email:
+   - "thoronir42@gmail.com"

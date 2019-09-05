@@ -3,23 +3,22 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
-use SeStep\GeneralSettings\IValuePoolsAdapter;
+use SeStep\GeneralSettings\IOptionsAdapter;
 use SeStep\LeanSettings\LeanOptionsAdapter;
-use SeStep\LeanSettings\LeanValuePoolsAdapter;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 use Test\PAF\Utils\TestDBUtils;
-use Test\SeStep\GeneralSettings\GenericValuePoolTest;
+use Test\SeStep\GeneralSettings\GenericOptionsTest;
 
-class LeanValuePoolsTest extends GenericValuePoolTest
+class LeanOptionsNamespacedTest extends GenericOptionsTest
 {
     protected function setUp(): void
     {
         TestDBUtils::truncateEntityTable(OptionNode::class);
+        $this->markTestSkipped("Namespaced options currently not supported");
     }
 
-    /** @return IValuePoolsAdapter */
-    protected function getPoolAdapter()
+    protected function getOptions(): IOptionsAdapter
     {
         $connection = TestDBUtils::getLeanConnection();
         $mapper = TestDBUtils::getLeanMapper();
@@ -27,6 +26,6 @@ class LeanValuePoolsTest extends GenericValuePoolTest
 
         $repo = new OptionNodeRepository($connection, $mapper, $entityFactory);
 
-        return new LeanValuePoolsAdapter($repo);
+        return new LeanOptionsAdapter($repo, 'test');
     }
 }
