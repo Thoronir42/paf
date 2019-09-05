@@ -17,7 +17,7 @@ return call_user_func(static function () {
 
     $configurator = new Nette\Configurator();
 
-    if (getenv('DEBUG_MODE') || defined('DEBUG_MODE')) {
+    if (getenv('DEBUG_MODE')) {
         $configurator->setDebugMode(true);
     } else {
         $debugList = [

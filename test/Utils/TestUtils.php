@@ -2,7 +2,6 @@
 
 namespace Test\PAF\Utils;
 
-
 use Nette\DI\Container;
 
 final class TestUtils

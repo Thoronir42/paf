@@ -1,9 +1,8 @@
 <?php
 
-define('DEBUG_MODE', true);
-
 call_user_func(function () {
-    if(!getenv('CONFIG_FILE')) {
+    putenv("DEBUG_MODE=1");
+    if (!getenv('CONFIG_FILE')) {
         putenv('CONFIG_FILE=config.testing.neon');
     }
 
@@ -16,7 +15,4 @@ call_user_func(function () {
     /** @var \LeanMapper\IMapper $mapper */
     $mapper = $container->getService('leanMapper.mapper');
     \Test\PAF\Utils\TestDBUtils::setLeanMapper($mapper);
-
 });
-
-
