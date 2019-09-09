@@ -29,7 +29,8 @@ final class EntityFixtures
         }
 
         $output->writeln("Loading from " . $loader->getName());
-        foreach ($loader->getGroups() as $name => $group) {
+        foreach ($loader->getGroups() as $group) {
+            $name = $group->getName();
             try {
                 $output->writeln("- processing group '$name'", OutputInterface::VERBOSITY_VERBOSE);
                 $count = $this->loadGroup($group, $output);
@@ -49,8 +50,9 @@ final class EntityFixtures
 
         $i = 0;
         foreach ($group->entities() as $n => $entityData) {
+            $fixtureId = $group->getName() . "[$n]";
             if (!is_array($entityData) || (is_object($entityData) && !$entityData instanceof \ArrayAccess)) {
-                $output->writeln("Error: Group value '$n' is not an associative array");
+                $output->writeln("Error: Fixture '$fixtureId' is not an associative array");
                 continue;
             }
 
@@ -65,8 +67,17 @@ final class EntityFixtures
                     }
                 }
 
-                $dao->create($entityData);
-                $i++;
+                $result = $dao->create($entityData);
+
+                switch ($result) {
+                    case $dao::CREATE_NOT_UNIQUE:
+                        $output->writeln("Fixture $fixtureId already exists", $output::VERBOSITY_VERBOSE);
+                            break;
+
+                }
+                if($result >= 0) {
+                    $i++;
+                }
             } catch (\Throwable $ex) {
                 $output->writeln("Failed to load item $n: " . $ex->getMessage());
                 $output->writeln($ex->getTraceAsString(), OutputInterface::VERBOSITY_VERY_VERBOSE);

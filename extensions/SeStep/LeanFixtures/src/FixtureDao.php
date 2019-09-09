@@ -5,9 +5,12 @@ namespace SeStep\LeanFixtures;
 interface FixtureDao
 {
 
+    const CREATE_OK = 0;
+    const CREATE_NOT_UNIQUE = -1;
+
     public function getEntityClass(): string;
 
-    public function create($entityData);
+    public function create($entityData): int;
 
     public function findBy($value);
 

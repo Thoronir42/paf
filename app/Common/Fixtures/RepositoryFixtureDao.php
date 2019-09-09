@@ -16,13 +16,15 @@ final class RepositoryFixtureDao implements FixtureDao
     /** @var Repository */
     private $repository;
 
+    private $entityClass;
+
     public function __construct(BaseRepository $repository, IMapper $mapper)
     {
         $this->repository = $repository;
         $this->mapper = $mapper;
     }
 
-    public function create($entityData)
+    public function create($entityData): int
     {
         $entityClass = $this->getEntityClass();
         $entity = new $entityClass();
@@ -30,7 +32,13 @@ final class RepositoryFixtureDao implements FixtureDao
             $entity->$property = $value;
         }
 
+        if(!$this->repository->isPersistable($entity)) {
+            return self::CREATE_NOT_UNIQUE;
+        }
+
         $this->repository->persist($entity);
+
+        return self::CREATE_OK;
     }
 
     public function findBy($value)
@@ -63,6 +71,10 @@ final class RepositoryFixtureDao implements FixtureDao
 
     public function getEntityClass(): string
     {
-        return $this->mapper->getEntityClass($this->mapper->getTableByRepositoryClass(get_class($this->repository)));
+        if(!$this->entityClass) {
+            $this->entityClass = $this->mapper->getEntityClass($this->mapper->getTableByRepositoryClass(get_class($this->repository)));
+        }
+
+        return $this->entityClass;
     }
 }

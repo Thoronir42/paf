@@ -6,9 +6,9 @@ class StructuredFixtureGroup extends FixtureGroup
 {
     private $dataIterator;
 
-    public function __construct(string $entityClass, array $data)
+    public function __construct(string $entityClass, string $name, array $data)
     {
-        parent::__construct($entityClass);
+        parent::__construct($entityClass, $name);
         $this->dataIterator = new \ArrayIterator($data);
     }
 
