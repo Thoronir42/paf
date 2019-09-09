@@ -6,7 +6,7 @@ use PAF\Common\Model\BaseEntity;
 
 /**
  * @property int $id
- * @property User $user m:hasOne(user_id)
+ * @property Person $person m:hasOne(person_id)
  * @property string $type m:enum(Contact::TYPE_*)
  * @property string $value
  */

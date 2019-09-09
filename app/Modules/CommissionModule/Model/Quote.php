@@ -4,12 +4,12 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use Nette\Utils\DateTime;
 use PAF\Common\Model\BaseEntity;
-use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Model\Person;
 use SeStep\FileAttachable\Model\UserFileThread;
 
 /**
  * @property int $id
- * @property User $issuer
+ * @property Person $issuer(issuer_person_id)
  * @property string $slug
  * @property string status m:column(self::STATUS_*)
  * @property DateTime $dateCreated

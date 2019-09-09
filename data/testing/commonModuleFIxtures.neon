@@ -3,15 +3,31 @@ users:
     data:
         -
             username: 'the-y'
+            type: 'person'
             password: 'test'
         -
             username: 'T-boi'
+            type: 'person'
             password: 'test'
+        -
+            username: 'appBoy'
+            type: 'system'
+
+
+person:
+    class: PAF\Modules\CommonModule\Model\Person
+    data:
+        -
+            id: 17
+            displayName: 'Toad'
+            user: 'T-boi'
+
+
 
 userContact:
     class: PAF\Modules\CommonModule\Model\Contact
     data:
         -
-            user: T-boi
+            person: 17
             type: email
             value: ohaio@gozaimasu.chan

@@ -11,7 +11,7 @@ use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
 
-class BaseRepository extends Repository implements IQueryable
+abstract class BaseRepository extends Repository implements IQueryable
 {
     private static $CONDITIONS = [
         true => [
@@ -42,8 +42,9 @@ class BaseRepository extends Repository implements IQueryable
         parent::__construct($connection, $mapper, $entityFactory);
         $this->index = $index;
         if ($index) {
-            $this->uniqueColumns = [$index];
+            $this->uniqueColumns[] = $index;
         }
+
     }
 
 
@@ -164,6 +165,19 @@ class BaseRepository extends Repository implements IQueryable
         return $this->mapper->getPrimaryKey($this->getTable());
     }
 
+    public function isPersistable(Entity $entity)
+    {
+        if($entity->isDetached()) {
+            return $this->isUnique($entity);
+        }
+
+        if(array_key_exists($this->getPrimaryKey(), $entity->getModifiedRowData())) {
+            return $this->isUnique($entity);
+        }
+
+        return true;
+    }
+
     protected function isUnique(Entity $entity)
     {
         if (empty($this->uniqueColumns)) {
@@ -175,6 +189,9 @@ class BaseRepository extends Repository implements IQueryable
         $orClauses = [];
         $orArgs = [];
         foreach ($this->uniqueColumns as $column) {
+            if(!isset($entity->$column)) {
+                continue;
+            }
             $value = $entity->$column;
             if (is_null($value)) {
                 continue;

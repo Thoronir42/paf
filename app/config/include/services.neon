@@ -13,6 +13,7 @@ services:
         class: PAF\Modules\CommonModule\Repository\UserRepository
         arguments:
             index: 'username'
+    common.personRepository: PAF\Modules\CommonModule\Repository\PersonRepository
 
     common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
 
@@ -57,4 +58,5 @@ services:
     leanFixtures.entityFixtures:
         setup:
             - addFixtureDao(PAF\Modules\CommonModule\Fixtures\UserFixtureDao())
+            - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.personRepository))
             - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository))
