@@ -29,6 +29,7 @@ session:
 
 extensions:
     appRouting: PAF\Common\Router\RoutingExtension
+    appForms: PAF\Common\Forms\FormsExtension
     leanMapper: PAF\Utils\LeanMapperExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
@@ -95,3 +96,4 @@ translation:
 includes:
     - include/services.neon
     - include/console.neon
+    - include/formsMessages.neon

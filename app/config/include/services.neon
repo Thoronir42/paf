@@ -4,8 +4,6 @@ services:
     - PAF\Common\Security\ReflectionAuthorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
-    - PAF\Common\Forms\FormFactory
-
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
     - PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
 
