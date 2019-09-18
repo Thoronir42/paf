@@ -1,11 +1,11 @@
 CREATE TABLE `common__user`
 (
-    id           INT         NOT NULL AUTO_INCREMENT,
-    type         VARCHAR(12) NOT NULL,
-    username     VARCHAR(32) NOT NULL,
-    password     VARCHAR(60) NOT NULL,
-    registered   DATETIME    NOT NULL,
-    last_asctivity DATETIME    NULL,
+    id            INT         NOT NULL AUTO_INCREMENT,
+    type          VARCHAR(12) NOT NULL,
+    username      VARCHAR(32) NOT NULL,
+    password      VARCHAR(60) NOT NULL,
+    registered    DATETIME    NOT NULL,
+    last_activity DATETIME    NULL,
 
     CONSTRAINT `common__user_pk` PRIMARY KEY (id)
 );
@@ -32,3 +32,9 @@ CREATE TABLE `common__contact`
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE `common__slug`
+(
+    id VARCHAR(64) NOT NULL,
+
+    CONSTRAINT `common_slug_pk` PRIMARY KEY (id)
+)

@@ -21,8 +21,7 @@ forms:
 
 quote-form:
     group-contact: "Contact information"
-    name: "Your name"
-    name-min-length: "Name must be at least %d characters long"
+    error-no-contact: "Please fill at least one form of contact"
 
     group-fursuit: "Fursuit information"
     fursuit-name: "Name of fursuit"

@@ -3,11 +3,13 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use Nette\Application\UI\Multiplier;
-use Nette\Forms\Form;
 use Nette\Http\FileUpload;
 use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
+use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
+use PAF\Modules\CommissionModule\Facade\Commissions;
 use PAF\Modules\CommissionModule\Facade\PafEntities;
+use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
@@ -25,6 +27,8 @@ final class QuotesPresenter extends BasePresenter
 
     /** @var PafEntities @inject */
     public $pafEntities;
+    /** @var Commissions @inject */
+    public $commissions;
 
     /** @var FursuitRepository @inject */
     public $fursuits;
@@ -70,20 +74,22 @@ final class QuotesPresenter extends BasePresenter
     {
         $form = $this->quoteFormFactory->create();
 
-        $form->onSave[] = function (Quote $quote, Form $form, $references) {
-            $entity = $this->pafEntities->findByName($quote->slug);
-            if ($entity) {
-                $entityProgress = $this->translator->translate('paf.entity.' . $entity->getMaxProgress());
-                $errorVariables = [
-                    'name' => $quote->slug,
-                    'progress' => $entityProgress,
-                ];
-                $errorMessage = $this->translator->translate('paf.entity.already-exists', $errorVariables);
-                $form['fursuit']['name']->addError($errorMessage);
+        $form->onSave[] = function (
+            Quote $quote,
+            Specification $specification,
+            array $contacts,
+            $references,
+            QuoteForm $form
+        ) {
+            $issuer = $this->commissions->createIssuerByContacts($contacts);
+
+            $result = $this->commissions->createNewQuote($quote, $specification, $issuer, $references);
+            if (is_string($result)) {
+                $form->addError($result);
+                return;
             }
 
             $refs = $this->files->createThread(true);
-            $quote->references = $refs;
 
             /**@var FileUpload[] $references */
             foreach ($references as $file) {
@@ -91,8 +97,8 @@ final class QuotesPresenter extends BasePresenter
                 $refs->addFile($fileEntity);
             }
 
-            $this->pafEntities->createQuote($quote);
             $this->flashTranslate('paf.quote.created');
+            $this->redirect(':Common:Homepage:default');
         };
 
         return $form;

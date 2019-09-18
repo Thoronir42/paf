@@ -78,6 +78,7 @@ services:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
                 ss_files__: SeStep\FileAttachable\FilesMapperModule()
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
+                commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
 
 translation:
     locales:

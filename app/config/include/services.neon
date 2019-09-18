@@ -14,8 +14,8 @@ services:
         arguments:
             index: 'username'
     common.personRepository: PAF\Modules\CommonModule\Repository\PersonRepository
-
     common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
+    common.slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
 
     common.users:
         class: PAF\Modules\CommonModule\Services\Users
@@ -23,8 +23,11 @@ services:
             powerUsers: %powerUsers%
 
     - PAF\Modules\CommissionModule\Facade\PafEntities
+    - PAF\Modules\CommissionModule\Facade\Commissions
+
     - PAF\Modules\CommissionModule\Repository\QuoteRepository
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
+    - PAF\Modules\CommissionModule\Repository\SpecificationRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
     - PAF\Modules\CmsModule\Facade\CmsPages

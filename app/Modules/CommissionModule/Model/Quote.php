@@ -11,9 +11,9 @@ use SeStep\FileAttachable\Model\UserFileThread;
  * @property int $id
  * @property Person $issuer(issuer_person_id)
  * @property string $slug
- * @property string status m:column(self::STATUS_*)
+ * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated
- * @property Specification $specification
+ * @property Specification $specification(specification_id)
  * @property UserFileThread $references
  */
 class Quote extends BaseEntity
