@@ -9,12 +9,12 @@ use SeStep\FileAttachable\Model\UserFileThread;
 
 /**
  * @property int $id
- * @property Person $issuer(issuer_person_id)
+ * @property Person $issuer m:hasOne(issuer_person_id)
  * @property string $slug
  * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated
- * @property Specification $specification(specification_id)
- * @property UserFileThread $references
+ * @property Specification $specification m:hasOne(specification_id)
+ * @property UserFileThread|null $references m:hasOne(references_thread_id)
  */
 class Quote extends BaseEntity
 {

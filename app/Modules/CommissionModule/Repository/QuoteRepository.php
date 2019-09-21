@@ -2,34 +2,24 @@
 
 namespace PAF\Modules\CommissionModule\Repository;
 
+use Nette\Utils\Paginator;
 use PAF\Common\Model\BaseRepository;
 use PAF\Modules\CommissionModule\Model\Quote;
 
 class QuoteRepository extends BaseRepository
 {
-    // todo: reimplement
-    public function findForOverview($limit = 10, $page = 1)
+    public function findForOverview(Paginator $paginator = null)
     {
-        $offset = ($page - 1) * $limit;
+        $select = $this->select('q.*', 'q')
+            ->where('q.status = ?', Quote::STATUS_NEW);
 
-        $qb = $this->repository->createQueryBuilder('q');
-        $qb->join('q.wrapper', 'pw')->addSelect('pw');
-        $qb->where("q.status = :status");
-
-        /** @var Quote[] $result */
-        $result = $qb->getQuery()
-            ->setMaxResults($limit)
-            ->setFirstResult($offset)
-            ->execute([
-                'status' => Quote::STATUS_NEW,
-            ]);
-
-        $quotes = [];
-
-        foreach ($result as $quote) {
-            $quotes[$quote->getFeName()] = $quote;
+        if($paginator) {
+            $select->offset($paginator->getOffset())->limit($paginator->getItemsPerPage());
         }
 
-        return $quotes;
+        /** @var Quote[] $result */
+        $result = $select->fetchAssoc('slug');
+
+        return $this->createEntities($result);
     }
 }

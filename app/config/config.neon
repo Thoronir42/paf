@@ -86,6 +86,7 @@ translation:
 
     dirs:
         - %appDir%/Common/lang
+        - %appDir%/Modules/CommissionModule/lang
 
 #translation:
 #    default: en_GB

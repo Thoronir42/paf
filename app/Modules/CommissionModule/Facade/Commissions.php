@@ -69,10 +69,10 @@ class Commissions
 
         $slug = $this->slugRepository->createSlug($slugId);
 
+        $quote->status = Quote::STATUS_NEW;
         $quote->slug = $slug->id; // todo: use FK
         $quote->specification = $specification;
         $quote->issuer = $issuer;
-
 
 
         $this->quoteRepository->persist($quote);
@@ -91,17 +91,23 @@ class Commissions
      */
     public function createIssuerByContacts(array $contacts): Person
     {
-        if ($this->personRepository->findByContact($contacts)) {
-            throw new InvalidStateException("Person with this contact information already exists");
+        $issuer = $this->personRepository->findByContact($contacts);
+        if ($issuer) {
+            if ($issuer->user) {
+                throw new InvalidStateException("Person with this contact information already exists");
+            }
+        } else {
+            $issuer = new Person();
+            $issuer->displayName = $this->getDisplayNameByContacts($contacts);
+            $this->personRepository->persist($issuer);
         }
 
-        $issuer = new Person();
-        $issuer->displayName = $this->getDisplayNameByContacts($contacts);
-        $this->personRepository->persist($issuer);
 
         foreach ($contacts as $contact) {
-            $contact->person = $issuer;
-            $this->contactRepository->persist($contact);
+            if (!$issuer->contactExists($contact)) {
+                $contact->person = $issuer;
+                $this->contactRepository->persist($contact);
+            }
         }
 
         return $issuer;
@@ -126,5 +132,20 @@ class Commissions
         $defaultContact = current($contacts);
 
         return $defaultContact->value;
+    }
+
+    public function rejectQuote(Quote $quote)
+    {
+        $quote->status = Quote::STATUS_REJECTED;
+        $this->quoteRepository->persist($quote);
+        return true;
+    }
+
+    public function acceptQuote(Quote $quote)
+    {
+        $quote->status = Quote::STATUS_ACCEPTED;
+        $this->quoteRepository->persist($quote);
+        // todo: create case out of this quote
+        return true;
     }
 }

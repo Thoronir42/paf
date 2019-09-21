@@ -1,19 +1,37 @@
 <div class="panel panel-default quote quote-overview">
-    <div class="panel-heading">
-        <span>{$quote->getFursuit()->getName()}</span>
-        <a n:href="reject!" class="btn btn-xs btn-danger pull-right">
-            <i class="">&times;</i>
-        </a>
-    </div>
     <div class="panel-body">
-        <span>{_'paf.quote.references', [count => $quote->getReferences()->count()]}</span>
-        <div class="row references text-center" n:if="$quote->getReferences()->count() > 0">
-            {foreach $quote->getReferences()->iterator() as $file}
+        <div class="form-group">
+            <h2>{$quote->specification->characterName}</h2>
+            <h2>{_'commission.quote-form.character-description'}</h2>
+            <textarea class="form-control" readonly>{$quote->specification->characterDescription}</textarea>
+        </div>
+        <div class="form-group">
+            <h2>{_"commission.quote-form.references"}</h2>
+            {if !$quote->references || $quote->references->count() < 1}
+                {_'commission.quote.noReferences'}
+            {else}
+            <div class="row references text-center" n:if="$quote->references->count() > 0">
+                {foreach $quote->getReferences()->iterator() as $file}
                 <a href="{$baseUrl .'/images/'. $file->getFilename()}">
                     <img class="img-thumbnail" src="{$baseUrl .'/images/'. $file->getFilename()}"/>
                 </a>
-            {/foreach}
+                {/foreach}
+            </div>
+            {/if}
         </div>
+        <div class="form-group">
+            <h2>{_'commission.quote.issuer'} <em>{$quote->issuer->displayName}</em></h2>
+            <ul>
+                <li n:foreach="$quote->issuer->contact as $contact">
+                    <b>{$contact->type}:</b> {$contact->value}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <a n:href="reject!" class="btn btn-sm btn-danger pull-right">
+            <i class="glyphicon glyphicon-remove"></i>
+        </a>
         <a n:href="accept!" class="btn btn-sm btn-primary">
             <i class="glyphicon glyphicon-check"></i>
         </a>

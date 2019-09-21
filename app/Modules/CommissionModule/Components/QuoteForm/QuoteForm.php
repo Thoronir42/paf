@@ -38,32 +38,32 @@ class QuoteForm extends Form
 
     public function initialize(array $fursuitTypes): void
     {
-        $this->addGroup('paf.quote-form.group-contact');
+        $this->addGroup('commission.quote-form.group-contact');
         $contact = $this->addContainer('contact');
 
         $contact->addText('email', 'paf.contact.email');
         $contact->addText('telegram', 'paf.contact.telegram');
 
-        $this->addGroup('paf.quote-form.group-fursuit');
+        $this->addGroup('commission.quote-form.group-fursuit');
         $fursuitContainer = $this->addContainer('fursuit');
 
-        $fursuitContainer->addText('name', 'paf.quote-form.fursuit-name');
-        $fursuitContainer->addTextArea('characterDescription', 'paf.quote-form.character-description')
-            ->setOption('help-text', 'paf.quote-form.character-description-help');
+        $fursuitContainer->addText('name', 'commission.quote-form.fursuit-name');
+        $fursuitContainer->addTextArea('characterDescription', 'commission.quote-form.character-description')
+            ->setOption('help-text', 'commission.quote-form.character-description-help');
         $fursuitContainer->addSelect('type', 'paf.fursuit.type', $fursuitTypes)
             ->setHtmlAttribute('data-minimum-results-for-search', 'Infinity');
 
 
         $additionals = $this->addContainer('additionals');
-        $additionals->addCheckbox('sleeves', 'paf.quote-form.long-sleeves');
+        $additionals->addCheckbox('sleeves', 'commission.quote-form.long-sleeves');
 
-        $this->addGroup('paf.quote-form.group-additional-info');
+        $this->addGroup('commission.quote-form.group-additional-info');
 
-        $this->addMultiUpload('reference', 'paf.quote-form.references');
+        $this->addMultiUpload('reference', 'commission.quote-form.references');
 
 
-        $this->addGroup('paf.quote-form.group-finish');
-        $this->addSubmit('save', 'submit');
+        $this->addGroup('commission.quote-form.group-finish');
+        $this->addSubmit('save', 'generic.submit');
 
         $this->onValidate[] = [$this, 'validateForm'];
 
@@ -74,7 +74,7 @@ class QuoteForm extends Form
     {
         $values = $form->getValues();
         if (empty($values['contact']['email']) && empty($values['contact']['telegram'])) {
-            $form->addError('paf.quote-form.error-no-contact');
+            $form->addError('commission.quote-form.error-no-contact');
         }
     }
 

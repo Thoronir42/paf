@@ -17,5 +17,14 @@ use PAF\Common\Model\BaseEntity;
  */
 class Person extends BaseEntity
 {
+    public function contactExists(Contact $contact): bool
+    {
+        foreach ($this->contact as $entry) {
+            if ($contact->equals($entry)) {
+                return true;
+            }
+        }
 
+        return false;
+    }
 }

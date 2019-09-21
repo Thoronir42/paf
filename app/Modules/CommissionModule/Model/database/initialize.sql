@@ -10,12 +10,13 @@ CREATE TABLE commission__specification
 
 CREATE TABLE `commission__quote`
 (
-    id               INT         NOT NULL AUTO_INCREMENT,
-    slug             VARCHAR(64) NOT NULL,
-    issuer_person_id INT         NOT NULL,
-    status           VARCHAR(24) NOT NULL,
-    date_created     DATE        NOT NULL,
-    specification_id INT         NOT NULL,
+    id                   INT         NOT NULL AUTO_INCREMENT,
+    slug                 VARCHAR(64) NOT NULL,
+    issuer_person_id     INT         NOT NULL,
+    status               VARCHAR(24) NOT NULL,
+    date_created         DATE        NOT NULL,
+    specification_id     INT         NOT NULL,
+    references_thread_id INT         NOT NULL,
 
     CONSTRAINT PRIMARY KEY (id),
     CONSTRAINT `quote_issuer_fk` FOREIGN KEY

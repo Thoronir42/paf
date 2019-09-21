@@ -1,4 +1,8 @@
-{block contents}
-{foreach $quotes as $name => $quote}
-	{control quote-$name:tile}
-{/foreach}
+{block content}
+Currently there are {count($quotes)} unresolved quotes:
+<div class="row">
+	<div class="col-md-6" n:foreach="$quotes as $name => $quote">
+		{control quote-$name:tile}
+	</div>
+</div>
+

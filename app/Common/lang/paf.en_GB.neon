@@ -13,41 +13,6 @@ entity:
 
     alerady-exists: "Name %name% already belongs to a %progress%"
 
-forms:
-    groups:
-        fursuit-spec: "Fursuit specification"
-        contact: "Contact"
-        paf-case: "Case details"
-
-quote-form:
-    group-contact: "Contact information"
-    error-no-contact: "Please fill at least one form of contact"
-
-    group-fursuit: "Fursuit information"
-    fursuit-name: "Name of fursuit"
-    fursuit-type: "Type of fursuit"
-    long-sleeves: "Long sleeves"
-    character-description: "Character description"
-    character-description-help: "Write the most important points in design"
-
-    group-additional-info: "Additional information"
-    teeth-amount: "Amount of teeth"
-    references: "References"
-
-    group-finish: "Finalize quote"
-
-quote:
-    references: "%count% references"
-
-    created: "Quote created"
-    rejected: "Quote %name% has been rejected"
-
-quotes:
-    enabled: "Quotes are currently enabled"
-    enable: "Enable quotes"
-    disabled: "Quotes are currently disabled"
-    disable: "Disable"
-
 case:
     created: "Case %name% has been created"
     already-exists: "Case %name% already exists"
@@ -64,6 +29,9 @@ case:
 
 cases:
     label: "Running cases"
+    detailTitle: "Detail of case %name%"
+    detail: "Case"
+    notes: "Notes"
 
 contact:
     name: "Name"

@@ -2,6 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
+use Contributte\Translation\Translator;
 use Nette\Application\UI\Multiplier;
 use Nette\Http\FileUpload;
 use PAF\Common\BasePresenter;
@@ -17,6 +18,12 @@ use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use SeStep\FileAttachable\Files;
 
+/**
+ * Class QuotesPresenter
+ * @package PAF\Modules\CommissionModule\Presenters
+ *
+ * @property-read Translator $translator
+ */
 final class QuotesPresenter extends BasePresenter
 {
     /** @var QuoteRepository @inject */
@@ -59,12 +66,18 @@ final class QuotesPresenter extends BasePresenter
         return new Multiplier(function ($name) {
             $quoteView = new QuoteView($this->template->quotes[$name]);
             $quoteView->onAccept[] = function (Quote $quote) {
-                dump('accept', $quote);
-                exit;
+                $this->commissions->acceptQuote($quote);
+                $this->flashTranslate('commission.quote.accepted', [
+                    'name' => $quote->specification->characterName,
+                ]);
+                $this->redirect('this');
             };
             $quoteView->onReject[] = function (Quote $quote) {
-                dump('reject', $quote);
-                exit;
+                $this->commissions->rejectQuote($quote);
+                $this->flashTranslate("commission.quote.rejected", [
+                    'name' => $quote->specification->characterName,
+                ]);
+                $this->redirect('this');
             };
             return $quoteView;
         });
