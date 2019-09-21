@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Facade;
 
-
 use Nette\InvalidStateException;
 use Nette\Utils\Strings;
 use PAF\Modules\CommissionModule\Model\Quote;

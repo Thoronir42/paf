@@ -22,7 +22,7 @@ class User extends BaseEntity
 
     public function setType(string $type)
     {
-        if(!$this->isDetached()) {
+        if (!$this->isDetached()) {
             throw new InvalidStateException("Can not set type of existing user");
         }
 

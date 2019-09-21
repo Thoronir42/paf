@@ -32,7 +32,7 @@ final class RepositoryFixtureDao implements FixtureDao
             $entity->$property = $value;
         }
 
-        if(!$this->repository->isPersistable($entity)) {
+        if (!$this->repository->isPersistable($entity)) {
             return self::CREATE_NOT_UNIQUE;
         }
 
@@ -71,8 +71,9 @@ final class RepositoryFixtureDao implements FixtureDao
 
     public function getEntityClass(): string
     {
-        if(!$this->entityClass) {
-            $this->entityClass = $this->mapper->getEntityClass($this->mapper->getTableByRepositoryClass(get_class($this->repository)));
+        if (!$this->entityClass) {
+            $table = $this->mapper->getTableByRepositoryClass(get_class($this->repository));
+            $this->entityClass = $this->mapper->getEntityClass($table);
         }
 
         return $this->entityClass;

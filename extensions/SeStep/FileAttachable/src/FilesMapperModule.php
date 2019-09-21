@@ -2,7 +2,6 @@
 
 namespace SeStep\FileAttachable;
 
-
 use SeStep\ModularLeanMapper\MapperModule;
 
 class FilesMapperModule extends MapperModule

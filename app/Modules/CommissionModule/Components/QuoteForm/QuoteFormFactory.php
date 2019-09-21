@@ -20,7 +20,8 @@ class QuoteFormFactory
     }
 
     /** @return QuoteForm */
-    public function create() {
+    public function create()
+    {
         /** @var QuoteForm $form */
         $form = $this->formFactory->create(QuoteForm::class);
         $form->initialize(Localization::getFursuitTypes());

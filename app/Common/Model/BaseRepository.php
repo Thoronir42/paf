@@ -44,7 +44,6 @@ abstract class BaseRepository extends Repository implements IQueryable
         if ($index) {
             $this->uniqueColumns[] = $index;
         }
-
     }
 
 

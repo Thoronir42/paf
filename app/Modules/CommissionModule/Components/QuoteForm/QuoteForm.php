@@ -12,7 +12,7 @@ use PAF\Modules\CommonModule\Model\Contact;
 /**
  * Class QuoteForm
  *
- * @method onSave(Quote $quote, Specification $specification, Contact[] $contact, FileUpload[] $references, QuoteForm $form)
+ * @method onSave$quote, $specification, $contact, $references, $form)
  */
 class QuoteForm extends Form
 {
@@ -86,8 +86,13 @@ class QuoteForm extends Form
         $fursuitSpecification->type = $values->fursuit->type;
         $fursuitSpecification->characterDescription = $values->fursuit->characterDescription;
 
-        $this->onSave($this->quote, $fursuitSpecification,
-            $this->getContacts($values['contact']), $values->reference, $this);
+        $this->onSave(
+            $this->quote,
+            $fursuitSpecification,
+            $this->getContacts($values['contact']),
+            $values->reference,
+            $this
+        );
     }
 
     private function getContacts($contactSection): array

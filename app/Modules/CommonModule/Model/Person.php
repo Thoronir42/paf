@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
-
 use PAF\Common\Model\BaseEntity;
 
 /**

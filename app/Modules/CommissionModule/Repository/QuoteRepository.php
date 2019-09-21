@@ -13,7 +13,7 @@ class QuoteRepository extends BaseRepository
         $select = $this->select('q.*', 'q')
             ->where('q.status = ?', Quote::STATUS_NEW);
 
-        if($paginator) {
+        if ($paginator) {
             $select->offset($paginator->getOffset())->limit($paginator->getItemsPerPage());
         }
 

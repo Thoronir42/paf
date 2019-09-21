@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Forms;
 
-
 use Nette\Application\UI\ITemplateFactory;
 use Nette\FileNotFoundException;
 use Nette\Forms\Form;
@@ -17,7 +16,7 @@ class TemplateFormRenderer implements IFormRenderer
 
     public function __construct(ITemplateFactory $templateFactory, string $templateFile)
     {
-        if(!file_exists($templateFile)) {
+        if (!file_exists($templateFile)) {
             throw new FileNotFoundException("File '$templateFile' does not exists");
         }
 
@@ -27,7 +26,7 @@ class TemplateFormRenderer implements IFormRenderer
     /**
      * @inheritDoc
      */
-    function render(Form $form): string
+    public function render(Form $form): string
     {
         $template = $this->templateFactory->createTemplate();
         $template->form = $form;

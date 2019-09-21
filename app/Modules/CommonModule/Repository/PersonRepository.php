@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommonModule\Repository;
 
-
 use Dibi\Expression;
 use PAF\Common\Model\BaseRepository;
 use PAF\Modules\CommonModule\Model\Contact;

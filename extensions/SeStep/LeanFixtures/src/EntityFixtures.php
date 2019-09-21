@@ -72,10 +72,9 @@ final class EntityFixtures
                 switch ($result) {
                     case $dao::CREATE_NOT_UNIQUE:
                         $output->writeln("Fixture $fixtureId already exists", $output::VERBOSITY_VERBOSE);
-                            break;
-
+                        break;
                 }
-                if($result >= 0) {
+                if ($result >= 0) {
                     $i++;
                 }
             } catch (\Throwable $ex) {
