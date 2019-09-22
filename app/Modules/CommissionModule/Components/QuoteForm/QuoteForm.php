@@ -99,6 +99,10 @@ class QuoteForm extends Form
     {
         $contacts = [];
         foreach ($contactSection as $type => $value) {
+            if (!$value) {
+                continue;
+            }
+
             $contact = new Contact();
             $contact->type = $type;
             $contact->value = $value;

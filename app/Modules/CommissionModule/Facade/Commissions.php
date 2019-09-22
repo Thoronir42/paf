@@ -2,8 +2,10 @@
 
 namespace PAF\Modules\CommissionModule\Facade;
 
+use Nette\Http\FileUpload;
 use Nette\InvalidStateException;
 use Nette\Utils\Strings;
+use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
@@ -24,30 +26,32 @@ class Commissions
     private $contactRepository;
     /** @var SlugRepository */
     private $slugRepository;
-    /**
-     * @var QuoteRepository
-     */
+    /** @var QuoteRepository */
     private $quoteRepository;
+    /** @var PafImageStorage */
+    private $imageStorage;
 
     public function __construct(
         SpecificationRepository $specificationRepository,
         PersonRepository $personRepository,
         ContactRepository $contactRepository,
         SlugRepository $slugRepository,
-        QuoteRepository $quoteRepository
+        QuoteRepository $quoteRepository,
+        PafImageStorage $imageStorage
     ) {
         $this->specificationRepository = $specificationRepository;
         $this->personRepository = $personRepository;
         $this->contactRepository = $contactRepository;
         $this->slugRepository = $slugRepository;
         $this->quoteRepository = $quoteRepository;
+        $this->imageStorage = $imageStorage;
     }
 
     /**
      * @param Quote $quote
      * @param Specification $specification
      * @param Person $issuer
-     * @param $references
+     * @param FileUpload[] $references
      *
      * @return string - error code
      */
@@ -62,16 +66,18 @@ class Commissions
         }
 
         $slugId = Strings::webalize($specification->characterName);
-        if ($this->slugRepository->slugExists($slugId)) {
+        /*if ($this->slugRepository->slugExists($slugId)) {
             return 'paf.case.already-exists';
         }
 
-        $slug = $this->slugRepository->createSlug($slugId);
+        $slug = $this->slugRepository->createSlug($slugId);*/
 
         $quote->status = Quote::STATUS_NEW;
-        $quote->slug = $slug->id; // todo: use FK
+        $quote->slug = $slugId; // todo: use FK
         $quote->specification = $specification;
         $quote->issuer = $issuer;
+
+        $this->imageStorage->setQuoteReferences($quote, $references);
 
 
         $this->quoteRepository->persist($quote);

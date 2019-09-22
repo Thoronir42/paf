@@ -41,10 +41,12 @@ services:
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())
 
-    -
+    fileStorage.image: PAF\Common\Storage\FileStorage(%wwwDir%/images)
+
+    genericImageStorage:
         class: PAF\Common\Storage\PafImageStorage
         arguments:
-            fileStorage: PAF\Common\Storage\FileStorage(%wwwDir%/images)
+            fileStorage: @fileStorage.image
 
     nette.latteFactory:
         setup:

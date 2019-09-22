@@ -31,4 +31,13 @@ class Quote extends BaseEntity
             self::STATUS_REJECTED,
         ];
     }
+
+    public function hasReferences(): bool
+    {
+        $prop = $this->getCurrentReflection()->getEntityProperty('references');
+        $column = $prop->getColumn();
+        $rowData = $this->getRowData();
+
+        return array_key_exists($column, $rowData) && $rowData[$column];
+    }
 }

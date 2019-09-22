@@ -16,14 +16,17 @@ CREATE TABLE `commission__quote`
     status               VARCHAR(24) NOT NULL,
     date_created         DATE        NOT NULL,
     specification_id     INT         NOT NULL,
-    references_thread_id INT         NOT NULL,
+    references_thread_id INT         NULL,
 
     CONSTRAINT PRIMARY KEY (id),
     CONSTRAINT `quote_issuer_fk` FOREIGN KEY
         (issuer_person_id) REFERENCES common__person (id),
 
     CONSTRAINT `quote_specification_fk` FOREIGN KEY
-        (specification_id) REFERENCES commission__specification (id)
+        (specification_id) REFERENCES commission__specification (id),
+    CONSTRAINT `quote_references_fq` FOREIGN KEY
+        (references_thread_id) REFERENCES ss_files__user_file_thread (id)
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 

@@ -6,7 +6,8 @@ use PAF\Common\Model\BaseEntity;
 
 /**
  * @property int $id
- * @property UserFile[] $files m:hasMany
+ * @property UserFile[] $files m:belongsToMany(thread_id)
+ * @property \DateTime $dateCreated
  */
 class UserFileThread extends BaseEntity implements \IteratorAggregate, \Countable
 {

@@ -4,7 +4,6 @@ namespace PAF\Modules\CommissionModule\Presenters;
 
 use Contributte\Translation\Translator;
 use Nette\Application\UI\Multiplier;
-use Nette\Http\FileUpload;
 use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
@@ -100,14 +99,6 @@ final class QuotesPresenter extends BasePresenter
             if (is_string($result)) {
                 $form->addError($result);
                 return;
-            }
-
-            $refs = $this->files->createThread(true);
-
-            /**@var FileUpload[] $references */
-            foreach ($references as $file) {
-                $fileEntity = $this->pafImages->saveQuoteReference($quote, $file, $quote->slug);
-                $refs->addFile($fileEntity);
             }
 
             $this->flashTranslate('paf.quote.created');

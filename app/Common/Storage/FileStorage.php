@@ -20,13 +20,17 @@ class FileStorage
     }
 
     /**
-     * @param string     $destFileName
+     * @param string $destFileName
      * @param FileUpload $file
+     * @param string|null $fileCategory
      *
      * @return string
      */
-    public function save($destFileName, FileUpload $file)
+    public function save(string $destFileName, FileUpload $file, string $fileCategory = null)
     {
+        if ($fileCategory) {
+            $destFileName = $fileCategory . DIRECTORY_SEPARATOR . $destFileName;
+        }
 
         $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
         $attempt = 0;

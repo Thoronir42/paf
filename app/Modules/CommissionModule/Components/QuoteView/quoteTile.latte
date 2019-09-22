@@ -11,7 +11,7 @@
                 {_'commission.quote.noReferences'}
             {else}
             <div class="row references text-center" n:if="$quote->references->count() > 0">
-                {foreach $quote->getReferences()->iterator() as $file}
+                {foreach $quote->getReferences() as $file}
                 <a href="{$baseUrl .'/images/'. $file->getFilename()}">
                     <img class="img-thumbnail" src="{$baseUrl .'/images/'. $file->getFilename()}"/>
                 </a>

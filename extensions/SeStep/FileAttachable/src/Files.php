@@ -33,6 +33,7 @@ class Files
     public function createThread($persist = false)
     {
         $thread = new UserFileThread();
+        $thread->dateCreated = new \DateTime();
         if ($persist) {
             $this->threadRepository->persist($thread);
         }
