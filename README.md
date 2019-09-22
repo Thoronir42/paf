@@ -12,3 +12,10 @@ To install dependencies, run
 > npm install
 ```
 
+Project initialization can be done via these commands:
+```
+> php bin/console app:database:init -d
+> php bin/console app:settings:setDefaults
+
+> php bin/console leanFixtures:initialize
+```
