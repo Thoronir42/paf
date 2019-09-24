@@ -2,11 +2,17 @@
     <div class="panel-body">
         <div class="form-group">
             <h2>{$quote->specification->characterName}</h2>
-            <h2>{_'commission.quote-form.character-description'}</h2>
+            <div class="row">
+                <dt class="col-sm-3">{_paf.fursuit.type}:</dt>
+                <dd class="col-sm-3">{_'paf.fursuit.types.'.$quote->specification->type}</dd>
+                <dt class="col-sm-3">{_'generic.createdAt'}:</dt>
+                <dd class="col-sm-3">{$quote->dateCreated|date}</dd>
+            </div>
+            <h3>{_'commission.quote-form.character-description'}</h3>
             <textarea class="form-control" readonly>{$quote->specification->characterDescription}</textarea>
         </div>
         <div class="form-group">
-            <h2>{_"commission.quote-form.references"}</h2>
+            <h3>{_"commission.quote-form.references"}</h3>
             {if !$quote->references || $quote->references->count() < 1}
                 {_'commission.quote.noReferences'}
             {else}
@@ -20,7 +26,7 @@
             {/if}
         </div>
         <div class="form-group">
-            <h2>{_'commission.quote.issuer'} <em>{$quote->issuer->displayName}</em></h2>
+            <h3>{_'commission.quote.issuer'} <em>{$quote->issuer->displayName}</em></h3>
             <ul>
                 <li n:foreach="$quote->issuer->contact as $contact">
                     <b>{$contact->type}:</b> {$contact->value}

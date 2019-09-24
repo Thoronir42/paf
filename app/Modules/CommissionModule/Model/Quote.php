@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Model;
 
-use Nette\Utils\DateTime;
+use DateTime;
 use PAF\Common\Model\BaseEntity;
 use PAF\Modules\CommonModule\Model\Person;
 use SeStep\FileAttachable\Model\UserFileThread;
@@ -21,6 +21,11 @@ class Quote extends BaseEntity
     const STATUS_NEW = 'new';
     const STATUS_ACCEPTED = 'accepted';
     const STATUS_REJECTED = 'rejected';
+
+    protected function initDefaults()
+    {
+        $this->dateCreated = new DateTime();
+    }
 
 
     public static function getStatuses()

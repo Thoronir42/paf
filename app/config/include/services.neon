@@ -50,6 +50,7 @@ services:
 
     nette.latteFactory:
         setup:
+            - Latte\Runtime\Filters::$dateFormat = 'y/m/d'
             - addFilter(yesno, @yesNoFilter)
             - addFilter(contactUrl, @contactUrlFilter)
 
