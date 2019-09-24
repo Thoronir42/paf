@@ -10,19 +10,23 @@ CREATE TABLE commission__specification
 
 CREATE TABLE `commission__quote`
 (
-    id               INT         NOT NULL AUTO_INCREMENT,
-    slug             VARCHAR(64) NOT NULL,
-    issuer_user_id   INT         NOT NULL,
-    status           VARCHAR(24) NOT NULL,
-    date_created     DATE        NOT NULL,
-    specification_id INT         NOT NULL,
+    id                   INT         NOT NULL AUTO_INCREMENT,
+    slug                 VARCHAR(64) NOT NULL,
+    issuer_person_id     INT         NOT NULL,
+    status               VARCHAR(24) NOT NULL,
+    date_created         DATE        NOT NULL,
+    specification_id     INT         NOT NULL,
+    references_thread_id INT         NULL,
 
     CONSTRAINT PRIMARY KEY (id),
     CONSTRAINT `quote_issuer_fk` FOREIGN KEY
-        (issuer_user_id) REFERENCES common__user (id),
+        (issuer_person_id) REFERENCES common__person (id),
 
     CONSTRAINT `quote_specification_fk` FOREIGN KEY
-        (specification_id) REFERENCES commission__specification (id)
+        (specification_id) REFERENCES commission__specification (id),
+    CONSTRAINT `quote_references_fq` FOREIGN KEY
+        (references_thread_id) REFERENCES ss_files__user_file_thread (id)
+        ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 

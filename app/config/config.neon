@@ -29,6 +29,7 @@ session:
 
 extensions:
     appRouting: PAF\Common\Router\RoutingExtension
+    appForms: PAF\Common\Forms\FormsExtension
     leanMapper: PAF\Utils\LeanMapperExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
@@ -75,7 +76,9 @@ services:
             mapper: PAF\Common\Model\UnderscoreMapper()
             modules:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
+                ss_files__: SeStep\FileAttachable\FilesMapperModule()
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
+                commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
 
 translation:
     locales:
@@ -83,6 +86,7 @@ translation:
 
     dirs:
         - %appDir%/Common/lang
+        - %appDir%/Modules/CommissionModule/lang
 
 #translation:
 #    default: en_GB
@@ -95,3 +99,4 @@ translation:
 includes:
     - include/services.neon
     - include/console.neon
+    - include/formsMessages.neon

@@ -2,25 +2,30 @@
 
 namespace PAF\Modules\CommissionModule\Model;
 
-use Nette\Utils\DateTime;
+use DateTime;
 use PAF\Common\Model\BaseEntity;
-use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Model\Person;
 use SeStep\FileAttachable\Model\UserFileThread;
 
 /**
  * @property int $id
- * @property User $issuer
+ * @property Person $issuer m:hasOne(issuer_person_id)
  * @property string $slug
- * @property string status m:column(self::STATUS_*)
+ * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated
- * @property Specification $specification
- * @property UserFileThread $references
+ * @property Specification $specification m:hasOne(specification_id)
+ * @property UserFileThread|null $references m:hasOne(references_thread_id)
  */
 class Quote extends BaseEntity
 {
     const STATUS_NEW = 'new';
     const STATUS_ACCEPTED = 'accepted';
     const STATUS_REJECTED = 'rejected';
+
+    protected function initDefaults()
+    {
+        $this->dateCreated = new DateTime();
+    }
 
 
     public static function getStatuses()
@@ -30,5 +35,14 @@ class Quote extends BaseEntity
             self::STATUS_ACCEPTED,
             self::STATUS_REJECTED,
         ];
+    }
+
+    public function hasReferences(): bool
+    {
+        $prop = $this->getCurrentReflection()->getEntityProperty('references');
+        $column = $prop->getColumn();
+        $rowData = $this->getRowData();
+
+        return array_key_exists($column, $rowData) && $rowData[$column];
     }
 }

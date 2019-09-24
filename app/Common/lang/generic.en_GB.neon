@@ -11,6 +11,8 @@ password: "Password"
 login: "Login"
 remember-me: "Forget me not"
 
+createdAt: 'Created at'
+
 form-validator:
     csrf: 'Your session has expired. Please return to the home page and try again.'
     equal: 'Please enter %s.'

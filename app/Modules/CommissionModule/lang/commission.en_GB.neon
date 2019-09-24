@@ -1,0 +1,33 @@
+quotes.title: "Quotes"
+quotes.currently-closed: "are currently closed"
+quotes.currently-closed-text: "If you want to apply for a commission, you are at correct place, alas I'm currently not accepting any new quotes."
+quotes.enabled: "Quotes are currently enabled"
+quotes.enable: "Enable quotes"
+quotes.disabled: "Quotes are currently disabled"
+quotes.disable: "Disable"
+
+quote.issuer: Issuer
+quote.references: "%count% references"
+quote.created: "Quote created"
+
+quote.rejected: "Quote '%name%' was rejected"
+quote.accepted: "Quote '%name%' was accepted"
+
+quote-form:
+    group-contact: "Contact information"
+    error-no-contact: "Please fill at least one form of contact"
+
+    group-fursuit: "Fursuit information"
+    fursuit-name: "Name of fursuit"
+    fursuit-type: "Type of fursuit"
+    long-sleeves: "Long sleeves"
+    character-description: "Character description"
+    character-description-help: "Write the most important points in design"
+
+    group-additional-info: "Additional information"
+    teeth-amount: "Amount of teeth"
+    references: "References"
+
+    group-finish: "Finalize quote"
+
+quote.noReferences: There are no references

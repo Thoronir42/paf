@@ -2,21 +2,19 @@
 
 namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
-use PAF\Common\Forms\FormWrapperControl;
-use PAF\Modules\CommonModule\Model\Contact;
-use Nette\Application\UI\Form;
-use Nette\Utils\ArrayHash;
+use Nette\Http\FileUpload;
+use PAF\Common\Forms\Form;
 use PAF\Modules\CommissionModule\Model\Specification;
-use PAF\Modules\PortfolioModule\Localization;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
+use PAF\Modules\CommonModule\Model\Contact;
 
 /**
  * Class QuoteForm
  *
- * @method onSave(Quote $quote, Form $form, ArrayHash $values)
+ * @method onSave$quote, $specification, $contact, $references, $form)
  */
-class QuoteForm extends FormWrapperControl
+class QuoteForm extends Form
 {
     /** @var callable[]  function (Form $form, ArrayHash $values); Occurs when form successfully validates input. */
     public $onSave;
@@ -24,83 +22,93 @@ class QuoteForm extends FormWrapperControl
     /** @var QuoteRepository */
     private $quote;
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->quote = new Quote();
+    }
+
 
     public function setEntity(Quote $quote)
     {
         $this->quote = $quote;
 
-        $form = $this->form();
-        $form->setDefaults($quote->getRowData());
+        $this->setDefaults($quote->getRowData());
     }
 
-    public function render()
+    public function initialize(array $fursuitTypes): void
     {
-        $this->template->setFile(__DIR__ . '/quoteForm.latte');
+        $this->addGroup('commission.quote-form.group-contact');
+        $contact = $this->addContainer('contact');
 
-        $this->template->render();
+        $contact->addText('email', 'paf.contact.email');
+        $contact->addText('telegram', 'paf.contact.telegram');
+
+        $this->addGroup('commission.quote-form.group-fursuit');
+        $fursuitContainer = $this->addContainer('fursuit');
+
+        $fursuitContainer->addText('name', 'commission.quote-form.fursuit-name');
+        $fursuitContainer->addTextArea('characterDescription', 'commission.quote-form.character-description')
+            ->setOption('help-text', 'commission.quote-form.character-description-help');
+        $fursuitContainer->addSelect('type', 'paf.fursuit.type', $fursuitTypes)
+            ->setHtmlAttribute('data-minimum-results-for-search', 'Infinity');
+
+
+        $additionals = $this->addContainer('additionals');
+        $additionals->addCheckbox('sleeves', 'commission.quote-form.long-sleeves');
+
+        $this->addGroup('commission.quote-form.group-additional-info');
+
+        $this->addMultiUpload('reference', 'commission.quote-form.references');
+
+
+        $this->addGroup('commission.quote-form.group-finish');
+        $this->addSubmit('save', 'generic.submit');
+
+        $this->onValidate[] = [$this, 'validateForm'];
+
+        $this->onSuccess[] = [$this, 'processForm'];
     }
 
-
-    public function createComponentForm()
+    public function validateForm(QuoteForm $form)
     {
-        $form = $this->factory->create();
-        $form->setTranslator($this->translator->domain('paf.quote-form'));
-
-
-        $form->addGroup('group-contact');
-        $contactTranslator = $this->translator->domain('paf.contact');
-        $contact = $form->addContainer('contact');
-        $contact->addText('name', 'name')->setTranslator($contactTranslator)
-            ->setRequired(true)
-            ->addRule(Form::MIN_LENGTH, 'name-min-length', 3);
-        $contact->addText('email', 'email')->setTranslator($contactTranslator);
-        $contact->addText('telegram', 'telegram')->setTranslator($contactTranslator);
-
-        $form->addGroup('group-fursuit');
-        $fursuitContainer = $form->addContainer('fursuit');
-
-        $fursuitContainer->addText('name', 'fursuit-name');
-        $fursuitContainer->addTextArea('characterDescription', 'character-description')
-            ->setOption('help-text', 'character-description-help');
-        $fursuitContainer->addSelect('type', 'paf.fursuit.type', Localization::getFursuitTypes())
-            ->setHtmlAttribute('data-minimum-results-for-search', 'Infinity')
-            ->setTranslator($this->translator);
-
-
-        $additionals = $form->addContainer('additionals');
-        $additionals->addCheckbox('sleeves', 'long-sleeves');
-
-        $form->addGroup('group-additional-info');
-
-        $form->addMultiUpload('reference', 'references');
-
-
-        $form->addGroup('group-finish');
-        $form->addSubmit('save', 'submit')
-            ->setTranslator($this->translator->domain('generic'));
-
-
-        $form->onSuccess[] = [$this, 'processForm'];
-
-        return $form;
+        $values = $form->getValues();
+        if (empty($values['contact']['email']) && empty($values['contact']['telegram'])) {
+            $form->addError('commission.quote-form.error-no-contact');
+        }
     }
 
     public function processForm(Form $form, $values)
     {
-        $contact = new Contact();
-        $contact->name = $values->contact->name;
-        $contact->email = $values->contact->email;
-        $contact->telegram = $values->contact->telegram;
 
         $fursuitSpecification = new Specification();
-        $fursuitSpecification->name = $values->fursuit->name;
-        $fursuitSpecification->type = $values->fursuit;
+        $fursuitSpecification->characterName = $values->fursuit->name;
+        $fursuitSpecification->type = $values->fursuit->type;
         $fursuitSpecification->characterDescription = $values->fursuit->characterDescription;
 
-        $quote = $this->quote ?: new Quote();
-        $quote->contact = $contact;
-        $quote->specification = $fursuitSpecification;
+        $this->onSave(
+            $this->quote,
+            $fursuitSpecification,
+            $this->getContacts($values['contact']),
+            $values->reference,
+            $this
+        );
+    }
 
-        $this->onSave($quote, $form, $values->reference);
+    private function getContacts($contactSection): array
+    {
+        $contacts = [];
+        foreach ($contactSection as $type => $value) {
+            if (!$value) {
+                continue;
+            }
+
+            $contact = new Contact();
+            $contact->type = $type;
+            $contact->value = $value;
+            $contacts[$type] = $contact;
+        }
+
+        return $contacts;
     }
 }

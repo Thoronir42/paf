@@ -11,7 +11,7 @@ use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
 
-class BaseRepository extends Repository implements IQueryable
+abstract class BaseRepository extends Repository implements IQueryable
 {
     private static $CONDITIONS = [
         true => [
@@ -42,14 +42,14 @@ class BaseRepository extends Repository implements IQueryable
         parent::__construct($connection, $mapper, $entityFactory);
         $this->index = $index;
         if ($index) {
-            $this->uniqueColumns = [$index];
+            $this->uniqueColumns[] = $index;
         }
     }
 
 
     protected function select($what = "t.*", $alias = "t", array $criteria = null)
     {
-        $fluent = $this->connection->command()->select($what)
+        $fluent = $this->connection->select($what)
             ->from($this->getTable() . " AS $alias");
 
         if ($criteria) {
@@ -164,6 +164,19 @@ class BaseRepository extends Repository implements IQueryable
         return $this->mapper->getPrimaryKey($this->getTable());
     }
 
+    public function isPersistable(Entity $entity)
+    {
+        if ($entity->isDetached()) {
+            return $this->isUnique($entity);
+        }
+
+        if (array_key_exists($this->getPrimaryKey(), $entity->getModifiedRowData())) {
+            return $this->isUnique($entity);
+        }
+
+        return true;
+    }
+
     protected function isUnique(Entity $entity)
     {
         if (empty($this->uniqueColumns)) {
@@ -175,6 +188,9 @@ class BaseRepository extends Repository implements IQueryable
         $orClauses = [];
         $orArgs = [];
         foreach ($this->uniqueColumns as $column) {
+            if (!isset($entity->$column)) {
+                continue;
+            }
             $value = $entity->$column;
             if (is_null($value)) {
                 continue;
@@ -190,6 +206,25 @@ class BaseRepository extends Repository implements IQueryable
 
         return $check === 0;
     }
+
+    protected function insertIntoDatabase(Entity $entity)
+    {
+        $primaryKey = $this->mapper->getPrimaryKey($this->getTable());
+        $values = $entity->getModifiedRowData();
+        foreach ($values as &$value) {
+            if ($value instanceof Entity) {
+                $primaryKey = $this->mapper->getPrimaryKey($this->mapper->getTable(get_class($value)));
+                $value = $value->$primaryKey;
+            }
+        }
+        $this->connection->query(
+            'INSERT INTO %n %v',
+            $this->getTable(),
+            $values
+        );
+        return isset($values[$primaryKey]) ? $values[$primaryKey] : $this->connection->getInsertId();
+    }
+
 
     public function deleteMany(array $entities)
     {

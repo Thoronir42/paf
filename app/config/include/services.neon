@@ -4,8 +4,6 @@ services:
     - PAF\Common\Security\ReflectionAuthorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
-    - PAF\Common\Forms\FormFactory
-
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
     - PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
 
@@ -15,8 +13,9 @@ services:
         class: PAF\Modules\CommonModule\Repository\UserRepository
         arguments:
             index: 'username'
-
+    common.personRepository: PAF\Modules\CommonModule\Repository\PersonRepository
     common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
+    common.slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
 
     common.users:
         class: PAF\Modules\CommonModule\Services\Users
@@ -24,8 +23,11 @@ services:
             powerUsers: %powerUsers%
 
     - PAF\Modules\CommissionModule\Facade\PafEntities
+    - PAF\Modules\CommissionModule\Facade\Commissions
+
     - PAF\Modules\CommissionModule\Repository\QuoteRepository
     - PAF\Modules\CommissionModule\Repository\PafCaseRepository
+    - PAF\Modules\CommissionModule\Repository\SpecificationRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
     - PAF\Modules\CmsModule\Facade\CmsPages
@@ -39,13 +41,16 @@ services:
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())
 
-    -
+    fileStorage.image: PAF\Common\Storage\FileStorage(%wwwDir%/images)
+
+    genericImageStorage:
         class: PAF\Common\Storage\PafImageStorage
         arguments:
-            fileStorage: PAF\Common\Storage\FileStorage(%wwwDir%/images)
+            fileStorage: @fileStorage.image
 
     nette.latteFactory:
         setup:
+            - Latte\Runtime\Filters::$dateFormat = 'y/m/d'
             - addFilter(yesno, @yesNoFilter)
             - addFilter(contactUrl, @contactUrlFilter)
 
@@ -59,4 +64,5 @@ services:
     leanFixtures.entityFixtures:
         setup:
             - addFixtureDao(PAF\Modules\CommonModule\Fixtures\UserFixtureDao())
+            - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.personRepository))
             - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository))

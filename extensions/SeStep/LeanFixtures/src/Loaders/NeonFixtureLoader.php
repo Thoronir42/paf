@@ -38,14 +38,14 @@ class NeonFixtureLoader implements FixtureLoader
     {
         $data = Neon::decode(file_get_contents($file));
 
-        return array_map([$this, 'parseGroup'], $data);
+        return array_map([$this, 'parseGroup'], array_values($data), array_keys($data));
     }
 
-    private function parseGroup($groupData): StructuredFixtureGroup
+    private function parseGroup($groupData, $groupName): StructuredFixtureGroup
     {
         $class = $groupData['class'];
         $data = $groupData['data'];
 
-        return new StructuredFixtureGroup($class, $data);
+        return new StructuredFixtureGroup($class, $groupName, $data);
     }
 }

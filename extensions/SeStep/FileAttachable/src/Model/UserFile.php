@@ -6,7 +6,7 @@ use Nette\InvalidArgumentException;
 use PAF\Common\Model\BaseEntity;
 
 /**
- * @property UserFileThread $thread m:belongsToOne
+ * @property UserFileThread|null $thread m:hasOne(thread_id)
  * @property string $filename
  * @property int $size
  */

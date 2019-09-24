@@ -2,6 +2,7 @@
 
 namespace SeStep\FileAttachable;
 
+use SeStep\FileAttachable\Model\UserFile;
 use SeStep\FileAttachable\Model\UserFileThread;
 use SeStep\FileAttachable\Service\UserFileRepository;
 use SeStep\FileAttachable\Service\UserFileThreadRepository;
@@ -29,33 +30,27 @@ class Files
         return $this->threadRepository->find($id);
     }
 
-    public function createThread($persist = false, $flush = false)
+    public function createThread($persist = false)
     {
         $thread = new UserFileThread();
+        $thread->dateCreated = new \DateTime();
         if ($persist) {
-            $this->em->persist($thread);
-            if ($flush) {
-                $this->em->flush();
-            }
+            $this->threadRepository->persist($thread);
         }
 
         return $thread;
     }
 
     /**
-     * @param FileEntity|UserFileThread $entity
+     * @param UserFile|UserFileThread $entity
+     *
+     * @return int
      */
-    public function save($entity, $flushImmediatelly = true)
+    public function save($entity)
     {
-        $this->em->persist($entity);
-        if ($flushImmediatelly) {
-            $this->em->flush($entity);
+        if ($entity instanceof UserFile) {
+            return $this->fileRepository->persist($entity);
         }
-    }
-
-
-    public function flushAll()
-    {
-        $this->em->flush();
+        return $this->threadRepository->persist($entity);
     }
 }

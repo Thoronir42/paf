@@ -28,18 +28,6 @@ class PafEntities
         $this->cases = $cases;
     }
 
-    public function createQuote(Quote $quote)
-    {
-        $slug = self::sluggify($quote->specification->name);
-        if ($this->entityExists($slug)) {
-            return false;
-        }
-
-        $this->quotes->persist($quote);
-
-        return true;
-    }
-
 
     /**
      * @param string    $name
@@ -55,15 +43,6 @@ class PafEntities
         }
 
         return $this->repository->countBy($where) > 0;
-    }
-
-    /**
-     * @param $name
-     * @return PafWrapper|null
-     */
-    public function findByName($name)
-    {
-        return $this->repository->findOneBy(['name' => $name]);
     }
 
     /**

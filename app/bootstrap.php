@@ -40,8 +40,6 @@ return call_user_func(static function () {
     $configFile = getenv('CONFIG_FILE') ?: 'config.local.neon';
     $configurator->addConfig(__DIR__ . '/config/' . $configFile);
 
-    PAF\Common\Forms\FormFactory::adjustValidatorMessages();
-
     $container = $configurator->createContainer();
 
     return $container;

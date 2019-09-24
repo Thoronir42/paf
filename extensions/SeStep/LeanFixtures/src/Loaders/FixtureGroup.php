@@ -7,18 +7,27 @@ abstract class FixtureGroup
     /** @var string */
     protected $entityClass;
 
+    /** @var string */
+    protected $name;
+
     /**
      * EntityGroup constructor.
      * @param string $entityClass
      */
-    public function __construct(string $entityClass)
+    public function __construct(string $entityClass, string $name)
     {
         $this->entityClass = $entityClass;
+        $this->name = $name;
     }
 
     public function getEntityClass(): string
     {
         return $this->entityClass;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     abstract public function entities(): \Iterator;

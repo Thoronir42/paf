@@ -28,13 +28,13 @@ class UserFixtureDao implements FixtureDao
         return User::class;
     }
 
-    public function create($entityData)
+    public function create($entityData): int
     {
         if (isset($entityData['password'])) {
             $entityData['password'] = $this->passwords->hash($entityData['password']);
         }
 
-        $this->repoDao->create($entityData);
+        return $this->repoDao->create($entityData);
     }
 
     public function findBy($value)
