@@ -66,14 +66,14 @@ class Commissions
         }
 
         $slugId = Strings::webalize($specification->characterName);
-        /*if ($this->slugRepository->slugExists($slugId)) {
+        if ($this->slugRepository->slugExists($slugId)) {
             return 'paf.case.already-exists';
         }
 
-        $slug = $this->slugRepository->createSlug($slugId);*/
+        $slug = $this->slugRepository->createSlug($slugId);
 
         $quote->status = Quote::STATUS_NEW;
-        $quote->slug = $slugId; // todo: use FK
+        $quote->slug = $slug->id; // todo: use FK
         $quote->specification = $specification;
         $quote->issuer = $issuer;
 

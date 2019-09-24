@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
-use Contributte\Translation\Translator;
 use Nette\Application\UI\Multiplier;
 use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
@@ -20,8 +19,6 @@ use SeStep\FileAttachable\Files;
 /**
  * Class QuotesPresenter
  * @package PAF\Modules\CommissionModule\Presenters
- *
- * @property-read Translator $translator
  */
 final class QuotesPresenter extends BasePresenter
 {
