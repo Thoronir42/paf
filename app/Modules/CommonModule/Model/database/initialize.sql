@@ -12,7 +12,7 @@ CREATE TABLE `common__user`
 
 CREATE TABLE `common__person`
 (
-    id           INT         NOT NULL AUTO_INCREMENT,
+    id           VARCHAR(10) NOT NULL,
     display_name VARCHAR(72) NOT NULL,
     user_id      INT         NULL,
 
@@ -22,7 +22,7 @@ CREATE TABLE `common__person`
 CREATE TABLE `common__contact`
 (
     id        INT          NOT NULL AUTO_INCREMENT,
-    person_id INT          NOT NULL,
+    person_id VARCHAR(10)  NOT NULL,
     type      VARCHAR(16)  NOT NULL,
     value     VARCHAR(256) NOT NULL,
 

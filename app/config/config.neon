@@ -38,6 +38,7 @@ extensions:
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
+    entityIds: SeStep\EntityIds\DI\EntityIdsExtension
 
 leanMapper:
     db: %database%
@@ -100,3 +101,4 @@ includes:
     - include/services.neon
     - include/console.neon
     - include/formsMessages.neon
+    - include/entityIds.neon

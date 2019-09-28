@@ -6,9 +6,11 @@ use Dibi\Expression;
 use PAF\Common\Model\BaseRepository;
 use PAF\Modules\CommonModule\Model\Contact;
 use PAF\Modules\CommonModule\Model\Person;
+use SeStep\EntityIds\HasIdGenerator;
 
 class PersonRepository extends BaseRepository
 {
+    use HasIdGenerator;
 
     /**
      * @param Contact[] $contacts

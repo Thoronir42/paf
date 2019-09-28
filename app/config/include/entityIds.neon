@@ -1,0 +1,6 @@
+entityIds:
+    autoWireGeneratorToTrait: true
+    idLength: 6
+    distinctPositions: [2, 3]
+    types:
+        17: PAF\Modules\CommonModule\Model\Person

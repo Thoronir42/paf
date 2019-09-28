@@ -10,6 +10,7 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
+use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable
 {
@@ -27,6 +28,9 @@ abstract class BaseRepository extends Repository implements IQueryable
             'EQ' => '!=',
         ],
     ];
+
+    /** @var IdGenerator */
+    protected $idGenerator;
 
     /** @var string */
     private $index;
@@ -130,6 +134,10 @@ abstract class BaseRepository extends Repository implements IQueryable
         if ($entity->isDetached()) {
             if (!$this->isUnique($entity)) {
                 throw new UniqueConstraintViolationException("Entity fails unique check");
+            }
+            
+            if ($this->idGenerator) {
+                $entity->id = $this->idGenerator->generateId(get_class($entity));
             }
         }
 

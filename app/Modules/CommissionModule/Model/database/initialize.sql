@@ -12,7 +12,7 @@ CREATE TABLE `commission__quote`
 (
     id                   INT         NOT NULL AUTO_INCREMENT,
     slug                 VARCHAR(64) NOT NULL,
-    issuer_person_id     INT         NOT NULL,
+    issuer_person_id     VARCHAR(10) NOT NULL,
     status               VARCHAR(24) NOT NULL,
     date_created         DATE        NOT NULL,
     specification_id     INT         NOT NULL,
