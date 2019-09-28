@@ -56,6 +56,7 @@
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
+      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/"
@@ -66,7 +67,8 @@
       "Test\\PAF\\": "test/",
       "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
-      "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/"
+      "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
+      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/test/"
     }
   },
   "require-dev": {
