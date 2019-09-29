@@ -3,11 +3,14 @@
 namespace SeStep\EntityIds\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use SeStep\EntityIds\CharSet;
+use SeStep\EntityIds\Console\GenerateTypeIdCommand;
+use SeStep\EntityIds\Console\ListIdTypesCommand;
 use SeStep\EntityIds\EncodedTypeIdGenerator;
 use SeStep\EntityIds\HasIdGenerator;
 use SeStep\EntityIds\Type\CheckSum;
@@ -23,6 +26,7 @@ class EntityIdsExtension extends CompilerExtension
             'types' => Expect::array(),
             'idLength' => Expect::int(12),
             'distinctPositions' => Expect::arrayOf(Expect::int()),
+            'registerCommands' => Expect::bool(false),
         ]);
     }
 
@@ -30,7 +34,15 @@ class EntityIdsExtension extends CompilerExtension
     {
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
+        $this->addDefinitions($builder, $config);
 
+        if ($config->registerCommands) {
+            $this->addCommandDefinitions($builder, $config);
+        }
+    }
+
+    private function addDefinitions(ContainerBuilder $builder, $config)
+    {
         $charSet = $builder->addDefinition($this->prefix('charSet'))
             ->setType(CharSet::class)
             ->setAutowired(false);
@@ -55,6 +67,25 @@ class EntityIdsExtension extends CompilerExtension
                 $config->types ?? [],
                 $config->idLength,
             ]);
+    }
+
+    private function addCommandDefinitions(ContainerBuilder $builder, $config)
+    {
+        $builder->addDefinition($this->prefix('listIdTypesCommand'))
+            ->setType(ListIdTypesCommand::class)
+            ->setArguments([
+                'name' => 'id:type:list',
+                'types' => $config->types,
+            ])
+            ->addTag('console.command', ['name' => 'id:type:list']);
+
+        $builder->addDefinition($this->prefix('generateTypeIdCommand'))
+            ->setType(GenerateTypeIdCommand::class)
+            ->setArguments([
+                'name' => 'id:type:generate',
+                'types' => $config->types,
+            ])
+            ->addTag('console.command', ['name' => 'id:type:generate']);
     }
 
     public function beforeCompile()
