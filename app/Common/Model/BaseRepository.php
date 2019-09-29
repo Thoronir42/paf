@@ -136,7 +136,7 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
     {
         $changedId = $entity->getModifiedRowData()['id'] ?? null;
         $type = get_class($entity);
-        $typeHasIdGenerator = $this->idGenerator->hasType($type);
+        $typeHasIdGenerator = $this->idGenerator && $this->idGenerator->hasType($type);
 
         if ($changedId && $typeHasIdGenerator) {
             if (is_string($changedId) && $type != $this->idGenerator->getType($changedId)) {
