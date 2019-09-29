@@ -4,14 +4,13 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use LeanMapper\Entity;
 use Nette\Utils\DateTime;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Model\Person;
 use SeStep\Commentable\Lean\Model\CommentThread;
 
 /**
  * @property int $id
  * @property string $status m:enum(self::STATUS_)
- * @property User $customer m:hasOne(customer_user_id)
+ * @property Person $customer m:hasOne(customer_person_id)
  * @property Specification $specification
  * @property DateTime $acceptedOn
  * @property DateTime $targetDelivery

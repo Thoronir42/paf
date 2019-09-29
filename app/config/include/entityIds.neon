@@ -5,4 +5,5 @@ entityIds:
     distinctPositions: [2, 3]
     registerCommands: true
     types:
+        3: PAF\Modules\CommonModule\Model\User
         17: PAF\Modules\CommonModule\Model\Person

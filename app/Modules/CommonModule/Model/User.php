@@ -7,7 +7,7 @@ use PAF\Common\Model\BaseEntity;
 use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 /**
- * @property int $id
+ * @property string $id
  * @property string $type m:enum(self::TYPE_*)
  * @property string $username
  * @property string $password

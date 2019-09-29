@@ -6,9 +6,11 @@ use PAF\Common\Model\BaseRepository;
 use Nette\InvalidStateException;
 use PAF\Modules\CommonModule\Model\User;
 use PAF\Utils\Moment\HasMomentProvider;
+use SeStep\EntityIds\HasIdGenerator;
 
 class UserRepository extends BaseRepository
 {
+    use HasIdGenerator;
     use HasMomentProvider;
 
     public function create(string $username, string $password, \DateTime $registered = null): User

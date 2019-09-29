@@ -32,18 +32,18 @@ CREATE TABLE `commission__quote`
 
 CREATE TABLE commission__paf_case
 (
-    id               INT         NOT NULL AUTO_INCREMENT,
-    status           varchar(20) NOT NULL,
-    customer_user_id int         NOT NULL,
-    specification_id int         NOT NULL,
-    accepted_on      DATE        NOT NULL,
-    target_delivery  DATE        NULL,
+    id                 INT         NOT NULL AUTO_INCREMENT,
+    status             VARCHAR(20) NOT NULL,
+    customer_person_id VARCHAR(10) NOT NULL,
+    specification_id   INT         NOT NULL,
+    accepted_on        DATE        NOT NULL,
+    target_delivery    DATE        NULL,
 
 
     CONSTRAINT PRIMARY KEY (id),
 
     CONSTRAINT `case_customer_fk` FOREIGN KEY
-        (customer_user_id) REFERENCES common__user (id),
+        (customer_person_id) REFERENCES common__person (id),
     CONSTRAINT `case_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id)
 );
