@@ -10,9 +10,13 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
+use SeStep\EntityIds\HasIdGenerator;
+use SeStep\EntityIds\IdGenerator;
 
-abstract class BaseRepository extends Repository implements IQueryable
+abstract class BaseRepository extends Repository implements IQueryable, HasIdGenerator
 {
+    private const MAX_ID_ATTEMPTS = 10;
+
     private static $CONDITIONS = [
         true => [
             'IN' => 'IN',
@@ -27,6 +31,9 @@ abstract class BaseRepository extends Repository implements IQueryable
             'EQ' => '!=',
         ],
     ];
+
+    /** @var IdGenerator */
+    protected $idGenerator;
 
     /** @var string */
     private $index;
@@ -127,9 +134,23 @@ abstract class BaseRepository extends Repository implements IQueryable
 
     public function persist(Entity $entity)
     {
+        $changedId = $entity->getModifiedRowData()['id'] ?? null;
+        $type = get_class($entity);
+        $typeHasIdGenerator = $this->idGenerator && $this->idGenerator->hasType($type);
+
+        if ($changedId && $typeHasIdGenerator) {
+            if (is_string($changedId) && $type != $this->idGenerator->getType($changedId)) {
+                throw new \UnexpectedValueException("Id '{$changedId}' could not be validated for type '$type'");
+            }
+        }
+
         if ($entity->isDetached()) {
             if (!$this->isUnique($entity)) {
                 throw new UniqueConstraintViolationException("Entity fails unique check");
+            }
+
+            if ($typeHasIdGenerator && !isset($entity->id)) {
+                $entity->id = $this->getUniqueId();
             }
         }
 
@@ -177,6 +198,12 @@ abstract class BaseRepository extends Repository implements IQueryable
         return true;
     }
 
+    public function injectEntityIdGenerator(IdGenerator $generator)
+    {
+        $this->idGenerator = $generator;
+    }
+
+
     protected function isUnique(Entity $entity)
     {
         if (empty($this->uniqueColumns)) {
@@ -222,6 +249,7 @@ abstract class BaseRepository extends Repository implements IQueryable
             $this->getTable(),
             $values
         );
+
         return isset($values[$primaryKey]) ? $values[$primaryKey] : $this->connection->getInsertId();
     }
 
@@ -229,5 +257,19 @@ abstract class BaseRepository extends Repository implements IQueryable
     public function deleteMany(array $entities)
     {
         return array_map([$this, 'delete'], $entities);
+    }
+
+    private function getUniqueId()
+    {
+        $i = 0;
+        do {
+            if (++$i > self::MAX_ID_ATTEMPTS) {
+                throw new UniqueConstraintViolationException("Could not get an unique ID after "
+                    . self::MAX_ID_ATTEMPTS . ' attempts');
+            }
+            $id = $this->idGenerator->generateId();
+        } while ($this->find($id));
+
+        return $id;
     }
 }

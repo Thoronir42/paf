@@ -8,7 +8,7 @@ use PAF\Common\Model\BaseEntity;
  * Class Person
  * @package PAF\Modules\CommonModule\Model
  *
- * @property int $id
+ * @property string $id
  * @property string $displayName
  * @property User|null $user m:hasOne(user_id)
  *

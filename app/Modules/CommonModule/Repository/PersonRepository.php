@@ -9,7 +9,6 @@ use PAF\Modules\CommonModule\Model\Person;
 
 class PersonRepository extends BaseRepository
 {
-
     /**
      * @param Contact[] $contacts
      * @return Person|null
