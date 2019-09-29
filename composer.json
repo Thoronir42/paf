@@ -12,6 +12,7 @@
     }
   ],
   "scripts": {
+    "test": "phpunit",
     "phpcs": "phpcs app/ test/ extensions/",
     "phpcbf": "phpcbf app/ test/ extensions/"
   },
