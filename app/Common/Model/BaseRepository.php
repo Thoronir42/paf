@@ -14,6 +14,8 @@ use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable
 {
+    private const MAX_ID_ATTEMPTS = 10;
+
     private static $CONDITIONS = [
         true => [
             'IN' => 'IN',
@@ -131,13 +133,24 @@ abstract class BaseRepository extends Repository implements IQueryable
 
     public function persist(Entity $entity)
     {
+        $changedId = $entity->getModifiedRowData()['id'] ?? null;
+
+        if ($changedId && $this->idGenerator) {
+            $type = get_class($entity);
+            if (is_string($changedId) && $type != $this->idGenerator->getType($changedId)) {
+                throw new \UnexpectedValueException("Id '{$changedId}' could not be validated for type '$type'");
+            }
+        }
+
         if ($entity->isDetached()) {
             if (!$this->isUnique($entity)) {
                 throw new UniqueConstraintViolationException("Entity fails unique check");
             }
-            
+
             if ($this->idGenerator) {
-                $entity->id = $this->idGenerator->generateId(get_class($entity));
+                if (!isset($entity->id)) {
+                    $entity->id = $this->getUniqueId();
+                }
             }
         }
 
@@ -237,5 +250,19 @@ abstract class BaseRepository extends Repository implements IQueryable
     public function deleteMany(array $entities)
     {
         return array_map([$this, 'delete'], $entities);
+    }
+
+    private function getUniqueId()
+    {
+        $i = 0;
+        do {
+            if (++$i > self::MAX_ID_ATTEMPTS) {
+                throw new UniqueConstraintViolationException("Could not get an unique ID after "
+                    . self::MAX_ID_ATTEMPTS . ' attempts');
+            }
+            $id = $this->idGenerator->generateId();
+        } while ($this->find($id));
+
+        return $id;
     }
 }
