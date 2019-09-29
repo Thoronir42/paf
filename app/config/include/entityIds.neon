@@ -1,4 +1,5 @@
 entityIds:
+    charList: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     autoWireGeneratorToTrait: true
     idLength: 6
     distinctPositions: [2, 3]

@@ -18,7 +18,7 @@ person:
     class: PAF\Modules\CommonModule\Model\Person
     data:
         -
-            id: eHG_t5
+            id: r4o7xP
             displayName: 'Toad'
             user: 'T-boi'
 
@@ -28,6 +28,6 @@ userContact:
     class: PAF\Modules\CommonModule\Model\Contact
     data:
         -
-            person: eHG_t5
+            person: r4o7xP
             type: email
             value: ohaio@gozaimasu.chan
