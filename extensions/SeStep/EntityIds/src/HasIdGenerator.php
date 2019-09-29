@@ -2,12 +2,7 @@
 
 namespace SeStep\EntityIds;
 
-trait HasIdGenerator
+interface HasIdGenerator
 {
-    protected $idGenerator;
-
-    public function injectEntityIdGenerator(IdGenerator $generator)
-    {
-        $this->idGenerator = $generator;
-    }
+    public function injectEntityIdGenerator(IdGenerator $generator);
 }

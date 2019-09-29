@@ -100,7 +100,7 @@ class EntityIdsExtension extends CompilerExtension
                     continue;
                 }
                 $type = $definition->getType();
-                if (class_exists($type) && in_array(HasIdGenerator::class, class_uses($type))) {
+                if (class_exists($type) && is_a($type, HasIdGenerator::class, true)) {
                     $definition->addSetup(new Statement('injectEntityIdGenerator', [$idGenerator]));
                 }
             }

@@ -50,6 +50,12 @@ final class EncodedTypeIdGenerator implements IdGenerator
         }
     }
 
+    public function hasType(string $type): bool
+    {
+        return array_key_exists($type, $this->typeToCheckSumMap);
+    }
+
+
     /**
      * Creates new ID of given type
      *

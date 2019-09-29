@@ -7,6 +7,15 @@ namespace SeStep\EntityIds;
  */
 interface IdGenerator
 {
+
+    /**
+     * Tests whether generator provides IDs for given type
+     *
+     * @param string $type
+     * @return bool
+     */
+    public function hasType(string $type): bool;
+
     /**
      * Creates new ID of given type
      *
