@@ -259,7 +259,7 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
         return array_map([$this, 'delete'], $entities);
     }
 
-    private function getUniqueId()
+    private function getUniqueId(string $type = null)
     {
         $i = 0;
         do {
@@ -267,7 +267,7 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
                 throw new UniqueConstraintViolationException("Could not get an unique ID after "
                     . self::MAX_ID_ATTEMPTS . ' attempts');
             }
-            $id = $this->idGenerator->generateId();
+            $id = $this->idGenerator->generateId($type);
         } while ($this->find($id));
 
         return $id;
