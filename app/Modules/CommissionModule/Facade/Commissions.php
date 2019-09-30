@@ -7,8 +7,10 @@ use Nette\InvalidStateException;
 use Nette\Utils\Strings;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Storage\PafImageStorage;
+use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Model\Specification;
+use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\CommissionModule\Repository\SpecificationRepository;
 use PAF\Modules\CommonModule\Model\Contact;
@@ -16,9 +18,13 @@ use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\CommonModule\Repository\ContactRepository;
 use PAF\Modules\CommonModule\Repository\PersonRepository;
 use PAF\Modules\CommonModule\Repository\SlugRepository;
+use PAF\Utils\Moment\HasMomentProvider;
+use SeStep\Commentable\Service\CommentsService;
 
 class Commissions
 {
+    use HasMomentProvider;
+
     /** @var SpecificationRepository */
     private $specificationRepository;
     /** @var PersonRepository */
@@ -29,8 +35,12 @@ class Commissions
     private $slugRepository;
     /** @var QuoteRepository */
     private $quoteRepository;
+    /** @var PafCaseRepository */
+    private $caseRepository;
     /** @var PafImageStorage */
     private $imageStorage;
+    /** @var CommentsService */
+    private $commentsService;
     /** @var TransactionManager */
     private $transactionManager;
 
@@ -41,6 +51,8 @@ class Commissions
         SlugRepository $slugRepository,
         QuoteRepository $quoteRepository,
         PafImageStorage $imageStorage,
+        PafCaseRepository $caseRepository,
+        CommentsService $commentsService,
         TransactionManager $transactionManager
     ) {
         $this->specificationRepository = $specificationRepository;
@@ -49,6 +61,8 @@ class Commissions
         $this->slugRepository = $slugRepository;
         $this->quoteRepository = $quoteRepository;
         $this->imageStorage = $imageStorage;
+        $this->caseRepository = $caseRepository;
+        $this->commentsService = $commentsService;
         $this->transactionManager = $transactionManager;
     }
 
@@ -156,9 +170,22 @@ class Commissions
 
     public function acceptQuote(Quote $quote)
     {
-        $quote->status = Quote::STATUS_ACCEPTED;
-        $this->quoteRepository->persist($quote);
-        // todo: create case out of this quote
+        $this->transactionManager->execute(function () use ($quote) {
+            $quote->status = Quote::STATUS_ACCEPTED;
+            $this->quoteRepository->persist($quote);
+
+            $case = new PafCase();
+            $case->customer = $quote->issuer;
+            $case->specification = $quote->specification;
+            $case->acceptedOn = $this->momentProvider->now();
+            $case->comments = $this->commentsService->createNewThread();
+
+            $this->caseRepository->persist($case);
+
+            return $case;
+        });
+
+
         return true;
     }
 }

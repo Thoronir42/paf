@@ -2,19 +2,19 @@
 
 namespace PAF\Modules\CommissionModule\Model;
 
+use DateTime;
 use LeanMapper\Entity;
-use Nette\Utils\DateTime;
 use PAF\Modules\CommonModule\Model\Person;
 use SeStep\Commentable\Lean\Model\CommentThread;
 
 /**
- * @property int $id
- * @property string $status m:enum(self::STATUS_)
+ * @property string $id
+ * @property string $status m:enum(self::STATUS_*) m:default('accepted')
  * @property Person $customer m:hasOne(customer_person_id)
- * @property Specification $specification
+ * @property Specification $specification m:hasOne(specification_id)
  * @property DateTime $acceptedOn
  * @property DateTime $targetDelivery
- * @property CommentThread $comments
+ * @property CommentThread $comments m:hasOne(comment_thread_id)
  *
  */
 class PafCase extends Entity

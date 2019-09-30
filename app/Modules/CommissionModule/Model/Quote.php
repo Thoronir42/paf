@@ -8,7 +8,7 @@ use PAF\Modules\CommonModule\Model\Person;
 use SeStep\FileAttachable\Model\UserFileThread;
 
 /**
- * @property int $id
+ * @property string $id
  * @property Person $issuer m:hasOne(issuer_person_id)
  * @property string $slug
  * @property string $status m:enum(self::STATUS*)

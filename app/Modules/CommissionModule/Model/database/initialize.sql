@@ -10,7 +10,7 @@ CREATE TABLE commission__specification
 
 CREATE TABLE `commission__quote`
 (
-    id                   INT         NOT NULL AUTO_INCREMENT,
+    id                   VARCHAR(10) NOT NULL,
     slug                 VARCHAR(64) NOT NULL,
     issuer_person_id     VARCHAR(10) NOT NULL,
     status               VARCHAR(24) NOT NULL,
@@ -32,11 +32,12 @@ CREATE TABLE `commission__quote`
 
 CREATE TABLE commission__paf_case
 (
-    id                 INT         NOT NULL AUTO_INCREMENT,
+    id                 VARCHAR(10) NOT NULL,
     status             VARCHAR(20) NOT NULL,
     customer_person_id VARCHAR(10) NOT NULL,
     specification_id   INT         NOT NULL,
     accepted_on        DATE        NOT NULL,
+    comment_thread_id  VARCHAR(10) NULL,
     target_delivery    DATE        NULL,
 
 
@@ -45,21 +46,23 @@ CREATE TABLE commission__paf_case
     CONSTRAINT `case_customer_fk` FOREIGN KEY
         (customer_person_id) REFERENCES common__person (id),
     CONSTRAINT `case_specification_fk` FOREIGN KEY
-        (specification_id) REFERENCES commission__specification (id)
+        (specification_id) REFERENCES commission__specification (id),
+    CONSTRAINT `case_comment_thread_fk` FOREIGN KEY
+        (comment_thread_id) REFERENCES ss_comments__comment_thread (id)
 );
 
 CREATE TABLE commission__fursuit_progress
 (
-    id          INT NOT NULL AUTO_INCREMENT,
-    case_id     INT NOT NULL,
+    id          INT         NOT NULL AUTO_INCREMENT,
+    case_id     VARCHAR(10) NOT NULL,
 
-    head        INT NOT NULL DEFAULT -1,
-    body        INT NOT NULL DEFAULT -1,
-    arm_sleeves INT NOT NULL DEFAULT -1,
-    paws        INT NOT NULL DEFAULT -1,
-    tail        INT NOT NULL DEFAULT -1,
-    leg_sleeves INT NOT NULL DEFAULT -1,
-    hind_paws   INT NOT NULL DEFAULT -1,
+    head        INT         NOT NULL DEFAULT -1,
+    body        INT         NOT NULL DEFAULT -1,
+    arm_sleeves INT         NOT NULL DEFAULT -1,
+    paws        INT         NOT NULL DEFAULT -1,
+    tail        INT         NOT NULL DEFAULT -1,
+    leg_sleeves INT         NOT NULL DEFAULT -1,
+    hind_paws   INT         NOT NULL DEFAULT -1,
 
     CONSTRAINT PRIMARY KEY (id),
     CONSTRAINT `progress_case_fk` FOREIGN KEY
