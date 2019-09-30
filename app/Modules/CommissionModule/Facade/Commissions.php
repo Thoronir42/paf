@@ -5,6 +5,7 @@ namespace PAF\Modules\CommissionModule\Facade;
 use Nette\Http\FileUpload;
 use Nette\InvalidStateException;
 use Nette\Utils\Strings;
+use PAF\Common\Model\TransactionManager;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Model\Specification;
@@ -30,6 +31,8 @@ class Commissions
     private $quoteRepository;
     /** @var PafImageStorage */
     private $imageStorage;
+    /** @var TransactionManager */
+    private $transactionManager;
 
     public function __construct(
         SpecificationRepository $specificationRepository,
@@ -37,7 +40,8 @@ class Commissions
         ContactRepository $contactRepository,
         SlugRepository $slugRepository,
         QuoteRepository $quoteRepository,
-        PafImageStorage $imageStorage
+        PafImageStorage $imageStorage,
+        TransactionManager $transactionManager
     ) {
         $this->specificationRepository = $specificationRepository;
         $this->personRepository = $personRepository;
@@ -45,6 +49,7 @@ class Commissions
         $this->slugRepository = $slugRepository;
         $this->quoteRepository = $quoteRepository;
         $this->imageStorage = $imageStorage;
+        $this->transactionManager = $transactionManager;
     }
 
     /**
@@ -61,26 +66,29 @@ class Commissions
         Person $issuer,
         $references
     ) {
-        if (!$this->saveSpecification($specification)) {
-            throw new \UnexpectedValueException("Could not save specification");
-        }
+        $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
+            if (!$this->saveSpecification($specification)) {
+                throw new \UnexpectedValueException("Could not save specification");
+            }
 
-        $slugId = Strings::webalize($specification->characterName);
-        if ($this->slugRepository->slugExists($slugId)) {
-            return 'paf.case.already-exists';
-        }
+            $slugId = Strings::webalize($specification->characterName);
+            if ($this->slugRepository->slugExists($slugId)) {
+                return 'paf.case.already-exists';
+            }
 
-        $slug = $this->slugRepository->createSlug($slugId);
+            $slug = $this->slugRepository->createSlug($slugId);
 
-        $quote->status = Quote::STATUS_NEW;
-        $quote->slug = $slug->id; // todo: use FK
-        $quote->specification = $specification;
-        $quote->issuer = $issuer;
+            $quote->status = Quote::STATUS_NEW;
+            $quote->slug = $slug->id; // todo: use FK
+            $quote->specification = $specification;
+            $quote->issuer = $issuer;
 
-        $this->imageStorage->setQuoteReferences($quote, $references);
+            $this->imageStorage->setQuoteReferences($quote, $references);
 
 
-        $this->quoteRepository->persist($quote);
+            $this->quoteRepository->persist($quote);
+        });
+
         return null;
     }
 

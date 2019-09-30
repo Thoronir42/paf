@@ -9,6 +9,7 @@ services:
 
     - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
+    common.transactionManager: PAF\Common\Model\TransactionManager
     common.userRepository:
         class: PAF\Modules\CommonModule\Repository\UserRepository
         arguments:
