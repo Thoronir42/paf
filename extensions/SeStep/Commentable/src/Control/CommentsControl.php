@@ -87,7 +87,10 @@ class CommentsControl extends Control
 
     public function processFormInput(Form $form, $values)
     {
-        $comment = new Comment($this->thread, $values['text']);
+        $comment = new Comment();
+        $comment->thread = $this->thread;
+        $comment->text = $values['text'];
+
         $this->onCommentAdd($comment, $this->thread);
     }
 

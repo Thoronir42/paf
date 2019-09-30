@@ -37,7 +37,10 @@ services:
     - SeStep\FileAttachable\Service\UserFileRepository
     - SeStep\FileAttachable\Service\UserFileThreadRepository
 
-    - SeStep\Commentable\Control\CommentsControlFactory
+    commentable.commentRepository: SeStep\Commentable\Lean\Repository\CommentRepository
+    commentable.commentThreadRepository: SeStep\Commentable\Lean\Repository\CommentThreadRepository
+    commentable.commentsService: SeStep\Commentable\Service\CommentsService
+    commentable.commentsControlFactory: SeStep\Commentable\Control\CommentsControlFactory
 
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())

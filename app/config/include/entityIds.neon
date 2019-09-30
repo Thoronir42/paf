@@ -7,3 +7,5 @@ entityIds:
     types:
         3: PAF\Modules\CommonModule\Model\User
         17: PAF\Modules\CommonModule\Model\Person
+        53: SeStep\Commentable\Lean\Model\CommentThread
+        57: SeStep\Commentable\Lean\Model\Comment
