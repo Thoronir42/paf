@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use PAF\Common\BasePresenter;
-use PAF\Modules\Admin\Controls\CasesControl\CasesControl;
+use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafEntities;

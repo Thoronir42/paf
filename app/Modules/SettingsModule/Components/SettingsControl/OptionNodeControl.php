@@ -78,7 +78,7 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
 
     public function renderPair(bool $editable = true)
     {
-        echo '<div class="well well-sm well-inline option-inline-pair">';
+        echo '<div class="option-inline-pair">';
         $this->renderLabel();
         $this->renderEditable();
         echo '</div>';

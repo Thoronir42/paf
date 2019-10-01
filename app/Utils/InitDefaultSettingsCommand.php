@@ -22,12 +22,12 @@ class InitDefaultSettingsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->settings->setValue('paf.quotes.enable', true);
-        $this->settings->setValue('paf.quotes.preferedSpecies', [
+        $this->settings->setValue('commission.quotes.enable', true);
+        $this->settings->setValue('commission.quotes.preferedSpecies', [
             'puppy',
             'get & killing',
         ]);
-        $this->settings->setValue('paf.priceList', [
+        $this->settings->setValue('commission.priceList', [
             'basePrice' => 420,
             'extraFeature' => 69
         ]);

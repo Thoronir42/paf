@@ -17,28 +17,17 @@ class PafCaseRepository extends BaseRepository
             $status = [$status];
         }
 
-        $qb = $this->repository->createQueryBuilder('q');
-        $qb->join('q.wrapper', 'pw')->addSelect('pw');
-        $qb->where("q.status IN (:status)");
-
-        /** @var PafCase[] $result */
-        $result = $qb->getQuery()
-            ->execute([
-                'status' => $status,
-            ]);
-
-        $quotes = [];
-
-        foreach ($result as $case) {
-            $quotes[$case->getFeName()] = $case;
-        }
-
-        return $quotes;
+        $query = $this->select('c.*', 'c', [
+            'c.status' => $status
+        ]);
+        $query->orderBy('c.accepted_on');
+        
+        return $this->createEntities($query->fetchAll());
     }
 
     /**
      * @param string $name
-     * @param bool   $deleted
+     * @param bool $deleted
      * @return PafCase?
      */
     public function getByName($name, $deleted = false)
@@ -52,7 +41,7 @@ class PafCaseRepository extends BaseRepository
 
         return $qb->getQuery()
             ->setParameters([
-                'name'    => $name,
+                'name' => $name,
                 'deleted' => $deleted,
             ])
             ->getOneOrNullResult();
