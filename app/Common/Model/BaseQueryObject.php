@@ -33,7 +33,6 @@ abstract class BaseQueryObject
 
     public function fetchAll()
     {
-
         return $this->queryable->makeEntities($this->dataSource->fetchAll());
     }
 }

@@ -34,10 +34,8 @@ final class CasesPresenter extends BasePresenter
     /** @var CommentsControlFactory @inject */
     public $commentsControlFactory;
 
-    /** @var CommentsService */
+    /** @var CommentsService @inject */
     public $commentsService;
-
-    private $case;
 
     public function actionList()
     {
@@ -52,25 +50,21 @@ final class CasesPresenter extends BasePresenter
         $casesComponent->setCases($cases);
     }
 
-    public function actionDetail($name)
+    public function actionDetail($id)
     {
-        $this->template->case = $case = $this->cases->getByName($name);
+        $this->template->case = $case = $this->cases->find($id);
         if (!$case) {
             throw new BadRequestException('case-not-found');
         }
 
 
         $thread = $case->comments;
-        if (!$thread) {
-            $thread = new CommentThread();
-            $case->comments = $thread;
-            $this->cases->persist($thread);
-        }
 
-        $comments = $this->commentsService->findComments()
-            ->byThread($thread)
-            ->orderByDateCreated()
-            ->fetchAll();
+        $comments = [];
+//        $comments = $this->commentsService->findComments()
+//            ->byThread($thread)
+//            ->orderByDateCreated()
+//            ->fetchAll();
 
         /** @var PafCaseForm $form */
         $form = $this['caseForm'];
@@ -149,8 +143,8 @@ final class CasesPresenter extends BasePresenter
     {
         $form = $this->caseFormFactory->create();
         $form->onSave[] = function (PafCase $case) {
-            $this->cases->save($case);
-            $this->flashTranslate('paf.case.updated', ['name' => $case->getFursuit()->getName()]);
+            $this->cases->persist($case);
+            $this->flashTranslate('paf.case.updated', ['name' => $case->specification->characterName]);
             $this->redirect('this');
         };
 

@@ -5,7 +5,7 @@ namespace SeStep\Commentable\Service;
 use SeStep\Commentable\Lean\Model\CommentThread;
 use SeStep\Commentable\Lean\Repository\CommentRepository;
 use SeStep\Commentable\Lean\Repository\CommentThreadRepository;
-use SeStep\Commentable\Query\FindCommentsQuery;
+use SeStep\Commentable\Lean\Query\FindCommentsQuery;
 
 class CommentsService
 {

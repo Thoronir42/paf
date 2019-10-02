@@ -10,6 +10,7 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule;
+use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\PortfolioModule;
 use stdClass;
 
@@ -28,7 +29,18 @@ class PafCaseForm extends FormWrapperControl
     public function setEntity(PafCase $case)
     {
         $this->case = $case;
-        $this->form()->setDefaults($case->getRowData());
+
+        $form = $this->form();
+        $form->setDefaults([
+            'specification' => [
+                'type' => $case->specification->type,
+                'characterName' => $case->specification->characterName,
+                'characterDescription' => $case->specification->characterDescription,
+            ],
+            'contact' => $this->getContactDefaultData($case->customer),
+            'status' => $case->status,
+            'targetDelivery' => $case->targetDelivery,
+        ]);
     }
 
     public function render()
@@ -45,9 +57,9 @@ class PafCaseForm extends FormWrapperControl
         $form = $this->factory->create();
 
         $form->addGroup('fursuit-specification');
-        $fursuit = $form->addContainer('fursuit');
+        $fursuit = $form->addContainer('specification');
 
-        $fursuit->addText('name', 'paf.fursuit.name');
+        $fursuit->addText('characterName', 'paf.fursuit.name');
         $fursuit->addSelect('type', 'paf.fursuit.type', PortfolioModule\Localization::getFursuitTypes());
         $fursuit->addTextarea('characterDescription', 'paf.fursuit.description');
 
@@ -62,7 +74,7 @@ class PafCaseForm extends FormWrapperControl
         $this->setContainerDisabled($contact, true);
 
         $form->addSelect('status', 'paf.case.status', CommissionModule\Localization::getCaseStatuses());
-        $form->addDate('targetDate', 'paf.case.target-date', DateInput::FORMAT_DATETIME)
+        $form->addDate('targetDelivery', 'paf.case.target-date', DateInput::FORMAT_DATETIME)
             ->setPickerPosition(DateInput::POSITION_TOP_RIGHT);
 
         $form->addSubmit('submit', 'generic.update');
@@ -77,21 +89,34 @@ class PafCaseForm extends FormWrapperControl
     {
         $case = $this->case;
 
-        if (count($values->fursuit)) {
+        if (count($values->specification)) {
             $specification = $this->case->specification;
-            $specification->type = $values->fursuit->type;
+            $specification->type = $values->specification->type;
             $specification->characterDescription = $values->fursuit->characterDescription;
         }
 
-        if (count($values->contact)) {
-            $case->contact->telegram = $values->contact->telegram;
-            $case->contact->email = $values->contact->email;
-        }
 
         $case->status = $values->status;
-        $case->targetDate = $values->targetDate;
+        $targetDelivery = $values->targetDelivery;
+        if (!$targetDelivery instanceof \DateTime) {
+            dump($targetDelivery);
+        }
+        $case->targetDelivery = $targetDelivery instanceof \DateTime ? $targetDelivery : null;
 
         $this->onSave($case, $form);
+    }
+
+    private function getContactDefaultData(Person $customer)
+    {
+        $data = [
+            'name' => $customer->displayName,
+        ];
+
+        foreach ($customer->contact as $contact) {
+            $data[$contact->type] = $contact->value;
+        }
+
+        return $data;
     }
 
     private function setContainerDisabled(Container $container, $disabled = false)

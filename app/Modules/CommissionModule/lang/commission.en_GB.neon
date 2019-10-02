@@ -31,3 +31,8 @@ quote-form:
     group-finish: "Finalize quote"
 
 quote.noReferences: There are no references
+
+entity.case: Case
+case.fursuitSpecification: FursuitSpecification
+case.notes: Notes
+case.details: Case details

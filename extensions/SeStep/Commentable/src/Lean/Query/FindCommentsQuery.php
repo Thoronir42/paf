@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Query;
+namespace SeStep\Commentable\Lean\Query;
 
 use Dibi\DataSource;
 use PAF\Common\Model\BaseQueryObject;

@@ -1,12 +1,12 @@
 {block content}
-<h1>{_detailTitle, ['name' => $case->getFursuit()->getName()]}</h1>
+<h1>{_'paf.cases.detailTitle', ['name' => $case->specification->characterName]}</h1>
 <div class="well">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-            <a data-toggle="tab" role="tab" href="#detail">{_detail}</a>
+            <a data-toggle="tab" role="tab" href="#detail">{_'commission.entity.case'}</a>
         </li>
         <li role="presentation">
-            <a data-toggle="tab" role="tab" href="#notes">{_notes} ({$notesCount})</a>
+            <a data-toggle="tab" role="tab" href="#notes">{_'commission.case.notes'} ({$notesCount})</a>
         </li>
     </ul>
     <div class="tab-content">
