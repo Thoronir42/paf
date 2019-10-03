@@ -6,7 +6,7 @@ use DateTime;
 use PAF\Common\Model\BaseEntity;
 
 /**
- * @property int $id
+ * @property string $id
  * @property CommentThread $thread m:hasOne(thread_id)
  * @property DateTime $createdOn
  * @property string $text

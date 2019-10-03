@@ -5,6 +5,8 @@ namespace SeStep\Commentable\Control;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormFactory;
+use PAF\Utils\Moment\HasMomentProvider;
+use PAF\Utils\Moment\MomentProvider;
 use SeStep\Commentable\Lean\Model\Comment;
 use SeStep\Commentable\Lean\Model\CommentThread;
 use UnexpectedValueException;
@@ -13,11 +15,13 @@ use UnexpectedValueException;
  * Class CommentsControl
  * @package SeStep\Commentable\Control
  *
- * @method onCommentAdd(Comment $comment, CommentThread $thread)
- * @method onCommentRemove(Comment $comment, CommentThread $thread)
+ * @method onCommentAdd(Comment $comment)
+ * @method onCommentRemove(Comment $comment)
  */
 class CommentsControl extends Control
 {
+    use HasMomentProvider;
+
     public $onCommentAdd = [];
 
     public $onCommentRemove = [];
@@ -25,14 +29,13 @@ class CommentsControl extends Control
     /** @var FormFactory */
     private $formFactory;
 
-    /** @var CommentThread */
-    private $thread;
     /** @var Comment[] */
     private $comments = [];
 
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactory $formFactory, MomentProvider $momentProvider)
     {
         $this->formFactory = $formFactory;
+        $this->momentProvider = $momentProvider;
     }
 
     public function renderInput($withLabels = true)
@@ -57,18 +60,15 @@ class CommentsControl extends Control
     }
 
     /**
-     * @param CommentThread $thread
-     * @param Comment[]     $comments
+     * @param Comment[] $comments
      */
-    public function setComments(CommentThread $thread, $comments)
+    public function setComments(array $comments)
     {
         foreach ($comments as $comment) {
             if (!($comment instanceof Comment)) {
                 throw new UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
             }
         }
-
-        $this->thread = $thread;
 
         $this->comments = $comments;
     }
@@ -77,7 +77,8 @@ class CommentsControl extends Control
     {
         $form = $this->formFactory->create();
 
-        $form->addTextArea('text', 'comments.comment.text');
+        $form->addTextArea('text', 'comments.comment.text')
+            ->addRule($form::MIN_LENGTH, null, 1);
         $form->addSubmit('submit', 'generic.submit');
 
         $form->onSuccess[] = [$this, 'processFormInput'];
@@ -88,10 +89,10 @@ class CommentsControl extends Control
     public function processFormInput(Form $form, $values)
     {
         $comment = new Comment();
-        $comment->thread = $this->thread;
+        $comment->createdOn = $this->momentProvider->now();
         $comment->text = $values['text'];
 
-        $this->onCommentAdd($comment, $this->thread);
+        $this->onCommentAdd($comment);
     }
 
     public function handleDelete($id)
@@ -104,10 +105,10 @@ class CommentsControl extends Control
             }
         }
         if (!$found) {
-            $this->presenter->flashMessage('comment_not_found', 'warning');
+            $this->flashMessage('comment_not_found', 'warning');
             return;
         }
 
-        $this->onCommentRemove($found, $this->thread);
+        $this->onCommentRemove($found);
     }
 }

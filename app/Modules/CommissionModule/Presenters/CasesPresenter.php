@@ -60,11 +60,11 @@ final class CasesPresenter extends BasePresenter
 
         $thread = $case->comments;
 
-        $comments = [];
-//        $comments = $this->commentsService->findComments()
-//            ->byThread($thread)
-//            ->orderByDateCreated()
-//            ->fetchAll();
+        $comments = $this->commentsService->findComments()
+            ->byThread($thread)
+            ->orderByDateCreated()
+            ->fetchAll();
+
 
         /** @var PafCaseForm $form */
         $form = $this['caseForm'];
@@ -72,7 +72,23 @@ final class CasesPresenter extends BasePresenter
 
         /** @var CommentsControl $commentControl */
         $commentControl = $this['comments'];
-        $commentControl->setComments($thread, $comments);
+        $commentControl->setComments($comments);
+
+        $commentControl->onCommentAdd[] = function (Comment $comment) use ($thread) {
+            $comment->thread = $thread;
+
+            $this->commentsService->save($comment);
+
+            $this->redirect('this');
+        };
+
+        $commentControl->onCommentRemove[] = function (Comment $comment) {
+            $this->commentsService->delete($comment);
+
+            $this->flashTranslate('comments.comment.removed');
+
+            $this->redirect('this');
+        };
 
         $this->template->notesCount = count($comments);
     }
@@ -114,29 +130,7 @@ final class CasesPresenter extends BasePresenter
 
     public function createComponentComments()
     {
-        $comments = $this->commentsControlFactory->create();
-
-        $comments->onCommentAdd[] = function (Comment $comment, CommentThread $thread) {
-            $thread->addComment($comment);
-
-            $this->em->persist($comment);
-            $this->em->persist($thread);
-
-            $this->em->flush();
-
-            $this->redirect('this');
-        };
-
-        $comments->onCommentRemove[] = function (Comment $comment, CommentThread $thread) {
-            $this->em->remove($comment);
-            $this->em->flush();
-
-            $this->flashTranslate('comments.comment.removed');
-
-            $this->redirect('this');
-        };
-
-        return $comments;
+        return $this->commentsControlFactory->create();
     }
 
     public function createComponentCaseForm()

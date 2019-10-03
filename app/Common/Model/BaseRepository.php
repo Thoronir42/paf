@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model;
 
-use Dibi\DataSource;
 use Dibi\Fluent;
 use Dibi\UniqueConstraintViolationException;
 use LeanMapper\Connection;
@@ -158,12 +157,11 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
     }
 
 
-    public function getDataSource(string $alias = null): DataSource
+    public function getDataSource(string $alias = null): Fluent
     {
-        $from = $this->getTable() . ($alias ? " AS $alias" : '');
         $select = $alias ? "$alias.*" : '*';
 
-        return $this->connection->dataSource("SELECT $select FROM $from");
+        return $this->select($select, $alias);
     }
 
     public function makeEntity($row)

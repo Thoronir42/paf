@@ -101,6 +101,7 @@ class PafCaseForm extends FormWrapperControl
         if (!$targetDelivery instanceof \DateTime) {
             dump($targetDelivery);
         }
+
         $case->targetDelivery = $targetDelivery instanceof \DateTime ? $targetDelivery : null;
 
         $this->onSave($case, $form);
