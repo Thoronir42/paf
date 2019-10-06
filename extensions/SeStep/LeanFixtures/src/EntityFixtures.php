@@ -12,14 +12,14 @@ final class EntityFixtures
     /** @var FixtureDao[] */
     private $daoByClass = [];
 
-    public function addFixtureDao(FixtureDao $dao)
-    {
-        $class = $dao->getEntityClass();
-        if (isset($this->daoByClass[$class])) {
-            throw new InvalidStateException("FixtureLoader for class '$class' already registered");
-        }
 
-        $this->daoByClass[$class] = $dao;
+    /**
+     * EntityFixtures constructor.
+     * @param FixtureDao[] $daos
+     */
+    public function __construct(array $daos)
+    {
+        $this->daoByClass = self::initializeDaoStructure($daos);
     }
 
     public function loadData(Loaders\FixtureLoader $loader, OutputInterface $output = null)
@@ -106,5 +106,33 @@ final class EntityFixtures
         }
 
         return $relatedEntity;
+    }
+
+    /**
+     * Validates array items to be FixtureDao instances, puts them into map
+     * by key which equals to their corresponding entity.
+     *
+     * @param FixtureDao[] $daos
+     *
+     * @return FixtureDao[] resulting map
+     */
+    private static function initializeDaoStructure(array $daos)
+    {
+        $daoByEntityClass = [];
+        foreach ($daos as $key => $dao) {
+            if (!$dao instanceof FixtureDao) {
+                throw new \UnexpectedValueException("Item $key expected to be instance of "
+                    . FixtureDao::class . ', got ' . get_class($dao));
+            }
+
+            $class = $dao->getEntityClass();
+            if (isset($daoByEntityClass[$class])) {
+                throw new InvalidStateException("FixtureLoader for class '$class' already registered");
+            }
+
+            $daoByEntityClass[$class] = $dao;
+        }
+
+        return $daoByEntityClass;
     }
 }

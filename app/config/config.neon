@@ -30,7 +30,7 @@ session:
 extensions:
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
-    leanMapper: PAF\Utils\LeanMapperExtension
+    leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
@@ -39,13 +39,6 @@ extensions:
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
     entityIds: SeStep\EntityIds\DI\EntityIdsExtension
-
-leanMapper:
-    db: %database%
-
-leanFixtures:
-    initFiles:
-        - %rootDir%/data/testing/commonModuleFixtures.neon
 
 navigationMenu:
     brandTitle: %appName%
@@ -70,18 +63,6 @@ monolog:
                     setup:
                         - setFilenameFormat('{filename}-{date}', 'Y-m')
 
-services:
-    leanMapper.mapper:
-        class: SeStep\ModularLeanMapper\ModularMapper
-        arguments:
-            mapper: PAF\Common\Model\UnderscoreMapper()
-            modules:
-                ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
-                ss_files__: SeStep\FileAttachable\FilesMapperModule()
-                ss_comments__: SeStep\Commentable\Lean\CommentsMapperModule()
-                common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
-                commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
-
 translation:
     locales:
         default: 'en'
@@ -103,3 +84,4 @@ includes:
     - include/console.neon
     - include/formsMessages.neon
     - include/entityIds.neon
+    - include/lean.neon

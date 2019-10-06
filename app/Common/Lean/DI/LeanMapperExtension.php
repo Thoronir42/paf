@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
-namespace PAF\Utils;
+
+namespace PAF\Common\Lean\DI;
 
 use Nette;
 use Nette\DI\CompilerExtension;
