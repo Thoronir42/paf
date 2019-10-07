@@ -28,6 +28,8 @@ session:
 
 
 extensions:
+    entityIds: SeStep\EntityIds\DI\EntityIdsExtension
+    applicationLog: PAF\Modules\ApplicationLogModule\DI\ApplicationLogExtension
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
     repository: PAF\Common\Lean\DI\RepositoryExtension
@@ -39,7 +41,6 @@ extensions:
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
-    entityIds: SeStep\EntityIds\DI\EntityIdsExtension
 
 navigationMenu:
     brandTitle: %appName%

@@ -54,7 +54,6 @@ class EntityIdsExtension extends CompilerExtension
                 $config->distinctPositions ?? [],
             ]);
 
-
         $builder->addDefinition($this->prefix('idGenerator'))
             ->setType(EncodedTypeIdGenerator::class)
             ->setArguments([
