@@ -30,6 +30,7 @@ session:
 extensions:
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
+    repository: PAF\Common\Lean\DI\RepositoryExtension
     leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension

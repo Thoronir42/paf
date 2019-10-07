@@ -4,15 +4,12 @@ namespace SeStep\EntityIds\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\ContainerBuilder;
-use Nette\DI\Definitions\ServiceDefinition;
-use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use SeStep\EntityIds\CharSet;
 use SeStep\EntityIds\Console\GenerateTypeIdCommand;
 use SeStep\EntityIds\Console\ListIdTypesCommand;
 use SeStep\EntityIds\EncodedTypeIdGenerator;
-use SeStep\EntityIds\HasIdGenerator;
 use SeStep\EntityIds\Type\CheckSum;
 
 class EntityIdsExtension extends CompilerExtension
@@ -22,7 +19,6 @@ class EntityIdsExtension extends CompilerExtension
     {
         return Expect::structure([
             'charList' => Expect::string(),
-            'autoWireGeneratorToTrait' => Expect::bool(false),
             'types' => Expect::array(),
             'idLength' => Expect::int(12),
             'distinctPositions' => Expect::arrayOf(Expect::int()),
@@ -86,25 +82,6 @@ class EntityIdsExtension extends CompilerExtension
                 'types' => $config->types,
             ])
             ->addTag('console.command', ['name' => 'id:type:generate']);
-    }
-
-    public function beforeCompile()
-    {
-        $config = $this->getConfig();
-        if ($config->autoWireGeneratorToTrait) {
-            $builder = $this->getContainerBuilder();
-            $idGenerator = $builder->getDefinition($this->prefix('idGenerator'));
-
-            foreach ($builder->getDefinitions() as $definition) {
-                if (!$definition instanceof ServiceDefinition) {
-                    continue;
-                }
-                $type = $definition->getType();
-                if (class_exists($type) && is_a($type, HasIdGenerator::class, true)) {
-                    $definition->addSetup(new Statement('injectEntityIdGenerator', [$idGenerator]));
-                }
-            }
-        }
     }
 
     private function uniqueCharList(string $charList): string
