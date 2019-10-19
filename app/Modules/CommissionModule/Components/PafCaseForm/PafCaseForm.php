@@ -98,11 +98,11 @@ class PafCaseForm extends FormWrapperControl
 
         $case->status = $values->status;
         $targetDelivery = $values->targetDelivery;
-        if (!$targetDelivery instanceof \DateTime) {
-            dump($targetDelivery);
+
+        if ($targetDelivery != $this->case->targetDelivery) {
+            $case->targetDelivery = $targetDelivery instanceof \DateTime ? $targetDelivery : null;
         }
 
-        $case->targetDelivery = $targetDelivery instanceof \DateTime ? $targetDelivery : null;
 
         $this->onSave($case, $form);
     }

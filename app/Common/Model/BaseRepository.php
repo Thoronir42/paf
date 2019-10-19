@@ -9,6 +9,7 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
+use PAF\Modules\ApplicationLogModule\Facade\RepositoryAppLogAdapter;
 use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable
@@ -246,6 +247,13 @@ abstract class BaseRepository extends Repository implements IQueryable
     {
         if (!$this->isUnique($entity)) {
             throw new UniqueConstraintViolationException("Entity fails unique check");
+        }
+    }
+
+    final public function registerEvents(RepositoryAppLogAdapter $adapter)
+    {
+        foreach ($adapter->getEvents() as $type => $callback) {
+            $this->events->registerCallback($type, $callback);
         }
     }
 
