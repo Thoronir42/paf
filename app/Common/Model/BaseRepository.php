@@ -107,9 +107,13 @@ abstract class BaseRepository extends Repository implements IQueryable
     public function find($primaryKeyValue)
     {
         $index = $this->index ?: $this->getPrimaryKey();
-        return $this->findOneBy([
-            $index => $primaryKeyValue
-        ]);
+        $criteria = [$index => $primaryKeyValue];
+
+        if (is_array($primaryKeyValue)) {
+            return $this->findBy($criteria);
+        } else {
+            return $this->findOneBy($criteria);
+        }
     }
 
     public function findOneBy(array $criteria)

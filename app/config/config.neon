@@ -42,6 +42,8 @@ extensions:
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
 
+    pafFeed: PAF\Modules\FeedModule\FeedModuleExtension
+
 navigationMenu:
     brandTitle: %appName%
     brandTarget: :Common:Homepage:default
