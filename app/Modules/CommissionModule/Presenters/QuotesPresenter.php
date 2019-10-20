@@ -2,8 +2,10 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
+use Dibi\UniqueConstraintViolationException;
 use Nette\Application\UI\Multiplier;
 use PAF\Common\BasePresenter;
+use PAF\Common\Model\BaseEntity;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\Commissions;
@@ -49,7 +51,7 @@ final class QuotesPresenter extends BasePresenter
 
     public function actionDefault()
     {
-        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable');
+        $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
     }
 
     public function actionList()

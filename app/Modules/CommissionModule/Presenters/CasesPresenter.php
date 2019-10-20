@@ -6,24 +6,25 @@ use PAF\Common\BasePresenter;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
+use PAF\Modules\CommissionModule\Facade\PafCases;
 use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Modules\CommissionModule\Components\QuotesControl\QuotesControl;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use Nette\Application\BadRequestException;
+use PAF\Modules\FeedModule\Components\Comment\CommentFeedControl;
+use PAF\Modules\FeedModule\Components\FeedControl\FeedControlFactory;
 use SeStep\Commentable\Control\CommentsControl;
 use SeStep\Commentable\Control\CommentsControlFactory;
 use SeStep\Commentable\Lean\Model\Comment;
-use SeStep\Commentable\Lean\Model\CommentThread;
 use SeStep\Commentable\Service\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {
     /** @var QuoteRepository @inject */
     public $quotes;
-    /** @var PafCaseRepository @inject */
+    /** @var PafCases @inject */
     public $cases;
     /** @var PafEntities @inject */
     public $pafEntities;
@@ -33,6 +34,8 @@ final class CasesPresenter extends BasePresenter
 
     /** @var CommentsControlFactory @inject */
     public $commentsControlFactory;
+    /** @var FeedControlFactory @inject */
+    public $feedControlFactory;
 
     /** @var CommentsService @inject */
     public $commentsService;
@@ -57,13 +60,9 @@ final class CasesPresenter extends BasePresenter
             throw new BadRequestException('case-not-found');
         }
 
+        $feedControl = $this->feedControlFactory->create($this->cases->getCaseFeed($case));
 
-        $thread = $case->comments;
-
-        $comments = $this->commentsService->findComments()
-            ->byThread($thread)
-            ->orderByDateCreated()
-            ->fetchAll();
+        $this['feed'] = $feedControl;
 
 
         /** @var PafCaseForm $form */
@@ -72,25 +71,27 @@ final class CasesPresenter extends BasePresenter
 
         /** @var CommentsControl $commentControl */
         $commentControl = $this['comments'];
-        $commentControl->setComments($comments);
 
-        $commentControl->onCommentAdd[] = function (Comment $comment) use ($thread) {
-            $comment->thread = $thread;
+        $commentControl->onCommentAdd[] = function (Comment $comment) use ($case) {
+            $comment->thread = $case->comments;
+            $comment->user = $this->user->identity->getEntity();
 
             $this->commentsService->save($comment);
 
             $this->redirect('this');
         };
 
-        $commentControl->onCommentRemove[] = function (Comment $comment) {
-            $this->commentsService->delete($comment);
+        $feedControl->addEvent(
+            CommentFeedControl::class,
+            CommentFeedControl::EVENT_DELETE,
+            function (Comment $comment) {
+                $this->commentsService->delete($comment);
 
-            $this->flashTranslate('comments.comment.removed');
+                $this->flashTranslate('comments.comment.removed');
 
-            $this->redirect('this');
-        };
-
-        $this->template->notesCount = count($comments);
+                $this->redirect('this');
+            }
+        );
     }
 
     public function createComponentCases()
@@ -137,7 +138,7 @@ final class CasesPresenter extends BasePresenter
     {
         $form = $this->caseFormFactory->create();
         $form->onSave[] = function (PafCase $case) {
-            $this->cases->persist($case);
+            $this->cases->save($case);
             $this->flashTranslate('paf.case.updated', ['name' => $case->specification->characterName]);
             $this->redirect('this');
         };

@@ -32,6 +32,21 @@ class PafCases
         $this->feedService = $feedService;
     }
 
+    public function save(PafCase $case)
+    {
+        $this->caseRepository->persist($case);
+    }
+
+    /**
+     * @param string[] $status
+     *
+     * @return PafCase[]
+     */
+    public function getCasesByStatus(array $status)
+    {
+        return $this->caseRepository->getCasesByStatus($status);
+    }
+
     public function getCaseFeed(PafCase $case, Paginator $paginator = null)
     {
         $entries = $this->feedService->fetchEntries([
@@ -43,5 +58,10 @@ class PafCases
             'comment' => [$this->commentRepository, 'find'],
             'logEvent' => [$this->eventRepository, 'find'],
         ]);
+    }
+
+    public function find($id): ?PafCase
+    {
+        return $this->caseRepository->find($id);
     }
 }

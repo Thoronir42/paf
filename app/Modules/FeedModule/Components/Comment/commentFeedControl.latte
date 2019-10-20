@@ -1,0 +1,9 @@
+<div class="well well-sm">
+    <span class="pull-right">
+        <a n:href="delete!" class="btn btn-xs btn-danger">
+            <i class="fa fa-trash"></i>
+        </a>
+    </span>
+    <small>{$comment->getCreatedOn()->format('Y.m.d H:i')}</small>
+    <p class="content">{$comment->getText()}</p>
+</div>
