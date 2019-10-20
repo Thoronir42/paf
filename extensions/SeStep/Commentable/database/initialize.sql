@@ -8,6 +8,7 @@ CREATE TABLE ss_comments__comment_thread
 CREATE TABLE ss_comments__comment
 (
     id         VARCHAR(10) NOT NULL,
+    user_id    VARCHAR(10) NOT NULL,
     thread_id  VARCHAR(10) NOT NULL,
     created_on DATETIME    NOT NULL,
     text       TEXT        NOT NULL,
@@ -15,5 +16,7 @@ CREATE TABLE ss_comments__comment
     CONSTRAINT `ss_c_comment_pk` PRIMARY KEY (id),
 
     CONSTRAINT `ss_c_thread_fk` FOREIGN KEY
-        (thread_id) REFERENCES ss_comments__comment_thread (id)
+        (thread_id) REFERENCES ss_comments__comment_thread (id),
+    CONSTRAINT `ss_c_user_fk` FOREIGN KEY
+        (user_id) REFERENCES common__user (id)
 );
