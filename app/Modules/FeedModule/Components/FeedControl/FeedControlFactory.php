@@ -4,10 +4,10 @@ namespace PAF\Modules\FeedModule\Components\FeedControl;
 
 class FeedControlFactory
 {
-    /** @var FeedEntryControlFactory */
+    /** @var EntryControlFactory */
     private $entryControlFactory;
 
-    public function __construct(FeedEntryControlFactory $entryControlFactory)
+    public function __construct(EntryControlFactory $entryControlFactory)
     {
         $this->entryControlFactory = $entryControlFactory;
     }

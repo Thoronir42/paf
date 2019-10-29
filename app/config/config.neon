@@ -49,10 +49,6 @@ navigationMenu:
     brandTarget: :Common:Homepage:default
     itemsFile: %appDir%/config/include/navigation.neon
 
-pafFeed:
-    entryControlClasses:
-        comment: PAF\Modules\FeedModule\Components\Comment\CommentFeedControl
-        logEvent: PAF\Modules\FeedModule\Components\Log\LogFeedControl
 
 appRouting:
     modules:
@@ -94,3 +90,4 @@ includes:
     - include/formsMessages.neon
     - include/entityIds.neon
     - include/lean.neon
+    - include/appLog.neon

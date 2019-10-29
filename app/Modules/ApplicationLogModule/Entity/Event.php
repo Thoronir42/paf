@@ -13,9 +13,20 @@ use PAF\Common\Model\BaseEntity;
  * @property DateTime $instant
  * @property string|null $actor
  * @property string $type
- * @property string $parameters
+ * @property array $parameters
  */
 class Event extends BaseEntity
 {
+    private $paramsCache;
 
+    public function getParameters(): array
+    {
+        return $this->paramsCache ?: $this->paramsCache = json_decode($this->row->parameters, true);
+    }
+
+    public function setParameters(array $parameters)
+    {
+        $this->row->parameters = json_encode($parameters);
+        $this->paramsCache = null;
+    }
 }

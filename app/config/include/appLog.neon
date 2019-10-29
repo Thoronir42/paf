@@ -1,0 +1,11 @@
+services:
+    logFeed:
+        class: PAF\Modules\FeedModule\Components\Log\LogFeedControlFactory
+        arguments:
+            templateByType:
+                commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AppLOg/caseUpdated-log.latte
+
+pafFeed:
+    entryControlClasses:
+        comment: PAF\Modules\FeedModule\Components\Comment\CommentFeedControl
+        logEvent: @logFeed

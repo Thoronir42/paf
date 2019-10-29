@@ -12,7 +12,7 @@ class FeedControl extends Control
     /** @var FeedEvents */
     private $events;
 
-    /** @var FeedEntryControlFactory */
+    /** @var EntryControlFactory */
     private $entryControlFactory;
     /** @var array */
     private $feedEntries;
@@ -23,7 +23,7 @@ class FeedControl extends Control
     /** @var Html */
     private $controlPrototype;
 
-    public function __construct(FeedEntryControlFactory $entryControlFactory, array $feedEntries)
+    public function __construct(EntryControlFactory $entryControlFactory, array $feedEntries)
     {
         $this->events = new FeedEvents();
         $this->entryControlFactory = $entryControlFactory;
