@@ -39,13 +39,14 @@ class LogFeedControl extends FeedEntryControl
     {
         $prefix = $arguments['prefix'] ?? '';
 
-        $changes = [];
-        foreach ($this->logEvent->parameters['properties'] as $property) {
-            $changes[] = [
-                'name' => $prefix ? $prefix . '.' . $property : $property,
-                'newValue' => null,
-                'oldValue' => null,
-            ];
+        $changes = $this->logEvent->parameters['changes'] ?? [];
+
+        foreach ($changes as $property => &$change) {
+            $change['prop'] = ($prefix ? $prefix . '.' : '') . $change['prop'];
+            $change['newValue'] = $this->presentValue($change['newValue']);
+            if (isset($change['oldValue'])) {
+                $change['oldValue'] = $this->presentValue($change['oldValue']);
+            }
         }
 
         $template = $this->createTemplate();
@@ -61,5 +62,14 @@ class LogFeedControl extends FeedEntryControl
     public function setTemplateFile(string $templateFile): void
     {
         $this->templateFile = $templateFile;
+    }
+
+    private function presentValue($value)
+    {
+        if (is_scalar($value)) {
+            return $value;
+        }
+
+        return json_encode($value);
     }
 }

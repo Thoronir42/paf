@@ -23,6 +23,7 @@ services:
         arguments:
             powerUsers: %powerUsers%
 
+
     - PAF\Modules\CommissionModule\Facade\PafEntities
     - PAF\Modules\CommissionModule\Facade\Commissions
 

@@ -3,6 +3,7 @@
 namespace PAF\Modules\CommissionModule\AppLog;
 
 use LeanMapper\Events;
+use Nette\Utils\Json;
 use PAF\Modules\ApplicationLogModule\Facade\RepositoryAppLogAdapter;
 use PAF\Modules\CommissionModule\Model\PafCase;
 
@@ -27,8 +28,8 @@ class CaseAppLogAdapter extends RepositoryAppLogAdapter
 
     public function afterUpdate(PafCase $case)
     {
-        $this->appLog->addEvent($case->id, 'commission.log.caseUpdated', [
-            'properties' => array_keys($case->getModifiedRowData()),
-        ]);
+        $parameters['changes'] = $this->compare($case);
+
+        $this->appLog->addEvent($case->id, 'commission.log.caseUpdated', $parameters);
     }
 }

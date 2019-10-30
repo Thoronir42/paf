@@ -3,6 +3,7 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use PAF\Common\BasePresenter;
+use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
@@ -40,6 +41,9 @@ final class CasesPresenter extends BasePresenter
     /** @var CommentsService @inject */
     public $commentsService;
 
+    /** @var LeanSnapshots @inject */
+    public $snapshots;
+
     public function actionList()
     {
         $quotes = $this->quotes->findForOverview();
@@ -59,6 +63,8 @@ final class CasesPresenter extends BasePresenter
         if (!$case) {
             throw new BadRequestException('case-not-found');
         }
+
+        $this->snapshots->store($case);
 
         $feedControl = $this->feedControlFactory->create($this->cases->getCaseFeed($case));
 

@@ -27,6 +27,6 @@ class Event extends BaseEntity
     public function setParameters(array $parameters)
     {
         $this->row->parameters = json_encode($parameters);
-        $this->paramsCache = null;
+        $this->paramsCache = $parameters;
     }
 }

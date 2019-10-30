@@ -10,6 +10,7 @@ leanFixtures:
         - PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository)
 
 services:
+    lean.snapshots: PAF\Common\Model\LeanSnapshots
     leanMapper.mapper:
         class: SeStep\ModularLeanMapper\ModularMapper
         arguments:

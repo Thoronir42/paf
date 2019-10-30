@@ -1,7 +1,7 @@
 <div class="prop-changes">
 <div n:foreach="$changes as $change">
-        <b>{$change['name']}</b>
+        <b>{$change['prop']}</b>
         <br/>
-        <b>{$change['oldValue']}</b> => <b>{$change['newValue']}</b>
+        {ifset $change['oldValue']}<b>{$change['oldValue']}</b> => {/ifset}<b>{$change['newValue']}</b>
     </div>
 </div>
