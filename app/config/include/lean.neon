@@ -19,6 +19,6 @@ services:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
                 ss_files__: SeStep\FileAttachable\FilesMapperModule()
                 ss_comments__: SeStep\Commentable\Lean\CommentsMapperModule()
-                app_log__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\ApplicationLogModule')
+                audit__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\AuditTrailModule')
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
                 commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')

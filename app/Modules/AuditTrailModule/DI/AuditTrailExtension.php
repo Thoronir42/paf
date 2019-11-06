@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\ApplicationLogModule\DI;
+namespace PAF\Modules\AuditTrailModule\DI;
 
 use Nette\DI\CompilerExtension;
-use PAF\Modules\ApplicationLogModule\Facade\AppLog;
-use PAF\Modules\ApplicationLogModule\Repository\EventRepository;
+use PAF\Modules\AuditTrailModule\Facade\AuditTrailService;
+use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
 use SeStep\EntityIds\TextIdGenerator;
 
-class ApplicationLogExtension extends CompilerExtension
+class AuditTrailExtension extends CompilerExtension
 {
     public function loadConfiguration()
     {
@@ -19,10 +19,10 @@ class ApplicationLogExtension extends CompilerExtension
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('eventRepository'))
-            ->setType(EventRepository::class)
+            ->setType(EntryRepository::class)
             ->addSetup('setIdGenerator', [$idGenerator]);
 
-        $builder->addDefinition($this->prefix('log'))
-            ->setType(AppLog::class);
+        $builder->addDefinition($this->prefix('service'))
+            ->setType(AuditTrailService::class);
     }
 }

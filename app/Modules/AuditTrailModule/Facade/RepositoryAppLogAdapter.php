@@ -1,32 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\ApplicationLogModule\Facade;
+namespace PAF\Modules\AuditTrailModule\Facade;
 
 use LeanMapper\Entity;
 use LeanMapper\IMapper;
 use PAF\Common\Model\LeanSnapshots;
-use PAF\Modules\CommissionModule\Model\PafCase;
+use PAF\Common\Model\RepositoryEventsProvider;
 
-abstract class RepositoryAppLogAdapter
+abstract class RepositoryAppLogAdapter implements RepositoryEventsProvider
 {
-    /** @var AppLog */
-    protected $appLog;
+    /** @var AuditTrailService */
+    protected $auditTrailService;
     /** @var LeanSnapshots */
     protected $snapshots;
     /** @var IMapper */
     protected $mapper;
 
-    public function __construct(AppLog $appLog, LeanSnapshots $snapshots, IMapper $mapper)
+    public function __construct(AuditTrailService $auditTrailService, LeanSnapshots $snapshots, IMapper $mapper)
     {
-        $this->appLog = $appLog;
+        $this->auditTrailService = $auditTrailService;
         $this->snapshots = $snapshots;
         $this->mapper = $mapper;
     }
-
-    /**
-     * @return callable[] Array of callbacks with keys being event types of {@link \LeanMapper\Events}
-     */
-    abstract public function getEvents(): array;
 
     protected function compare(Entity $entity)
     {
@@ -54,6 +49,6 @@ abstract class RepositoryAppLogAdapter
             }
         }
 
-        return $this->appLog->normalizeValues($changed);
+        return $this->auditTrailService->normalizeValues($changed);
     }
 }

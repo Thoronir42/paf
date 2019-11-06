@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Utils\Paginator;
-use PAF\Modules\ApplicationLogModule\Repository\EventRepository;
+use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Modules\FeedModule\Service\FeedService;
@@ -15,20 +15,20 @@ class PafCases
     private $caseRepository;
     /** @var CommentRepository */
     private $commentRepository;
-    /** @var EventRepository */
-    private $eventRepository;
+    /** @var EntryRepository */
+    private $entryRepository;
     /** @var FeedService */
     private $feedService;
 
     public function __construct(
         PafCaseRepository $caseRepository,
         CommentRepository $commentRepository,
-        EventRepository $eventRepository,
+        EntryRepository $entryRepository,
         FeedService $feedService
     ) {
         $this->caseRepository = $caseRepository;
         $this->commentRepository = $commentRepository;
-        $this->eventRepository = $eventRepository;
+        $this->entryRepository = $entryRepository;
         $this->feedService = $feedService;
     }
 
@@ -51,12 +51,12 @@ class PafCases
     {
         $entries = $this->feedService->fetchEntries([
             'comment' => $this->commentRepository->getCommentFeedQuery($case->comments),
-            'logEvent' => $this->eventRepository->getEventFeedQuery($case->id),
+            'logEvent' => $this->entryRepository->getEventFeedQuery($case->id),
         ], $paginator);
 
         return $this->feedService->hydrateFeed($entries, [
             'comment' => [$this->commentRepository, 'find'],
-            'logEvent' => [$this->eventRepository, 'find'],
+            'logEvent' => [$this->entryRepository, 'find'],
         ]);
     }
 

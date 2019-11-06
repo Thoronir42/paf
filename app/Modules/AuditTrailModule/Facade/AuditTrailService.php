@@ -1,32 +1,31 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\ApplicationLogModule\Facade;
+namespace PAF\Modules\AuditTrailModule\Facade;
 
 use Nette\Security\User;
-use Nette\Utils\Json;
-use PAF\Modules\ApplicationLogModule\Entity\Event;
-use PAF\Modules\ApplicationLogModule\Repository\EventRepository;
+use PAF\Modules\AuditTrailModule\Entity\Entry;
+use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
 use PAF\Utils\Moment\MomentProvider;
 
-class AppLog
+class AuditTrailService
 {
     /** @var User */
     private $user;
     /** @var MomentProvider */
     private $momentProvider;
-    /** @var EventRepository */
-    private $eventRepository;
+    /** @var EntryRepository */
+    private $entryRepository;
 
-    public function __construct(User $user, MomentProvider $momentProvider, EventRepository $eventRepository)
+    public function __construct(User $user, MomentProvider $momentProvider, EntryRepository $entryRepository)
     {
         $this->user = $user;
         $this->momentProvider = $momentProvider;
-        $this->eventRepository = $eventRepository;
+        $this->entryRepository = $entryRepository;
     }
 
     public function addEvent(string $subject, string $type, array $parameters = [])
     {
-        $event = new Event();
+        $event = new Entry();
         $event->instant = $this->momentProvider->now();
         $event->actor = $this->user->id;
 
@@ -34,7 +33,7 @@ class AppLog
         $event->type = $type;
         $event->parameters = $parameters;
 
-        $this->eventRepository->persist($event);
+        $this->entryRepository->persist($event);
     }
 
     public function normalizeValues($parameters)

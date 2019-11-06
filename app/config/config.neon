@@ -29,7 +29,7 @@ session:
 
 extensions:
     entityIds: SeStep\EntityIds\DI\EntityIdsExtension
-    applicationLog: PAF\Modules\ApplicationLogModule\DI\ApplicationLogExtension
+    auditTrail: PAF\Modules\AuditTrailModule\DI\AuditTrailExtension
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
     repository: PAF\Common\Lean\DI\RepositoryExtension
@@ -90,4 +90,4 @@ includes:
     - include/formsMessages.neon
     - include/entityIds.neon
     - include/lean.neon
-    - include/appLog.neon
+    - include/auditTrail.neon

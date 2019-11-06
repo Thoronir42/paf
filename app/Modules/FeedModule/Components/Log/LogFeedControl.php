@@ -2,23 +2,23 @@
 
 namespace PAF\Modules\FeedModule\Components\Log;
 
-use PAF\Modules\ApplicationLogModule\Entity\Event;
+use PAF\Modules\AuditTrailModule\Entity\Entry;
 use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
 use PAF\Modules\FeedModule\FeedEvents;
 
 class LogFeedControl extends FeedEntryControl
 {
 
-    /** @var Event */
-    private $logEvent;
+    /** @var Entry */
+    private $entry;
 
     /** @var string */
     private $templateFile = __DIR__ . '/logFeedControl.latte';
 
-    public function __construct(FeedEvents $events, Event $logEvent)
+    public function __construct(FeedEvents $events, Entry $entry)
     {
         parent::__construct($events);
-        $this->logEvent = $logEvent;
+        $this->entry = $entry;
     }
 
     /**
@@ -29,7 +29,7 @@ class LogFeedControl extends FeedEntryControl
     public function renderFeed(): void
     {
         $template = $this->createTemplate();
-        $template->logEvent = $this->logEvent;
+        $template->logEvent = $this->entry;
         $template->setFile($this->templateFile);
 
         $template->render();
@@ -39,7 +39,7 @@ class LogFeedControl extends FeedEntryControl
     {
         $prefix = $arguments['prefix'] ?? '';
 
-        $changes = $this->logEvent->parameters['changes'] ?? [];
+        $changes = $this->entry->parameters['changes'] ?? [];
 
         foreach ($changes as $property => &$change) {
             $change['prop'] = ($prefix ? $prefix . '.' : '') . $change['prop'];

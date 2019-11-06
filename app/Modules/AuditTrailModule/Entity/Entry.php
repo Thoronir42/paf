@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\ApplicationLogModule\Entity;
+namespace PAF\Modules\AuditTrailModule\Entity;
 
 use DateTime;
 use PAF\Common\Model\BaseEntity;
@@ -15,7 +15,7 @@ use PAF\Common\Model\BaseEntity;
  * @property string $type
  * @property array $parameters
  */
-class Event extends BaseEntity
+class Entry extends BaseEntity
 {
     private $paramsCache;
 

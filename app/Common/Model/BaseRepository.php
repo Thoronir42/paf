@@ -9,7 +9,6 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
-use PAF\Modules\ApplicationLogModule\Facade\RepositoryAppLogAdapter;
 use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable
@@ -254,7 +253,7 @@ abstract class BaseRepository extends Repository implements IQueryable
         }
     }
 
-    final public function registerEvents(RepositoryAppLogAdapter $adapter)
+    final public function registerEvents(RepositoryEventsProvider $adapter)
     {
         foreach ($adapter->getEvents() as $type => $callback) {
             $this->events->registerCallback($type, $callback);

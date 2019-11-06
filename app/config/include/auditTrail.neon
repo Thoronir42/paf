@@ -3,7 +3,7 @@ services:
         class: PAF\Modules\FeedModule\Components\Log\LogFeedControlFactory
         arguments:
             templateByType:
-                commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AppLOg/caseUpdated-log.latte
+                commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
 
 pafFeed:
     entryControlClasses:

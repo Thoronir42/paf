@@ -1,4 +1,4 @@
-CREATE TABLE app_log__event
+CREATE TABLE audit__entry
 (
     id         VARCHAR(10) NOT NULL,
     subject    VARCHAR(10) NOT NULL,

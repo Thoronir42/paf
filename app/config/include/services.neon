@@ -31,7 +31,7 @@ services:
     -
         class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
         setup:
-            - registerEvents(PAF\Modules\CommissionModule\AppLog\CaseAppLogAdapter())
+            - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAppLogAdapter())
     commission.pafCases:
         class: PAF\Modules\CommissionModule\Facade\PafCases
     - PAF\Modules\CommissionModule\Repository\SpecificationRepository
