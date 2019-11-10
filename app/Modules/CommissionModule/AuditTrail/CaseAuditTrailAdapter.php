@@ -3,10 +3,10 @@
 namespace PAF\Modules\CommissionModule\AuditTrail;
 
 use LeanMapper\Events;
-use PAF\Modules\AuditTrailModule\Facade\RepositoryAppLogAdapter;
+use PAF\Modules\AuditTrailModule\Facade\AuditTrailRepositoryAdapter;
 use PAF\Modules\CommissionModule\Model\PafCase;
 
-class CaseAppLogAdapter extends RepositoryAppLogAdapter
+class CaseAuditTrailAdapter extends AuditTrailRepositoryAdapter
 {
 
     /**

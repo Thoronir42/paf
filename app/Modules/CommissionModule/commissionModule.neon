@@ -2,7 +2,7 @@ specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRe
 pafCaseRepository:
         class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
         setup:
-            - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAppLogAdapter())
+            - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAuditTrailAdapter())
 
 pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
 

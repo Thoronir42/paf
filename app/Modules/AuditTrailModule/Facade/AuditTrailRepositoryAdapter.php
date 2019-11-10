@@ -7,7 +7,7 @@ use LeanMapper\IMapper;
 use PAF\Common\Model\LeanSnapshots;
 use PAF\Common\Model\RepositoryEventsProvider;
 
-abstract class RepositoryAppLogAdapter implements RepositoryEventsProvider
+abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
 {
     /** @var AuditTrailService */
     protected $auditTrailService;

@@ -56,7 +56,12 @@ abstract class BaseRepository extends Repository implements IQueryable
         $this->events->registerCallback($this->events::EVENT_BEFORE_CREATE, [$this, 'validateUnique']);
     }
 
-    public function setIdGenerator(IdGenerator $generator)
+    /**
+     * Sets given idGenerator and initializes events
+     *
+     * @param IdGenerator $generator
+     */
+    public function bindIdGenerator(IdGenerator $generator)
     {
         if ($this->idGenerator) {
             throw new \RuntimeException("Id generator already set");

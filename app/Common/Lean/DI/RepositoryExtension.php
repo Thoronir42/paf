@@ -25,7 +25,7 @@ class RepositoryExtension extends CompilerExtension
             $definition->addSetup(<<<PHP
 \$idGenerator = ?;
 if(\$idGenerator->hasType(\$entityClass)) {
-    \$service->setIdGenerator(\$idGenerator);
+    \$service->bindIdGenerator(\$idGenerator);
 }
 PHP, [$builder->getDefinition('entityIds.idGenerator')]);
         }

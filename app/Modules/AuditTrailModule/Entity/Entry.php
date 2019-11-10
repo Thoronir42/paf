@@ -6,7 +6,7 @@ use DateTime;
 use PAF\Common\Model\BaseEntity;
 
 /**
- * Application event entity
+ * AuditTrail entity
  *
  * @property string $id
  * @property string $subject id of subject where the event happened

@@ -20,7 +20,7 @@ class AuditTrailExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('eventRepository'))
             ->setType(EntryRepository::class)
-            ->addSetup('setIdGenerator', [$idGenerator]);
+            ->addSetup('bindIdGenerator', [$idGenerator]);
 
         $builder->addDefinition($this->prefix('service'))
             ->setType(AuditTrailService::class);
