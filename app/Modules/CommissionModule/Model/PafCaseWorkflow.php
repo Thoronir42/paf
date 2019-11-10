@@ -67,4 +67,31 @@ class PafCaseWorkflow extends Workflow
     {
         return new Definition(self::getStates(), self::getTransitions(), [self::STATUS_ACCEPTED]);
     }
+
+    /**
+     * @return string[]
+     */
+    public static function getCaseStatesLocalized()
+    {
+        $states = [];
+        foreach (PafCaseWorkflow::getStates() as $status) {
+            $states[$status] = "commission.case.status.$status";
+        }
+
+        return $states;
+    }
+
+    /**
+     * @param PafCase $subject
+     * @return string[]
+     */
+    public function getActionsLocalized(PafCase $subject): array
+    {
+        $actions = [];
+        foreach ($this->getEnabledTransitions($subject) as $transition) {
+            $actions[$transition->getName()] = 'commission.case.action.' . $transition->getName();
+        }
+
+        return $actions;
+    }
 }

@@ -45,15 +45,10 @@ class CaseStateControl extends Control
 
     public function createComponentActionForm()
     {
-        $actions = [];
-        foreach ($this->caseWorkflow->getEnabledTransitions($this->case) as $transition) {
-            $actions[$transition->getName()] = $transition->getName();
-        }
-
         $form = $this->formFactory->create();
         $form->addSelect('action')
             ->setPrompt('Do...')
-            ->setItems($actions);
+            ->setItems($this->caseWorkflow->getActionsLocalized($this->case));
 
         $form->addSubmit('submit', 'Execute');
 

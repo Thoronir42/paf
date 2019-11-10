@@ -6,10 +6,6 @@ final class FeedEvents
 {
     private $events = [];
 
-    public function __construct()
-    {
-    }
-
     public function register(string $type, string $event, $callback)
     {
         if (!isset($this->events[$type])) {

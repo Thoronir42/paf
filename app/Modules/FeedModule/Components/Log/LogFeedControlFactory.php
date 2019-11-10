@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\FeedModule\Components\Log;
 
-use PAF\Modules\ApplicationLogModule\Entity\Event;
+use PAF\Modules\AuditTrailModule\Entity\Entry;
 use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
 use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControlFactory;
 use PAF\Modules\FeedModule\FeedEvents;
@@ -16,16 +16,15 @@ class LogFeedControlFactory implements FeedEntryControlFactory
 
     public function __construct(array $templateByType)
     {
-
         $this->templateByType = $templateByType;
     }
 
     public function create(FeedEvents $events, FeedEntry $entry): FeedEntryControl
     {
-        /** @var Event $event */
-        $event = $entry->getSource();
-        $control = new LogFeedControl($events, $event);
-        if ($template = $this->getTemplateByType($event->type)) {
+        /** @var Entry $auditEntry */
+        $auditEntry = $entry->getSource();
+        $control = new LogFeedControl($events, $auditEntry);
+        if ($template = $this->getTemplateByType($auditEntry->type)) {
             $control->setTemplateFile($template);
         }
 

@@ -34,8 +34,8 @@ class FeedService
             if (!$query instanceof Fluent) {
                 throw new \InvalidArgumentException("Query $type is not instance of " . Fluent::class);
             }
-            if ($query->getCommand() !== 'SELECT') {
-                throw new \InvalidArgumentException("Query $type must be a SELECT, got: " . $query->getCommand());
+            if (($command = $query->getCommand()) !== 'SELECT') {
+                throw new \InvalidArgumentException("Query $type must be a SELECT, got: " . $command);
             }
 
             $query->select("'$type' AS type");
