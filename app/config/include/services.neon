@@ -5,11 +5,6 @@ services:
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
-    - PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
-
-    - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
-
-    commission.caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
 
     common.transactionManager: PAF\Common\Model\TransactionManager
     common.userRepository:
@@ -24,19 +19,6 @@ services:
         class: PAF\Modules\CommonModule\Services\Users
         arguments:
             powerUsers: %powerUsers%
-
-
-    - PAF\Modules\CommissionModule\Facade\PafEntities
-    - PAF\Modules\CommissionModule\Facade\Commissions
-
-    - PAF\Modules\CommissionModule\Repository\QuoteRepository
-    -
-        class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
-        setup:
-            - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAppLogAdapter())
-    commission.pafCases:
-        class: PAF\Modules\CommissionModule\Facade\PafCases
-    - PAF\Modules\CommissionModule\Repository\SpecificationRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
     - PAF\Modules\CmsModule\Facade\CmsPages

@@ -1,0 +1,17 @@
+specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
+pafCaseRepository:
+        class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
+        setup:
+            - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAppLogAdapter())
+
+pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
+
+pafCases: PAF\Modules\CommissionModule\Facade\PafCases
+
+- PAF\Modules\CommissionModule\Facade\PafEntities
+commissions: PAF\Modules\CommissionModule\Facade\Commissions
+quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
+
+quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
+pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
+caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
