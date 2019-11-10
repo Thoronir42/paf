@@ -8,7 +8,6 @@ pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
 
 pafCases: PAF\Modules\CommissionModule\Facade\PafCases
 
-- PAF\Modules\CommissionModule\Facade\PafEntities
 commissions: PAF\Modules\CommissionModule\Facade\Commissions
 quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
 

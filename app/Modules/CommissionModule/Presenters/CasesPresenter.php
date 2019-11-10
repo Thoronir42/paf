@@ -5,16 +5,12 @@ namespace PAF\Modules\CommissionModule\Presenters;
 use PAF\Common\BasePresenter;
 use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
-use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControl;
 use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafCases;
-use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Components\QuotesControl\QuotesControl;
-use PAF\Modules\CommissionModule\Model\Quote;
-use PAF\Modules\CommissionModule\Repository\QuoteRepository;
+use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 use Nette\Application\BadRequestException;
 use PAF\Modules\FeedModule\Components\Comment\CommentFeedControl;
 use PAF\Modules\FeedModule\Components\FeedControl\FeedControlFactory;
@@ -25,12 +21,8 @@ use SeStep\Commentable\Service\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {
-    /** @var QuoteRepository @inject */
-    public $quotes;
     /** @var PafCases @inject */
     public $cases;
-    /** @var PafEntities @inject */
-    public $pafEntities;
 
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
@@ -48,14 +40,9 @@ final class CasesPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
-    public function actionList()
+    public function actionList(string $filter = null)
     {
-        $quotes = $this->quotes->findForOverview();
-        /** @var QuotesControl $quotesComponent */
-        $quotesComponent = $this['quotes'];
-        $quotesComponent->setQuotes($quotes);
-
-        $cases = $this->cases->getCasesByStatus([PafCase::STATUS_ACCEPTED, PafCase::STATUS_WIP]);
+        $cases = $this->cases->getCasesByStatus([PafCaseWorkflow::STATUS_ACCEPTED, PafCaseWorkflow::STATUS_WIP]);
         /** @var CasesControl $casesComponent */
         $casesComponent = $this['cases'];
         $casesComponent->setCases($cases);
@@ -128,34 +115,6 @@ final class CasesPresenter extends BasePresenter
         $casesComponent = new CasesControl();
 
         return $casesComponent;
-    }
-
-    public function createComponentQuotes()
-    {
-        $quotesComponent = new QuotesControl();
-
-        $this->context->callInjects($quotesComponent);
-
-        $quotesComponent->onAccept[] = function (Quote $quote) {
-            $error = $this->pafEntities->acceptQuote($quote);
-
-            if (!$error) {
-                $this->flashTranslate('paf.case.created', ['name' => $quote->getFeName()]);
-            } else {
-                $this->flashTranslate("paf.case.$error", ['name' => $quote->getFeName()]);
-            }
-
-            $this->redirect('list');
-        };
-
-        $quotesComponent->onReject[] = function (Quote $quote) {
-            $this->pafEntities->rejectQuote($quote);
-            $this->flashTranslate('paf.quote.rejected', ['name' => $quote->getFeName()]);
-
-            $this->redirect('list');
-        };
-
-        return $quotesComponent;
     }
 
     public function createComponentComments()
