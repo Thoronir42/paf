@@ -5,6 +5,8 @@ namespace PAF\Modules\CommissionModule\Presenters;
 use PAF\Common\BasePresenter;
 use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
+use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControl;
+use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafCases;
@@ -32,6 +34,8 @@ final class CasesPresenter extends BasePresenter
 
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
+    /** @var CaseStateControlFactory @inject */
+    public $caseStateControlFactory;
 
     /** @var CommentsControlFactory @inject */
     public $commentsControlFactory;
@@ -98,6 +102,25 @@ final class CasesPresenter extends BasePresenter
                 $this->redirect('this');
             }
         );
+
+        $stateControl = $this->caseStateControlFactory->create($case);
+        $stateControl->onAction[] = function (string $action) use ($case) {
+            $result = $this->cases->executeAction($case, $action);
+            if (!$result) {
+                $message = $result->getMessage() ?: 'generic.error';
+                $params = $result->getParams();
+
+                $this->flashTranslate($message, $params, 'error');
+            } else {
+                $message = $result->getMessage() ?: 'generic.success';
+                $params = $result->getParams();
+
+                $this->flashTranslate($message, $params);
+                $this->redirect('this');
+            }
+        };
+
+        $this['stateControl'] = $stateControl;
     }
 
     public function createComponentCases()

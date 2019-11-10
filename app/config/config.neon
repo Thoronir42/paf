@@ -42,12 +42,19 @@ extensions:
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
 
+    commonEvents: PAF\Common\Events\EventsExtension
+
     pafFeed: PAF\Modules\FeedModule\FeedModuleExtension
+    pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 navigationMenu:
     brandTitle: %appName%
     brandTarget: :Common:Homepage:default
     itemsFile: %appDir%/config/include/navigation.neon
+
+commonEvents:
+    subscribers:
+        - PAF\Common\Workflow\EntityWorkflowListener()
 
 
 appRouting:

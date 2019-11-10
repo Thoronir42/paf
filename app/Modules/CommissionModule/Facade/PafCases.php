@@ -3,6 +3,7 @@
 namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Utils\Paginator;
+use PAF\Common\Workflow\ActionResult;
 use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
@@ -63,5 +64,10 @@ class PafCases
     public function find($id): ?PafCase
     {
         return $this->caseRepository->find($id);
+    }
+
+    public function executeAction(PafCase $case, string $action): ActionResult
+    {
+        return $this->caseRepository->executeAction($case, $action);
     }
 }

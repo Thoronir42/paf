@@ -42,7 +42,9 @@
     "sestep/modular-lean-mapper": "dev-master",
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1",
-    "contributte/monolog": "^0.3.0"
+    "contributte/monolog": "^0.3.0",
+    "symfony/workflow": "^4.3",
+    "symfony/event-dispatcher": "^4.3"
   },
   "repositories": [
     {

@@ -9,6 +9,8 @@ services:
 
     - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
+    commission.caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
+
     common.transactionManager: PAF\Common\Model\TransactionManager
     common.userRepository:
         class: PAF\Modules\CommonModule\Repository\UserRepository

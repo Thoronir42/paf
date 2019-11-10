@@ -2,14 +2,14 @@
 
 namespace PAF\Modules\CommissionModule;
 
-use PAF\Modules\CommissionModule\Model\PafCase;
+use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 
 class Localization
 {
     public static function getCaseStatuses()
     {
         $statuses = [];
-        foreach (PafCase::getStatuses() as $status) {
+        foreach (PafCaseWorkflow::getStates() as $status) {
             $statuses[$status] = "paf.case.statuses.$status";
         }
 
