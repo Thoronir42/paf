@@ -61,6 +61,12 @@ case:
     action.cancel: Cancel
     action.archive: Archive
 
+    action.commence.executed: %actor% commenced work on the case.
+    action.finish.executed: %actor% finished this case.
+    action.ship.executed: %actor% shipped the work.
+    action.cancel.executed: %actor% cancelled the case.
+    action.archive.executed: %actor% archived the case
+
 cases:
     label: "Running cases"
     detailTitle: "Detail of case %name%"

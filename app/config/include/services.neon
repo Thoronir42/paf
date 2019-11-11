@@ -47,6 +47,7 @@ services:
             - Latte\Runtime\Filters::$dateFormat = 'y/m/d'
             - addFilter(yesno, @yesNoFilter)
             - addFilter(contactUrl, @contactUrlFilter)
+            - addFilter(user, @userFilter)
 
     yesNoFilter: PAF\Common\Latte\YesNoFilter
     contactUrlFilter:
@@ -54,3 +55,10 @@ services:
         arguments:
             formats:
                 telegram: 'https://t.me/%s'
+    userFilter: PAF\Modules\CommonModule\Latte\UserFilter
+
+    entityWorkflowListener:
+        class: PAF\Common\Workflow\EntityWorkflowListener
+        arguments:
+            prefixByClass:
+

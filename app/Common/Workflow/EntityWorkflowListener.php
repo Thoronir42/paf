@@ -7,6 +7,7 @@ use LeanMapper\IMapper;
 use PAF\Modules\AuditTrailModule\Facade\AuditTrailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
+use Symfony\Component\Workflow\Event\Event;
 use Symfony\Component\Workflow\WorkflowEvents;
 
 class EntityWorkflowListener implements EventSubscriberInterface
@@ -17,7 +18,7 @@ class EntityWorkflowListener implements EventSubscriberInterface
     /** @var IMapper */
     private $mapper;
 
-    public function __construct(AuditTrailService $auditTrailService, IMapper $mapper)
+    public function __construct(AuditTrailService $auditTrailService, IMapper $mapper, array $prefixByClass = [])
     {
         $this->auditTrailService = $auditTrailService;
         $this->mapper = $mapper;
@@ -30,10 +31,20 @@ class EntityWorkflowListener implements EventSubscriberInterface
             return;
         }
         $primaryKey = $this->mapper->getPrimaryKey($this->mapper->getTable(get_class($subject)));
-        $transition = $event->getTransition();
 
-        $this->auditTrailService->addEvent($subject->$primaryKey, $transition->getName());
+        $auditTrailEntryName = $this->getAuditTrailEntryName($event);
+        $this->auditTrailService->addEvent($subject->$primaryKey, $auditTrailEntryName, [
+            'from' => $event->getTransition()->getFroms(),
+        ]);
         $this->auditTrailService->omitSubject($subject->$primaryKey, 1);
+    }
+
+    private function getAuditTrailEntryName(Event $event): string
+    {
+        $transitionName = $event->getTransition()->getName();
+        $workflowName = $event->getWorkflowName();
+
+        return "$workflowName.action.$transitionName";
     }
 
     /**

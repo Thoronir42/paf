@@ -29,7 +29,7 @@ class PafCaseWorkflow extends Workflow
             self::createDefinition(),
             new MethodMarkingStore(true, 'state'),
             $eventDispatcher,
-            self::class
+            'commission.case'
         );
     }
 
