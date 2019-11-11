@@ -4,6 +4,7 @@ namespace PAF\Modules\AuditTrailModule\Entity;
 
 use DateTime;
 use PAF\Common\Model\BaseEntity;
+use PAF\Modules\CommonModule\Model\User;
 
 /**
  * AuditTrail entity
@@ -11,7 +12,7 @@ use PAF\Common\Model\BaseEntity;
  * @property string $id
  * @property string $subject id of subject where the event happened
  * @property DateTime $instant
- * @property string|null $actor
+ * @property User|null $actor m:hasOne(actor)
  * @property string $type
  * @property array $parameters
  */

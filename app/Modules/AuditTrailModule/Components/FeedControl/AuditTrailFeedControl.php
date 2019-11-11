@@ -1,24 +1,28 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\Log;
+namespace PAF\Modules\AuditTrailModule\Components\FeedControl;
 
 use PAF\Modules\AuditTrailModule\Entity\Entry;
+use PAF\Modules\CommonModule\Latte\UserFilter;
 use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
 use PAF\Modules\FeedModule\FeedEvents;
 
-class LogFeedControl extends FeedEntryControl
+class AuditTrailFeedControl extends FeedEntryControl
 {
 
     /** @var Entry */
     private $entry;
+    /** @var UserFilter */
+    private $userFilter;
 
     /** @var string */
-    private $templateFile = __DIR__ . '/logFeedControl.latte';
+    private $templateFile = __DIR__ . '/auditTrailFeedControl.latte';
 
-    public function __construct(FeedEvents $events, Entry $entry)
+    public function __construct(FeedEvents $events, Entry $entry, UserFilter $userFilter)
     {
         parent::__construct($events);
         $this->entry = $entry;
+        $this->userFilter = $userFilter;
     }
 
     /**
@@ -30,6 +34,8 @@ class LogFeedControl extends FeedEntryControl
     {
         $template = $this->createTemplate();
         $template->logEvent = $this->entry;
+        $template->actor = $this->userFilter->useFilter($this->entry->actor);
+
         $template->setFile($this->templateFile);
 
         $template->render();
