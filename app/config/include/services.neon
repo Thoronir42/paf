@@ -48,6 +48,7 @@ services:
             - addFilter(yesno, @yesNoFilter)
             - addFilter(contactUrl, @contactUrlFilter)
             - addFilter(user, @userFilter)
+            - addFilter(htmlCLass, @htmlClassFilter)
 
     yesNoFilter: PAF\Common\Latte\YesNoFilter
     contactUrlFilter:
@@ -55,6 +56,7 @@ services:
         arguments:
             formats:
                 telegram: 'https://t.me/%s'
+    htmlClassFilter: PAF\Common\Latte\HtmlClassFilter
     userFilter: PAF\Modules\CommonModule\Latte\UserFilter
 
     entityWorkflowListener:
@@ -62,3 +64,6 @@ services:
         arguments:
             prefixByClass:
 
+    typeful.typeRegister:
+        setup:
+            - registerDescriptor(PAF\Modules\CommissionModule\Model\PafCase, PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor())

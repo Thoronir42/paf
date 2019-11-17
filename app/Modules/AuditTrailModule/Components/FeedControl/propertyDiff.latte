@@ -1,0 +1,15 @@
+<div class="property-diff prop-{$property|htmlClass}">
+    <span class="property-name">{$property|entityPropertyName:$entityClass|translate}</span>
+    <br/>
+    {ifset $entityClass}
+        {capture $oldValueDisp}{$oldValue|entityProperty:$entityClass:$property}{/capture}
+        {capture $newValueDisp}{$newValue|entityProperty:$entityClass:$property}{/capture}
+    {else}
+        {var $oldValueDisp = $oldValue}
+        {var $newValueDisp = $newValue}
+    {/ifset}
+
+    <span class="property-old-val">{$oldValueDisp}</span>
+    <span>&gt;</span>
+    <span class="property-new-val">{$newValueDisp}</span>
+</div>

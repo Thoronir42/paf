@@ -34,6 +34,8 @@ class AuditTrailFeedControl extends FeedEntryControl
     {
         $template = $this->createTemplate();
         $template->logEvent = $this->entry;
+        $template->parameters = $this->entry->parameters;
+
         $template->actor = $this->userFilter->useFilter($this->entry->actor);
 
         $template->setFile($this->templateFile);
@@ -41,23 +43,14 @@ class AuditTrailFeedControl extends FeedEntryControl
         $template->render();
     }
 
-    public function renderDiff(array $arguments)
+    public function renderPropertyDiff(string $entityClass, string $propertyName, $newValue, $oldValue = null)
     {
-        $prefix = $arguments['prefix'] ?? '';
-
-        $changes = $this->entry->parameters['changes'] ?? [];
-
-        foreach ($changes as $property => &$change) {
-            $change['prop'] = ($prefix ? $prefix . '.' : '') . $change['prop'];
-            $change['newValue'] = $this->presentValue($change['newValue']);
-            if (isset($change['oldValue'])) {
-                $change['oldValue'] = $this->presentValue($change['oldValue']);
-            }
-        }
-
         $template = $this->createTemplate();
-        $template->setFile(__DIR__ . '/propertyChanges.latte');
-        $template->changes = $changes;
+        $template->setFile(__DIR__ . '/propertyDiff.latte');
+        $template->entityClass = $entityClass;
+        $template->property = $propertyName;
+        $template->newValue = $newValue;
+        $template->oldValue = $oldValue;
 
         $template->render();
     }
@@ -68,14 +61,5 @@ class AuditTrailFeedControl extends FeedEntryControl
     public function setTemplateFile(string $templateFile): void
     {
         $this->templateFile = $templateFile;
-    }
-
-    private function presentValue($value)
-    {
-        if (is_scalar($value)) {
-            return $value;
-        }
-
-        return json_encode($value);
     }
 }

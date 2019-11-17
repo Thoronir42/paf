@@ -41,6 +41,7 @@ extensions:
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
+    typeful: SeStep\Typeful\TypefulExtension
 
     commonEvents: PAF\Common\Events\EventsExtension
 
@@ -62,6 +63,13 @@ appRouting:
         Cms: PAF\Modules\CmsModule\Routing\CmsRouterModule()
         Commission: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
         Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
+
+typeful:
+    propertyTypes:
+        - PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+    filters:
+        displayEntityProperty: 'entityProperty'
+        displayPropertyName: 'entityPropertyName'
 
 monolog:
     channel:

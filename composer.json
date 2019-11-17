@@ -62,7 +62,8 @@
       "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
-      "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/"
+      "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/",
+      "SeStep\\Typeful\\": "extensions/SeStep/Typeful/src/"
     }
   },
   "autoload-dev": {
@@ -71,7 +72,8 @@
       "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
       "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
-      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/test/"
+      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/test/",
+      "SeStep\\Typeful\\": "extensions/SeStep/Typeful/test/"
     }
   },
   "require-dev": {

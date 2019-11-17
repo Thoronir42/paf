@@ -1,5 +1,14 @@
+{var $entityClass = 'PAF\Modules\CommissionModule\Model\PafCase'}
 <div>
-    {_$logEvent->type}
+    <span class="label label-default">{_$logEvent->type, ['actor' => $actor]}</span>
 
-    {control $control:diff, prefix => 'commission.case'}
+    <div class="list-group">
+
+        {foreach $parameters['changes'] ?? [] as $property => $change}
+            <div class="list-group-item">
+                {control $control:propertyDiff, $entityClass, $property, $change['newValue']??null, $change['oldValue']??null}
+            </div>
+        {/foreach}
+    </div>
+
 </div>
