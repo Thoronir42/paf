@@ -45,7 +45,7 @@ case:
     already-exists: "Case %name% already exists"
     create-error: "Case could not be created"
     updated: Case %name% has been updated
-    target-date: Target date
+    targetDelivery: Target delivery date
 
     status: Status
     status.accepted: Accepted
@@ -66,6 +66,10 @@ case:
     action.ship.executed: %actor% shipped the work.
     action.cancel.executed: %actor% cancelled the case.
     action.archive.executed: %actor% archived the case
+
+log:
+    caseCreated: %actor% created the case
+    caseUpdated: %actor% updated the case
 
 cases:
     label: "Running cases"

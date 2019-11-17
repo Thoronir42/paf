@@ -3,6 +3,7 @@ services:
         class: PAF\Modules\AuditTrailModule\Components\FeedControl\AuditTrailFeedControlFactory
         arguments:
             templateByType:
+                commission.log.caseCreated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
                 commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
                 commission.case.action.*: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
 

@@ -47,10 +47,10 @@ class CaseStateControl extends Control
     {
         $form = $this->formFactory->create();
         $form->addSelect('action')
-            ->setPrompt('Do...')
+            ->setPrompt('paf.workflow.actionPrompt')
             ->setItems($this->caseWorkflow->getActionsLocalized($this->case));
 
-        $form->addSubmit('submit', 'Execute');
+        $form->addSubmit('submit', 'paf.workflow.actionExecute');
 
         $form->onSuccess[] = function ($form, $values) {
             $this->onAction($values['action']);

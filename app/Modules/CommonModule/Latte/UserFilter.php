@@ -11,7 +11,7 @@ class UserFilter extends BaseFilter
 
     public function useFilter(...$args): string
     {
-        $user = $args[0] ?? null();
+        $user = $args[0] ?? null;
 
         if ($user === null) {
             return '#!@$';

@@ -30,4 +30,9 @@ class Entry extends BaseEntity
         $this->row->parameters = json_encode($parameters);
         $this->paramsCache = $parameters;
     }
+
+    public function setActorId(string $id = null)
+    {
+        $this->row->actor = $id;
+    }
 }

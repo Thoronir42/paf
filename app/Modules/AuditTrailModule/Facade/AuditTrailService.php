@@ -33,7 +33,7 @@ class AuditTrailService
 
         $event = new Entry();
         $event->instant = $this->momentProvider->now();
-        $event->actor = $this->user->id;
+        $event->setActorId($this->user->id);
 
         $event->subject = $subject;
         $event->type = $type;

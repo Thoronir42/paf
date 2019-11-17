@@ -27,3 +27,7 @@ fursuit:
         partial: "Partial"
         halfsuit: "Half-suit"
         fullsuit: "Fullboddy fursuit"
+
+workflow:
+    actionPrompt: Do...
+    actionExecute: Execute

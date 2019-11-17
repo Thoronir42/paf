@@ -32,8 +32,8 @@ abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
             $changed = [];
             foreach ($diff as $prop => $oldValue) {
                 $propertyName = $this->mapper->getEntityField($tableName, $prop);
-                $changed[$prop] = [
-                    'prop' => $prop,
+                $changed[$propertyName] = [
+                    'prop' => $propertyName,
                     'newValue' => $entity->$propertyName,
                     'oldValue' => $oldValue,
                 ];
@@ -42,8 +42,8 @@ abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
             $changed = [];
             foreach ($entity->getModifiedRowData() as $prop => $oldValue) {
                 $propertyName = $this->mapper->getEntityField($tableName, $prop);
-                $changed[$prop] = [
-                    'prop' => $prop,
+                $changed[$propertyName] = [
+                    'prop' => $propertyName,
                     'newValue' => $entity->$propertyName,
                 ];
             }
