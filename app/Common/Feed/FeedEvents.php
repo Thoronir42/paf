@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule;
+namespace PAF\Common\Feed;
 
 final class FeedEvents
 {

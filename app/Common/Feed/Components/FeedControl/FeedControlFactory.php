@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\FeedControl;
+namespace PAF\Common\Feed\Components\FeedControl;
 
 class FeedControlFactory
 {

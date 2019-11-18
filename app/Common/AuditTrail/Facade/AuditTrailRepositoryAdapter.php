@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\Facade;
+namespace PAF\Common\AuditTrail\Facade;
 
 use LeanMapper\Entity;
 use LeanMapper\IMapper;

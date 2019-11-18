@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\FeedControl;
+namespace PAF\Common\Feed\Components\FeedControl;
 
 use Nette\Application\UI\Control;
-use PAF\Modules\FeedModule\FeedEvents;
+use PAF\Common\Feed\FeedEvents;
 
 abstract class FeedEntryControl extends Control
 {

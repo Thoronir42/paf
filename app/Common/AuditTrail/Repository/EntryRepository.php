@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\Repository;
+namespace PAF\Common\AuditTrail\Repository;
 
 use PAF\Common\Model\BaseRepository;
 

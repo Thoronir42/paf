@@ -4,10 +4,10 @@ namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Utils\Paginator;
 use PAF\Common\Workflow\ActionResult;
-use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
+use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
-use PAF\Modules\FeedModule\Service\FeedService;
+use PAF\Common\Feed\Service\FeedService;
 use SeStep\Commentable\Lean\Repository\CommentRepository;
 
 class PafCases

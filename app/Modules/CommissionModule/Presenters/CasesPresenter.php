@@ -3,6 +3,8 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use PAF\Common\BasePresenter;
+use PAF\Common\Feed\Components\Comment\CommentFeedControl;
+use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
 use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
@@ -12,8 +14,6 @@ use PAF\Modules\CommissionModule\Facade\PafCases;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 use Nette\Application\BadRequestException;
-use PAF\Modules\FeedModule\Components\Comment\CommentFeedControl;
-use PAF\Modules\FeedModule\Components\FeedControl\FeedControlFactory;
 use SeStep\Commentable\Control\CommentsControl;
 use SeStep\Commentable\Control\CommentsControlFactory;
 use SeStep\Commentable\Lean\Model\Comment;

@@ -1,14 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\FeedControl;
+namespace PAF\Common\Feed\Components\FeedControl;
 
 use Nette\InvalidStateException;
-use PAF\Modules\FeedModule\FeedEvents;
-use PAF\Modules\FeedModule\Model\FeedEntry;
+use PAF\Common\Feed\FeedEvents;
+use PAF\Common\Feed\Model\FeedEntry;
 
 /**
  * Class EntryControlFactory
- * @package PAF\Modules\FeedModule\Components\FeedControl
  *
  * @internal
  */

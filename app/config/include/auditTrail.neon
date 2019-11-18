@@ -1,6 +1,6 @@
 services:
     auditTrailFeed:
-        class: PAF\Modules\AuditTrailModule\Components\FeedControl\AuditTrailFeedControlFactory
+        class: PAF\Common\AuditTrail\Components\FeedControl\AuditTrailFeedControlFactory
         arguments:
             templateByType:
                 commission.log.caseCreated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
@@ -9,5 +9,5 @@ services:
 
 pafFeed:
     entryControlClasses:
-        comment: PAF\Modules\FeedModule\Components\Comment\CommentFeedControl
+        comment: PAF\Common\Feed\Components\Comment\CommentFeedControl
         logEvent: @auditTrailFeed

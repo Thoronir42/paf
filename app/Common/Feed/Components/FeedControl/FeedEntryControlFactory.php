@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\FeedControl;
+namespace PAF\Common\Feed\Components\FeedControl;
 
-use PAF\Modules\FeedModule\FeedEvents;
-use PAF\Modules\FeedModule\Model\FeedEntry;
+use PAF\Common\Feed\FeedEvents;
+use PAF\Common\Feed\Model\FeedEntry;
 
 interface FeedEntryControlFactory
 {

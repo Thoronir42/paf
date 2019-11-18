@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Components\Comment;
+namespace PAF\Common\Feed\Components\Comment;
 
-use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
-use PAF\Modules\FeedModule\FeedEvents;
+use PAF\Common\Feed\Components\FeedControl\FeedEntryControl;
+use PAF\Common\Feed\FeedEvents;
 use SeStep\Commentable\Lean\Model\Comment;
 
 class CommentFeedControl extends FeedEntryControl

@@ -29,7 +29,7 @@ session:
 
 extensions:
     entityIds: SeStep\EntityIds\DI\EntityIdsExtension
-    auditTrail: PAF\Modules\AuditTrailModule\DI\AuditTrailExtension
+    auditTrail: PAF\Common\AuditTrail\AuditTrailExtension
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
     repository: PAF\Common\Lean\DI\RepositoryExtension
@@ -45,7 +45,7 @@ extensions:
 
     commonEvents: PAF\Common\Events\EventsExtension
 
-    pafFeed: PAF\Modules\FeedModule\FeedModuleExtension
+    pafFeed: PAF\Common\Feed\FeedExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 navigationMenu:

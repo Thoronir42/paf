@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\Entity;
+namespace PAF\Common\AuditTrail\Entity;
 
 use DateTime;
 use PAF\Common\Model\BaseEntity;

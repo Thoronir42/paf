@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\Facade;
+namespace PAF\Common\AuditTrail\Facade;
 
 use Nette\Security\User;
-use PAF\Modules\AuditTrailModule\Entity\Entry;
-use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
+use PAF\Common\AuditTrail\Entity\Entry;
+use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Utils\Moment\MomentProvider;
 
 class AuditTrailService

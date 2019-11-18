@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Model;
+namespace PAF\Common\Feed\Model;
 
 use DateTime;
 

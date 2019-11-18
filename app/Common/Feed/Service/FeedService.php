@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule\Service;
+namespace PAF\Common\Feed\Service;
 
 use Dibi\Connection;
 use Dibi\Fluent;
 use Nette\Utils\Paginator;
-use PAF\Modules\FeedModule\Model\FeedEntry;
-use PAF\Modules\FeedModule\Model\FeedEntryAdapter;
+use PAF\Common\Feed\Model\FeedEntry;
+use PAF\Common\Feed\Model\FeedEntryAdapter;
 
 class FeedService
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\FeedModule;
+namespace PAF\Common\Feed;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
@@ -8,13 +8,13 @@ use Nette\DI\Definitions\Statement;
 use Nette\Schema\Elements\Type;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
-use PAF\Modules\FeedModule\Components\FeedControl\EntryControlFactory;
-use PAF\Modules\FeedModule\Components\FeedControl\FeedControlFactory;
-use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
-use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControlFactory;
-use PAF\Modules\FeedModule\Service\FeedService;
+use PAF\Common\Feed\Components\FeedControl\EntryControlFactory;
+use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
+use PAF\Common\Feed\Components\FeedControl\FeedEntryControl;
+use PAF\Common\Feed\Components\FeedControl\FeedEntryControlFactory;
+use PAF\Common\Feed\Service\FeedService;
 
-class FeedModuleExtension extends CompilerExtension
+class FeedExtension extends CompilerExtension
 {
     public function getConfigSchema(): Schema
     {

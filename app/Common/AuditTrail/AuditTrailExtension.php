@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\DI;
+namespace PAF\Common\AuditTrail;
 
 use Nette\DI\CompilerExtension;
-use PAF\Modules\AuditTrailModule\Facade\AuditTrailService;
-use PAF\Modules\AuditTrailModule\Repository\EntryRepository;
+use PAF\Common\AuditTrail\Facade\AuditTrailService;
+use PAF\Common\AuditTrail\Repository\EntryRepository;
 use SeStep\EntityIds\TextIdGenerator;
 
 class AuditTrailExtension extends CompilerExtension

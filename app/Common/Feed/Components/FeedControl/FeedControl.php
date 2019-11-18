@@ -1,11 +1,11 @@
 <?php
 
-namespace PAF\Modules\FeedModule\Components\FeedControl;
+namespace PAF\Common\Feed\Components\FeedControl;
 
 use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;
 use Nette\Utils\Html;
-use PAF\Modules\FeedModule\FeedEvents;
+use PAF\Common\Feed\FeedEvents;
 
 class FeedControl extends Control
 {

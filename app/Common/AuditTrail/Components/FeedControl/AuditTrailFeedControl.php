@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\AuditTrailModule\Components\FeedControl;
+namespace PAF\Common\AuditTrail\Components\FeedControl;
 
-use PAF\Modules\AuditTrailModule\Entity\Entry;
+use PAF\Common\AuditTrail\Entity\Entry;
 use PAF\Modules\CommonModule\Latte\UserFilter;
-use PAF\Modules\FeedModule\Components\FeedControl\FeedEntryControl;
-use PAF\Modules\FeedModule\FeedEvents;
+use PAF\Common\Feed\Components\FeedControl\FeedEntryControl;
+use PAF\Common\Feed\FeedEvents;
 
 class AuditTrailFeedControl extends FeedEntryControl
 {
