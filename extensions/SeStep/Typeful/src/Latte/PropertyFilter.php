@@ -2,7 +2,7 @@
 
 namespace SeStep\Typeful\Latte;
 
-use Nette\Localization\ITranslator;
+use SeStep\Typeful\EntityDescriptorRegistry;
 use SeStep\Typeful\TypeRegister;
 
 class PropertyFilter
@@ -10,31 +10,40 @@ class PropertyFilter
 
     /** @var TypeRegister */
     private $typeRegister;
+    /** @var EntityDescriptorRegistry */
+    private $entityDescriptorRegistry;
 
     /**
      * PropertyFilter constructor.
      *
      * @param TypeRegister $typeRegister
+     * @param EntityDescriptorRegistry $entityDescriptorRegistry
      */
-    public function __construct(TypeRegister $typeRegister)
+    public function __construct(TypeRegister $typeRegister, EntityDescriptorRegistry $entityDescriptorRegistry)
     {
         $this->typeRegister = $typeRegister;
+        $this->entityDescriptorRegistry = $entityDescriptorRegistry;
     }
 
     public function displayPropertyName(string $property, string $entityClass = null)
     {
-        $descriptor = $this->typeRegister->getEntityDescriptor($entityClass);
+        $descriptor = $this->entityDescriptorRegistry->getEntityDescriptor($entityClass);
 
         return $descriptor->getPropertyFullName($property);
     }
 
-    public function displayEntityProperty($value, string $entityClass, string $propertyName, array $options = [])
+    public function displayEntityProperty($value, string $entityType, string $propertyName, array $options = [])
     {
-        $property = $this->typeRegister->getEntityProperty($entityClass, $propertyName);
+        $descriptor = $this->entityDescriptorRegistry->getEntityDescriptor($entityType);
+        if (!$descriptor) {
+            trigger_error("Entity $entityType not recognized");
+            return 'nada';
+        }
+        $property = $descriptor->getProperty($propertyName);
         $propertyType = $property ? $this->typeRegister->getPropertyType($property->getType()) : null;
 
         if (!$propertyType) {
-            trigger_error("Property '$entityClass::$propertyName'' can not be displayed");
+            trigger_error("Property '$entityType::$propertyName'' can not be displayed");
             return 'nada';
         }
 

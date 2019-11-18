@@ -4,6 +4,7 @@ namespace SeStep\Typeful;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\FactoryDefinition;
+use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
@@ -29,6 +30,9 @@ class TypefulExtension extends CompilerExtension
         $typeRegister = $builder->addDefinition($this->prefix('typeRegister'))
             ->setType(TypeRegister::class)
             ->setArgument('propertyTypes', $this->getTypesDefinitions($config->propertyTypes));
+
+        $builder->addDefinition($this->prefix('entityDescriptorRegister'))
+            ->setType(EntityDescriptorRegistry::class);
 
         $builder->addDefinition($this->prefix('propertyFilter'))
             ->setType(Latte\PropertyFilter::class)
@@ -70,6 +74,15 @@ class TypefulExtension extends CompilerExtension
         if (!empty($config->filters)) {
             $this->registerFilters($builder->getDefinition($this->prefix('propertyFilter')), $config->filters);
         }
+
+        $descriptors = [];
+        foreach ($builder->findByTag('typeful.entity') as $service => $entityClass) {
+            $descriptors[$entityClass] = $builder->getDefinition($service);
+        }
+
+        /** @var ServiceDefinition $entityDescriptorRegister */
+        $entityDescriptorRegister = $builder->getDefinition($this->prefix('entityDescriptorRegister'));
+        $entityDescriptorRegister->setArgument('descriptors', $descriptors);
     }
 
     private function registerFilters($filterService, $filterNamesConfig)

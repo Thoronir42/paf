@@ -8,6 +8,6 @@ class CommissionModuleExtension extends CompilerExtension
 {
     public function loadConfiguration()
     {
-        $this->loadDefinitionsFromConfig($this->loadFromFile(__DIR__ . '/commissionModule.neon'));
+        $this->loadDefinitionsFromConfig($this->loadFromFile(__DIR__ . '/commissionModule.neon')['services']);
     }
 }

@@ -63,7 +63,3 @@ services:
         class: PAF\Common\Workflow\EntityWorkflowListener
         arguments:
             prefixByClass:
-
-    typeful.typeRegister:
-        setup:
-            - registerDescriptor(PAF\Modules\CommissionModule\Model\PafCase, PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor())
