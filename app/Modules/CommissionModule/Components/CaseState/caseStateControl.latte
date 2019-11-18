@@ -1,0 +1,16 @@
+<div>
+    {_'commission.case.status'}
+    {form actionForm}
+    <dl class="row">
+        <dt class="col-md-12">{_'commission.case.status.'.$currentState}</dt>
+        <dt class="col-md-9">
+            {input action}
+        </dt>
+        <dd class="col-md-3">
+            {input submit, class => 'btn btn-primary'}
+        </dd>
+    </dl>
+    {/form}
+
+
+</div>

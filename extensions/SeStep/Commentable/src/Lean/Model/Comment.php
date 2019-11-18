@@ -4,10 +4,12 @@ namespace SeStep\Commentable\Lean\Model;
 
 use DateTime;
 use PAF\Common\Model\BaseEntity;
+use PAF\Modules\CommonModule\Model\User;
 
 /**
- * @property int $id
+ * @property string $id
  * @property CommentThread $thread m:hasOne(thread_id)
+ * @property User $user(user_id)
  * @property DateTime $createdOn
  * @property string $text
  */

@@ -1,22 +1,18 @@
 {block content}
-<h1>{_detailTitle, ['name' => $case->getFursuit()->getName()]}</h1>
-<div class="well">
-    <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-            <a data-toggle="tab" role="tab" href="#detail">{_detail}</a>
-        </li>
-        <li role="presentation">
-            <a data-toggle="tab" role="tab" href="#notes">{_notes} ({$notesCount})</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="detail">
-            {control caseForm}
-        </div>
-        <div role="tabpanel" class="tab-pane" id="notes">
-            {control comments:input, noLabels => true}
+<h1>{_'commission.cases.detailTitle', ['name' => $case->specification->characterName]}</h1>
 
-            {control comments:stack}
+<div class="row">
+    <div class="col-md-8" id="notes">
+        {control comments:input, noLabels => true}
+        <div class="well">
+            {control feed}
+        </div>
+    </div>
+    <div class="col-md-4" id="detail">
+        <div class="well">
+            {control caseForm}
+            <hr/>
+            {control stateControl}
         </div>
     </div>
 </div>

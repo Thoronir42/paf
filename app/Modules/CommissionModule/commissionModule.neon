@@ -1,0 +1,28 @@
+services:
+    specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
+    pafCaseRepository:
+            class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
+            setup:
+                - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAuditTrailAdapter())
+
+    pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
+
+    pafCases: PAF\Modules\CommissionModule\Facade\PafCases
+
+    commissions: PAF\Modules\CommissionModule\Facade\Commissions
+    quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
+
+    quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
+    pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
+    caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
+
+    pafCaseDescriptor:
+        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor
+        autowired: false
+        tags:
+            typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
+    pafCaseStatusType:
+        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+        autowired: false
+        tags:
+            - typeful.propertyType

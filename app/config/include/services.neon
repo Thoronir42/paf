@@ -5,9 +5,6 @@ services:
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
 
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
-    - PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
-
-    - PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
 
     common.transactionManager: PAF\Common\Model\TransactionManager
     common.userRepository:
@@ -22,13 +19,6 @@ services:
         class: PAF\Modules\CommonModule\Services\Users
         arguments:
             powerUsers: %powerUsers%
-
-    - PAF\Modules\CommissionModule\Facade\PafEntities
-    - PAF\Modules\CommissionModule\Facade\Commissions
-
-    - PAF\Modules\CommissionModule\Repository\QuoteRepository
-    - PAF\Modules\CommissionModule\Repository\PafCaseRepository
-    - PAF\Modules\CommissionModule\Repository\SpecificationRepository
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 
     - PAF\Modules\CmsModule\Facade\CmsPages
@@ -37,7 +27,10 @@ services:
     - SeStep\FileAttachable\Service\UserFileRepository
     - SeStep\FileAttachable\Service\UserFileThreadRepository
 
-    - SeStep\Commentable\Control\CommentsControlFactory
+    commentable.commentRepository: SeStep\Commentable\Lean\Repository\CommentRepository
+    commentable.commentThreadRepository: SeStep\Commentable\Lean\Repository\CommentThreadRepository
+    commentable.commentsService: SeStep\Commentable\Service\CommentsService
+    commentable.commentsControlFactory: SeStep\Commentable\Control\CommentsControlFactory
 
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())
@@ -54,6 +47,8 @@ services:
             - Latte\Runtime\Filters::$dateFormat = 'y/m/d'
             - addFilter(yesno, @yesNoFilter)
             - addFilter(contactUrl, @contactUrlFilter)
+            - addFilter(user, @userFilter)
+            - addFilter(htmlCLass, @htmlClassFilter)
 
     yesNoFilter: PAF\Common\Latte\YesNoFilter
     contactUrlFilter:
@@ -61,9 +56,10 @@ services:
         arguments:
             formats:
                 telegram: 'https://t.me/%s'
+    htmlClassFilter: PAF\Common\Latte\HtmlClassFilter
+    userFilter: PAF\Modules\CommonModule\Latte\UserFilter
 
-    leanFixtures.entityFixtures:
-        setup:
-            - addFixtureDao(PAF\Modules\CommonModule\Fixtures\UserFixtureDao())
-            - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.personRepository))
-            - addFixtureDao(PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository))
+    entityWorkflowListener:
+        class: PAF\Common\Workflow\EntityWorkflowListener
+        arguments:
+            prefixByClass:

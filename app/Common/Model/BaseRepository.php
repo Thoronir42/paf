@@ -2,7 +2,6 @@
 
 namespace PAF\Common\Model;
 
-use Dibi\DataSource;
 use Dibi\Fluent;
 use Dibi\UniqueConstraintViolationException;
 use LeanMapper\Connection;
@@ -10,10 +9,9 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
-use SeStep\EntityIds\HasIdGenerator;
 use SeStep\EntityIds\IdGenerator;
 
-abstract class BaseRepository extends Repository implements IQueryable, HasIdGenerator
+abstract class BaseRepository extends Repository implements IQueryable
 {
     private const MAX_ID_ATTEMPTS = 10;
 
@@ -51,6 +49,28 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
         if ($index) {
             $this->uniqueColumns[] = $index;
         }
+    }
+
+    protected function initEvents()
+    {
+        $this->events->registerCallback($this->events::EVENT_BEFORE_CREATE, [$this, 'validateUnique']);
+    }
+
+    /**
+     * Sets given idGenerator and initializes events
+     *
+     * @param IdGenerator $generator
+     */
+    public function bindIdGenerator(IdGenerator $generator)
+    {
+        if ($this->idGenerator) {
+            throw new \RuntimeException("Id generator already set");
+        }
+
+        $this->idGenerator = $generator;
+
+        $this->events->registerCallback($this->events::EVENT_BEFORE_CREATE, [$this, 'assignId']);
+        $this->events->registerCallback($this->events::EVENT_BEFORE_UPDATE, [$this, 'validateAssignedId']);
     }
 
 
@@ -91,9 +111,13 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
     public function find($primaryKeyValue)
     {
         $index = $this->index ?: $this->getPrimaryKey();
-        return $this->findOneBy([
-            $index => $primaryKeyValue
-        ]);
+        $criteria = [$index => $primaryKeyValue];
+
+        if (is_array($primaryKeyValue)) {
+            return $this->findBy($criteria);
+        } else {
+            return $this->findOneBy($criteria);
+        }
     }
 
     public function findOneBy(array $criteria)
@@ -132,38 +156,11 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
         return $this->createEntities($selection->fetchAll());
     }
 
-    public function persist(Entity $entity)
+    public function getDataSource(string $alias = null): Fluent
     {
-        $changedId = $entity->getModifiedRowData()['id'] ?? null;
-        $type = get_class($entity);
-        $typeHasIdGenerator = $this->idGenerator && $this->idGenerator->hasType($type);
-
-        if ($changedId && $typeHasIdGenerator) {
-            if (is_string($changedId) && $type != $this->idGenerator->getType($changedId)) {
-                throw new \UnexpectedValueException("Id '{$changedId}' could not be validated for type '$type'");
-            }
-        }
-
-        if ($entity->isDetached()) {
-            if (!$this->isUnique($entity)) {
-                throw new UniqueConstraintViolationException("Entity fails unique check");
-            }
-
-            if ($typeHasIdGenerator && !isset($entity->id)) {
-                $entity->id = $this->getUniqueId();
-            }
-        }
-
-        return parent::persist($entity);
-    }
-
-
-    public function getDataSource(string $alias = null): DataSource
-    {
-        $from = $this->getTable() . ($alias ? " AS $alias" : '');
         $select = $alias ? "$alias.*" : '*';
 
-        return $this->connection->dataSource("SELECT $select FROM $from");
+        return $this->select($select, $alias);
     }
 
     public function makeEntity($row)
@@ -196,11 +193,6 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
         }
 
         return true;
-    }
-
-    public function injectEntityIdGenerator(IdGenerator $generator)
-    {
-        $this->idGenerator = $generator;
     }
 
 
@@ -257,6 +249,44 @@ abstract class BaseRepository extends Repository implements IQueryable, HasIdGen
     public function deleteMany(array $entities)
     {
         return array_map([$this, 'delete'], $entities);
+    }
+
+    public function validateUnique(Entity $entity)
+    {
+        if (!$this->isUnique($entity)) {
+            throw new UniqueConstraintViolationException("Entity fails unique check");
+        }
+    }
+
+    final public function registerEvents(RepositoryEventsProvider $adapter)
+    {
+        foreach ($adapter->getEvents() as $type => $callback) {
+            $this->events->registerCallback($type, $callback);
+        }
+    }
+
+    public function assignId(Entity $entity)
+    {
+        $type = get_class($entity);
+        $primary = $this->mapper->getPrimaryKey($this->mapper->getTable($type));
+
+        if (!isset($entity->$primary) || !$entity->$primary) {
+            $entity->$primary = $this->getUniqueId($type);
+        }
+    }
+
+    public function validateAssignedId(Entity $entity)
+    {
+        $type = get_class($entity);
+        $primary = $this->mapper->getPrimaryKey($this->mapper->getTable($type));
+
+        $changed = $entity->getModifiedRowData();
+        if (!array_key_exists($primary, $changed)) {
+            return;
+        }
+        if ($this->generator->getType($changed[$primary]) !== $type) {
+            throw new \UnexpectedValueException("Id '{$changed[$primary]}' could not be validated for type '$type'");
+        }
     }
 
     private function getUniqueId(string $type = null)

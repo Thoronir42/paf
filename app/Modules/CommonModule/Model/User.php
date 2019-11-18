@@ -19,6 +19,7 @@ use PAF\Modules\PortfolioModule\Model\Fursuit;
 class User extends BaseEntity
 {
     public const TYPE_PERSON = 'person';
+    public const TYPE_SYSTEM = 'system';
 
     public function setType(string $type)
     {

@@ -28,9 +28,12 @@ session:
 
 
 extensions:
+    entityIds: SeStep\EntityIds\DI\EntityIdsExtension
+    auditTrail: PAF\Modules\AuditTrailModule\DI\AuditTrailExtension
     appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
-    leanMapper: PAF\Utils\LeanMapperExtension
+    repository: PAF\Common\Lean\DI\RepositoryExtension
+    leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
     moment: PAF\Utils\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
@@ -38,25 +41,33 @@ extensions:
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
-    entityIds: SeStep\EntityIds\DI\EntityIdsExtension
+    typeful: SeStep\Typeful\TypefulExtension
 
-leanMapper:
-    db: %database%
+    commonEvents: PAF\Common\Events\EventsExtension
 
-leanFixtures:
-    initFiles:
-        - %rootDir%/data/testing/commonModuleFixtures.neon
+    pafFeed: PAF\Modules\FeedModule\FeedModuleExtension
+    pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 navigationMenu:
     brandTitle: %appName%
     brandTarget: :Common:Homepage:default
     itemsFile: %appDir%/config/include/navigation.neon
 
+commonEvents:
+    subscribers:
+        - PAF\Common\Workflow\EntityWorkflowListener()
+
+
 appRouting:
     modules:
         Cms: PAF\Modules\CmsModule\Routing\CmsRouterModule()
         Commission: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
         Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
+
+typeful:
+    filters:
+        displayEntityProperty: 'entityProperty'
+        displayPropertyName: 'entityPropertyName'
 
 monolog:
     channel:
@@ -69,17 +80,6 @@ monolog:
                         - 5
                     setup:
                         - setFilenameFormat('{filename}-{date}', 'Y-m')
-
-services:
-    leanMapper.mapper:
-        class: SeStep\ModularLeanMapper\ModularMapper
-        arguments:
-            mapper: PAF\Common\Model\UnderscoreMapper()
-            modules:
-                ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
-                ss_files__: SeStep\FileAttachable\FilesMapperModule()
-                common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
-                commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
 
 translation:
     locales:
@@ -102,3 +102,5 @@ includes:
     - include/console.neon
     - include/formsMessages.neon
     - include/entityIds.neon
+    - include/lean.neon
+    - include/auditTrail.neon

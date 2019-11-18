@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Query;
+namespace SeStep\Commentable\Lean\Query;
 
 use Dibi\DataSource;
 use PAF\Common\Model\BaseQueryObject;
@@ -24,7 +24,7 @@ class FindCommentsQuery extends BaseQueryObject
 
     public function orderByDateCreated($order = 'ASC')
     {
-        $this->dataSource->orderBy('c.createdOn', $order);
+        $this->query->orderBy('c.created_on', $order);
 
         return $this;
     }
@@ -37,7 +37,7 @@ class FindCommentsQuery extends BaseQueryObject
     public function byThread($thread)
     {
         $threadId = $thread instanceof CommentThread ? $thread->id : $thread;
-        $this->dataSource->where('c.thread = ?', $threadId);
+        $this->query->where('c.thread_id = ?', $threadId);
 
         return $this;
     }

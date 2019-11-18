@@ -56,6 +56,11 @@ class LiveUserIdentity implements IIdentity
         return $this->user->$key;
     }
 
+    public function getEntity(): User
+    {
+        return $this->user;
+    }
+
     public function __sleep()
     {
         return ['id'];

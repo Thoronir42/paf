@@ -7,7 +7,11 @@ trait HasMomentProvider
     /** @var MomentProvider */
     private $momentProvider;
 
-    /** @return MomentProvider */
+    /**
+     * Retrieves MomentProvider instance
+     *
+     * @return MomentProvider
+     */
     public function getMomentProvider(): MomentProvider
     {
         if (!$this->momentProvider) {
@@ -17,7 +21,12 @@ trait HasMomentProvider
         return $this->momentProvider;
     }
 
-    /** @param MomentProvider $momentProvider */
+    /**
+     * Injects momentProvider instance
+     *
+     * @param MomentProvider $momentProvider
+     * @return self
+     */
     public function setMomentProvider(MomentProvider $momentProvider): self
     {
         $this->momentProvider = $momentProvider;

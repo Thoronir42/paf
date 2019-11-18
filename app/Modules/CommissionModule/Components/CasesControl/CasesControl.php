@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\Admin\Controls\CasesControl;
+namespace PAF\Modules\CommissionModule\Components\CasesControl;
 
 use Nette\Application\UI\Control;
 use PAF\Modules\CommissionModule\Model\PafCase;

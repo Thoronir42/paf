@@ -7,7 +7,6 @@ use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\Commissions;
-use PAF\Modules\CommissionModule\Facade\PafEntities;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
@@ -28,8 +27,6 @@ final class QuotesPresenter extends BasePresenter
     /** @var QuoteFormFactory @inject */
     public $quoteFormFactory;
 
-    /** @var PafEntities @inject */
-    public $pafEntities;
     /** @var Commissions @inject */
     public $commissions;
 
@@ -49,7 +46,7 @@ final class QuotesPresenter extends BasePresenter
 
     public function actionDefault()
     {
-        $this->template->enableQuotes = $this->settings->getValue('paf.quotes.enable');
+        $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
     }
 
     public function actionList()

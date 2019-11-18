@@ -1,0 +1,24 @@
+leanMapper:
+    db: %database%
+
+leanFixtures:
+    initFiles:
+        - %rootDir%/data/testing/commonModuleFixtures.neon
+    daos:
+        - PAF\Modules\CommonModule\Fixtures\UserFixtureDao()
+        - PAF\Common\Fixtures\RepositoryFixtureDao(@common.personRepository)
+        - PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository)
+
+services:
+    lean.snapshots: PAF\Common\Model\LeanSnapshots
+    leanMapper.mapper:
+        class: SeStep\ModularLeanMapper\ModularMapper
+        arguments:
+            mapper: PAF\Common\Model\UnderscoreMapper()
+            modules:
+                ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
+                ss_files__: SeStep\FileAttachable\FilesMapperModule()
+                ss_comments__: SeStep\Commentable\Lean\CommentsMapperModule()
+                audit__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\AuditTrailModule')
+                common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
+                commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')

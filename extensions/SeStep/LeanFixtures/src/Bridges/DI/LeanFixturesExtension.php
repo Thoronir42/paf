@@ -14,19 +14,23 @@ class LeanFixturesExtension extends CompilerExtension
     {
         return Nette\Schema\Expect::structure([
             'initFiles' => Nette\Schema\Expect::arrayOf(Nette\Schema\Expect::string()),
-        ])->castTo('array');
+            'daos' => Nette\Schema\Expect::array(),
+        ]);
     }
 
 
     public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
+        $config = $this->getConfig();
+
 
         $builder->addDefinition($this->prefix('entityFixtures'))
-            ->setType(EntityFixtures::class);
+            ->setType(EntityFixtures::class)
+            ->setArgument('daos', $config->daos);
 
         if (class_exists(Command::class)) {
-            $files = $this->getConfig()['initFiles'];
+            $files = $config->initFiles;
             $builder->addDefinition($this->prefix('initCommand'))
                 ->setType(InitFixturesCommand::class)
                 ->setArguments(['files' => $files]);

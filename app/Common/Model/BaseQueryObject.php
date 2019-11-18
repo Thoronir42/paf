@@ -1,14 +1,15 @@
 <?php declare(strict_types=1);
+
 namespace PAF\Common\Model;
 
-use Dibi\DataSource;
+use Dibi\Fluent;
 
 abstract class BaseQueryObject
 {
     /** @var IQueryable */
     protected $queryable;
-    /** @var DataSource */
-    protected $dataSource;
+    /** @var Fluent */
+    protected $query;
 
     /**
      * BaseQueryObject constructor.
@@ -18,22 +19,33 @@ abstract class BaseQueryObject
      */
     public function __construct(IQueryable $queryable, string $tableAlias = null)
     {
-        $this->dataSource = $queryable->getDataSource($tableAlias);
+        $this->query = $queryable->getDataSource($tableAlias);
     }
+
+    /**
+     * @param IQueryable $queryable
+     */
+    public function setQueryable(IQueryable $queryable): void
+    {
+        $this->queryable = $queryable;
+    }
+
 
     public function limit(int $limit, int $offset = null)
     {
-        $this->dataSource->applyLimit($limit, $offset);
+        $this->query->limit($limit);
+        if ($offset !== null) {
+            $this->query->offset($offset);
+        }
     }
 
     public function fetch()
     {
-        $this->queryable->makeEntity($this->dataSource->fetch());
+        $this->queryable->makeEntity($this->query->fetch());
     }
 
     public function fetchAll()
     {
-
-        return $this->queryable->makeEntities($this->dataSource->fetchAll());
+        return $this->queryable->makeEntities($this->query->fetchAll());
     }
 }

@@ -1,6 +1,9 @@
+entity.case: Case
+
 quotes.title: "Quotes"
 quotes.currently-closed: "are currently closed"
 quotes.currently-closed-text: "If you want to apply for a commission, you are at correct place, alas I'm currently not accepting any new quotes."
+
 quotes.enabled: "Quotes are currently enabled"
 quotes.enable: "Enable quotes"
 quotes.disabled: "Quotes are currently disabled"
@@ -31,3 +34,45 @@ quote-form:
     group-finish: "Finalize quote"
 
 quote.noReferences: There are no references
+
+
+case.fursuitSpecification: FursuitSpecification
+
+case:
+    notes: Notes
+    details: Case details
+    created: "Case %name% has been created"
+    already-exists: "Case %name% already exists"
+    create-error: "Case could not be created"
+    updated: Case %name% has been updated
+    targetDelivery: Target delivery date
+
+    status: Status
+    status.accepted: Accepted
+    status.wip: In progress
+    status.finished: Finished
+    status.cancelled: Cancelled
+    status.shipped: Shipped
+    status.archived: Archived
+
+    action.commence: Commence
+    action.finish: Finish
+    action.ship: Ship
+    action.cancel: Cancel
+    action.archive: Archive
+
+    action.commence.executed: %actor% commenced work on the case.
+    action.finish.executed: %actor% finished this case.
+    action.ship.executed: %actor% shipped the work.
+    action.cancel.executed: %actor% cancelled the case.
+    action.archive.executed: %actor% archived the case
+
+log:
+    caseCreated: %actor% created the case
+    caseUpdated: %actor% updated the case
+
+cases:
+    label: "Running cases"
+    detailTitle: "Detail of case %name%"
+    detail: "Case"
+    notes: "Notes"
