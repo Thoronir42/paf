@@ -2,6 +2,7 @@
 
 namespace SeStep\Typeful;
 
+use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\FactoryDefinition;
 use Nette\DI\Definitions\ServiceDefinition;
@@ -14,7 +15,6 @@ class TypefulExtension extends CompilerExtension
     public function getConfigSchema(): Schema
     {
         return Expect::structure([
-            'propertyTypes' => Expect::array(),
             'filters' => Expect::structure([
                 'displayEntityProperty' => Expect::string(),
                 'displayPropertyName' => Expect::string(),
@@ -25,11 +25,9 @@ class TypefulExtension extends CompilerExtension
     public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
-        $config = $this->getConfig();
 
         $typeRegister = $builder->addDefinition($this->prefix('typeRegister'))
-            ->setType(TypeRegister::class)
-            ->setArgument('propertyTypes', $this->getTypesDefinitions($config->propertyTypes));
+            ->setType(TypeRegister::class);
 
         $builder->addDefinition($this->prefix('entityDescriptorRegister'))
             ->setType(EntityDescriptorRegistry::class);
@@ -39,41 +37,25 @@ class TypefulExtension extends CompilerExtension
             ->setArgument('typeRegister', $typeRegister);
     }
 
-    private function getTypesDefinitions($configTypes)
-    {
-        $types = [
-            new Statement(Types\IntType::class),
-            new Statement(Types\TextType::class),
-            new Statement(Types\DateTimeType::class),
-        ];
-
-        foreach ($configTypes as $i => $type) {
-            if ($type instanceof Statement) {
-                $types[] = $type;
-                continue;
-            }
-            if (is_string($type)) {
-                if (is_a($type, PropertyType::class, true)) {
-                    $types[] = new Statement($type);
-                    continue;
-                }
-            }
-
-            $key = $this->prefix("propertyTypes") . '.' . $i;
-            throw new \UnexpectedValueException("Type $key is not recognized");
-        }
-
-        return $types;
-    }
-
     public function beforeCompile()
     {
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
 
-        if (!empty($config->filters)) {
-            $this->registerFilters($builder->getDefinition($this->prefix('propertyFilter')), $config->filters);
+        $typeServiceNames = $builder->findByTag('typeful.propertyType');
+        $types = [
+            new Statement(Types\IntType::class),
+            new Statement(Types\TextType::class),
+            new Statement(Types\DateTimeType::class),
+        ];
+        foreach (array_keys($typeServiceNames) as $typeServiceName) {
+            $types[] = $builder->getDefinition($typeServiceName);
         }
+
+        /** @var ServiceDefinition $typeRegister */
+        $typeRegister = $builder->getDefinition($this->prefix('typeRegister'));
+        $typeRegister->setArgument('propertyTypes', $types);
+
 
         $descriptors = [];
         foreach ($builder->findByTag('typeful.entity') as $service => $entityClass) {
@@ -83,6 +65,10 @@ class TypefulExtension extends CompilerExtension
         /** @var ServiceDefinition $entityDescriptorRegister */
         $entityDescriptorRegister = $builder->getDefinition($this->prefix('entityDescriptorRegister'));
         $entityDescriptorRegister->setArgument('descriptors', $descriptors);
+
+        if (!empty($config->filters)) {
+            $this->registerFilters($builder->getDefinition($this->prefix('propertyFilter')), $config->filters);
+        }
     }
 
     private function registerFilters($filterService, $filterNamesConfig)
@@ -94,7 +80,7 @@ class TypefulExtension extends CompilerExtension
         foreach ($filterNamesConfig as $filterMethod => $registerName) {
             if (!preg_match('/^\w+$/', $registerName)) {
                 $paramName = $this->prefix("filters.$filterMethod");
-                throw new \InvalidArgumentException("Parameter '$paramName' must match `^\w+$` pattern," .
+                throw new InvalidArgumentException("Parameter '$paramName' must match `^\w+$` pattern," .
                     " got '$registerName'");
             }
 

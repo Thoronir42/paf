@@ -21,3 +21,8 @@ services:
         autowired: false
         tags:
             typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
+    pafCaseStatusType:
+        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+        autowired: false
+        tags:
+            - typeful.propertyType

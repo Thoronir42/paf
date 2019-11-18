@@ -65,8 +65,6 @@ appRouting:
         Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
 
 typeful:
-    propertyTypes:
-        - PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
     filters:
         displayEntityProperty: 'entityProperty'
         displayPropertyName: 'entityPropertyName'
