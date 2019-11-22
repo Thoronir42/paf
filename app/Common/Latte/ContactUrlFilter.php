@@ -3,18 +3,17 @@
 namespace PAF\Common\Latte;
 
 use Nette\InvalidArgumentException;
+use PAF\Modules\CommonModule\Services\ContactDefinitions;
 
 final class ContactUrlFilter extends BaseFilter
 {
-    /** @var string[] */
-    private $formats;
+    /** @var ContactDefinitions */
+    private $contactDefinitions;
 
-    /** @param string[] $formats */
-    public function __construct(array $formats)
+    public function __construct(ContactDefinitions $contactDefinitions)
     {
-        $this->formats = $formats;
+        $this->contactDefinitions = $contactDefinitions;
     }
-
 
     public function useFilter(...$args): string
     {
@@ -25,6 +24,6 @@ final class ContactUrlFilter extends BaseFilter
             throw new InvalidArgumentException("Contact filter '$args[1]' not recognized");
         }
 
-        return sprintf($this->formats[$args[1]], $args[0]);
+        return $this->contactDefinitions->formatHref($args[1], $args[0]);
     }
 }

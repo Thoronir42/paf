@@ -3,13 +3,16 @@
 namespace PAF\Modules\CommissionModule\Components\PafCaseForm;
 
 use Nette\Application\UI\ITemplate;
+use Nette\Localization\ITranslator;
 use PAF\Common\Forms\Controls\DateInput;
+use PAF\Common\Forms\FormFactory;
 use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule;
+use PAF\Modules\CommonModule\Components\ContactControl\ContactControlFactory;
 use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\PortfolioModule;
 use stdClass;
@@ -23,6 +26,19 @@ use stdClass;
  */
 class PafCaseForm extends FormWrapperControl
 {
+    /** @var ContactControlFactory */
+    private $contactControlFactory;
+
+    public function __construct(
+        FormFactory $formFactory,
+        ITranslator $translator,
+        ContactControlFactory $contactControlFactory
+    ) {
+        parent::__construct($formFactory, $translator);
+        $this->contactControlFactory = $contactControlFactory;
+        $this['contact'] = new Container();
+    }
+
     /** @var PafCase */
     private $case;
 
@@ -41,6 +57,10 @@ class PafCaseForm extends FormWrapperControl
             'status' => $case->status,
             'targetDelivery' => $case->targetDelivery,
         ]);
+
+        foreach ($case->customer->contact as $contact) {
+            $this['contact'][$contact->type] = $this->contactControlFactory->create($contact);
+        }
     }
 
     public function render()

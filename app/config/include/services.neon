@@ -42,6 +42,16 @@ services:
         arguments:
             fileStorage: @fileStorage.image
 
+    common.contactDefinitions:
+        class: PAF\Modules\CommonModule\Services\ContactDefinitions
+        arguments:
+            contactSpecification:
+                telegram:
+                    format: 'https://t.me/%s'
+                    icon: 'fa-telegram'
+    common.contactControlFactory: PAF\Modules\CommonModule\Components\ContactControl\ContactControlFactory
+
+
     nette.latteFactory:
         setup:
             - Latte\Runtime\Filters::$dateFormat = 'y/m/d'
@@ -53,9 +63,6 @@ services:
     yesNoFilter: PAF\Common\Latte\YesNoFilter
     contactUrlFilter:
         class: PAF\Common\Latte\ContactUrlFilter
-        arguments:
-            formats:
-                telegram: 'https://t.me/%s'
     htmlClassFilter: PAF\Common\Latte\HtmlClassFilter
     userFilter: PAF\Modules\CommonModule\Latte\UserFilter
 

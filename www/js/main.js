@@ -10,8 +10,6 @@ $(document).ready(function () {
     initSelect2();
 
     initDatePicker();
-
-    replaceTelegramUrls();
     
 });
 
@@ -81,14 +79,4 @@ function initDatePicker() {
 }
 
 
-function replaceTelegramUrls() {
-    var pattern = /https:\/\/t\.me\/(.+)\/?/;
-    $('a').each(function () {
-        var href = this.href;
-        var result = pattern.exec(href);
-        if(result) {
-            this.href = "tg:resolve?domain=" + result[1];
-        }
 
-    });
-}

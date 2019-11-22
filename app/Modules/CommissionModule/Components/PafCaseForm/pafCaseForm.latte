@@ -28,11 +28,9 @@
                         {label contact-telegram, class => 'control-label'}
                         <div class="input-group">
                             {input contact-telegram, class => 'form-control'}
-                            <div class="input-group-btn">
-                                <a class="btn btn-default"
-                                   href="{$form['contact']['telegram']->value|contactUrl:'telegram'}">
-                                    <i class="fa fa-telegram"></i>
-                                </a>
+
+                            <div class="input-group-btn" n:if="$form['contact']['telegram']->getValue()">
+                                {control contact-telegram:iconBtn}
                             </div>
                         </div>
                     </div>
