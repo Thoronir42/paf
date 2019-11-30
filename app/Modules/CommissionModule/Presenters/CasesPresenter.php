@@ -7,6 +7,7 @@ use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
+use PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory;
 use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
@@ -23,6 +24,9 @@ final class CasesPresenter extends BasePresenter
 {
     /** @var PafCases @inject */
     public $cases;
+
+    /** @var CasesGridFactory @inject */
+    public $casesGridFactory;
 
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
@@ -42,10 +46,12 @@ final class CasesPresenter extends BasePresenter
 
     public function actionList(string $filter = null)
     {
-        $cases = $this->cases->getCasesByStatus([PafCaseWorkflow::STATUS_ACCEPTED, PafCaseWorkflow::STATUS_WIP]);
-        /** @var CasesControl $casesComponent */
-        $casesComponent = $this['cases'];
-        $casesComponent->setCases($cases);
+        $casesGrid = $this->casesGridFactory->create();
+
+        $casesGrid->setDataSource($this->cases->getCasesDataSource());
+        $casesGrid->addAction('edit', 'generic.edit', 'detail');
+
+        $this['cases'] = $casesGrid;
     }
 
     public function actionDetail($id)
@@ -108,13 +114,6 @@ final class CasesPresenter extends BasePresenter
         };
 
         $this['stateControl'] = $stateControl;
-    }
-
-    public function createComponentCases()
-    {
-        $casesComponent = new CasesControl();
-
-        return $casesComponent;
     }
 
     public function createComponentComments()

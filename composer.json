@@ -44,7 +44,8 @@
     "contributte/console": "^0.7.1",
     "contributte/monolog": "^0.3.0",
     "symfony/workflow": "^4.3",
-    "symfony/event-dispatcher": "^4.3"
+    "symfony/event-dispatcher": "^4.3",
+    "ublaboo/datagrid": "^6.2"
   },
   "repositories": [
     {

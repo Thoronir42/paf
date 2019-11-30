@@ -12,6 +12,8 @@ services:
     commissions: PAF\Modules\CommissionModule\Facade\Commissions
     quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
 
+    pafCasesGridFactory: PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory
+
     quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
     pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
     caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory

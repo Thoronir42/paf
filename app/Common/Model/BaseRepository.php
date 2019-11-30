@@ -9,6 +9,7 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
+use PAF\Common\Lean\LeanMapperDataSource;
 use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable
@@ -74,7 +75,7 @@ abstract class BaseRepository extends Repository implements IQueryable
     }
 
 
-    protected function select($what = "t.*", $alias = "t", array $criteria = null)
+    protected function select(string $what = "t.*", string $alias = "t", array $criteria = null): Fluent
     {
         $fluent = $this->connection->select($what)
             ->from($this->getTable() . " AS $alias");
@@ -163,6 +164,18 @@ abstract class BaseRepository extends Repository implements IQueryable
         return $this->select($select, $alias);
     }
 
+    public function getEntityDataSource(): LeanMapperDataSource
+    {
+        $entityClass = $this->mapper->getEntityClass($this->getTable());
+
+        $fluent = $this->connection->command();
+        $fluent
+            ->select('t.*')
+            ->from($this->getTable() . ' AS t');
+        
+        return new LeanMapperDataSource($fluent, $this, $this->mapper, $entityClass);
+    }
+
     public function makeEntity($row)
     {
         if (!$row) {
@@ -228,7 +241,7 @@ abstract class BaseRepository extends Repository implements IQueryable
 
     protected function insertIntoDatabase(Entity $entity)
     {
-        $primaryKey = $this->mapper->getPrimaryKey($this->getTable());
+        $primaryKey = $this->getPrimaryKey();
         $values = $entity->getModifiedRowData();
         foreach ($values as &$value) {
             if ($value instanceof Entity) {

@@ -3,12 +3,14 @@
 namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Utils\Paginator;
+use PAF\Common\Lean\LeanMapperDataSource;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Common\Feed\Service\FeedService;
 use SeStep\Commentable\Lean\Repository\CommentRepository;
+use Ublaboo\DataGrid\DataSource\DibiFluentDataSource;
 
 class PafCases
 {
@@ -69,5 +71,10 @@ class PafCases
     public function executeAction(PafCase $case, string $action): ActionResult
     {
         return $this->caseRepository->executeAction($case, $action);
+    }
+
+    public function getCasesDataSource(): LeanMapperDataSource
+    {
+        return $this->caseRepository->getEntityDataSource();
     }
 }
