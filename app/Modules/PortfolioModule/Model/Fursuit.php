@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\PortfolioModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use PAF\Common\Model\Traits\Slug;
 use Nette\Utils\DateTime;
 use PAF\Modules\CommonModule\Model\User;
@@ -15,7 +15,7 @@ use PAF\Modules\CommonModule\Model\User;
  * @property DateTime $issuedOn
  * @property DateTime $completedOn
  */
-class Fursuit extends BaseEntity
+class Fursuit extends Entity
 {
     const TYPE_PARTIAL = 'partial';
     const TYPE_HALF_SUIT = 'halfsuit';

@@ -3,7 +3,7 @@
 namespace PAF\Common\AuditTrail\Entity;
 
 use DateTime;
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\User;
 
 /**
@@ -16,7 +16,7 @@ use PAF\Modules\CommonModule\Model\User;
  * @property string $type
  * @property array $parameters
  */
-class Entry extends BaseEntity
+class Entry extends Entity
 {
     private $paramsCache;
 

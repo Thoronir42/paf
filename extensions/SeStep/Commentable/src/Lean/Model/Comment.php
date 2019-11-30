@@ -3,7 +3,7 @@
 namespace SeStep\Commentable\Lean\Model;
 
 use DateTime;
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\User;
 
 /**
@@ -13,6 +13,6 @@ use PAF\Modules\CommonModule\Model\User;
  * @property DateTime $createdOn
  * @property string $text
  */
-class Comment extends BaseEntity
+class Comment extends Entity
 {
 }

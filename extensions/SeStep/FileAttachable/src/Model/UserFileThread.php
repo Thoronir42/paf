@@ -2,14 +2,14 @@
 
 namespace SeStep\FileAttachable\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * @property int $id
  * @property UserFile[] $files m:belongsToMany(thread_id)
  * @property \DateTime $dateCreated
  */
-class UserFileThread extends BaseEntity implements \IteratorAggregate, \Countable
+class UserFileThread extends Entity implements \IteratorAggregate, \Countable
 {
 
     public function getIterator()

@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 /**
@@ -13,7 +13,7 @@ use PAF\Modules\PortfolioModule\Model\Fursuit;
  *
  * @see Fursuit possible type values
  */
-class Specification extends BaseEntity
+class Specification extends Entity
 {
 
 }

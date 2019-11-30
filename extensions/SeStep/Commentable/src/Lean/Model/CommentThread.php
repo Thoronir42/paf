@@ -2,13 +2,13 @@
 
 namespace SeStep\Commentable\Lean\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * @property string $id
  * @property Comment[] $comments m:belongsToMany(thread_id)
  *
  */
-class CommentThread extends BaseEntity
+class CommentThread extends Entity
 {
 }

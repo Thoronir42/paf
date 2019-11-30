@@ -4,8 +4,6 @@ namespace Test\PAF\Utils;
 
 use LeanMapper\Connection;
 use LeanMapper\IMapper;
-use PAF\Commands\InitDatabaseCommand;
-use PAF\Common\Model\BaseEntity;
 
 final class TestDBUtils
 {

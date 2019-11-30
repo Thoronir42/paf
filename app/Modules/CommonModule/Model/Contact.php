@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * @property int $id
@@ -10,7 +10,7 @@ use PAF\Common\Model\BaseEntity;
  * @property string $type m:enum(Contact::TYPE_*)
  * @property string $value
  */
-class Contact extends BaseEntity
+class Contact extends Entity
 {
     const TYPE_EMAIL = 'email';
     const TYPE_TELEGRAM = 'telegram';

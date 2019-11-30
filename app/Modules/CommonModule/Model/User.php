@@ -2,8 +2,8 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
+use LeanMapper\Entity;
 use Nette\InvalidStateException;
-use PAF\Common\Model\BaseEntity;
 use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 /**
@@ -16,7 +16,7 @@ use PAF\Modules\PortfolioModule\Model\Fursuit;
  *
  * @property Fursuit[] $fursuits
  */
-class User extends BaseEntity
+class User extends Entity
 {
     public const TYPE_PERSON = 'person';
     public const TYPE_SYSTEM = 'system';

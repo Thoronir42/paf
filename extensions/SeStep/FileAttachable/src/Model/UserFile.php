@@ -2,15 +2,15 @@
 
 namespace SeStep\FileAttachable\Model;
 
+use LeanMapper\Entity;
 use Nette\InvalidArgumentException;
-use PAF\Common\Model\BaseEntity;
 
 /**
  * @property UserFileThread|null $thread m:hasOne(thread_id)
  * @property string $filename
  * @property int $size
  */
-class UserFile extends BaseEntity
+class UserFile extends Entity
 {
     public function validate()
     {
