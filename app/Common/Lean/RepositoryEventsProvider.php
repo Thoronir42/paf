@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Model;
+namespace PAF\Common\Lean;
 
 interface RepositoryEventsProvider
 {

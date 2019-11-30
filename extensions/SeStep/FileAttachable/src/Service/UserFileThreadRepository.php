@@ -2,7 +2,7 @@
 
 namespace SeStep\FileAttachable\Service;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class UserFileThreadRepository extends BaseRepository
 {

@@ -4,7 +4,6 @@ namespace PAF\Common\Lean;
 
 use LeanMapper\Fluent;
 use LeanMapper\IMapper;
-use PAF\Common\Model\IQueryable;
 use Ublaboo\DataGrid\DataSource\FilterableDataSource;
 use Ublaboo\DataGrid\DataSource\IDataSource;
 use Ublaboo\DataGrid\Exception\DataGridDateTimeHelperException;

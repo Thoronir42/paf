@@ -3,7 +3,7 @@
 namespace SeStep\Commentable\Lean\Repository;
 
 use Dibi\Fluent;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use SeStep\Commentable\Lean\Model\CommentThread;
 
 class CommentRepository extends BaseRepository

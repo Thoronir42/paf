@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\PAF\Utils;
+namespace PAF\Utils;
 
 use LeanMapper\Connection;
 use LeanMapper\IMapper;

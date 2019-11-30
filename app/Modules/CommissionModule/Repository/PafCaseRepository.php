@@ -5,7 +5,7 @@ namespace PAF\Modules\CommissionModule\Repository;
 use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Modules\CommissionModule\Model\PafCase;

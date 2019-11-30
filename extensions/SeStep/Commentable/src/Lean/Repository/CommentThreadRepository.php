@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 namespace SeStep\Commentable\Lean\Repository;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class CommentThreadRepository extends BaseRepository
 {

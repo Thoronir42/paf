@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Model;
+namespace PAF\Common\Lean;
 
 use Dibi\Fluent;
 use Dibi\UniqueConstraintViolationException;
@@ -9,7 +9,6 @@ use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use LeanMapper\Repository;
-use PAF\Common\Lean\LeanMapperDataSource;
 use SeStep\EntityIds\IdGenerator;
 
 abstract class BaseRepository extends Repository implements IQueryable

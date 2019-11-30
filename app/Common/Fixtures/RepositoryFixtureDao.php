@@ -6,7 +6,7 @@ use LeanMapper\Entity;
 use LeanMapper\IMapper;
 use LeanMapper\Reflection\Property;
 use LeanMapper\Repository;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use SeStep\LeanFixtures\FixtureDao;
 
 final class RepositoryFixtureDao implements FixtureDao

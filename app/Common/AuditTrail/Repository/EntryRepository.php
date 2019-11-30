@@ -2,7 +2,7 @@
 
 namespace PAF\Common\AuditTrail\Repository;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class EntryRepository extends BaseRepository
 {

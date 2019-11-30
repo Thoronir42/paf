@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Test\PAF\Utils;
+namespace PAF\Utils;
 
 use Nette\DI\Container;
 

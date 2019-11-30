@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace Test\PAF\Common\Model;
+namespace PAF\Common\Lean;
 
-use PAF\Common\Model\LeanSnapshots;
 use PAF\Modules\CommonModule\Model\Person;
 use PHPUnit\Framework\TestCase;
 

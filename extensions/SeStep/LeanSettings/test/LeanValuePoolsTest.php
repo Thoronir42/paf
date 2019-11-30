@@ -3,12 +3,11 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
+use PAF\Utils\TestDBUtils;
 use SeStep\GeneralSettings\IValuePoolsAdapter;
-use SeStep\LeanSettings\LeanOptionsAdapter;
 use SeStep\LeanSettings\LeanValuePoolsAdapter;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
-use Test\PAF\Utils\TestDBUtils;
 use Test\SeStep\GeneralSettings\GenericValuePoolTest;
 
 class LeanValuePoolsTest extends GenericValuePoolTest

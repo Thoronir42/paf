@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommonModule\Repository;
 
 use LeanMapper\Entity;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class ContactRepository extends BaseRepository
 {

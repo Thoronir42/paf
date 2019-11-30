@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommissionModule\Repository;
 
 use Nette\Utils\Paginator;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use PAF\Modules\CommissionModule\Model\Quote;
 
 class QuoteRepository extends BaseRepository

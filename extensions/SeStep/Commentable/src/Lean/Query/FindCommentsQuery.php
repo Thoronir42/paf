@@ -2,9 +2,8 @@
 
 namespace SeStep\Commentable\Lean\Query;
 
-use Dibi\DataSource;
-use PAF\Common\Model\BaseQueryObject;
-use PAF\Common\Model\IQueryable;
+use PAF\Common\Lean\BaseQueryObject;
+use PAF\Common\Lean\IQueryable;
 use SeStep\Commentable\Lean\Model\Comment;
 use SeStep\Commentable\Lean\Model\CommentThread;
 
