@@ -5,6 +5,7 @@ namespace PAF\Common\Lean\DI;
 use Nette;
 use Nette\DI\CompilerExtension;
 use Nette\Schema\Expect;
+use PAF\Common\Lean\LeanSnapshots;
 
 class LeanMapperExtension extends \LeanMapper\Bridges\Nette\DI\LeanMapperExtension
 {
@@ -25,16 +26,19 @@ class LeanMapperExtension extends \LeanMapper\Bridges\Nette\DI\LeanMapperExtensi
 
     public function loadConfiguration()
     {
-        $container = $this->getContainerBuilder();
+        $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
 
-        $container->addDefinition($this->prefix('mapper'))
+        $builder->addDefinition($this->prefix('mapper'))
             ->setClass('LeanMapper\DefaultMapper');
 
-        $container->addDefinition($this->prefix('entityFactory'))
+        $builder->addDefinition($this->prefix('entityFactory'))
             ->setClass('LeanMapper\DefaultEntityFactory');
 
-        $connection = $container->addDefinition($this->prefix('connection'))
+        $builder->addDefinition($this->prefix('snapshots'))
+            ->setType(LeanSnapshots::class);
+
+        $connection = $builder->addDefinition($this->prefix('connection'))
             ->setFactory('LeanMapper\Connection', [$config['db']]);
 
         if (isset($config['db']['flags'])) {
@@ -45,11 +49,11 @@ class LeanMapperExtension extends \LeanMapper\Bridges\Nette\DI\LeanMapperExtensi
             $config['db']['flags'] = $flags;
         }
 
-        if (class_exists('Tracy\Debugger') && $container->parameters['debugMode'] && $config['profiler']) {
-            $panel = $container->addDefinition($this->prefix('panel'))->setClass('Dibi\Bridges\Tracy\Panel');
+        if (class_exists('Tracy\Debugger') && $builder->parameters['debugMode'] && $config['profiler']) {
+            $panel = $builder->addDefinition($this->prefix('panel'))->setClass('Dibi\Bridges\Tracy\Panel');
             $connection->addSetup([$panel, 'register'], [$connection]);
             if ($config['logFile']) {
-                $fileLogger = $container->addDefinition($this->prefix('fileLogger'))
+                $fileLogger = $builder->addDefinition($this->prefix('fileLogger'))
                     ->setClass('Dibi\Loggers\FileLogger', [$config['logFile']]);
                 $connection->addSetup('$service->onEvent[] = ?', [
                     [$fileLogger, 'logEvent'],

@@ -23,14 +23,14 @@ services:
 
     - PAF\Modules\CmsModule\Facade\CmsPages
 
-    - SeStep\FileAttachable\Files
-    - SeStep\FileAttachable\Service\UserFileRepository
-    - SeStep\FileAttachable\Service\UserFileThreadRepository
+    - PAF\Modules\CommonModule\Services\FilesService
+    - PAF\Modules\CommonModule\Repository\UserFileRepository
+    - PAF\Modules\CommonModule\Repository\UserFileThreadRepository
 
-    commentable.commentRepository: SeStep\Commentable\Lean\Repository\CommentRepository
-    commentable.commentThreadRepository: SeStep\Commentable\Lean\Repository\CommentThreadRepository
-    commentable.commentsService: SeStep\Commentable\Service\CommentsService
-    commentable.commentsControlFactory: SeStep\Commentable\Control\CommentsControlFactory
+    common.commentRepository: PAF\Modules\CommonModule\Repository\CommentRepository
+    common.commentThreadRepository: PAF\Modules\CommonModule\Repository\CommentThreadRepository
+    common.commentsService: PAF\Modules\CommonModule\Services\CommentsService
+    common.commentsControlFactory: PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory
 
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())

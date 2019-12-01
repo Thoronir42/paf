@@ -34,7 +34,7 @@ extensions:
     appForms: PAF\Common\Forms\FormsExtension
     repository: PAF\Common\Lean\DI\RepositoryExtension
     leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
-    moment: PAF\Utils\Moment\MomentProviderExtension
+    moment: SeStep\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
     translation: Contributte\Translation\DI\TranslationExtension

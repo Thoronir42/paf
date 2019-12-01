@@ -5,11 +5,6 @@ namespace SeStep\NavigationMenuComponent\Loader;
 use Nette\FileNotFoundException;
 use Nette\Neon\Neon;
 use Nette\Security\User;
-use Nette\UnexpectedValueException;
-use SeStep\Navigation\Menu\Items\ANavMenuItem;
-use SeStep\Navigation\Menu\Items\INavMenuItem;
-use SeStep\Navigation\Menu\Items\NavMenuLink;
-use SeStep\Navigation\Menu\Items\NavMenuSeparator;
 use SeStep\Navigation\Provider\AssociativeArrayProvider;
 use SeStep\Navigation\Provider\NavigationItemsProvider;
 

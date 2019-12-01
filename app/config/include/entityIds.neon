@@ -8,5 +8,5 @@ entityIds:
         17: PAF\Modules\CommonModule\Model\Person
         19: PAF\Modules\CommissionModule\Model\Quote
         23: PAF\Modules\CommissionModule\Model\PafCase
-        53: SeStep\Commentable\Lean\Model\CommentThread
-        57: SeStep\Commentable\Lean\Model\Comment
+        53: PAF\Modules\CommonModule\Model\CommentThread
+        57: PAF\Modules\CommonModule\Model\Comment

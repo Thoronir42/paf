@@ -18,8 +18,8 @@ use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\CommonModule\Repository\ContactRepository;
 use PAF\Modules\CommonModule\Repository\PersonRepository;
 use PAF\Modules\CommonModule\Repository\SlugRepository;
-use PAF\Utils\Moment\HasMomentProvider;
-use SeStep\Commentable\Service\CommentsService;
+use PAF\Modules\CommonModule\Services\CommentsService;
+use SeStep\Moment\HasMomentProvider;
 
 class Commissions
 {
@@ -79,8 +79,8 @@ class Commissions
         Specification $specification,
         Person $issuer,
         $references
-    ) {
-        $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
+    ): ?string {
+        return $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
             if (!$this->saveSpecification($specification)) {
                 throw new \UnexpectedValueException("Could not save specification");
             }
@@ -101,9 +101,8 @@ class Commissions
 
 
             $this->quoteRepository->persist($quote);
+            return null;
         });
-
-        return null;
     }
 
     public function saveSpecification(Specification $specification): bool

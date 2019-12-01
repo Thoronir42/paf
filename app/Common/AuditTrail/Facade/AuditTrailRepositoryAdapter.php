@@ -4,8 +4,8 @@ namespace PAF\Common\AuditTrail\Facade;
 
 use LeanMapper\Entity;
 use LeanMapper\IMapper;
-use PAF\Common\Model\LeanSnapshots;
-use PAF\Common\Model\RepositoryEventsProvider;
+use PAF\Common\Lean\LeanSnapshots;
+use PAF\Common\Lean\RepositoryEventsProvider;
 
 abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
 {

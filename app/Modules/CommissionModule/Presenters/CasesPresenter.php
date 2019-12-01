@@ -5,24 +5,26 @@ namespace PAF\Modules\CommissionModule\Presenters;
 use PAF\Common\BasePresenter;
 use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
-use PAF\Common\Model\LeanSnapshots;
-use PAF\Modules\CommissionModule\Components\CasesControl\CasesControl;
+use PAF\Common\Lean\LeanSnapshots;
+use PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory;
 use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
 use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafCases;
 use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 use Nette\Application\BadRequestException;
-use SeStep\Commentable\Control\CommentsControl;
-use SeStep\Commentable\Control\CommentsControlFactory;
-use SeStep\Commentable\Lean\Model\Comment;
-use SeStep\Commentable\Service\CommentsService;
+use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControl;
+use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
+use PAF\Modules\CommonModule\Model\Comment;
+use PAF\Modules\CommonModule\Services\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {
     /** @var PafCases @inject */
     public $cases;
+
+    /** @var CasesGridFactory @inject */
+    public $casesGridFactory;
 
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
@@ -40,12 +42,14 @@ final class CasesPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
-    public function actionList(string $filter = null)
+    public function actionList()
     {
-        $cases = $this->cases->getCasesByStatus([PafCaseWorkflow::STATUS_ACCEPTED, PafCaseWorkflow::STATUS_WIP]);
-        /** @var CasesControl $casesComponent */
-        $casesComponent = $this['cases'];
-        $casesComponent->setCases($cases);
+        $casesGrid = $this->casesGridFactory->create();
+
+        $casesGrid->setDataSource($this->cases->getCasesDataSource());
+        $casesGrid->addAction('edit', 'generic.edit', 'detail');
+
+        $this['cases'] = $casesGrid;
     }
 
     public function actionDetail($id)
@@ -108,13 +112,6 @@ final class CasesPresenter extends BasePresenter
         };
 
         $this['stateControl'] = $stateControl;
-    }
-
-    public function createComponentCases()
-    {
-        $casesComponent = new CasesControl();
-
-        return $casesComponent;
     }
 
     public function createComponentComments()

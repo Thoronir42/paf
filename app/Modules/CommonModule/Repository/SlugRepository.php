@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Repository;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use PAF\Modules\CommonModule\Model\Slug;
 
 /**

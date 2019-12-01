@@ -4,7 +4,7 @@ namespace PAF\Common\Feed\Components\Comment;
 
 use PAF\Common\Feed\Components\FeedControl\FeedEntryControl;
 use PAF\Common\Feed\FeedEvents;
-use SeStep\Commentable\Lean\Model\Comment;
+use PAF\Modules\CommonModule\Model\Comment;
 
 class CommentFeedControl extends FeedEntryControl
 {

@@ -1,9 +1,9 @@
 <?php declare(strict_types=1);
+
 namespace Test\SeStep\GeneralSettings;
 
 use PHPUnit\Framework\TestCase;
 use SeStep\GeneralSettings\DomainLocator;
-use SeStep\GeneralSettings\Model\INode;
 
 class DomainLocatorTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * Class Person
@@ -14,7 +14,7 @@ use PAF\Common\Model\BaseEntity;
  *
  * @property Contact[] $contact m:belongsToMany(person_id)
  */
-class Person extends BaseEntity
+class Person extends Entity
 {
     public function contactExists(Contact $contact): bool
     {

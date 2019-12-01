@@ -2,10 +2,10 @@
 
 namespace PAF\Modules\CommonModule\Repository;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 use Nette\InvalidStateException;
 use PAF\Modules\CommonModule\Model\User;
-use PAF\Utils\Moment\HasMomentProvider;
+use SeStep\Moment\HasMomentProvider;
 
 class UserRepository extends BaseRepository
 {

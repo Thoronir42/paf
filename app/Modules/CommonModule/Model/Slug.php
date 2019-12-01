@@ -2,14 +2,14 @@
 
 namespace PAF\Modules\CommonModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * Universally unique slug
  *
  * @property string $id
  */
-class Slug extends BaseEntity
+class Slug extends Entity
 {
 
 }

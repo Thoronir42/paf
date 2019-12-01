@@ -1,11 +1,9 @@
 <?php
 
-namespace Test\PAF\Utils;
+namespace PAF\Utils;
 
 use LeanMapper\Connection;
 use LeanMapper\IMapper;
-use PAF\Commands\InitDatabaseCommand;
-use PAF\Common\Model\BaseEntity;
 
 final class TestDBUtils
 {

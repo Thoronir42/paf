@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CmsModule\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 
 /**
  * @property int $id
@@ -10,7 +10,7 @@ use PAF\Common\Model\BaseEntity;
  * @property string $title
  * @property string $content
  */
-class Page extends BaseEntity
+class Page extends Entity
 {
 
 }

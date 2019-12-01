@@ -41,7 +41,6 @@ class LiveUserIdentity implements IIdentity
     public function initialize(User $user, array $roles = [])
     {
         $user->detach();
-        $user->unsetProperty('password');
 
         $this->user = $user;
         $this->roles = $roles;

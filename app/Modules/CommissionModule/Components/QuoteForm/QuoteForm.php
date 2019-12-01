@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
-use Nette\Http\FileUpload;
 use PAF\Common\Forms\Form;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Model\Quote;
@@ -12,7 +11,7 @@ use PAF\Modules\CommonModule\Model\Contact;
 /**
  * Class QuoteForm
  *
- * @method onSave$quote, $specification, $contact, $references, $form)
+ * @method onSave($quote, $specification, $contact, $references, $form)
  */
 class QuoteForm extends Form
 {

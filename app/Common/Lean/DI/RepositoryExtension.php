@@ -5,7 +5,7 @@ namespace PAF\Common\Lean\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class RepositoryExtension extends CompilerExtension
 {

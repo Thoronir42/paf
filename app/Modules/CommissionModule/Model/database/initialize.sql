@@ -25,7 +25,7 @@ CREATE TABLE `commission__quote`
     CONSTRAINT `quote_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id),
     CONSTRAINT `quote_references_fq` FOREIGN KEY
-        (references_thread_id) REFERENCES ss_files__user_file_thread (id)
+        (references_thread_id) REFERENCES common__user_file_thread (id)
         ON DELETE SET NULL ON UPDATE CASCADE
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE commission__paf_case
     CONSTRAINT `case_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id),
     CONSTRAINT `case_comment_thread_fk` FOREIGN KEY
-        (comment_thread_id) REFERENCES ss_comments__comment_thread (id)
+        (comment_thread_id) REFERENCES common__comment_thread (id)
 );
 
 CREATE TABLE commission__fursuit_progress

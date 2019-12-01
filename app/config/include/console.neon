@@ -7,18 +7,16 @@ console:
 
 services:
     command.initDatabase:
-        class: PAF\Common\Commands\InitDatabaseCommand
+        class: Data\InitDatabaseCommand
         arguments:
             databaseName: %database.database%
             defaultFiles:
                 - %appDir%/Modules/CommonModule/Model/database/initialize.sql
                 - %rootDir%/extensions/SeStep/LeanSettings/database/initialize.sql
-                - %rootDir%/extensions/SeStep/FileAttachable/database/initialize.sql
-                - %rootDir%/extensions/SeStep/Commentable/database/initialize.sql
                 - %appDir%/Common/AuditTrail/database/initialize.sql
                 - %appDir%/Modules/CommissionModule/Model/database/initialize.sql
                 - %appDir%/Modules/PortfolioModule/Model/database/initialize.sql
                 - %appDir%/Modules/CmsModule/Model/database/initialize.sql
 
     command.initDefaultSettings:
-        class: PAF\Utils\InitDefaultSettingsCommand
+        class: Data\InitDefaultSettingsCommand

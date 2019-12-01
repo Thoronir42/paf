@@ -2,26 +2,24 @@
 
 namespace PAF\Modules\PortfolioModule\Model;
 
-use PAF\Common\Model\BaseEntity;
-use PAF\Common\Model\Traits\Slug;
+use LeanMapper\Entity;
 use Nette\Utils\DateTime;
 use PAF\Modules\CommonModule\Model\User;
 
 /**
  * @property int $id
+ * @property string $slug
  * @property string $name
  * @property string $type m:enum(self::TYPE_*)
  * @property User $owner
  * @property DateTime $issuedOn
  * @property DateTime $completedOn
  */
-class Fursuit extends BaseEntity
+class Fursuit extends Entity
 {
     const TYPE_PARTIAL = 'partial';
     const TYPE_HALF_SUIT = 'halfsuit';
     const TYPE_FULL_SUIT = 'fullsuit';
-
-    use Slug;
 
     public static function getTypes()
     {

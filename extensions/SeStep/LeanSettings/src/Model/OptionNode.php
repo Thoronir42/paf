@@ -2,9 +2,8 @@
 
 namespace SeStep\LeanSettings\Model;
 
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use SeStep\GeneralSettings\Model\INode;
-use SeStep\LeanSettings\Model\Option;
 
 /**
  * @property int $id
@@ -16,7 +15,7 @@ use SeStep\LeanSettings\Model\Option;
  * @property Section $parentSection m:hasOne(parent_section_id)
  *
  */
-abstract class OptionNode extends BaseEntity implements INode
+abstract class OptionNode extends Entity implements INode
 {
 
     /**

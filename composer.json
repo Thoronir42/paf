@@ -21,6 +21,8 @@
   "require": {
     "php": "^7.3.0",
 
+    "ext-json": "*",
+
     "nette/application": "dev-master#c99c04ed665e69ca547df6c490d2ccc47d47855f",
     "nette/bootstrap": "^3.0",
     "nette/caching": "^3.0",
@@ -44,7 +46,8 @@
     "contributte/console": "^0.7.1",
     "contributte/monolog": "^0.3.0",
     "symfony/workflow": "^4.3",
-    "symfony/event-dispatcher": "^4.3"
+    "symfony/event-dispatcher": "^4.3",
+    "ublaboo/datagrid": "^6.2"
   },
   "repositories": [
     {
@@ -55,24 +58,26 @@
   "autoload": {
     "psr-4": {
       "PAF\\": "app/",
-      "SeStep\\Commentable\\": "extensions/SeStep/Commentable/src/",
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
       "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
+      "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
       "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/",
       "SeStep\\Typeful\\": "extensions/SeStep/Typeful/src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Test\\PAF\\": "test/",
+      "PAF\\": "test/",
+      "Data\\": "data/src/",
       "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
       "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
       "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/test/",
+      "SeStep\\Moment\\": "extensions/SeStep/Moment/test/",
       "SeStep\\Typeful\\": "extensions/SeStep/Typeful/test/"
     }
   },

@@ -3,9 +3,9 @@
 namespace PAF\Modules\CommissionModule\Model;
 
 use DateTime;
-use PAF\Common\Model\BaseEntity;
+use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\Person;
-use SeStep\FileAttachable\Model\UserFileThread;
+use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property string $id
@@ -16,7 +16,7 @@ use SeStep\FileAttachable\Model\UserFileThread;
  * @property Specification $specification m:hasOne(specification_id)
  * @property UserFileThread|null $references m:hasOne(references_thread_id)
  */
-class Quote extends BaseEntity
+class Quote extends Entity
 {
     const STATUS_NEW = 'new';
     const STATUS_ACCEPTED = 'accepted';

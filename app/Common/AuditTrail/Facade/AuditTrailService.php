@@ -2,17 +2,19 @@
 
 namespace PAF\Common\AuditTrail\Facade;
 
+use DateTime;
 use Nette\Security\User;
 use PAF\Common\AuditTrail\Entity\Entry;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
-use PAF\Utils\Moment\MomentProvider;
+use SeStep\Moment\HasMomentProvider;
+use SeStep\Moment\MomentProvider;
 
 class AuditTrailService
 {
+    use HasMomentProvider;
+
     /** @var User */
     private $user;
-    /** @var MomentProvider */
-    private $momentProvider;
     /** @var EntryRepository */
     private $entryRepository;
 
@@ -60,7 +62,7 @@ class AuditTrailService
             return 0;
         }
 
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTime) {
             $value = $value->format('c');
             return 1;
         }

@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\PortfolioModule\Repository;
 
-use PAF\Common\Model\BaseRepository;
+use PAF\Common\Lean\BaseRepository;
 
 class FursuitRepository extends BaseRepository
 {

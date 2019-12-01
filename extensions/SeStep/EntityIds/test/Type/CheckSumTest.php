@@ -41,7 +41,6 @@ class CheckSumTest extends TestCase
      * @param string $value
      * @param int $expectedCheckSum
      * @param array $distinctPositions
-     * @param int $modulo
      *
      * @dataProvider hexDecCheckSumData
      */

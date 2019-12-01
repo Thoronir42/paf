@@ -2,9 +2,7 @@
 
 namespace PAF\Modules\SettingsModule\InlineOption;
 
-use Nette\Application\AbortException;
 use Nette\SmartObject;
-use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Model\INode;
 use SeStep\GeneralSettings\Settings;
 
