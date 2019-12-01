@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Service;
+namespace PAF\Modules\CommonModule\Services;
 
-use SeStep\Commentable\Lean\Model\Comment;
-use SeStep\Commentable\Lean\Model\CommentThread;
-use SeStep\Commentable\Lean\Repository\CommentRepository;
-use SeStep\Commentable\Lean\Repository\CommentThreadRepository;
+use PAF\Modules\CommonModule\Model\Comment;
+use PAF\Modules\CommonModule\Model\CommentThread;
+use PAF\Modules\CommonModule\Repository\CommentRepository;
+use PAF\Modules\CommonModule\Repository\CommentThreadRepository;
 
 class CommentsService
 {

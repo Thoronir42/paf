@@ -48,7 +48,7 @@ CREATE TABLE commission__paf_case
     CONSTRAINT `case_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id),
     CONSTRAINT `case_comment_thread_fk` FOREIGN KEY
-        (comment_thread_id) REFERENCES ss_comments__comment_thread (id)
+        (comment_thread_id) REFERENCES common__comment_thread (id)
 );
 
 CREATE TABLE commission__fursuit_progress

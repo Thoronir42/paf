@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Lean\Repository;
+namespace PAF\Modules\CommonModule\Repository;
 
 use PAF\Common\Lean\BaseRepository;
 

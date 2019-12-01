@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Lean\Model;
+namespace PAF\Modules\CommonModule\Model;
 
 use DateTime;
 use LeanMapper\Entity;
-use PAF\Modules\CommonModule\Model\User;
 
 /**
  * @property string $id

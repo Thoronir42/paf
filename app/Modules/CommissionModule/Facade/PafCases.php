@@ -9,8 +9,7 @@ use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
 use PAF\Common\Feed\Service\FeedService;
-use SeStep\Commentable\Lean\Repository\CommentRepository;
-use Ublaboo\DataGrid\DataSource\DibiFluentDataSource;
+use PAF\Modules\CommonModule\Repository\CommentRepository;
 
 class PafCases
 {

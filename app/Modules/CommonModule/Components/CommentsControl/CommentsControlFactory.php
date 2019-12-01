@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Control;
+namespace PAF\Modules\CommonModule\Components\CommentsControl;
 
 interface CommentsControlFactory
 {

@@ -38,3 +38,26 @@ CREATE TABLE `common__slug`
 
     CONSTRAINT `common_slug_pk` PRIMARY KEY (id)
 )
+
+CREATE TABLE common__comment_thread
+(
+    id VARCHAR(10) NOT NULL,
+
+    CONSTRAINT `ss_c_comment_thread_pk` PRIMARY KEY (id)
+);
+
+CREATE TABLE common__comment
+(
+    id         VARCHAR(10) NOT NULL,
+    user_id    VARCHAR(10) NOT NULL,
+    thread_id  VARCHAR(10) NOT NULL,
+    created_on DATETIME    NOT NULL,
+    text       TEXT        NOT NULL,
+
+    CONSTRAINT `ss_c_comment_pk` PRIMARY KEY (id),
+
+    CONSTRAINT `ss_c_thread_fk` FOREIGN KEY
+        (thread_id) REFERENCES common__comment_thread (id),
+    CONSTRAINT `ss_c_user_fk` FOREIGN KEY
+        (user_id) REFERENCES common__user (id)
+);

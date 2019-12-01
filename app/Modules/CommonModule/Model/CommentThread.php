@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Lean\Model;
+namespace PAF\Modules\CommonModule\Model;
 
 use LeanMapper\Entity;
 

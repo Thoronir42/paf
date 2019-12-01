@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Lean\Repository;
+namespace PAF\Modules\CommonModule\Repository;
 
 use Dibi\Fluent;
 use PAF\Common\Lean\BaseRepository;
-use SeStep\Commentable\Lean\Model\CommentThread;
+use PAF\Modules\CommonModule\Model\CommentThread;
 
 class CommentRepository extends BaseRepository
 {

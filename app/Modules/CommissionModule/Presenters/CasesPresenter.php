@@ -13,10 +13,10 @@ use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
 use PAF\Modules\CommissionModule\Facade\PafCases;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use Nette\Application\BadRequestException;
-use SeStep\Commentable\Control\CommentsControl;
-use SeStep\Commentable\Control\CommentsControlFactory;
-use SeStep\Commentable\Lean\Model\Comment;
-use SeStep\Commentable\Service\CommentsService;
+use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControl;
+use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
+use PAF\Modules\CommonModule\Model\Comment;
+use PAF\Modules\CommonModule\Services\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {

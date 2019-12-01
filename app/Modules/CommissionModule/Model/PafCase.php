@@ -4,8 +4,8 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use DateTime;
 use LeanMapper\Entity;
+use PAF\Modules\CommonModule\Model\CommentThread;
 use PAF\Modules\CommonModule\Model\Person;
-use SeStep\Commentable\Lean\Model\CommentThread;
 
 /**
  * @property string $id

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\Commentable\Control;
+namespace PAF\Modules\CommonModule\Components\CommentsControl;
 
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormFactory;
+use PAF\Modules\CommonModule\Model\Comment;
 use SeStep\Moment\HasMomentProvider;
 use SeStep\Moment\MomentProvider;
-use SeStep\Commentable\Lean\Model\Comment;
 
 /**
  * Class CommentsControl
@@ -19,8 +19,6 @@ class CommentsControl extends Control
     use HasMomentProvider;
 
     public $onCommentAdd = [];
-
-    public $onCommentRemove = [];
 
     /** @var FormFactory */
     private $formFactory;
