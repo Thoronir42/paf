@@ -8,15 +8,11 @@ use PAF\Common\Forms\FormFactory;
 use PAF\Utils\Moment\HasMomentProvider;
 use PAF\Utils\Moment\MomentProvider;
 use SeStep\Commentable\Lean\Model\Comment;
-use SeStep\Commentable\Lean\Model\CommentThread;
-use UnexpectedValueException;
 
 /**
  * Class CommentsControl
- * @package SeStep\Commentable\Control
  *
  * @method onCommentAdd(Comment $comment)
- * @method onCommentRemove(Comment $comment)
  */
 class CommentsControl extends Control
 {
@@ -28,9 +24,6 @@ class CommentsControl extends Control
 
     /** @var FormFactory */
     private $formFactory;
-
-    /** @var Comment[] */
-    private $comments = [];
 
     public function __construct(FormFactory $formFactory, MomentProvider $momentProvider)
     {
@@ -46,31 +39,6 @@ class CommentsControl extends Control
         $template->renderLabels = $withLabels;
 
         $template->render();
-    }
-
-    public function renderStack()
-    {
-        $template = $this->createTemplate();
-
-        $template->comments = $this->comments;
-
-        $template->setFile(__DIR__ . '/commentsStack.latte');
-
-        $template->render();
-    }
-
-    /**
-     * @param Comment[] $comments
-     */
-    public function setComments(array $comments)
-    {
-        foreach ($comments as $comment) {
-            if (!($comment instanceof Comment)) {
-                throw new UnexpectedValueException("Comments array contained non-comment item: " . gettype($comment));
-            }
-        }
-
-        $this->comments = $comments;
     }
 
     public function createComponentFormInput()
@@ -93,22 +61,5 @@ class CommentsControl extends Control
         $comment->text = $values['text'];
 
         $this->onCommentAdd($comment);
-    }
-
-    public function handleDelete($id)
-    {
-        $found = null;
-        foreach ($this->comments as $comment) {
-            if ($comment->getId() == $id) {
-                $found = $comment;
-                break;
-            }
-        }
-        if (!$found) {
-            $this->flashMessage('comment_not_found', 'warning');
-            return;
-        }
-
-        $this->onCommentRemove($found);
     }
 }

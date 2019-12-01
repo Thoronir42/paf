@@ -296,7 +296,7 @@ abstract class BaseRepository extends Repository implements IQueryable
         if (!array_key_exists($primary, $changed)) {
             return;
         }
-        if ($this->generator->getType($changed[$primary]) !== $type) {
+        if ($this->idGenerator->getType($changed[$primary]) !== $type) {
             throw new \UnexpectedValueException("Id '{$changed[$primary]}' could not be validated for type '$type'");
         }
     }

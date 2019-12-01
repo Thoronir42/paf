@@ -6,7 +6,6 @@ use SeStep\Commentable\Lean\Model\Comment;
 use SeStep\Commentable\Lean\Model\CommentThread;
 use SeStep\Commentable\Lean\Repository\CommentRepository;
 use SeStep\Commentable\Lean\Repository\CommentThreadRepository;
-use SeStep\Commentable\Lean\Query\FindCommentsQuery;
 
 class CommentsService
 {
@@ -17,7 +16,6 @@ class CommentsService
 
     public function __construct(CommentRepository $commentRepository, CommentThreadRepository $commentThreadRepository)
     {
-
         $this->commentRepository = $commentRepository;
         $this->commentThreadRepository = $commentThreadRepository;
     }
@@ -28,13 +26,6 @@ class CommentsService
         $this->commentThreadRepository->persist($thread);
 
         return $thread;
-    }
-
-    public function findComments(): FindCommentsQuery
-    {
-        $findQuery = new FindCommentsQuery($this->commentRepository);
-        $findQuery->setQueryable($this->commentRepository);
-        return $findQuery;
     }
 
     public function save(Comment $comment)
