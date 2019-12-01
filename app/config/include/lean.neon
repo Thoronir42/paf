@@ -6,8 +6,8 @@ leanFixtures:
         - %rootDir%/data/testing/commonModuleFixtures.neon
     daos:
         - PAF\Modules\CommonModule\Fixtures\UserFixtureDao()
-        - PAF\Common\Fixtures\RepositoryFixtureDao(@common.personRepository)
-        - PAF\Common\Fixtures\RepositoryFixtureDao(@common.contactRepository)
+        - PAF\Common\Lean\RepositoryFixtureDao(@common.personRepository)
+        - PAF\Common\Lean\RepositoryFixtureDao(@common.contactRepository)
 
 services:
     leanMapper.mapper:

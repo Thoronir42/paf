@@ -7,7 +7,7 @@ console:
 
 services:
     command.initDatabase:
-        class: PAF\Common\Commands\InitDatabaseCommand
+        class: Data\InitDatabaseCommand
         arguments:
             databaseName: %database.database%
             defaultFiles:
@@ -21,4 +21,4 @@ services:
                 - %appDir%/Modules/CmsModule/Model/database/initialize.sql
 
     command.initDefaultSettings:
-        class: PAF\Utils\InitDefaultSettingsCommand
+        class: Data\InitDefaultSettingsCommand

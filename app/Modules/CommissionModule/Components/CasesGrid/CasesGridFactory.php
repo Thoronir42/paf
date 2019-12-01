@@ -5,7 +5,7 @@ namespace PAF\Modules\CommissionModule\Components\CasesGrid;
 use Nette\Localization\ITranslator;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
-use PAF\Utils\TranslatorUtils;
+use PAF\Common\Localization\TranslatorUtils;
 use Ublaboo\DataGrid\DataGrid;
 
 class CasesGridFactory

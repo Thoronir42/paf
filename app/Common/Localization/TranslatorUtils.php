@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Utils;
+namespace PAF\Common\Localization;
 
 use Nette\Localization\ITranslator;
 

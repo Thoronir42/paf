@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Commands;
+namespace Data;
 
 use Dibi\Connection;
 use Nette\FileNotFoundException;

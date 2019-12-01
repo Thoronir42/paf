@@ -1,12 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Fixtures;
+namespace PAF\Common\Lean;
 
 use LeanMapper\Entity;
 use LeanMapper\IMapper;
 use LeanMapper\Reflection\Property;
 use LeanMapper\Repository;
-use PAF\Common\Lean\BaseRepository;
 use SeStep\LeanFixtures\FixtureDao;
 
 final class RepositoryFixtureDao implements FixtureDao

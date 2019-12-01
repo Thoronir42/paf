@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Utils;
+namespace Data;
 
 use SeStep\GeneralSettings\Settings;
 use Symfony\Component\Console\Command\Command;
@@ -23,7 +23,7 @@ class InitDefaultSettingsCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->settings->setValue('commission.quotes.enable', true);
-        $this->settings->setValue('commission.quotes.preferedSpecies', [
+        $this->settings->setValue('commission.quotes.preferredSpecies', [
             'puppy',
             'get & killing',
         ]);

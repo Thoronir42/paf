@@ -71,6 +71,7 @@
   "autoload-dev": {
     "psr-4": {
       "PAF\\": "test/",
+      "Data\\": "data/src/",
       "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
       "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
