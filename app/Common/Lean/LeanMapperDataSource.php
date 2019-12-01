@@ -22,13 +22,9 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
     private $dataSource;
     /** @var IQueryable */
     private $queryable;
-    /**
-     * @var IMapper
-     */
+    /** @var IMapper */
     private $mapper;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $entityClass;
 
     public function __construct(Fluent $dataSource, IQueryable $queryable, IMapper $mapper, string $entityClass)
@@ -52,13 +48,13 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
      */
     public function getData(): array
     {
-
         return $this->queryable->makeEntities($this->dataSource->fetchAll());
     }
 
     /**
      * Filter data - get one row
      *
+     * @param array $condition
      * @return static
      */
     public function filterOne(array $condition): IDataSource
@@ -92,6 +88,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
     /**
      * Sort data
      *
+     * @param Sorting $sorting
      * @return static
      */
     public function sort(Sorting $sorting): IDataSource

@@ -2,16 +2,10 @@
 
 namespace SeStep\Typeful;
 
-use Nette\InvalidStateException;
-use UnexpectedValueException;
-
 class TypeRegister
 {
     /** @var PropertyType[] */
     private $propertyTypes;
-
-    /** @var EntityDescriptor[] */
-    private $entityDescriptors = [];
 
     /**
      * TypeRegister constructor.

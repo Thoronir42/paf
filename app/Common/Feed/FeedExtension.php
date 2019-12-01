@@ -5,7 +5,6 @@ namespace PAF\Common\Feed;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
-use Nette\Schema\Elements\Type;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use PAF\Common\Feed\Components\FeedControl\EntryControlFactory;

@@ -13,6 +13,7 @@ abstract class FixtureGroup
     /**
      * EntityGroup constructor.
      * @param string $entityClass
+     * @param string $name
      */
     public function __construct(string $entityClass, string $name)
     {

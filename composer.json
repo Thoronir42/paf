@@ -21,6 +21,8 @@
   "require": {
     "php": "^7.3.0",
 
+    "ext-json": "*",
+
     "nette/application": "dev-master#c99c04ed665e69ca547df6c490d2ccc47d47855f",
     "nette/bootstrap": "^3.0",
     "nette/caching": "^3.0",

@@ -51,6 +51,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         }
 
         for ($freeIndex = 0; $freeIndex < $this->maxSectionItems && $parent->hasNode($freeIndex); $freeIndex++) {
+            continue; // hic sunt leones
         }
 
         if ($freeIndex >= $this->maxSectionItems) {

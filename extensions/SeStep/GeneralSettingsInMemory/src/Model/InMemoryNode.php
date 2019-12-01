@@ -4,6 +4,7 @@ namespace SeStep\GeneralSettingsInMemory\Model;
 
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Model\INode;
+use SeStep\GeneralSettingsInMemory\InMemoryOptionsAdapter;
 
 abstract class InMemoryNode implements INode
 {

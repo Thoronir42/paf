@@ -42,7 +42,7 @@ final class CasesPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
-    public function actionList(string $filter = null)
+    public function actionList()
     {
         $casesGrid = $this->casesGridFactory->create();
 

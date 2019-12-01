@@ -37,7 +37,7 @@ CREATE TABLE `common__slug`
     id VARCHAR(64) NOT NULL,
 
     CONSTRAINT `common_slug_pk` PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE common__comment_thread
 (

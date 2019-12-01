@@ -2,6 +2,8 @@
 
 namespace SeStep\Moment;
 
+use DateTime;
+
 trait HasMomentProvider
 {
     /** @var MomentProvider */
@@ -15,7 +17,7 @@ trait HasMomentProvider
     public function getMomentProvider(): MomentProvider
     {
         if (!$this->momentProvider) {
-            $this->momentProvider = new MomentProvider(new \DateTime());
+            $this->momentProvider = new RelativeMomentProvider(new DateTime());
         }
 
         return $this->momentProvider;
