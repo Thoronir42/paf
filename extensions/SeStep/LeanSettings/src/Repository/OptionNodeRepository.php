@@ -7,8 +7,8 @@ use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use Nette\InvalidStateException;
 use PAF\Common\Lean\BaseRepository;
-use PAF\Common\Model\Exceptions\EntityNotFoundException;
 use SeStep\GeneralSettings\DomainLocator;
+use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Model\INode;
 use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;
@@ -34,7 +34,7 @@ class OptionNodeRepository extends BaseRepository
             return $result;
         }
 
-        throw new EntityNotFoundException();
+        throw new NodeNotFoundException($fqn);
     }
 
     public function getRootSection(): Section
