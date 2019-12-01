@@ -5,8 +5,8 @@ namespace SeStep\Commentable\Control;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use PAF\Common\Forms\FormFactory;
-use PAF\Utils\Moment\HasMomentProvider;
-use PAF\Utils\Moment\MomentProvider;
+use SeStep\Moment\HasMomentProvider;
+use SeStep\Moment\MomentProvider;
 use SeStep\Commentable\Lean\Model\Comment;
 
 /**

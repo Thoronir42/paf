@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Utils\Moment;
+namespace SeStep\Moment;
 
 trait HasMomentProvider
 {

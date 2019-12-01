@@ -1,18 +1,26 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Utils\Moment;
+namespace SeStep\Moment;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
 
 class MomentProviderExtension extends CompilerExtension
 {
-    public function beforeCompile()
+    public function loadConfiguration()
     {
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('provider'))
-            ->setType(MomentProvider::class);
+            ->setType(RelativeMomentProvider::class)
+            ->setArgument('now', new \DateTime());
+    }
+    
+    public function beforeCompile()
+    {
+        $builder = $this->getContainerBuilder();
+
+        $builder->getDefinition($this->prefix('provider'));
 
         foreach ($builder->getDefinitions() as $definition) {
             if (!$definition instanceof ServiceDefinition) {

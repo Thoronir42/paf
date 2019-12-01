@@ -5,14 +5,15 @@ namespace PAF\Common\AuditTrail\Facade;
 use Nette\Security\User;
 use PAF\Common\AuditTrail\Entity\Entry;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
-use PAF\Utils\Moment\MomentProvider;
+use SeStep\Moment\HasMomentProvider;
+use SeStep\Moment\MomentProvider;
 
 class AuditTrailService
 {
+    use HasMomentProvider;
+
     /** @var User */
     private $user;
-    /** @var MomentProvider */
-    private $momentProvider;
     /** @var EntryRepository */
     private $entryRepository;
 

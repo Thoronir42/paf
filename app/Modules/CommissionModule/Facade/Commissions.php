@@ -18,7 +18,7 @@ use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\CommonModule\Repository\ContactRepository;
 use PAF\Modules\CommonModule\Repository\PersonRepository;
 use PAF\Modules\CommonModule\Repository\SlugRepository;
-use PAF\Utils\Moment\HasMomentProvider;
+use SeStep\Moment\HasMomentProvider;
 use SeStep\Commentable\Service\CommentsService;
 
 class Commissions
