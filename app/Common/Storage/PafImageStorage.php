@@ -4,19 +4,19 @@ namespace PAF\Common\Storage;
 
 use Nette\Http\FileUpload;
 use PAF\Modules\CommissionModule\Model\Quote;
-use SeStep\FileAttachable\Files;
-use SeStep\FileAttachable\Model\UserFile;
-use SeStep\FileAttachable\Model\UserFileThread;
+use PAF\Modules\CommonModule\Model\UserFile;
+use PAF\Modules\CommonModule\Model\UserFileThread;
+use PAF\Modules\CommonModule\Services\FilesService;
 
 // todo: implement properly
 class PafImageStorage
 {
     /** @var FileStorage */
     private $fileStorage;
-    /** @var Files */
+    /** @var FilesService */
     private $files;
 
-    public function __construct(FileStorage $fileStorage, Files $files)
+    public function __construct(FileStorage $fileStorage, FilesService $files)
     {
         $this->fileStorage = $fileStorage;
         $this->files = $files;

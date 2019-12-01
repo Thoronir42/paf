@@ -23,9 +23,9 @@ services:
 
     - PAF\Modules\CmsModule\Facade\CmsPages
 
-    - SeStep\FileAttachable\Files
-    - SeStep\FileAttachable\Service\UserFileRepository
-    - SeStep\FileAttachable\Service\UserFileThreadRepository
+    - PAF\Modules\CommonModule\Services\FilesService
+    - PAF\Modules\CommonModule\Repository\UserFileRepository
+    - PAF\Modules\CommonModule\Repository\UserFileThreadRepository
 
     common.commentRepository: PAF\Modules\CommonModule\Repository\CommentRepository
     common.commentThreadRepository: PAF\Modules\CommonModule\Repository\CommentThreadRepository

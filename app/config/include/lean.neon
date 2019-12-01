@@ -16,7 +16,6 @@ services:
             mapper: PAF\Common\Lean\UnderscoreMapper()
             modules:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
-                ss_files__: SeStep\FileAttachable\FilesMapperModule()
                 audit__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Common\AuditTrail')
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
                 commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')

@@ -8,12 +8,12 @@ use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\Commissions;
 use PAF\Modules\CommissionModule\Model\Specification;
+use PAF\Modules\CommonModule\Services\FilesService;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
-use SeStep\FileAttachable\Files;
 
 /**
  * Class QuotesPresenter
@@ -36,7 +36,7 @@ final class QuotesPresenter extends BasePresenter
     /** @var PafImageStorage @inject */
     public $pafImages;
 
-    /** @var Files @inject */
+    /** @var FilesService @inject */
     public $files;
 
     public function startup()

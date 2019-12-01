@@ -1,14 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\FileAttachable;
+namespace PAF\Modules\CommonModule\Services;
 
-use SeStep\FileAttachable\Model\UserFile;
-use SeStep\FileAttachable\Model\UserFileThread;
-use SeStep\FileAttachable\Service\UserFileRepository;
-use SeStep\FileAttachable\Service\UserFileThreadRepository;
+use PAF\Modules\CommonModule\Model\UserFile;
+use PAF\Modules\CommonModule\Model\UserFileThread;
+use PAF\Modules\CommonModule\Repository\UserFileRepository;
+use PAF\Modules\CommonModule\Repository\UserFileThreadRepository;
+use SeStep\Moment\HasMomentProvider;
 
-class Files
+class FilesService
 {
+    use HasMomentProvider;
+
     /** @var UserFileRepository */
     private $fileRepository;
     /** @var UserFileThreadRepository */
@@ -20,20 +23,20 @@ class Files
         $this->threadRepository = $threadRepository;
     }
 
-    public function findFile(int $id)
+    public function findFile(int $id): ?UserFile
     {
-        return $this->fileRepository->get($id);
+        return $this->fileRepository->find($id);
     }
 
-    public function findThread($id)
+    public function findThread(int $id): ?UserFileThread
     {
         return $this->threadRepository->find($id);
     }
 
-    public function createThread($persist = false)
+    public function createThread($persist = false): UserFileThread
     {
         $thread = new UserFileThread();
-        $thread->dateCreated = new \DateTime();
+        $thread->dateCreated = $this->getMomentProvider()->now();
         if ($persist) {
             $this->threadRepository->persist($thread);
         }
@@ -46,7 +49,7 @@ class Files
      *
      * @return int
      */
-    public function save($entity)
+    public function save($entity): int
     {
         if ($entity instanceof UserFile) {
             return $this->fileRepository->persist($entity);

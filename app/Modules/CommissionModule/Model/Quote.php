@@ -5,7 +5,7 @@ namespace PAF\Modules\CommissionModule\Model;
 use DateTime;
 use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\Person;
-use SeStep\FileAttachable\Model\UserFileThread;
+use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property string $id
