@@ -1,15 +1,11 @@
 {block content}
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading" n:inner-block="title">{_'generic.sign-in-action'}</div>
-            <div class="panel-body">
-                <div class="col-sm-12">
-                    {control signInForm}
-                </div>
+<div class="row sign-in">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header" n:inner-block="title">{_'generic.sign-in-action'}</div>
+            <div class="card-body">
+                {control signInForm}
             </div>
         </div>
     </div>
 </div>
-
-{* or use {include '../components/form.latte', form => signInForm} *}

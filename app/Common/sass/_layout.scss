@@ -1,0 +1,16 @@
+@import "common.vars";
+
+body {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+#body-container {
+  min-height: calc(100vh - #{$header-height} - #{$footer-height});
+
+  margin-top: 60px;
+  margin-bottom: 40px;
+
+  display: flex;
+  flex-direction: column;
+}

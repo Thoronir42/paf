@@ -1,5 +1,5 @@
-<li n:class="'dropdown', $control->itemCurrent($item) ? 'active'">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{_$item->getCaption()}<span
+<li n:class="nav-item, dropdown, $control->itemCurrent($item) ? 'active'">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">{_$item->getCaption()}<span
                 class="caret"></span></a>
     <ul class="dropdown-menu">
         {foreach $item->getItems() as $itemName => $subItem}

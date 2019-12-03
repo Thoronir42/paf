@@ -9,21 +9,20 @@
 
     <title>{ifset title}{include title|striptags} | {/ifset}{$appName}</title>
 
-    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{$basePath}/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{$basePath}/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="{$basePath}/vendor/css/font-awesome.min.css">
 
-    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css">
-    <link rel="stylesheet" href="{$basePath}/node_modules/X-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
-    <link rel="stylesheet" href="{$basePath}/node_modules/select2/dist/css/select2.min.css">
-    <link rel="stylesheet" href="{$basePath}/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css">
+    {*    <link rel="stylesheet" href="{$basePath}/node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker.css">*}
+    {*    <link rel="stylesheet" href="{$basePath}/node_modules/X-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">*}
+    {*    <link rel="stylesheet" href="{$basePath}/node_modules/select2/dist/css/select2.min.css">*}
+    {*    <link rel="stylesheet" href="{$basePath}/node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css">*}
 
-    <link rel="stylesheet" href="{$basePath}/css/input-file.css">
-    <link rel="stylesheet" href="{$basePath}/css/style.css">
+    <link rel="stylesheet" href="{$basePath}/dist/css/paf.css">
 
     {block style}
         <style>
-            body{
-                background: url({$basePath . "/images/bgt.png"}) {$background_color|noescape};
+            body {
+                background: url({$basePath . "/images/bgt.png"}){$background_color|noescape};
             }
         </style>
     {/block}
@@ -37,10 +36,8 @@
 
 <div class="container">
     <div id="body-container">
-        <div>
-            {include 'components/flashes.latte', flashes => $flashes}
-            {include #content}
-        </div>
+        {include 'components/flashes.latte', flashes => $flashes}
+        {include #content}
     </div>
 </div>
 
@@ -49,14 +46,14 @@
 {block scripts}
     <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
 
-    <script src="{$basePath}/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="{$basePath}/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="{$basePath}/vendor/js/jquery.min.js"></script>
+    <script src="{$basePath}/vendor/js/bootstrap.min.js"></script>
 
-    <script src="{$basePath}/node_modules/bootstrap-confirmation/bootstrap-confirmation.js"></script>
+    {*    <script src="{$basePath}/node_modules/bootstrap-confirmation/bootstrap-confirmation.js"></script>*}
 
-    <script src="{$basePath}/node_modules/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js"></script>
-    <script src="{$basePath}/node_modules/X-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
-    <script src="{$basePath}/node_modules/select2/dist/js/select2.min.js"></script>
+    {*    <script src="{$basePath}/node_modules/bootstrap-datetime-picker/js/bootstrap-datetimepicker.js"></script>*}
+    {*    <script src="{$basePath}/node_modules/X-editable/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>*}
+    {*    <script src="{$basePath}/node_modules/select2/dist/js/select2.min.js"></script>*}
 
     <script src="{$basePath}/js/nette.ajax.js"></script>
     <script src="{$basePath}/js/input-file.js"></script>

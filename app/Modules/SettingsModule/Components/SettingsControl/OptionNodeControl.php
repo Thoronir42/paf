@@ -96,8 +96,6 @@ final class OptionNodeControl extends UI\Control implements OptionAccessor
 
     private function renderSectionTemplate(IOptionSection $section)
     {
-        $this->template->class = 'default';
-
         $this->template->section = $section;
         // todo: replace by more sophisticated check
         $this->template->canExpandSubSections = count(explode(INode::DOMAIN_DELIMITER, $this->optionFqn)) <= 2;

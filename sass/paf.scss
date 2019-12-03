@@ -1,0 +1,5 @@
+// This is the entry-point scss which is used to put it all together
+
+@import "../app/Common/sass/common";
+@import "../app/Modules/CommonModule/sass/commonModule";
+@import "../app/Modules/CommissionModule/sass/commissionModule";

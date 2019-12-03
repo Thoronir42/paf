@@ -1,8 +1,8 @@
 .btn-file {
-    position: relative;
-    overflow: hidden;
-}
-.btn-file input[type=file] {
+  position: relative;
+  overflow: hidden;
+
+  input[type=file] {
     position: absolute;
     top: 0;
     right: 0;
@@ -16,4 +16,6 @@
     background: white;
     cursor: inherit;
     display: block;
+  }
+
 }
