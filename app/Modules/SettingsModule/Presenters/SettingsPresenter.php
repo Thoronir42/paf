@@ -17,7 +17,7 @@ final class SettingsPresenter extends BasePresenter
      *
      * @authorize admin-settings
      */
-    public function actionDefault(string $fqn = 'paf')
+    public function actionDefault(string $fqn = '')
     {
         $this->template->fqnComponent = str_replace(INode::DOMAIN_DELIMITER, '-', $fqn);
 
