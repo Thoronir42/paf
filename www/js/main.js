@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $.nette.init();
 
-    initConfirmation();
+    // initConfirmation();
 
     initTags();
 
@@ -64,8 +64,12 @@ function initSelect2() {
     $('select:not(.no-select2)').each(function () {
         var $element = $(this);
         $element.select2({
-            theme: 'bootstrap'
+            theme: 'bootstrap4',
+            width: 'style',
+            placeholder: $(this).attr('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
         });
+        console.log($element)
     })
 }
 
