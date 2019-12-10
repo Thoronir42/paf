@@ -12,37 +12,16 @@ class DateInput extends TextInput
     const FORMAT_DATE = "Y-m-d";
     const FORMAT_DATETIME = "Y-m-d H:i";
 
-    const VIEW_MINUTE = 0;
-    const VIEW_HOUR = 1;
-    const VIEW_DAY = 2;
-    const VIEW_MONTH = 3;
-    const VIEW_YEAR = 4;
-    const VIEW_DECADE = 5;
-
-    const POSITION_BOTTOM_RIGHT = 'bottom-right';
-    const POSITION_BOTTOM_LEFT = 'bottom-left';
-    const POSITION_TOP_RIGHT = 'top-right';
-    const POSITION_TOP_LEFT = 'top-left';
-
     protected $format;
-    protected $bsFormat;
 
-    protected $position;
-
-    public function __construct(string $label = null, string $format = null)
+    public function __construct(string $format, string $label = null)
     {
         parent::__construct($label);
         $this->setOption('type', 'datetime');
 
-        $this->format = $format ?: self::FORMAT_DATE;
+        $this->format = $format;
         $this->setRequired(false);
         $this->addRule([$this, 'validateDate'], 'invalid-date-format');
-    }
-
-    public function setPickerPosition($position)
-    {
-        $this->position = $position;
-        return $this;
     }
 
     public function setDate(DateTime $value)
@@ -74,42 +53,47 @@ class DateInput extends TextInput
     public function getControl(): Html
     {
         $element = parent::getControl();
-        $view = $this->getMinView($this->format);
-        $attrs = [
-            'data-date-format' => $this->getBootstrapFormat($this->format),
-            'data-min-view' => $view,
-            'data-start-view' => self::VIEW_DAY,
-        ];
-        if ($this->position) {
-            $attrs['data-picker-position'] = $this->position;
-        }
-        $element->addAttributes($attrs);
+        $id = 'td-' . $this->lookupPath();
 
-        return $element;
+        $element->class[] = 'form-control datetimepicker-input';
+        $element->data('target', "#$id");
+
+
+        $wrapper = Html::el('div', [
+            'class' => 'input-group date td-wrapper',
+            'id' => $id,
+        ]);
+        $wrapper->data('target-input', 'nearest');
+        $wrapper->data('format', $this->getBootstrapFormat($this->format));
+
+        $wrapper->addHtml($element);
+        $wrapper->addHtml($this->createPickerAddOn("#$id"));
+
+        return $wrapper;
     }
 
     private function getBootstrapFormat($format)
     {
         switch ($format) {
             case self::FORMAT_DATE:
-                return 'yyyy-mm-dd';
+                return 'YYYY-MM-DD';
             case self::FORMAT_DATETIME:
-                return 'yyyy-mm-dd hh:ii';
+                return 'YYYY-MM-DD HH:mm';
         }
 
         throw new UnexpectedValueException("Format $format is not supported");
     }
 
-    private function getMinView($format)
+    private function createPickerAddOn(string $targetSelector): Html
     {
-        switch ($format) {
-            case self::FORMAT_DATE:
-                return self::VIEW_DAY;
-            case self::FORMAT_DATETIME:
-                return self::VIEW_MINUTE;
-        }
+        $inputAddon = Html::el('div');
+        $inputAddon->class[] = 'input-group-append';
+        $inputAddon->data('target', $targetSelector);
+        $inputAddon->data('toggle', 'datetimepicker');
 
-        return -1;
+        $inputAddon->addHtml('<div class="input-group-text"><i class="fa fa-calendar"></i></div>');
+
+        return $inputAddon;
     }
 
     public function validateDate(DateInput $input)

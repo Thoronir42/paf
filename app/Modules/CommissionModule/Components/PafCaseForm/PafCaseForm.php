@@ -4,7 +4,6 @@ namespace PAF\Modules\CommissionModule\Components\PafCaseForm;
 
 use Nette\Application\UI\ITemplate;
 use Nette\Localization\ITranslator;
-use PAF\Common\Forms\Controls\DateInput;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
@@ -95,8 +94,7 @@ class PafCaseForm extends FormWrapperControl
 
         $caseStatesLocalized = CommissionModule\Model\PafCaseWorkflow::getCaseStatesLocalized();
         $form->addSelect('status', 'commission.case.status', $caseStatesLocalized);
-        $form->addDate('targetDelivery', 'commission.case.targetDelivery', DateInput::FORMAT_DATETIME)
-            ->setPickerPosition(DateInput::POSITION_TOP_RIGHT);
+        $form->addDateTime('targetDelivery', 'commission.case.targetDelivery');
 
         $form->addSubmit('submit', 'generic.update');
 

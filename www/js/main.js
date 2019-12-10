@@ -10,7 +10,7 @@ $(document).ready(function () {
     initSelect2();
 
     initDatePicker();
-    
+
 });
 
 function initConfirmation() {
@@ -69,16 +69,19 @@ function initSelect2() {
             placeholder: $(this).attr('placeholder'),
             allowClear: Boolean($(this).data('allow-clear')),
         });
-        console.log($element)
     })
 }
 
 function initDatePicker() {
-    $('input.date').each(function () {
-        $(this).datetimepicker({
-            weekstart: 1,
-            todayHighlight: true
-        });
+    $('.td-wrapper').each(function (a, el) {
+        let $el = $(el);
+
+        let options = {
+            debug: true,
+        };
+        Object.assign(options, $el.data());
+
+        $el.datetimepicker(options);
     });
 }
 
