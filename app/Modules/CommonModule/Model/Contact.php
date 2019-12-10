@@ -7,7 +7,7 @@ use LeanMapper\Entity;
 /**
  * @property int $id
  * @property Person $person m:hasOne(person_id)
- * @property string $type m:enum(Contact::TYPE_*)
+ * @property string|null $type m:enum(Contact::TYPE_*)
  * @property string $value
  */
 class Contact extends Entity
@@ -15,7 +15,12 @@ class Contact extends Entity
     const TYPE_EMAIL = 'email';
     const TYPE_TELEGRAM = 'telegram';
     const TYPE_TELEPHONE = 'telephone';
-    const TYPE_OTHER = 'other';
+
+    protected function initDefaults()
+    {
+        $this->type = null;
+        $this->value = '';
+    }
 
     public function equals($other): bool
     {
@@ -24,5 +29,10 @@ class Contact extends Entity
         }
 
         return $other->type == $this->type && $other->value == $this->value;
+    }
+
+    public function isEmpty()
+    {
+        return !$this->value;
     }
 }

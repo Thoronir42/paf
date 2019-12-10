@@ -1,64 +1,37 @@
 <div>
     {form form}
+        {var $renderer = $form->getRenderer()}
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
                     <h2>{_'commission.case.fursuitSpecification'}</h2>
                 </div>
                 <div class="col-sm-12">
-                    {label specification-characterName, class => 'control-label'}
-                    {input specification-characterName, class => 'form-control'}
-                    <br/>
-                    {label specification-type, class => 'control-label'}
-                    {input specification-type, class => 'form-control select2'}
-                    <br/>
-                    {label specification-characterDescription, class => 'control-label'}
-                    {input specification-characterDescription, class => 'form-control'}
+                    {$renderer->renderPair($form['specification-characterName'])|noescape}
+                    {$renderer->renderPair($form['specification-type'])|noescape}
+                    {$renderer->renderPair($form['specification-characterDescription'])|noescape}
                 </div>
 
                 <div class="col-sm-12">
                     <h2>{_'paf.entity.contact'}</h2>
                 </div>
                 <div class="col-sm-12">
-                    <div class="form-group">
-                        {label contact-name, class => 'control-label'}
-                        {input contact-name, class => 'form-control'}
-                    </div>
-                    <div class="form-group">
-                        {label contact-telegram, class => 'control-label'}
-                        <div class="input-group">
-                            {input contact-telegram, class => 'form-control'}
-
-                            <div class="input-group-btn" n:if="$form['contact']['telegram']->getValue()">
-                                {control contact-telegram:iconBtn}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        {label contact-email, class => 'control-label'}
-                        {input contact-email, class => 'form-control'}
-                    </div>
+                    {$renderer->renderPair($form['contact-name'])|noescape}
+                    {$renderer->renderPair($form['contact-telegram'])|noescape}
+                    {$renderer->renderPair($form['contact-email'])|noescape}
+                    {$renderer->renderPair($form['contact-telephone'])|noescape}
                 </div>
                 <div class="col-sm-12">
                     <h2>{_'commission.case.details'}</h2>
                 </div>
                 <div class="col-sm-12">
-                    <div class="form-group">
-                        {label status, class => 'control-label'}
-                        {input status, class => 'form-control select2'}
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        {label targetDelivery, class => 'control-label'}
-                        {input targetDelivery}
-                    </div>
+                    {$renderer->renderPair($form['status'])|noescape}
+                    {$renderer->renderPair($form['targetDelivery'])|noescape}
                 </div>
                 <div class="col-sm-12">
                     <div class="form-group">
                         {input submit, class => 'btn btn-primary'}
                     </div>
-
                 </div>
             </div>
         </div>

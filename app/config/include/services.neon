@@ -49,6 +49,12 @@ services:
                 telegram:
                     format: 'https://t.me/%s'
                     icon: 'fa-telegram'
+                email:
+                    format: 'mailto:%s'
+                    icon: 'fa-envelope'
+                telephone:
+                    format: 'tel:%s'
+                    icon: 'fa-phone'
     common.contactControlFactory: PAF\Modules\CommonModule\Components\ContactControl\ContactControlFactory
 
 

@@ -5,6 +5,7 @@ namespace PAF\Common\Forms;
 use Nette;
 use Nette\Forms\Controls\TextArea;
 use Nette\Forms\Rendering\DefaultFormRenderer;
+use Nette\Utils\Html;
 
 class BootstrapFormRenderer extends DefaultFormRenderer
 {
@@ -17,12 +18,6 @@ class BootstrapFormRenderer extends DefaultFormRenderer
     public function render(Nette\Forms\Form $form, string $mode = null): string
     {
         $form->getElementPrototype()->appendAttribute('class', 'bs-form');
-
-        foreach ($form->getControls() as $control) {
-            if ($control instanceof TextArea) {
-                $control->getControlPrototype()->class[] = 'form-control';
-            }
-        }
 
         return parent::render($form, $mode);
     }
@@ -59,7 +54,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
             ],
 
             'control' => [
-                'container' => 'div class=col-sm-9',
+                'container' => 'div class="col-sm-12 col-md-9"',
                 '.odd' => null,
 
                 'description' => 'span class=help-block',
@@ -79,7 +74,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
             ],
 
             'label' => [
-                'container' => 'div class="col-sm-3 control-label"',
+                'container' => 'div class="col-sm-12 col-md-3 control-label"',
                 'suffix' => null,
                 'requiredsuffix' => '',
             ],
@@ -113,5 +108,14 @@ class BootstrapFormRenderer extends DefaultFormRenderer
         $pair->id = $control->getOption('id');
 
         return $pair->render(0);
+    }
+
+    public function renderControl(Nette\Forms\IControl $control): Html
+    {
+        if ($control instanceof TextArea) {
+            $control->getControlPrototype()->class[] = 'form-control';
+        }
+
+        return parent::renderControl($control);
     }
 }

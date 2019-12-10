@@ -18,6 +18,7 @@ contact:
     name: "Name"
     email: "Email"
     telegram: "Telegram"
+    phone: 'Phone'
 
 fursuit:
     name: "Fursuit name"
