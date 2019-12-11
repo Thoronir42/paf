@@ -91,9 +91,7 @@ class PafCaseForm extends FormWrapperControl
         $this->setContainerDisabled($fursuit, true);
         $this->setContainerDisabled($contact, true);
 
-        $caseStatesLocalized = CommissionModule\Model\PafCaseWorkflow::getCaseStatesLocalized();
-        $form->addSelect('status', 'commission.case.status', $caseStatesLocalized);
-        $form->addDateTime('targetDelivery', 'commission.case.targetDelivery');
+        $form->addDate('targetDelivery', 'commission.case.targetDelivery');
 
         $form->addSubmit('submit', 'generic.update');
 
@@ -113,8 +111,6 @@ class PafCaseForm extends FormWrapperControl
             $specification->characterDescription = $values->fursuit->characterDescription;
         }
 
-
-        $case->status = $values->status;
         $targetDelivery = $values->targetDelivery;
 
         if ($targetDelivery != $this->case->targetDelivery) {
