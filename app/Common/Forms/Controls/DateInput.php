@@ -46,7 +46,12 @@ class DateInput extends TextInput
 
     public function getValue()
     {
-        return DateTime::createFromFormat($this->format, parent::getValue());
+        $value = DateTime::createFromFormat($this->format, parent::getValue());
+        if ($this->format === self::FORMAT_DATE) {
+            $value->setTime(0, 0, 0);
+        }
+
+        return $value;
     }
 
 
