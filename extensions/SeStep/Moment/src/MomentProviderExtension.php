@@ -3,6 +3,7 @@
 namespace SeStep\Moment;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\Statement;
 use Nette\DI\ServiceDefinition;
 
 class MomentProviderExtension extends CompilerExtension
@@ -13,7 +14,7 @@ class MomentProviderExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('provider'))
             ->setType(RelativeMomentProvider::class)
-            ->setArgument('now', new \DateTime());
+            ->setArgument('now', new Statement(\DateTime::class));
     }
     
     public function beforeCompile()
