@@ -15,6 +15,6 @@ class DateTimeType extends PropertyType
     public function renderValue($value, array $options = [])
     {
         // TODO: Avoid using internal class Filters
-        return Filters::date($value, \DateTime::W3C);
+        return Filters::date($value, 'Y-m-d H:i');
     }
 }

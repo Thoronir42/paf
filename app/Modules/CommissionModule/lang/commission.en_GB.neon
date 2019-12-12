@@ -2,7 +2,7 @@ entity.case: Case
 
 quotes.title: "Quotes"
 quotes.currently-closed: "are currently closed"
-quotes.currently-closed-text: "If you want to apply for a commission, you are at correct place, alas I'm currently not accepting any new quotes."
+quotes.currently-closed-text: "If you wanted to apply for a commission, you are at correct place. <br/> Alas I'm currently not accepting any new quotes."
 
 quotes.enabled: "Quotes are currently enabled"
 quotes.enable: "Enable quotes"

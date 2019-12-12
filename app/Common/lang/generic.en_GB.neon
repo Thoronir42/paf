@@ -1,11 +1,14 @@
 submit: "Submit"
 save: Save
 update: Update
-return-home: "Return home"
+return: "Return"
 
 sign-in: "Sign in"
 sign-out: "Sign out"
 sign-in-action: "Sign in"
+
+sign:
+    invalidLoginAttempt: 'Invalid name or password'
 
 password: "Password"
 login: "Login"

@@ -15,7 +15,7 @@ class SignPresenter extends BasePresenter
     public $users;
 
     /** @var SignInFormFactory @inject */
-    public $in_factory;
+    public $signInFormFactory;
 
     public function actionDefault()
     {
@@ -34,7 +34,7 @@ class SignPresenter extends BasePresenter
 
     protected function createComponentSignInForm()
     {
-        $form = $this->in_factory->create();
+        $form = $this->signInFormFactory->create();
 
         $form->onSave[] = function (Form $form, $values) {
             $login = $values->login;
@@ -52,38 +52,8 @@ class SignPresenter extends BasePresenter
 
                 $this->redirect('Homepage:');
             } catch (AuthenticationException $e) {
-                $form->addError($this->translator->translate('authentication.invalid-attempt'));
+                $form->addError('generic.sign.invalidLoginAttempt', false);
             }
-        };
-
-        return $form;
-    }
-
-    /**
-     * Sign-in form factory.
-     * @return Nette\Application\UI\Form
-     */
-    protected function createComponentSignUpForm()
-    {
-        // fixme: move creation into facade
-        $form = $this->up_factory->create();
-
-        $form->onSave[] = function (Form $form, $values) {
-            $login = $values->login;
-            $password = $values->password;
-
-            try {
-                $user = $this->users->create($login, $password);
-                $this->users->persist($user);
-            } catch (Nette\InvalidStateException $ex) {
-                $form->addError('Uživatel se jménem' . $login . ' již existuje.');
-
-                return;
-            }
-
-            $this->flashMessage('Váš účet byl vytvořen.');
-
-            $this->redirect('in');
         };
 
         return $form;

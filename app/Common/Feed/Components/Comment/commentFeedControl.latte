@@ -1,9 +1,15 @@
-<div class="well well-sm">
+{layout $layout}
+
+<div class="card-header" n:block="#card-header">
+    {include #stamp, 'instant' => $comment->createdOn}
     <span class="pull-right">
-        <a n:href="delete!" class="btn btn-xs btn-danger">
+        <a n:href="delete!" class="btn btn-sm btn-danger">
             <i class="fa fa-trash"></i>
         </a>
     </span>
-    <small>{$comment->getCreatedOn()->format('Y.m.d H:i')}</small>
-    <p class="content">{$comment->getText()}</p>
+    <span>{$comment->user|user}</span>
+</div>
+
+<div class="card-body" n:block="#card-body">
+    <p class="content">{$comment->text}</p>
 </div>

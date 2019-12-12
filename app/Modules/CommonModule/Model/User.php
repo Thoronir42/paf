@@ -14,7 +14,7 @@ use PAF\Modules\PortfolioModule\Model\Fursuit;
  * @property \DateTime $registered
  * @property \DateTime|null $lastActivity
  *
- * @property Fursuit[] $fursuits
+ * @property Person|null $person m:belongsToOne(user_id)
  */
 class User extends Entity
 {

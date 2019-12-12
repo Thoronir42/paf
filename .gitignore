@@ -4,7 +4,7 @@
 log/*
 temp/*
 /vendor/
-www/node_modules/
+/node_modules/
 
 !.gitignore
 !*/.gitkeep
@@ -16,5 +16,7 @@ app/config/config.*.neon
 app/config/users.neon
 
 www/ref/
+www/dist/
+www/vendor/
 www/images/quote/*
 

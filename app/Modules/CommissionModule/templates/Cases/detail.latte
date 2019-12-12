@@ -4,17 +4,22 @@
 <div class="row">
     <div class="col-md-8" id="notes">
         <div class="form-group">
-        {control comments:input, noLabels => true}
+            {control comments:input, noLabels => true}
         </div>
-        <div class="well">
-            {control feed}
+        <div class="card">
+            <div class="card-body">
+                {control feed}
+            </div>
         </div>
     </div>
     <div class="col-md-4" id="detail">
-        <div class="well">
-            {control caseForm}
-            <hr/>
-            {control stateControl}
+        <div class="card">
+            <div class="card-body">
+                {control caseForm}
+            </div>
+            <div class="card-body">
+                {control stateControl}
+            </div>
         </div>
     </div>
 </div>

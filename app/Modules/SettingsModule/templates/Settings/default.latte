@@ -1,5 +1,9 @@
 {block content}
     <h1>{_'title'}</h1>
-    {control settings-$fqnComponent}
+    {if $fqnComponent}
+        {control settings-$fqnComponent}
+    {else}
+        {control settings}
+    {/if}
 
 {/block}

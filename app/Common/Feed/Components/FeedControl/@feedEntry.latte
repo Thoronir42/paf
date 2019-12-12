@@ -1,0 +1,13 @@
+<div class="card card-feed" n:block="#card">
+    <div class="card-header" n:block="#card-header">
+        {include #stamp}
+    </div>
+    <div class="card-body" n:ifcontent n:block="#card-body"></div>
+</div>
+
+{define #stamp, $instant}
+<span class="feed-stamp">
+    <span class="date">{$instant|date:'Y-m-d'}</span>
+    <span class="time">{$instant|date:'H:i:s'}</span>
+</span>
+{/define}

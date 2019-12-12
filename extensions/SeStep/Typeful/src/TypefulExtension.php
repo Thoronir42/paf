@@ -46,6 +46,7 @@ class TypefulExtension extends CompilerExtension
         $types = [
             new Statement(Types\IntType::class),
             new Statement(Types\TextType::class),
+            new Statement(Types\DateType::class),
             new Statement(Types\DateTimeType::class),
         ];
         foreach (array_keys($typeServiceNames) as $typeServiceName) {

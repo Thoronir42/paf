@@ -176,7 +176,12 @@ class LeanOptionsAdapter implements IOptionsAdapter
         /** @var Model\Section $parent */
         $parent = SectionNavigator::getSectionByDomain($this->rootSection, $dl);
 
-        $optionNode = $dl->getName() ? $parent->getNode($dl->getName()) : $parent;
+        $childName = $dl->getName();
+        if (!$childName && !is_numeric($childName)) {
+            $childName = null;
+        }
+
+        $optionNode = $childName !== null ? $parent->getNode($dl->getName()) : $parent;
 
         return $optionNode;
     }

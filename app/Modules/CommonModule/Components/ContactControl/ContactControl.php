@@ -27,14 +27,21 @@ class ContactControl extends Control
             return;
         }
 
+        $linkEl = self::getIconHtml($this->contactDefinitions, $this->contact);
+        
+        echo $linkEl;
+    }
+
+    public static function getIconHtml(ContactDefinitions $definitions, Contact $contact): Html
+    {
         $iconEl = Html::el('i');
-        $iconEl->class[] = 'fa ' . $this->contactDefinitions->getIconClass($this->contact->type);
+        $iconEl->class[] = 'fa ' . $definitions->getIconClass($contact->type);
 
         $linkEl = Html::el('a');
         $linkEl->class[] = 'btn btn-default';
-        $linkEl->href($this->contactDefinitions->formatHref($this->contact->type, $this->contact->value));
+        $linkEl->href($definitions->formatHref($contact->type, $contact->value));
         $linkEl->addHtml($iconEl);
-        
-        echo $linkEl;
+
+        return $linkEl;
     }
 }

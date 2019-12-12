@@ -4,14 +4,14 @@ namespace PAF\Modules\PortfolioModule\Model;
 
 use LeanMapper\Entity;
 use Nette\Utils\DateTime;
-use PAF\Modules\CommonModule\Model\User;
+use PAF\Modules\CommonModule\Model\Person;
 
 /**
  * @property int $id
  * @property string $slug
  * @property string $name
  * @property string $type m:enum(self::TYPE_*)
- * @property User $owner
+ * @property Person $owner(owner_person_id)
  * @property DateTime $issuedOn
  * @property DateTime $completedOn
  */

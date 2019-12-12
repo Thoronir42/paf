@@ -61,7 +61,7 @@ class QuoteForm extends Form
         $this->addMultiUpload('reference', 'commission.quote-form.references');
 
 
-        $this->addGroup('commission.quote-form.group-finish');
+        $this->addGroup();
         $this->addSubmit('save', 'generic.submit');
 
         $this->onValidate[] = [$this, 'validateForm'];

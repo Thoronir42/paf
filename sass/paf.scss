@@ -1,0 +1,8 @@
+// This is the entry-point scss which is used to put it all together
+
+@import "../app/Common/sass/common";
+@import "../app/Common/AuditTrail/sass/auditTrail";
+@import "../app/Common/Feed/sass/auditFeed";
+@import "../app/Modules/CommonModule/sass/commonModule";
+@import "../app/Modules/CommissionModule/sass/commissionModule";
+@import "overrides/xEditable";

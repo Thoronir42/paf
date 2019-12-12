@@ -1,7 +1,8 @@
 $(document).ready(function () {
     $.nette.init();
 
-    initConfirmation();
+    bsCustomFileInput.init();
+    // initConfirmation();
 
     initTags();
 
@@ -10,7 +11,7 @@ $(document).ready(function () {
     initSelect2();
 
     initDatePicker();
-    
+
 });
 
 function initConfirmation() {
@@ -64,17 +65,24 @@ function initSelect2() {
     $('select:not(.no-select2)').each(function () {
         var $element = $(this);
         $element.select2({
-            theme: 'bootstrap'
+            theme: 'bootstrap4',
+            width: 'style',
+            placeholder: $(this).attr('placeholder'),
+            allowClear: Boolean($(this).data('allow-clear')),
         });
     })
 }
 
 function initDatePicker() {
-    $('input.date').each(function () {
-        $(this).datetimepicker({
-            weekstart: 1,
-            todayHighlight: true
-        });
+    $('.td-wrapper').each(function (a, el) {
+        let $el = $(el);
+
+        let options = {
+            debug: true,
+        };
+        Object.assign(options, $el.data());
+
+        $el.datetimepicker(options);
     });
 }
 

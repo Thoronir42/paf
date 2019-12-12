@@ -1,9 +1,9 @@
-<div id="settings-{$control->getName()}" class="panel panel-{$class}" n:if="!empty($options)">
-    <div class="panel-heading">
+<div id="settings-{$control->getName()}" class="card" n:if="!empty($options)">
+    <div class="card-header">
         <small class="pull-right text-muted">{$section->getFQN()}</small>
         <h3>{$section->getCaption()}</h3>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
         <div class="row">
             {*<div class="col-sm-2">Option</div>
             <div class="col-sm-10">Value</div>*}

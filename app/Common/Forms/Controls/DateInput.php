@@ -6,43 +6,23 @@ use Nette\Forms\Controls\TextInput;
 use Nette\UnexpectedValueException;
 use Nette\Utils\DateTime;
 use Nette\Utils\Html;
+use SeStep\NetteBootstrap as NBS;
 
 class DateInput extends TextInput
 {
     const FORMAT_DATE = "Y-m-d";
     const FORMAT_DATETIME = "Y-m-d H:i";
 
-    const VIEW_MINUTE = 0;
-    const VIEW_HOUR = 1;
-    const VIEW_DAY = 2;
-    const VIEW_MONTH = 3;
-    const VIEW_YEAR = 4;
-    const VIEW_DECADE = 5;
-
-    const POSITION_BOTTOM_RIGHT = 'bottom-right';
-    const POSITION_BOTTOM_LEFT = 'bottom-left';
-    const POSITION_TOP_RIGHT = 'top-right';
-    const POSITION_TOP_LEFT = 'top-left';
-
     protected $format;
-    protected $bsFormat;
 
-    protected $position;
-
-    public function __construct(string $label = null, string $format = null)
+    public function __construct(string $format, string $label = null)
     {
         parent::__construct($label);
         $this->setOption('type', 'datetime');
 
-        $this->format = $format ?: self::FORMAT_DATE;
+        $this->format = $format;
         $this->setRequired(false);
         $this->addRule([$this, 'validateDate'], 'invalid-date-format');
-    }
-
-    public function setPickerPosition($position)
-    {
-        $this->position = $position;
-        return $this;
     }
 
     public function setDate(DateTime $value)
@@ -67,49 +47,46 @@ class DateInput extends TextInput
 
     public function getValue()
     {
-        return DateTime::createFromFormat($this->format, parent::getValue());
+        $value = DateTime::createFromFormat($this->format, parent::getValue());
+        if ($this->format === self::FORMAT_DATE) {
+            $value->setTime(0, 0, 0);
+        }
+
+        return $value;
     }
 
 
     public function getControl(): Html
     {
         $element = parent::getControl();
-        $view = $this->getMinView($this->format);
-        $attrs = [
-            'data-date-format' => $this->getBootstrapFormat($this->format),
-            'data-min-view' => $view,
-            'data-start-view' => self::VIEW_DAY,
-        ];
-        if ($this->position) {
-            $attrs['data-picker-position'] = $this->position;
-        }
-        $element->addAttributes($attrs);
+        $id = 'td-' . $this->lookupPath();
 
-        return $element;
+        $element->class[] = 'form-control datetimepicker-input';
+        $element->data('target', "#$id");
+
+        $inputGroup = new NBS\InputGroup($element);
+        $inputGroup->class[] = 'date td-wrapper';
+        $inputGroup->id = $id;
+        $inputGroup->data('target-input', 'nearest');
+        $inputGroup->data('format', $this->getBootstrapFormat($this->format));
+
+        $append = $inputGroup->append(NBS\InputGroup::text('<i class="fa fa-calendar"></i>'));
+        $append->data('target', "#$id");
+        $append->data('toggle', 'datetimepicker');
+
+        return $inputGroup;
     }
 
     private function getBootstrapFormat($format)
     {
         switch ($format) {
             case self::FORMAT_DATE:
-                return 'yyyy-mm-dd';
+                return 'YYYY-MM-DD';
             case self::FORMAT_DATETIME:
-                return 'yyyy-mm-dd hh:ii';
+                return 'YYYY-MM-DD HH:mm';
         }
 
         throw new UnexpectedValueException("Format $format is not supported");
-    }
-
-    private function getMinView($format)
-    {
-        switch ($format) {
-            case self::FORMAT_DATE:
-                return self::VIEW_DAY;
-            case self::FORMAT_DATETIME:
-                return self::VIEW_MINUTE;
-        }
-
-        return -1;
     }
 
     public function validateDate(DateInput $input)

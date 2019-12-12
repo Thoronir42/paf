@@ -13,6 +13,9 @@ use PAF\Common\Forms\FormWrapperControl;
  */
 class SignInForm extends FormWrapperControl
 {
+    /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
+    public $onSave = [];
+
     public function render()
     {
         $this->template->setFile(__DIR__ . '/signInForm.latte');

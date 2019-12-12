@@ -2,16 +2,20 @@
   "description": "PAF, the interactive portfolio",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^3.3.7",
-    "bootstrap-confirmation": "^0.0.2",
-    "bootstrap-datetime-picker": "github:auspexeu/bootstrap-datetimepicker#2.4.4",
+    "@ttskch/select2-bootstrap4-theme": "^1.3.2",
     "X-editable": "github:vitalets/x-editable#1.5.1",
+    "bootstrap": "^4.4.1",
+    "bs-custom-file-input": "^1.3.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "select2": "^4.0.3",
-    "select2-bootstrap-theme": "0.1.0-beta.10"
+    "tempusdominus-bootstrap-4": "^5.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
+  },
   "scripts": {},
   "author": "Thoronir42@Gmail.com"
 }

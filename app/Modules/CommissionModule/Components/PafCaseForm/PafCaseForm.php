@@ -4,7 +4,6 @@ namespace PAF\Modules\CommissionModule\Components\PafCaseForm;
 
 use Nette\Application\UI\ITemplate;
 use Nette\Localization\ITranslator;
-use PAF\Common\Forms\Controls\DateInput;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
@@ -12,8 +11,9 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule;
-use PAF\Modules\CommonModule\Components\ContactControl\ContactControlFactory;
+use PAF\Modules\CommonModule\Model\Contact;
 use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\CommonModule\Services\ContactDefinitions;
 use PAF\Modules\PortfolioModule;
 use stdClass;
 
@@ -26,16 +26,19 @@ use stdClass;
  */
 class PafCaseForm extends FormWrapperControl
 {
-    /** @var ContactControlFactory */
-    private $contactControlFactory;
+    /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
+    public $onSave = [];
+
+    /** @var ContactDefinitions */
+    private $contactDefinitions;
 
     public function __construct(
         FormFactory $formFactory,
         ITranslator $translator,
-        ContactControlFactory $contactControlFactory
+        ContactDefinitions $contactDefinitions
     ) {
         parent::__construct($formFactory, $translator);
-        $this->contactControlFactory = $contactControlFactory;
+        $this->contactDefinitions = $contactDefinitions;
         $this['contact'] = new Container();
     }
 
@@ -57,10 +60,6 @@ class PafCaseForm extends FormWrapperControl
             'status' => $case->status,
             'targetDelivery' => $case->targetDelivery,
         ]);
-
-        foreach ($case->customer->contact as $contact) {
-            $this['contact'][$contact->type] = $this->contactControlFactory->create($contact);
-        }
     }
 
     public function render()
@@ -87,16 +86,15 @@ class PafCaseForm extends FormWrapperControl
         $contact = $form->addContainer('contact');
 
         $contact->addText('name', 'paf.contact.name');
-        $contact->addText('telegram', 'paf.contact.telegram');
-        $contact->addText('email', 'paf.contact.email');
+        $contact->addContact('telegram', $this->contactDefinitions, 'paf.contact.telegram');
+        $contact->addContact('email', $this->contactDefinitions, 'paf.contact.email');
+        $contact->addContact('telephone', $this->contactDefinitions, 'paf.contact.phone')
+            ->setContactType(Contact::TYPE_TELEPHONE);
 
         $this->setContainerDisabled($fursuit, true);
         $this->setContainerDisabled($contact, true);
 
-        $caseStatesLocalized = CommissionModule\Model\PafCaseWorkflow::getCaseStatesLocalized();
-        $form->addSelect('status', 'commission.case.status', $caseStatesLocalized);
-        $form->addDate('targetDelivery', 'commission.case.targetDelivery', DateInput::FORMAT_DATETIME)
-            ->setPickerPosition(DateInput::POSITION_TOP_RIGHT);
+        $form->addDate('targetDelivery', 'commission.case.targetDelivery');
 
         $form->addSubmit('submit', 'generic.update');
 
@@ -116,8 +114,6 @@ class PafCaseForm extends FormWrapperControl
             $specification->characterDescription = $values->fursuit->characterDescription;
         }
 
-
-        $case->status = $values->status;
         $targetDelivery = $values->targetDelivery;
 
         if ($targetDelivery != $this->case->targetDelivery) {
@@ -135,7 +131,7 @@ class PafCaseForm extends FormWrapperControl
         ];
 
         foreach ($customer->contact as $contact) {
-            $data[$contact->type] = $contact->value;
+            $data[$contact->type] = $contact;
         }
 
         return $data;
