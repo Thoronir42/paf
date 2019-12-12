@@ -1,0 +1,24 @@
+.property-diff {
+  display: flex;
+  flex-direction: column;
+
+  .diff-value {
+    display: flex;
+
+    .value {
+      padding: 1px 4px;
+      border-bottom: 2px solid;
+    }
+  }
+
+  .diff-value-old, .diff-value-new {
+    flex: 1;
+  }
+
+  .diff-value-old .value {
+    border-bottom-color: #ffc2aa;
+  }
+  .diff-value-new .value {
+    border-bottom-color: #beffc4;
+  }
+}

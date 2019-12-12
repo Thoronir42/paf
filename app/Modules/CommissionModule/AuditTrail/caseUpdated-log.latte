@@ -7,12 +7,8 @@
     <span>{_$logEvent->type, ['actor' => $actor]}</span>
 </div>
 
-{block #card-body}
-<div class="list-group">
+<div class="card-body" n:block="#card-body">
     {foreach $parameters['changes'] ?? [] as $property => $change}
-        <div class="list-group-item">
-            {control $control:propertyDiff, $entityClass, $property, $change['newValue']??null, $change['oldValue']??null}
-        </div>
+        {control $control:propertyDiff, $entityClass, $property, $change['newValue']??null, $change['oldValue']??null}
     {/foreach}
 </div>
-{/block}
