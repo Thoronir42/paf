@@ -16,7 +16,7 @@ class PafCaseDescriptor implements EntityDescriptor
     {
         $this->properties = [
             'status' => new Property('status', 'commission.case.status'),
-            'targetDelivery' => new Property('targetDelivery', 'datetime'),
+            'targetDelivery' => new Property('targetDelivery', 'date'),
         ];
     }
 
