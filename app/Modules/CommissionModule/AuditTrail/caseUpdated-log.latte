@@ -1,14 +1,18 @@
+{layout $layout}
+
 {var $entityClass = 'PAF\Modules\CommissionModule\Model\PafCase'}
-<div>
-    <span class="label label-default">{_$logEvent->type, ['actor' => $actor]}</span>
 
-    <div class="list-group">
-
-        {foreach $parameters['changes'] ?? [] as $property => $change}
-            <div class="list-group-item">
-                {control $control:propertyDiff, $entityClass, $property, $change['newValue']??null, $change['oldValue']??null}
-            </div>
-        {/foreach}
-    </div>
-
+<div class="card-header" n:block="#card-header">
+    {include #stamp, 'instant' => $logEvent->instant}
+    <span>{_$logEvent->type, ['actor' => $actor]}</span>
 </div>
+
+{block #card-body}
+<div class="list-group">
+    {foreach $parameters['changes'] ?? [] as $property => $change}
+        <div class="list-group-item">
+            {control $control:propertyDiff, $entityClass, $property, $change['newValue']??null, $change['oldValue']??null}
+        </div>
+    {/foreach}
+</div>
+{/block}

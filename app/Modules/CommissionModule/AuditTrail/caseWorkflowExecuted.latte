@@ -1,1 +1,8 @@
-<span class="label label-default">{_$logEvent->type.'.executed', ['actor'=>$actor]}</span>
+{layout $layout}
+
+<div class="card-header" n:block="#card-header">
+    {include #stamp, 'instant' => $logEvent->instant}
+    <span>{_$logEvent->type.'.executed', ['actor'=>$actor]}</span>
+</div>
+
+

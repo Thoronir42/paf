@@ -1,12 +1,5 @@
 {$controlElement->startTag()|noescape}
-<div class="row">
-    {foreach $entries as $entry}
-        <div class="col-md-3">
-            <span>{$entry->getInstant()|date}</span>
-        </div>
-        <div class="col-md-9">
-            {control $entry->getId():feed}
-        </div>
-    {/foreach}
-</div>
+{foreach $entries as $entry}
+    {control $entry->getId():feed}
+{/foreach}
 {$controlElement->endTag()|noescape}
