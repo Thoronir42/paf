@@ -66,6 +66,7 @@
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
       "SeStep\\NavigationMenuComponent\\": "extensions/SeStep/NavigationMenuComponent/src/",
+      "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
       "SeStep\\Typeful\\": "extensions/SeStep/Typeful/src/"
     }
   },

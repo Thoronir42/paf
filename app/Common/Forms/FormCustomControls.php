@@ -2,8 +2,10 @@
 
 namespace PAF\Common\Forms;
 
+use Nette\Forms\Controls\UploadControl;
 use PAF\Common\Forms\Controls\DateInput;
 use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use SeStep\NetteBootstrap\Controls as NBSC;
 
 trait FormCustomControls
 {
@@ -23,6 +25,16 @@ trait FormCustomControls
         string $label = null
     ): Controls\ContactInput {
         return $this[$name] = new Controls\ContactInput($definitions, $label);
+    }
+
+    public function addUpload(string $name, $label = null): UploadControl
+    {
+        return $this[$name] = new NBSC\BootstrapUploadControl($label, false);
+    }
+
+    public function addMultiUpload(string $name, $label = null): UploadControl
+    {
+        return $this[$name] = new NBSC\BootstrapUploadControl($label, true);
     }
 
     /**

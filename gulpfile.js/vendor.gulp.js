@@ -5,6 +5,7 @@ module.exports.copyVendor = async () => {
         'js': [
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/bs-custom-file-input/dist/bs-custom-file-input.js',
             'node_modules/select2/dist/js/select2.full.min.js',
             'node_modules/X-editable/dist/bootstrap3-editable/js/bootstrap-editable.js',
             'node_modules/moment/min/locales.min.js',

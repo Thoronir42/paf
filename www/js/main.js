@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $.nette.init();
 
+    bsCustomFileInput.init();
     // initConfirmation();
 
     initTags();

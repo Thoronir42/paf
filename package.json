@@ -5,6 +5,7 @@
     "@ttskch/select2-bootstrap4-theme": "^1.3.2",
     "X-editable": "github:vitalets/x-editable#1.5.1",
     "bootstrap": "^4.4.1",
+    "bs-custom-file-input": "^1.3.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "select2": "^4.0.3",

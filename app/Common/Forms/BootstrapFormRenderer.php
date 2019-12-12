@@ -59,7 +59,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
 
                 'description' => 'span class=help-block',
                 'requiredsuffix' => '',
-                'errorcontainer' => 'span class=help-block error',
+                'errorcontainer' => 'span class=form-text text-danger',
                 'erroritem' => '',
 
                 '.required' => 'required',
@@ -67,14 +67,13 @@ class BootstrapFormRenderer extends DefaultFormRenderer
                 '.number' => 'form-control',
                 '.select' => 'form-control',
                 '.password' => 'text',
-                '.file' => 'btn btn-secondary btn-file',
                 '.submit' => 'btn btn-primary',
                 '.image' => 'imagebutton',
                 '.button' => 'button',
             ],
 
             'label' => [
-                'container' => 'div class="col-sm-12 col-md-3 control-label"',
+                'container' => 'div class="col-sm-12 col-md-3"',
                 'suffix' => null,
                 'requiredsuffix' => '',
             ],
