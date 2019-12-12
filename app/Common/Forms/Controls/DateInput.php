@@ -6,6 +6,7 @@ use Nette\Forms\Controls\TextInput;
 use Nette\UnexpectedValueException;
 use Nette\Utils\DateTime;
 use Nette\Utils\Html;
+use SeStep\NetteBootstrap as NBS;
 
 class DateInput extends TextInput
 {
@@ -63,18 +64,17 @@ class DateInput extends TextInput
         $element->class[] = 'form-control datetimepicker-input';
         $element->data('target', "#$id");
 
+        $inputGroup = new NBS\InputGroup($element);
+        $inputGroup->class[] = 'date td-wrapper';
+        $inputGroup->id = $id;
+        $inputGroup->data('target-input', 'nearest');
+        $inputGroup->data('format', $this->getBootstrapFormat($this->format));
 
-        $wrapper = Html::el('div', [
-            'class' => 'input-group date td-wrapper',
-            'id' => $id,
-        ]);
-        $wrapper->data('target-input', 'nearest');
-        $wrapper->data('format', $this->getBootstrapFormat($this->format));
+        $append = $inputGroup->append(NBS\InputGroup::text('<i class="fa fa-calendar"></i>'));
+        $append->data('target', "#$id");
+        $append->data('toggle', 'datetimepicker');
 
-        $wrapper->addHtml($element);
-        $wrapper->addHtml($this->createPickerAddOn("#$id"));
-
-        return $wrapper;
+        return $inputGroup;
     }
 
     private function getBootstrapFormat($format)
@@ -87,18 +87,6 @@ class DateInput extends TextInput
         }
 
         throw new UnexpectedValueException("Format $format is not supported");
-    }
-
-    private function createPickerAddOn(string $targetSelector): Html
-    {
-        $inputAddon = Html::el('div');
-        $inputAddon->class[] = 'input-group-append';
-        $inputAddon->data('target', $targetSelector);
-        $inputAddon->data('toggle', 'datetimepicker');
-
-        $inputAddon->addHtml('<div class="input-group-text"><i class="fa fa-calendar"></i></div>');
-
-        return $inputAddon;
     }
 
     public function validateDate(DateInput $input)

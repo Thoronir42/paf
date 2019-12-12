@@ -7,6 +7,7 @@ use Nette\Forms\Controls\TextInput;
 use PAF\Modules\CommonModule\Components\ContactControl\ContactControl;
 use PAF\Modules\CommonModule\Model\Contact;
 use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use SeStep\NetteBootstrap as NBS;
 
 class ContactInput extends TextInput
 {
@@ -66,22 +67,14 @@ class ContactInput extends TextInput
         $input = parent::getControl();
         $input->class[] = 'form-control';
 
-        $wrapper = Nette\Utils\Html::el('div', [
-            'class' => 'input-group',
-        ]);
-        $wrapper->addHtml($input);
+        $inputGroup = new NBS\InputGroup($input);
 
         $addOn = $this->getAddOn();
         if ($addOn) {
-            $append = Nette\Utils\Html::el('div', [
-                'class' => 'input-group-append',
-            ]);
-
-            $append->addHtml($addOn);
-            $wrapper->addHtml($append);
+            $inputGroup->append($addOn);
         }
 
-        return $wrapper;
+        return $inputGroup;
     }
 
     private function getAddOn(): ?Nette\Utils\Html
