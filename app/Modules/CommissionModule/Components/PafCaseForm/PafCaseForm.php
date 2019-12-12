@@ -26,6 +26,9 @@ use stdClass;
  */
 class PafCaseForm extends FormWrapperControl
 {
+    /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
+    public $onSave = [];
+
     /** @var ContactDefinitions */
     private $contactDefinitions;
 

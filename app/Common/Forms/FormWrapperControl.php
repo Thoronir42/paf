@@ -9,9 +9,6 @@ use Nette\Utils\ArrayHash;
 
 abstract class FormWrapperControl extends UI\Control
 {
-    /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
-    public $onSave = [];
-
     /** @var FormFactory */
     protected $factory;
     /** @var ITranslator */

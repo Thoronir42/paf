@@ -6,11 +6,13 @@
 
 <h1>{_'commission.quotes.title'}{if !$enableQuotes} {_'currently-closed'}{/if}</h1>
 {if !$enableQuotes}
-    <div class="text-info">{_'currently-closed-text'}</div>
-    <br/>
-    <div class="text-center">
-        <a n:href=":Common:Homepage:" class="btn btn-lg btn-default">{_'generic.return-home'}</a>
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="text-info">{$_ = 'commission.quotes.currently-closed-text'|translate|noescape}</div>
+            <a n:href=":Common:Homepage:" class="btn btn-lg btn-link">{_'generic.return'}</a>
+        </div>
     </div>
+
 {else}
     <div class="card">
         <div class="card-body">
