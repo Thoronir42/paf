@@ -86,7 +86,6 @@ class ContactInput extends TextInput
 
     private function getAddOn(): ?Nette\Utils\Html
     {
-        bdump($this->getContactType());
         if (!$this->value->isEmpty()) {
             $link = ContactControl::getIconHtml($this->definitions, $this->value);
             $link->class = 'input-group-text';

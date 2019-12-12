@@ -75,7 +75,7 @@ final class CasesPresenter extends BasePresenter
 
         $commentControl->onCommentAdd[] = function (Comment $comment) use ($case) {
             $comment->thread = $case->comments;
-            $comment->user = $this->user->identity->getEntity();
+            $comment->setUserId($this->user->identity->getEntity()->id);
 
             $this->commentsService->save($comment);
 
