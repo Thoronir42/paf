@@ -66,8 +66,8 @@ class BootstrapFormRenderer extends DefaultFormRenderer
                 '.text' => 'form-control',
                 '.number' => 'form-control',
                 '.select' => 'form-control',
-                '.password' => 'text',
-                '.submit' => 'btn btn-primary',
+                '.password' => 'form-control',
+                '.submit' => 'btn btn-primary pull-right',
                 '.image' => 'imagebutton',
                 '.button' => 'button',
             ],
@@ -94,7 +94,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
         $pair->addHtml($this->renderLabel($control));
         $controlHtml = $this->renderControl($control);
         if ($help = $control->getOption('help-text')) {
-            $controlHtml->addHtml('<p class="help-block">' . $control->translate($help) . '</p>');
+            $controlHtml->addHtml('<p class="form-text text-muted">' . $control->translate($help) . '</p>');
         }
         $pair->addHtml($controlHtml);
 

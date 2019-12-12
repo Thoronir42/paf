@@ -2,6 +2,7 @@
 
 namespace PAF\Common\Forms;
 
+use Nette\Forms\Controls\Checkbox;
 use Nette\Forms\Controls\UploadControl;
 use PAF\Common\Forms\Controls\DateInput;
 use PAF\Modules\CommonModule\Services\ContactDefinitions;
@@ -35,6 +36,11 @@ trait FormCustomControls
     public function addMultiUpload(string $name, $label = null): UploadControl
     {
         return $this[$name] = new NBSC\BootstrapUploadControl($label, true);
+    }
+
+    public function addCheckbox(string $name, $caption = null): Checkbox
+    {
+        return $this[$name] = new NBSC\BootstrapCheckboxControl($caption);
     }
 
     /**
