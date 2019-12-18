@@ -11,5 +11,5 @@ default:
         - "test-features"
       contexts:
         - Behat\PAF\Context\SettingsContext
-        - Behat\PAF\Context\BrowserContext
+        - Behat\PAF\Context\SessionContext
         - Behat\MinkExtension\Context\MinkContext
