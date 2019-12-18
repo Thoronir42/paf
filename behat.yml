@@ -1,0 +1,15 @@
+default:
+  extensions:
+    Behat\MinkExtension\ServiceContainer\MinkExtension:
+      base_url: 'http://paf.local'
+      goutte: ~
+    Behat\PAF\Extensions\NetteContainerExtension: {}
+
+  suites:
+    default:
+      paths:
+        - "test-features"
+      contexts:
+        - Behat\PAF\Context\SettingsContext
+        - Behat\PAF\Context\BrowserContext
+        - Behat\MinkExtension\Context\MinkContext
