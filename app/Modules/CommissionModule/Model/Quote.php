@@ -5,12 +5,13 @@ namespace PAF\Modules\CommissionModule\Model;
 use DateTime;
 use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\CommonModule\Model\Slug;
 use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property string $id
  * @property Person $issuer m:hasOne(issuer_person_id)
- * @property string $slug
+ * @property Slug $slug m:hasOne(slug)
  * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated
  * @property Specification $specification m:hasOne(specification_id)

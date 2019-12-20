@@ -33,7 +33,7 @@ class PafImageStorage
         }
 
         foreach ($references as $file) {
-            $this->saveImageFile('quote', $file, $quote->slug, $quote->references);
+            $this->saveImageFile('quote', $file, $quote->slug->id, $quote->references);
         }
     }
 
