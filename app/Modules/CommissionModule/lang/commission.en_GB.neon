@@ -37,7 +37,7 @@ quote.noReferences: There are no references
 
 
 case.customer: Customer
-case.fursuitSpecification: FursuitSpecification
+case.fursuitSpecification: Fursuit Specification
 
 case:
     notes: Notes

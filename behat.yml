@@ -13,3 +13,4 @@ default:
         - Behat\PAF\Context\SettingsContext
         - Behat\PAF\Context\SessionContext
         - Behat\MinkExtension\Context\MinkContext
+        - Behat\PAF\Modules\CommissionModule\QuoteListContext
