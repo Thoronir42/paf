@@ -15,20 +15,7 @@
         </ul>
 
         <ul class="nav navbar-nav pull-right">
-            <li>
-                {if $user->isLoggedIn()}
-                    <a href="{plink ':Common:Sign:out'}">
-                        <i class="fa fa-sign-out"></i>
-                        <span>{_'generic.sign-out'}</span>
-                    </a>
-                {else}
-                    <a href="{plink ':Common:Sign:in'}">
-                        <i class="fa fa-sign-in"></i>
-                        <span>{_'generic.sign-in'}</span>
-                    </a>
-
-                {/if}
-            </li>
+            {control signLink}
         </ul>
     </div>
     <!-- /.navbar-collapse -->

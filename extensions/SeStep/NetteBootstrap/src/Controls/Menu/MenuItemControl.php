@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\NavigationMenuComponent;
+namespace SeStep\NetteBootstrap\Controls\Menu;
 
 use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;

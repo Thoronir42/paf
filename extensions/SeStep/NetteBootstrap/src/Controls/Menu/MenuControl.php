@@ -1,49 +1,31 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\NavigationMenuComponent;
+namespace SeStep\NetteBootstrap\Controls\Menu;
 
 use Nette\Application\UI;
 use Nette\ComponentModel\IComponent;
 use Nette\InvalidStateException;
-use Nette\Localization\ITranslator;
 use SeStep\Navigation\Menu\Items\ANavMenuItem;
 use SeStep\Navigation\Menu\Items\INavMenuItem;
 use SeStep\Navigation\Menu\Items\NavMenuLink;
 use SeStep\Navigation\Provider\NavigationItemsProvider;
 
-class NavigationMenu extends UI\Control
+class MenuControl extends UI\Control
 {
-    /** @var string */
-    protected $title;
-
-    /** @var string */
-    protected $brandTarget;
-
     /** @var ANavMenuItem[] */
-    private $items;
-    /**
-     * @var ITranslator
-     */
-    private $translator;
+    protected $items;
 
     /***
      * NavigationMenu constructor.
-     * @param string $title
      * @param ANavMenuItem[]|NavigationItemsProvider $items
-     * @param string|null $brandTarget
-     * @param ITranslator|null $translator
      */
-    public function __construct(string $title, $items, string $brandTarget = null, ITranslator $translator = null)
+    public function __construct($items)
     {
         if ($items instanceof NavigationItemsProvider) {
             $items = $items->getItems();
         }
 
-        $this->title = $title;
-        $this->brandTarget = $brandTarget;
         $this->items = $items;
-
-        $this->translator = $translator;
     }
 
     public function link(string $destination, $args = array()): string
@@ -62,13 +44,12 @@ class NavigationMenu extends UI\Control
             return $this->presenter->isLinkCurrent($item->getTarget());
         }
 
-
         if ($item->hasItems()) {
             foreach ($item->getItems() as $subItem) {
                 if (!($subItem instanceof NavMenuLink)) {
                     continue;
                 }
-                if ($subItem->getRole() == 'dropdown' && $this->itemCurrent($subItem)) {
+                if ($subItem->getRole() == NavMenuLink::ROLE_DROPDOWN && $this->itemCurrent($subItem)) {
                     return true;
                 }
             }
@@ -77,14 +58,10 @@ class NavigationMenu extends UI\Control
         return false;
     }
 
-
-    public function renderTop()
+    public function render()
     {
-        $this->template->setTranslator($this->translator);
-        $this->template->setFile(__DIR__ . "/navigationMenuTop.latte");
+        $this->template->setFile(__DIR__ . "/menu-tabs.latte");
 
-        $this->template->title = $this->title;
-        $this->template->brandTarget = $this->brandTarget;
         $this->template->items = $this->items;
 
         $this->template->render();
