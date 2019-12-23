@@ -55,7 +55,6 @@ class SlugRepository extends BaseRepository
             return 1;
         }
 
-
         return (int)$suffix;
     }
 }
