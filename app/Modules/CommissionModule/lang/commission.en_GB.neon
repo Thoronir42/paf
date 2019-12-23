@@ -11,7 +11,7 @@ quotes.disable: "Disable"
 
 quote.issuer: Issuer
 quote.references: "%count% references"
-quote.created: "Quote created"
+quote.created: "Your quote has been received"
 
 quote.rejected: "Quote '%name%' was rejected"
 quote.accepted: "Quote '%name%' was accepted"
@@ -37,7 +37,7 @@ quote.noReferences: There are no references
 
 
 case.customer: Customer
-case.fursuitSpecification: FursuitSpecification
+case.fursuitSpecification: Fursuit Specification
 
 case:
     notes: Notes

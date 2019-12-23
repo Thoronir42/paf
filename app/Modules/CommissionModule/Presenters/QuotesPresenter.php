@@ -95,7 +95,7 @@ final class QuotesPresenter extends BasePresenter
                 return;
             }
 
-            $this->flashTranslate('paf.quote.created');
+            $this->flashTranslate('commission.quote.created');
             $this->redirect(':Common:Homepage:default');
         };
 

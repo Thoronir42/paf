@@ -85,15 +85,10 @@ class Commissions
                 throw new \UnexpectedValueException("Could not save specification");
             }
 
-            $slugId = Strings::webalize($specification->characterName);
-            if ($this->slugRepository->slugExists($slugId)) {
-                return 'paf.case.already-exists';
-            }
-
-            $slug = $this->slugRepository->createSlug($slugId);
+            $slug = $this->slugRepository->createSlug($specification->characterName, true);
 
             $quote->status = Quote::STATUS_NEW;
-            $quote->slug = $slug->id; // todo: use FK
+            $quote->slug = $slug;
             $quote->specification = $specification;
             $quote->issuer = $issuer;
 

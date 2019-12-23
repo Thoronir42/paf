@@ -24,6 +24,10 @@ class CasesGridFactory
 
         $casesGrid->setTranslator($this->translator);
 
+        $casesGrid->addColumnText('fursuit', 'paf.entity.fursuit')
+            ->setRenderer(function (PafCase $row) {
+                return $row->specification->characterName;
+            });
         $casesGrid->addColumnText('customer', 'commission.case.customer')
             ->setRenderer(function (PafCase $row) {
                 return $row->customer->displayName;
