@@ -1,5 +1,6 @@
 views:
     home: "Home"
+    dashboard: "Dashboard"
     quotes: "Quotes"
     manage: "Manage"
     settings: "Settings"

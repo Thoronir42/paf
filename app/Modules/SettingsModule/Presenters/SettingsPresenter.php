@@ -2,10 +2,10 @@
 
 namespace PAF\Modules\SettingsModule\Presenters;
 
-use PAF\Common\BasePresenter;
+use PAF\Modules\CommonModule\Presenters\DashboardPresenter;
 use SeStep\GeneralSettings\Model\INode;
 
-final class SettingsPresenter extends BasePresenter
+final class SettingsPresenter extends DashboardPresenter
 {
     public function startup()
     {

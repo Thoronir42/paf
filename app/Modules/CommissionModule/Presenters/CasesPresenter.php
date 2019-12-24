@@ -2,7 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
-use PAF\Common\BasePresenter;
 use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Lean\LeanSnapshots;
@@ -16,9 +15,10 @@ use Nette\Application\BadRequestException;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControl;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
 use PAF\Modules\CommonModule\Model\Comment;
+use PAF\Modules\CommonModule\Presenters\DashboardPresenter;
 use PAF\Modules\CommonModule\Services\CommentsService;
 
-final class CasesPresenter extends BasePresenter
+final class CasesPresenter extends DashboardPresenter
 {
     /** @var PafCases @inject */
     public $cases;

@@ -1,0 +1,13 @@
+{extends auto}
+
+{define content}
+    <h1>{_'paf.views.dashboard'}</h1>
+    <div class="card">
+        <div class="card-header">
+            {control dashboardNavigation:tabs, 'context' => 'card'}
+        </div>
+        <div class="card-body">
+            {include dashboardContent}
+        </div>
+    </div>
+{/define}

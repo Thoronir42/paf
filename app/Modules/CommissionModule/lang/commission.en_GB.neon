@@ -33,6 +33,8 @@ quote-form:
 
     group-finish: "Finalize quote"
 
+unresolvedQuotes: "Unresolved quotes"
+
 quote.noReferences: There are no references
 
 

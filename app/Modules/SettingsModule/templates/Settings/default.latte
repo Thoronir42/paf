@@ -1,9 +1,8 @@
-{block content}
-    <h1>{_'title'}</h1>
+{extends $dashboardTemplate}
+{block dashboardContent}
     {if $fqnComponent}
         {control settings-$fqnComponent}
     {else}
         {control settings}
     {/if}
-
 {/block}

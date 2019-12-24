@@ -1,0 +1,10 @@
+items:
+    quoteList:
+        target: ':Commission:Quotes:list'
+        caption: 'paf.views.quotes'
+    casesList:
+        target: ':Commission:Cases:list'
+        caption: 'paf.views.cases'
+    settings:
+        target: ':Settings:Settings:default'
+        caption: 'paf.views.settings'

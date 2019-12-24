@@ -1,14 +1,6 @@
-{block content}
-    <div class="card">
-        <div class="card-header">
-            {control option-commission-quotes-enable:pair}
-        </div>
-    </div>
+{extends $dashboardTemplate}
 
-    <div class="card">
-        <div class="card-header">{_'commission.cases.label'}</div>
-        <div class="card-body">
-            {control cases}
-        </div>
-    </div>
+{block dashboardContent}
+    <h2>{_'commission.cases.label'}</h2>
+    {control cases}
 {/block}

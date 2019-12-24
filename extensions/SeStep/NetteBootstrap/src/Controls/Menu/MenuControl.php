@@ -58,11 +58,12 @@ class MenuControl extends UI\Control
         return false;
     }
 
-    public function render()
+    public function renderTabs(array $options = [])
     {
-        $this->template->setFile(__DIR__ . "/menu-tabs.latte");
+        $this->template->setFile(__DIR__ . "/menuControl-tabs.latte");
 
         $this->template->items = $this->items;
+        $this->template->context = $options['context'] ?? null;
 
         $this->template->render();
     }

@@ -25,8 +25,16 @@ services:
         arguments:
             brandTitle: %appName%
             brandTarget: :Common:Homepage:default
-            items: PAF\Modules\CommonModule\Layout\Navigation\NeonProvider(%appDir%/config/include/navigation.neon)
+            items: PAF\Modules\CommonModule\Layout\Navigation\NeonProvider(%appDir%/config/navigation/site.neon)
             signItems: PAF\Modules\CommonModule\Layout\Navigation\SignItemProvider()
+        autowired: false
+
+    paf.dashboardNavigation:
+        class: SeStep\NetteBootstrap\Controls\Menu\MenuControl
+        arguments:
+            items: PAF\Modules\CommonModule\Layout\Navigation\NeonProvider(%appDir%/config/navigation/dashboard.neon)
+
+        autowired: false
 
     - PAF\Modules\PortfolioModule\Repository\FursuitRepository
 

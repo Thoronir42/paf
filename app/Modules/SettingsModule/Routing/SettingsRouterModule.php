@@ -15,6 +15,7 @@ class SettingsRouterModule extends RouterModule
         $router = new RouteList('Settings');
         $router[] = new Route('settings', [
             'presenter' => 'Settings',
+            'action' => 'default',
         ]);
 
         return $router;
