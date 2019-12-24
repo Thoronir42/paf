@@ -156,6 +156,15 @@ abstract class BaseRepository extends Repository implements IQueryable
         return $this->createEntities($selection->fetchAll());
     }
 
+    public function countBy(array $criteria): int
+    {
+        $pk = $this->getPrimaryKey();
+
+        $selection = $this->select("COUNT(t.$pk)", 't', $criteria);
+
+        return $selection->fetchSingle();
+    }
+
     public function getDataSource(string $alias = null): Fluent
     {
         $select = $alias ? "$alias.*" : '*';

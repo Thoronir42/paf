@@ -10,6 +10,11 @@ use SeStep\Navigation\Menu\Items\INavMenuItem;
 use SeStep\Navigation\Menu\Items\NavMenuLink;
 use SeStep\Navigation\Provider\NavigationItemsProvider;
 
+/**
+ * Class MenuControl
+ *
+ * @method MenuItemControl offsetGet(string $name)
+ */
 class MenuControl extends UI\Control
 {
     /** @var ANavMenuItem[] */

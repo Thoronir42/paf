@@ -19,6 +19,14 @@ class MenuItemControl extends Control
         $this->item = $item;
     }
 
+    /**
+     * @return ANavMenuItem
+     */
+    public function getItem(): ANavMenuItem
+    {
+        return $this->item;
+    }
+
     public function render()
     {
         $role = $this->item->getRole();

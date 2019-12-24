@@ -2,7 +2,7 @@ items:
     quoteList:
         target: ':Commission:Quotes:list'
         caption: 'paf.views.quotes'
-    casesList:
+    caseList:
         target: ':Commission:Cases:list'
         caption: 'paf.views.cases'
     settings:
