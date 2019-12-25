@@ -3,11 +3,12 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use Nette\Application\UI\Multiplier;
+use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\Commissions;
 use PAF\Modules\CommissionModule\Model\Specification;
-use PAF\Modules\CommonModule\Presenters\DashboardPresenter;
+use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\FilesService;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
@@ -19,8 +20,10 @@ use PAF\Modules\CommissionModule\Repository\QuoteRepository;
  * Class QuotesPresenter
  * @package PAF\Modules\CommissionModule\Presenters
  */
-final class QuotesPresenter extends DashboardPresenter
+final class QuotesPresenter extends BasePresenter
 {
+    use DashboardComponent;
+
     /** @var QuoteRepository @inject */
     public $quotes;
 
