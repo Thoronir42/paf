@@ -39,6 +39,7 @@ quote.noReferences: There are no references
 
 priceList:
     title: 'MY SHIT FOR YOUS'
+    intro: 'HI! BUY MY STUFF!'
     products: 'Products'
     extras: 'Extras'
 

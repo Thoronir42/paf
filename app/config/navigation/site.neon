@@ -1,4 +1,7 @@
 items:
+    priceList:
+        target: ':Commission:PriceList:default'
+        caption: 'commission.priceList.title'
     quotes:
         target: ':Commission:Quotes:create'
         caption: paf.views.createQuote
