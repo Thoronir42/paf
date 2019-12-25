@@ -47,7 +47,7 @@ final class QuotesPresenter extends BasePresenter
         parent::startup();
     }
 
-    public function actionDefault()
+    public function actionCreate()
     {
         $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
     }

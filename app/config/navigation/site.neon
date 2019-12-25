@@ -1,10 +1,17 @@
 items:
     quotes:
-        target: ':Commission:Quotes:default'
-        caption: paf.views.quotes
+        target: ':Commission:Quotes:create'
+        caption: paf.views.createQuote
+        requirements:
+             -
+                 type: setting
+                 value: 'commission.quotes.enable'
     configuration:
         caption: paf.views.manage
-        requiredPermission: admin-settings
+        requirements:
+             -
+                 type: permission
+                 value: admin-settings
         subItems:
             settings:
                 target: ':Settings:Settings:'
