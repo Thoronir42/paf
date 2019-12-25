@@ -37,6 +37,10 @@ unresolvedQuotes: "Unresolved quotes"
 
 quote.noReferences: There are no references
 
+priceList:
+    title: 'MY SHIT FOR YOUS'
+    products: 'Products'
+    extras: 'Extras'
 
 case.customer: Customer
 case.fursuitSpecification: Fursuit Specification

@@ -9,6 +9,8 @@ services:
 
     pafCases: PAF\Modules\CommissionModule\Facade\PafCases
 
+    priceList: PAF\Modules\CommissionModule\Facade\PriceListService
+
     commissions: PAF\Modules\CommissionModule\Facade\Commissions
     quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
 

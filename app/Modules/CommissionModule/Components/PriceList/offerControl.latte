@@ -1,0 +1,16 @@
+<div class="offer" id="{$control->lookupPath()}">
+    <h3 class="name">{_$offer->getName()}</h3>
+    {if !empty($offer->getFeatures())}
+    {_'priceList.product.featureList'}
+    <ul class="features list-group">
+        <li class="list-group-item" n:foreach="$offer->getFeatures() as $feature">
+            <span>{_$feature->getName()}</span>
+            <p>{_$feature->getName().'.description'}</p>
+        </li>
+    </ul>
+    {/if}
+    {if $offer->getPrice()}
+    <span class="price">{$offer->getPrice()|price}</span>
+    {/if}
+
+</div>

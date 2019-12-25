@@ -13,7 +13,7 @@ class CommissionRouterModule extends RouterModule
     {
         $router = new RouteList('Commission');
         $router[] = new Route('case/<id>', 'Cases:detail');
-        $router[] = new Route('<presenter quotes|cases>[/<action=default>[/<id>]]');
+        $router[] = new Route('<presenter quotes|cases|price-list>[/<action=default>[/<id>]]');
 
         return $router;
     }
