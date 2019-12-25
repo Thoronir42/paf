@@ -49,6 +49,9 @@ final class QuotesPresenter extends DashboardPresenter
         $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
     }
 
+    /**
+     * @authorize manage-commissions
+     */
     public function actionList()
     {
         $this->template->quotes = $this->quotes->findForOverview();

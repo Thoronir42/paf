@@ -42,6 +42,9 @@ final class CasesPresenter extends DashboardPresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
+    /**
+     * @authorize manage-commissions
+     */
     public function actionList()
     {
         $casesGrid = $this->casesGridFactory->create();
@@ -52,6 +55,11 @@ final class CasesPresenter extends DashboardPresenter
         $this['cases'] = $casesGrid;
     }
 
+    /**
+     * @authorize manage-commissions
+     *
+     * @param string $id
+     */
     public function actionDetail($id)
     {
         $this->template->case = $case = $this->cases->find($id);
