@@ -8,6 +8,7 @@ use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\Commissions;
 use PAF\Modules\CommissionModule\Model\Specification;
+use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\FilesService;
 use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
@@ -21,6 +22,8 @@ use PAF\Modules\CommissionModule\Repository\QuoteRepository;
  */
 final class QuotesPresenter extends BasePresenter
 {
+    use DashboardComponent;
+
     /** @var QuoteRepository @inject */
     public $quotes;
 
@@ -49,6 +52,9 @@ final class QuotesPresenter extends BasePresenter
         $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
     }
 
+    /**
+     * @authorize manage-commissions
+     */
     public function actionList()
     {
         $this->template->quotes = $this->quotes->findForOverview();

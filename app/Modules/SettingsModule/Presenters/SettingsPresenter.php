@@ -3,10 +3,13 @@
 namespace PAF\Modules\SettingsModule\Presenters;
 
 use PAF\Common\BasePresenter;
+use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use SeStep\GeneralSettings\Model\INode;
 
 final class SettingsPresenter extends BasePresenter
 {
+    use DashboardComponent;
+
     public function startup()
     {
         parent::startup();

@@ -1,5 +1,7 @@
-{block content}
-Currently there are {count($quotes)} unresolved quotes:
+{extends $dashboardTemplate}
+
+{block dashboardContent}
+<h2>{_'commission.unresolvedQuotes'}</h2>
 <div class="row">
 	<div class="col-md-6" n:foreach="$quotes as $name => $quote">
 		{control quote-$name:tile}

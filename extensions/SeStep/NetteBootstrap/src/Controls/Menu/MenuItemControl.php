@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\NavigationMenuComponent;
+namespace SeStep\NetteBootstrap\Controls\Menu;
 
 use Nette\Application\UI\Control;
 use Nette\ComponentModel\IComponent;
@@ -17,6 +17,14 @@ class MenuItemControl extends Control
     public function __construct(ANavMenuItem $item)
     {
         $this->item = $item;
+    }
+
+    /**
+     * @return ANavMenuItem
+     */
+    public function getItem(): ANavMenuItem
+    {
+        return $this->item;
     }
 
     public function render()

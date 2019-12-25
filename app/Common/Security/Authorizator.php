@@ -21,19 +21,23 @@ class Authorizator extends Permission implements IAuthorizator
         $this->addRole('power-user', ['user']);
 
         $this->addResource('admin-section');
+        $this->addResource('manage-commissions');
 
         $this->addResource("admin-settings", 'admin-section');
 
         $this->addResource('option');
 
         $this->allow('power-user', 'admin-section');
+        $this->allow('power-user', 'manage-commissions');
     }
 
     /**
      * Performs a role-based authorization.
-     * @param    string|IRole     $role
-     * @param    string|IResource $resource
-     * @param    string           $privilege
+     *
+     * @param string|IRole $role
+     * @param string|IResource $resource
+     * @param string $privilege
+     *
      * @return bool
      */
     public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL): bool

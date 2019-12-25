@@ -16,10 +16,13 @@ use Nette\Application\BadRequestException;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControl;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
 use PAF\Modules\CommonModule\Model\Comment;
+use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\CommentsService;
 
 final class CasesPresenter extends BasePresenter
 {
+    use DashboardComponent;
+
     /** @var PafCases @inject */
     public $cases;
 
@@ -42,6 +45,9 @@ final class CasesPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
+    /**
+     * @authorize manage-commissions
+     */
     public function actionList()
     {
         $casesGrid = $this->casesGridFactory->create();
@@ -52,6 +58,11 @@ final class CasesPresenter extends BasePresenter
         $this['cases'] = $casesGrid;
     }
 
+    /**
+     * @authorize manage-commissions
+     *
+     * @param string $id
+     */
     public function actionDetail($id)
     {
         $this->template->case = $case = $this->cases->find($id);

@@ -8,6 +8,7 @@ use Nette\Utils\Strings;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Model\PafCase;
+use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
@@ -179,7 +180,24 @@ class Commissions
             return $case;
         });
 
-
         return true;
+    }
+
+    public function countUnresolvedQuotes(): int
+    {
+        return $this->quoteRepository->countBy([
+            'status' => [Quote::STATUS_NEW],
+        ]);
+    }
+
+    public function countUnresolvedCases(): int
+    {
+        return $this->caseRepository->countBy([
+            '!status' => [
+                PafCaseWorkflow::STATUS_FINISHED,
+                PafCaseWorkflow::STATUS_SHIPPED,
+                PafCaseWorkflow::STATUS_CANCELLED,
+            ],
+        ]);
     }
 }

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace SeStep\NavigationMenuComponent\Loader;
+namespace PAF\Modules\CommonModule\Layout\Navigation;
 
 use Nette\FileNotFoundException;
 use Nette\Neon\Neon;

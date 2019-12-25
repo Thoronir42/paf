@@ -13,7 +13,6 @@ use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SeStep\GeneralSettings\Settings;
-use SeStep\NavigationMenuComponent\NavigationMenu;
 use stdClass;
 
 /**
@@ -79,12 +78,9 @@ abstract class BasePresenter extends Presenter implements LoggerAwareInterface
         return $fileCandidates;
     }
 
-    public function createComponentMenu()
+    public function createComponentNavbar()
     {
-        /** @var NavigationMenu $navMenu */
-        $navMenu = $this->context->getService('navigationMenu.control');
-
-        return $navMenu;
+        return $this->context->getService('paf.navbar');
     }
 
     public function setLogger(LoggerInterface $logger)

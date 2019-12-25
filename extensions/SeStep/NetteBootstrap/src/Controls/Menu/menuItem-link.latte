@@ -1,0 +1,10 @@
+{var $link = $control->link($item->getTarget(), $item->getParameters())}
+{var $active = $control->linkCurrent}
+<li n:class="nav-item, $active ? active">
+    {var $label = $item->getLabel()}
+    <a n:class="nav-link, $active ? active" href="{$link}">
+        <span>{_$item->getCaption()}</span>
+        <span n:if="$label" class="badge badge-{$label->getLevel()}">{$label->getText()}</span>
+    </a>
+
+</li>

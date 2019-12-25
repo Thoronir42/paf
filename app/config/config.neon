@@ -39,7 +39,6 @@ extensions:
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
     translation: Contributte\Translation\DI\TranslationExtension
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
-    navigationMenu: SeStep\NavigationMenuComponent\DI\NavigationMenuComponentExtension
     monolog: Contributte\Monolog\DI\MonologExtension
     typeful: SeStep\Typeful\TypefulExtension
 
@@ -48,10 +47,6 @@ extensions:
     pafFeed: PAF\Common\Feed\FeedExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
-navigationMenu:
-    brandTitle: %appName%
-    brandTarget: :Common:Homepage:default
-    itemsFile: %appDir%/config/include/navigation.neon
 
 commonEvents:
     subscribers:
