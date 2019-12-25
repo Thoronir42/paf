@@ -14,6 +14,9 @@ class CommissionModuleExtension extends CompilerExtension
 
         /** @var ServiceDefinition $priceList */
         $priceList = $this->getContainerBuilder()->getDefinition($this->prefix('priceList'));
-        $priceList->setArgument('data', Neon::decode(file_get_contents(__DIR__ . '/../../config/priceList.neon')));
+        $priceListNeon = __DIR__ . '/../../config/priceList.neon';
+        $priceList->setArgument('data', Neon::decode(file_get_contents($priceListNeon)));
+
+        $this->compiler->addDependencies([$priceListNeon]);
     }
 }
