@@ -3,6 +3,7 @@ offers:
         name: 'priceList.product.partial'
         type: 'product'
         price: 420.69
+        preview: '/images/priceList/product-partial.png'
         features:
             - fursuitHead
             - fursuitPaws

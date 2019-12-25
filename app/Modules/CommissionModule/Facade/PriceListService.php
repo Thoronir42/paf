@@ -58,6 +58,9 @@ class PriceListService
             }
 
             $offer = new Offer($offerData['name'], $offerData['type'], $offerData['price'], $offerFeatures);
+            if (isset($offerData['preview'])) {
+                $offer->setPreview($offerData['preview']);
+            }
             $offers[$name] = $offer;
         }
 

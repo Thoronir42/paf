@@ -14,6 +14,8 @@ class Offer
     private $type;
     /** @var string|float */
     private $price;
+    /** @var string */
+    private $preview;
     /** @var Feature[] */
     private $features;
 
@@ -43,5 +45,15 @@ class Offer
     public function getFeatures(): array
     {
         return $this->features;
+    }
+
+    public function getPreview(): ?string
+    {
+        return $this->preview;
+    }
+
+    public function setPreview(?string $preview): void
+    {
+        $this->preview = $preview;
     }
 }
