@@ -34,7 +34,17 @@ final class NeonProvider implements NavigationItemsProvider
     /** @inheritDoc */
     public function getItems()
     {
+        // todo: don't decode neon files on every load!
         $data = Neon::decode(file_get_contents($this->file));
+
+        foreach ($data['items'] as &$item) {
+            if (isset($item['includeSubItems'])) {
+                $includePath = dirname($this->file) . $item['includeSubItems'];
+                $subItemsData = Neon::decode(file_get_contents($includePath));
+                $item['subItems'] = $subItemsData['items'];
+                unset($item['includeSubItems']);
+            }
+        }
 
         return iterator_to_array(new AssociativeArrayProvider($data['items'], [$this, 'checkRequirements']));
     }

@@ -10,16 +10,10 @@ items:
                  type: setting
                  value: 'commission.quotes.enable'
     configuration:
-        caption: paf.views.manage
+        caption: paf.views.dashboard
         requirements:
              -
                  type: permission
                  value: admin-settings
-        subItems:
-            settings:
-                target: ':Settings:Settings:'
-                caption: paf.views.settings
-            cases:
-                target: :Commission:Cases:list
-                caption: paf.views.cases
+        includeSubItems: ./dashboard.neon
 
