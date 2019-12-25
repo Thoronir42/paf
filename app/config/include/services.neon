@@ -82,12 +82,14 @@ services:
             - addFilter(contactUrl, @contactUrlFilter)
             - addFilter(user, @userFilter)
             - addFilter(htmlCLass, @htmlClassFilter)
+            - addFilter(price, @priceFilter)
 
     yesNoFilter: PAF\Common\Latte\YesNoFilter
     contactUrlFilter:
         class: PAF\Common\Latte\ContactUrlFilter
     htmlClassFilter: PAF\Common\Latte\HtmlClassFilter
     userFilter: PAF\Modules\CommonModule\Latte\UserFilter
+    priceFilter: PAF\Common\Latte\PriceFilter('%s €')
 
     entityWorkflowListener:
         class: PAF\Common\Workflow\EntityWorkflowListener
