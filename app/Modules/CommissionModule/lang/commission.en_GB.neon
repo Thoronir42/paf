@@ -62,19 +62,25 @@ case:
     acceptedOn: Accepted on
     targetDelivery: Target delivery date
 
+    archivedOn: Archived on %archivedOn%
+
     status: Status
     status.accepted: Accepted
     status.wip: In progress
     status.finished: Finished
     status.cancelled: Cancelled
     status.shipped: Shipped
+
     status.archived: Archived
+    status.unarchived: Unarchived
 
     action.commence: Commence
     action.finish: Finish
     action.ship: Ship
     action.cancel: Cancel
+
     action.archive: Archive
+    action.unarchive: Unarchive
 
     action.commence.executed: %actor% commenced work on the case.
     action.finish.executed: %actor% finished this case.
@@ -85,9 +91,13 @@ case:
 log:
     caseCreated: %actor% created the case
     caseUpdated: %actor% updated the case
+    caseArchived.executed: %actor% archived the case
+    caseUnarchived.executed: %actor% un-archived the case
 
 cases:
     label: "Running cases"
     detailTitle: "Detail of case %name%"
     detail: "Case"
     notes: "Notes"
+
+    archivedFilter: "Archived"

@@ -39,7 +39,7 @@ CREATE TABLE commission__paf_case
     accepted_on        DATE        NOT NULL,
     comment_thread_id  VARCHAR(10) NULL,
     target_delivery    DATE        NULL,
-
+    archived_on        DATETIME    NULL,
 
     CONSTRAINT PRIMARY KEY (id),
 
@@ -57,7 +57,7 @@ CREATE TABLE commission__product
     slug             VARCHAR(64) NOT NULL,
     title            VARCHAR(64) NOT NULL,
     type             VARCHAR(24) NOT NULL,
-    specification_id INT NULL,
+    specification_id INT         NULL,
     owner_person_id  VARCHAR(10) NULL,
     issued_on        DATE        NOT NULL,
     completed_on     DATE        NOT NULL,

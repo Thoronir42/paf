@@ -3,19 +3,24 @@
 namespace PAF\Modules\CommissionModule\Components\CasesGrid;
 
 use Nette\Localization\ITranslator;
+use Nette\Utils\Html;
 use PAF\Modules\CommissionModule\Model\PafCase;
 use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
 use PAF\Common\Localization\TranslatorUtils;
+use SeStep\Typeful\Latte\PropertyFilter;
 use Ublaboo\DataGrid\DataGrid;
 
 class CasesGridFactory
 {
     /** @var ITranslator */
     private $translator;
+    /** @var PropertyFilter */
+    private $propertyFilter;
 
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, PropertyFilter $propertyFilter)
     {
         $this->translator = $translator;
+        $this->propertyFilter = $propertyFilter;
     }
 
     public function create()
@@ -34,7 +39,24 @@ class CasesGridFactory
             });
         $casesGrid->addColumnText('status', 'commission.case.status')
             ->setRenderer(function (PafCase $case) {
-                return $this->translator->translate('commission.case.status.' . $case->status);
+                $html = Html::el('div');
+                $status = Html::el('span');
+                $status->setText($this->translator->translate('commission.case.status.' . $case->status));
+                $html->addHtml($status);
+                if ($case->archivedOn) {
+                    $archivedOn = $this->propertyFilter->displayEntityProperty(
+                        $case->archivedOn,
+                        PafCase::class,
+                        'archivedOn'
+                    );
+                    $archivedOnEl = Html::el('span');
+                    $archivedOnEl->setText($this->translator->translate('commission.case.archivedOn', [
+                        'archivedOn' => $archivedOn,
+                    ]));
+                    $html->addHtml($archivedOnEl);
+                }
+
+                return $html;
             })
             ->setFilterMultiSelect(TranslatorUtils::mapTranslate(
                 PafCaseWorkflow::getCaseStatesLocalized(),

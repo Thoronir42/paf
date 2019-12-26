@@ -15,13 +15,11 @@ class PafCaseWorkflow extends Workflow
     const STATUS_FINISHED = "finished";
     const STATUS_SHIPPED = "shipped";
     const STATUS_CANCELLED = "cancelled";
-    const STATUS_ARCHIVED = 'archived';
 
     const ACTION_COMMENCE = 'commence';
     const ACTION_FINISH = 'finish';
     const ACTION_SHIP = 'ship';
     const ACTION_CANCEL = 'cancel';
-    const ACTION_ARCHIVE = 'archive';
 
     public function __construct(EventDispatcherInterface $eventDispatcher = null)
     {
@@ -45,7 +43,6 @@ class PafCaseWorkflow extends Workflow
             self::STATUS_FINISHED,
             self::STATUS_SHIPPED,
             self::STATUS_CANCELLED,
-            self::STATUS_ARCHIVED,
         ];
     }
 

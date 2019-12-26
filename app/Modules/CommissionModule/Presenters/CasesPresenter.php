@@ -122,6 +122,16 @@ final class CasesPresenter extends BasePresenter
             }
         };
 
+        $stateControl->onArchivedChanged[] = function (bool $archived) use ($case) {
+            if (!$this->cases->setArchived($case, $archived)) {
+                $this->flashTranslate('generic.operationFailed');
+            } else {
+                $this->flashTranslate('generic.success');
+            }
+
+            $this->redirect('this');
+        };
+
         $this['stateControl'] = $stateControl;
     }
 

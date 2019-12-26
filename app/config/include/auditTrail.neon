@@ -5,6 +5,8 @@ services:
             templateByType:
                 commission.log.caseCreated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
                 commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
+                commission.log.caseArchived: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
+                commission.log.caseUnarchived: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
                 commission.case.action.*: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
 
 pafFeed:

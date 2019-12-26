@@ -13,6 +13,7 @@ use PAF\Modules\CommonModule\Model\Person;
  * @property Person $customer m:hasOne(customer_person_id)
  * @property Specification $specification m:hasOne(specification_id)
  * @property DateTime $acceptedOn
+ * @property DateTime|null $archivedOn
  * @property DateTime|null $targetDelivery
  * @property CommentThread $comments m:hasOne(comment_thread_id)
  *

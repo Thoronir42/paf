@@ -11,6 +11,11 @@
         </dd>
     </dl>
     {/form}
+    {if !$archived}
+        <a n:href="archive!" class="btn btn-secondary">{_'commission.case.archive'}</a>
+    {else}
+        <a n:href="unarchive!" class="btn btn-secondary">{_'commission.case.unarchive'}</a>
+    {/if}
 
 
 </div>

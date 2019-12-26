@@ -3,6 +3,7 @@
 namespace PAF\Modules\CommissionModule\Model\Typeful;
 
 use SeStep\Typeful\EntityDescriptor;
+use SeStep\Typeful\Latte\PropertyFilter;
 use SeStep\Typeful\Property;
 
 class PafCaseDescriptor implements EntityDescriptor
@@ -17,6 +18,7 @@ class PafCaseDescriptor implements EntityDescriptor
         $this->properties = [
             'status' => new Property('status', 'commission.case.status'),
             'targetDelivery' => new Property('targetDelivery', 'date'),
+            'archivedOn' => new Property('archivedOn', 'datetime'),
         ];
     }
 

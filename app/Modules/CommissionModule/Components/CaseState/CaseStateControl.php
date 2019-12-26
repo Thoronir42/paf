@@ -12,11 +12,14 @@ use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
  * @package PAF\Modules\CommissionModule\Components\CaseState
  *
  * @method onAction(string $action)
+ * @method onArchivedChanged(bool $archive)
  */
 class CaseStateControl extends Control
 {
 
     public $onAction = [];
+
+    public $onArchivedChanged = [];
 
     /** @var PafCase */
     private $case;
@@ -38,6 +41,7 @@ class CaseStateControl extends Control
         $template = $this->createTemplate();
 
         $template->currentState = $this->case->status;
+        $template->archived = !!$this->case->archivedOn;
 
         $template->setFile(__DIR__ . '/caseStateControl.latte');
         $template->render();
@@ -46,16 +50,32 @@ class CaseStateControl extends Control
     public function createComponentActionForm()
     {
         $form = $this->formFactory->create();
-        $form->addSelect('action')
+        $action = $form->addSelect('action')
             ->setPrompt('paf.workflow.actionPrompt')
             ->setItems($this->caseWorkflow->getActionsLocalized($this->case));
 
-        $form->addSubmit('submit', 'paf.workflow.actionExecute');
+        $submit = $form->addSubmit('submit', 'paf.workflow.actionExecute');
 
-        $form->onSuccess[] = function ($form, $values) {
-            $this->onAction($values['action']);
-        };
+        if ($this->case->archivedOn) {
+            $action->setDisabled();
+            $submit->setDisabled();
+        } else {
+            $form->onSuccess[] = function ($form, $values) {
+                $this->onAction($values['action']);
+            };
+        }
+
 
         return $form;
+    }
+
+    public function handleArchive()
+    {
+        $this->onArchivedChanged(true);
+    }
+
+    public function handleUnarchive()
+    {
+        $this->onArchivedChanged(false);
     }
 }
