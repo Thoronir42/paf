@@ -26,10 +26,6 @@ fursuit:
     name: "Fursuit name"
     type: "Fursuit type"
     description: "Description"
-    types:
-        partial: "Partial"
-        halfsuit: "Half-suit"
-        fullsuit: "Fullboddy fursuit"
 
 workflow:
     actionPrompt: Do...

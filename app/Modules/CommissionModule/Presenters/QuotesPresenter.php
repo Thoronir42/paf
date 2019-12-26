@@ -10,7 +10,6 @@ use PAF\Modules\CommissionModule\Facade\Commissions;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\FilesService;
-use PAF\Modules\PortfolioModule\Repository\FursuitRepository;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
 use PAF\Modules\CommissionModule\Model\Quote;
@@ -32,9 +31,6 @@ final class QuotesPresenter extends BasePresenter
 
     /** @var Commissions @inject */
     public $commissions;
-
-    /** @var FursuitRepository @inject */
-    public $fursuits;
 
     /** @var PafImageStorage @inject */
     public $pafImages;

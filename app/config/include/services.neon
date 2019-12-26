@@ -36,8 +36,6 @@ services:
 
         autowired: false
 
-    - PAF\Modules\PortfolioModule\Repository\FursuitRepository
-
     - PAF\Modules\CmsModule\Facade\CmsPages
 
     - PAF\Modules\CommonModule\Services\FilesService

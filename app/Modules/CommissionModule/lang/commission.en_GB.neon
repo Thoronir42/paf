@@ -43,6 +43,11 @@ priceList:
     products: 'Products'
     extras: 'Extras'
 
+productType:
+    partial: 'Partial suit'
+    halfSuit: 'Half suit'
+    fullSuit: 'Fullbody fursuit'
+
 case.customer: Customer
 case.fursuitSpecification: Fursuit Specification
 

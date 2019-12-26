@@ -9,12 +9,11 @@ use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
+use PAF\Modules\CommissionModule\Facade\ProductService;
 use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule;
 use PAF\Modules\CommonModule\Model\Contact;
 use PAF\Modules\CommonModule\Model\Person;
 use PAF\Modules\CommonModule\Services\ContactDefinitions;
-use PAF\Modules\PortfolioModule;
 use stdClass;
 
 /**
@@ -31,14 +30,20 @@ class PafCaseForm extends FormWrapperControl
 
     /** @var ContactDefinitions */
     private $contactDefinitions;
+    /**
+     * @var ProductService
+     */
+    private $productService;
 
     public function __construct(
         FormFactory $formFactory,
         ITranslator $translator,
-        ContactDefinitions $contactDefinitions
+        ContactDefinitions $contactDefinitions,
+        ProductService $productService
     ) {
         parent::__construct($formFactory, $translator);
         $this->contactDefinitions = $contactDefinitions;
+        $this->productService = $productService;
         $this['contact'] = new Container();
     }
 
@@ -79,7 +84,7 @@ class PafCaseForm extends FormWrapperControl
         $fursuit = $form->addContainer('specification');
 
         $fursuit->addText('characterName', 'paf.fursuit.name');
-        $fursuit->addSelect('type', 'paf.fursuit.type', PortfolioModule\Localization::getFursuitTypes());
+        $fursuit->addSelect('type', 'paf.fursuit.type', $this->productService->getTypes());
         $fursuit->addTextarea('characterDescription', 'paf.fursuit.description');
 
         $form->addGroup('contact');

@@ -1,32 +1,38 @@
 services:
+    # Typeful
+    pafCaseDescriptor:
+            class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor
+            autowired: false
+            tags:
+                typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
+    pafCaseStatusType:
+        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+        autowired: false
+        tags:
+            - typeful.propertyType
+
+    # Repositories
     specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
+    quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
     pafCaseRepository:
             class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
             setup:
                 - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAuditTrailAdapter())
 
     pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
+    productRepository: PAF\Modules\CommissionModule\Repository\ProductRepository
 
+    # Services
+    productService: PAF\Modules\CommissionModule\Facade\ProductService
     pafCases: PAF\Modules\CommissionModule\Facade\PafCases
 
     priceList: PAF\Modules\CommissionModule\Facade\PriceListService
 
     commissions: PAF\Modules\CommissionModule\Facade\Commissions
-    quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
 
+    # Components
     pafCasesGridFactory: PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory
 
     quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
     pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
     caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
-
-    pafCaseDescriptor:
-        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor
-        autowired: false
-        tags:
-            typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
-    pafCaseStatusType:
-        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
-        autowired: false
-        tags:
-            - typeful.propertyType

@@ -4,6 +4,7 @@ namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
 use Nette\Localization\ITranslator;
 use PAF\Common\Forms\FormFactory;
+use PAF\Modules\CommissionModule\Facade\ProductService;
 use PAF\Modules\PortfolioModule\Localization;
 
 class QuoteFormFactory
@@ -12,11 +13,16 @@ class QuoteFormFactory
     private $formFactory;
     /** @var ITranslator */
     private $translator;
+    /**
+     * @var ProductService
+     */
+    private $productService;
 
-    public function __construct(FormFactory $formFactory, ITranslator $translator)
+    public function __construct(FormFactory $formFactory, ITranslator $translator, ProductService $productService)
     {
         $this->formFactory = $formFactory;
         $this->translator = $translator;
+        $this->productService = $productService;
     }
 
     /** @return QuoteForm */
@@ -24,7 +30,7 @@ class QuoteFormFactory
     {
         /** @var QuoteForm $form */
         $form = $this->formFactory->create(QuoteForm::class);
-        $form->initialize(Localization::getFursuitTypes());
+        $form->initialize($this->productService->getTypes());
 
         return $form;
     }

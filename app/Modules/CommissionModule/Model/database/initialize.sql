@@ -51,20 +51,21 @@ CREATE TABLE commission__paf_case
         (comment_thread_id) REFERENCES common__comment_thread (id)
 );
 
-CREATE TABLE commission__fursuit_progress
+CREATE TABLE commission__product
 (
-    id          INT         NOT NULL AUTO_INCREMENT,
-    case_id     VARCHAR(10) NOT NULL,
-
-    head        INT         NOT NULL DEFAULT -1,
-    body        INT         NOT NULL DEFAULT -1,
-    arm_sleeves INT         NOT NULL DEFAULT -1,
-    paws        INT         NOT NULL DEFAULT -1,
-    tail        INT         NOT NULL DEFAULT -1,
-    leg_sleeves INT         NOT NULL DEFAULT -1,
-    hind_paws   INT         NOT NULL DEFAULT -1,
+    id               INT         NOT NULL AUTO_INCREMENT,
+    slug             VARCHAR(64) NOT NULL,
+    title            VARCHAR(64) NOT NULL,
+    type             VARCHAR(24) NOT NULL,
+    specification_id INT NULL,
+    owner_person_id  VARCHAR(10) NULL,
+    issued_on        DATE        NOT NULL,
+    completed_on     DATE        NOT NULL,
 
     CONSTRAINT PRIMARY KEY (id),
-    CONSTRAINT `progress_case_fk` FOREIGN KEY
-        (case_id) REFERENCES commission__paf_case (id)
-)
+
+    CONSTRAINT `product_owner_fk` FOREIGN KEY
+        (owner_person_id) REFERENCES common__person (id),
+    CONSTRAINT `product_specification_fk` FOREIGN KEY
+        (specification_id) REFERENCES commission__specification (id)
+);
