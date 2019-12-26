@@ -5,6 +5,8 @@ namespace PAF\Modules\CommissionModule\Presenters;
 use PAF\Common\BasePresenter;
 use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
+use PAF\Common\Forms\Form;
+use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory;
 use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
@@ -28,6 +30,8 @@ final class CasesPresenter extends BasePresenter
 
     /** @var CasesGridFactory @inject */
     public $casesGridFactory;
+    /** @var FormFactory @inject */
+    public $formFactory;
 
     /** @var PafCaseFormFactory @inject */
     public $caseFormFactory;
@@ -45,6 +49,9 @@ final class CasesPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
+    /** @var string @persistent */
+    public $archivedFilter;
+
     /**
      * @authorize manage-commissions
      */
@@ -52,10 +59,28 @@ final class CasesPresenter extends BasePresenter
     {
         $casesGrid = $this->casesGridFactory->create();
 
-        $casesGrid->setDataSource($this->cases->getCasesDataSource());
+        $filter = null;
+        if ($this->archivedFilter) {
+            if ($this->archivedFilter == 'archived') {
+                $filter = ['!archivedOn' => null];
+            } elseif ($this->archivedFilter == 'unarchived') {
+                $filter = ['archivedOn' => null];
+            } else {
+                $this->archivedFilter = null;
+                $this->redirect('this');
+            }
+        }
+        
+        $casesGrid->setDataSource($this->cases->getCasesDataSource($filter));
         $casesGrid->addAction('edit', 'generic.edit', 'detail');
 
         $this['cases'] = $casesGrid;
+
+        /** @var Form $filter */
+        $filter = $this['casesFilter'];
+        $filter->setDefaults([
+            'archived' => $this->archivedFilter,
+        ]);
     }
 
     /**
@@ -149,6 +174,24 @@ final class CasesPresenter extends BasePresenter
             $this->redirect('this');
         };
 
+        return $form;
+    }
+
+    public function createComponentCasesFilter()
+    {
+        $form = $this->formFactory->create();
+        $form->setMethod('GET');
+        $form->addSelect('archived', 'commission.cases.archivedFilter', [
+            null => 'generic.any',
+            'archived' => 'commission.case.status.archived',
+            'unarchived' => 'commission.case.status.unarchived',
+        ]);
+        $form->addSubmit('filter', 'generic.action.filter');
+
+        $form->onSuccess[] = function ($form, $values) {
+            $this->archivedFilter = $values['archived'];
+            $this->redirect('this');
+        };
         return $form;
     }
 }

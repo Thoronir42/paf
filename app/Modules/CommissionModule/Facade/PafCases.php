@@ -114,8 +114,8 @@ class PafCases
         return $this->caseRepository->executeAction($case, $action);
     }
 
-    public function getCasesDataSource(): LeanMapperDataSource
+    public function getCasesDataSource(array $conditions = null): LeanMapperDataSource
     {
-        return $this->caseRepository->getEntityDataSource();
+        return $this->caseRepository->getEntityDataSource($conditions);
     }
 }

@@ -88,22 +88,25 @@ abstract class BaseRepository extends Repository implements IQueryable
 
     private function applyCriteria(Fluent $fluent, array &$criteria)
     {
-        foreach ($criteria as $key => $value) {
-            if ($key[0] === '!') {
-                $key = substr($key, 1);
+        $entityClass = $this->getEntityClass();
+
+        foreach ($criteria as $property => $value) {
+            if ($property[0] === '!') {
+                $property = substr($property, 1);
                 $conditions = &self::$CONDITIONS[false];
             } else {
                 $conditions = &self::$CONDITIONS[true];
             }
 
+            $column = $this->mapper->getColumn($entityClass, $property);
             if (is_array($value)) {
-                $fluent->where("$key $conditions[IN] %in", $value);
+                $fluent->where("$column $conditions[IN] %in", $value);
             } elseif (is_null($value)) {
-                $fluent->where("$key $conditions[NULL]");
+                $fluent->where("$column $conditions[NULL]");
             } elseif (is_string($value) && strpos($value, '%') !== false) {
-                $fluent->where("$key $conditions[LIKE] ?", $value);
+                $fluent->where("$column $conditions[LIKE] ?", $value);
             } else {
-                $fluent->where("$key $conditions[EQ] %s", $value);
+                $fluent->where("$column $conditions[EQ] %s", $value);
             }
         }
     }
@@ -172,7 +175,7 @@ abstract class BaseRepository extends Repository implements IQueryable
         return $this->select($select, $alias);
     }
 
-    public function getEntityDataSource(): LeanMapperDataSource
+    public function getEntityDataSource(array $conditions = null): LeanMapperDataSource
     {
         $entityClass = $this->mapper->getEntityClass($this->getTable());
 
@@ -180,7 +183,11 @@ abstract class BaseRepository extends Repository implements IQueryable
         $fluent
             ->select('t.*')
             ->from($this->getTable() . ' AS t');
-        
+
+        if ($conditions) {
+            $this->applyCriteria($fluent, $conditions);
+        }
+
         return new LeanMapperDataSource($fluent, $this, $this->mapper, $entityClass);
     }
 
@@ -201,6 +208,11 @@ abstract class BaseRepository extends Repository implements IQueryable
     protected function getPrimaryKey(): string
     {
         return $this->mapper->getPrimaryKey($this->getTable());
+    }
+
+    protected function getEntityClass(): string
+    {
+        return $this->mapper->getEntityClass($this->getTable());
     }
 
     public function isPersistable(Entity $entity)
