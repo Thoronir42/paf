@@ -8,6 +8,7 @@ quotes.enabled: "Quotes are currently enabled"
 quotes.enable: "Enable quotes"
 quotes.disabled: "Quotes are currently disabled"
 quotes.disable: "Disable"
+quotes.allResolved: "All quotes are resolved"
 
 quote.issuer: Issuer
 quote.references: "%count% references"

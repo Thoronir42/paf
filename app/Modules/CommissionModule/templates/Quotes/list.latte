@@ -1,10 +1,18 @@
 {extends $dashboardTemplate}
 
 {block dashboardContent}
-<h2>{_'commission.unresolvedQuotes'}</h2>
-<div class="row">
-	<div class="col-md-6" n:foreach="$quotes as $name => $quote">
-		{control quote-$name:tile}
-	</div>
+<div>
+    <span>{_'commission.quotes.enable'}</span>: {control option-commission-quotes-enable:editable}
 </div>
+<hr/>
 
+{if !empty($quotes)}
+    <h2>{_'commission.unresolvedQuotes'}</h2>
+    <div class="row">
+        <div class="col-md-6" n:foreach="$quotes as $name => $quote">
+            {control quote-$name:tile}
+        </div>
+    </div>
+{else}
+    <p>{_'commission.quotes.allResolved'}</p>
+{/if}
