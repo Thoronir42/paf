@@ -1,5 +1,5 @@
 {block content}
-<h1>{_'commission.cases.detailTitle', ['name' => $case->specification->characterName]}</h1>
+<h1>{_'commission.views.commissionDetail', ['name' => $commission->specification->characterName]}</h1>
 
 <div class="row">
     <div class="col-md-8" id="notes">
@@ -15,10 +15,12 @@
     <div class="col-md-4" id="detail">
         <div class="card">
             <div class="card-body">
-                {control caseForm}
+                {control commissionForm}
             </div>
             <div class="card-body">
                 {control stateControl}
+                {if }
+                <a n:href="c"></a>
             </div>
         </div>
     </div>

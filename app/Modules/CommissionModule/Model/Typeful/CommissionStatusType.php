@@ -5,7 +5,7 @@ namespace PAF\Modules\CommissionModule\Model\Typeful;
 use Nette\Localization\ITranslator;
 use SeStep\Typeful\PropertyType;
 
-class PafCaseStatusType extends PropertyType
+class CommissionStatusType extends PropertyType
 {
     /** @var ITranslator */
     private $translator;
@@ -17,11 +17,11 @@ class PafCaseStatusType extends PropertyType
 
     public function renderValue($value, array $options = [])
     {
-        return $this->translator->translate('commission.case.status.' . $value);
+        return $this->translator->translate('commission.commission.status.' . $value);
     }
 
     public static function getName(): string
     {
-        return 'commission.case.status';
+        return 'commission.commission.status';
     }
 }

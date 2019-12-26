@@ -7,6 +7,6 @@ entityIds:
         3: PAF\Modules\CommonModule\Model\User
         17: PAF\Modules\CommonModule\Model\Person
         19: PAF\Modules\CommissionModule\Model\Quote
-        23: PAF\Modules\CommissionModule\Model\PafCase
+        23: PAF\Modules\CommissionModule\Model\Commission
         53: PAF\Modules\CommonModule\Model\CommentThread
         57: PAF\Modules\CommonModule\Model\Comment

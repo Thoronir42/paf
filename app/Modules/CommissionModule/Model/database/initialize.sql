@@ -30,9 +30,10 @@ CREATE TABLE `commission__quote`
 );
 
 
-CREATE TABLE commission__paf_case
+CREATE TABLE commission__commission
 (
     id                 VARCHAR(10) NOT NULL,
+    slug               VARCHAR(64) NOT NULL,
     status             VARCHAR(20) NOT NULL,
     customer_person_id VARCHAR(10) NOT NULL,
     specification_id   INT         NOT NULL,
@@ -43,11 +44,11 @@ CREATE TABLE commission__paf_case
 
     CONSTRAINT PRIMARY KEY (id),
 
-    CONSTRAINT `case_customer_fk` FOREIGN KEY
+    CONSTRAINT `commission_customer_fk` FOREIGN KEY
         (customer_person_id) REFERENCES common__person (id),
-    CONSTRAINT `case_specification_fk` FOREIGN KEY
+    CONSTRAINT `commission_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id),
-    CONSTRAINT `case_comment_thread_fk` FOREIGN KEY
+    CONSTRAINT `commission_comment_thread_fk` FOREIGN KEY
         (comment_thread_id) REFERENCES common__comment_thread (id)
 );
 

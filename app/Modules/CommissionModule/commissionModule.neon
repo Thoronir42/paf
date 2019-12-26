@@ -1,12 +1,12 @@
 services:
     # Typeful
-    pafCaseDescriptor:
-            class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor
+    commissionDescriptor:
+            class: PAF\Modules\CommissionModule\Model\Typeful\CommissionDescriptor
             autowired: false
             tags:
-                typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
-    pafCaseStatusType:
-        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+                typeful.entity: PAF\Modules\CommissionModule\Model\Commission
+    commissionStatusType:
+        class: PAF\Modules\CommissionModule\Model\Typeful\CommissionStatusType
         autowired: false
         tags:
             - typeful.propertyType
@@ -14,25 +14,25 @@ services:
     # Repositories
     specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
     quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
-    pafCaseRepository:
-            class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
+    commissionRepository:
+            class: PAF\Modules\CommissionModule\Repository\CommissionRepository
             setup:
-                - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAuditTrailAdapter())
+                - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CommissionAuditTrailAdapter())
 
-    pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
+    commissionWorkflow: PAF\Modules\CommissionModule\Model\CommissionWorkflow
     productRepository: PAF\Modules\CommissionModule\Repository\ProductRepository
 
     # Services
     productService: PAF\Modules\CommissionModule\Facade\ProductService
-    pafCases: PAF\Modules\CommissionModule\Facade\PafCases
+    commissionService: PAF\Modules\CommissionModule\Facade\CommissionService
 
     priceList: PAF\Modules\CommissionModule\Facade\PriceListService
 
     commissions: PAF\Modules\CommissionModule\Facade\Commissions
 
     # Components
-    pafCasesGridFactory: PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory
+    commissionsGridFactory: PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory
 
     quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
-    pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
-    caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
+    commissionFormFactory: PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory
+    commissionStatusControlFactory: PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory

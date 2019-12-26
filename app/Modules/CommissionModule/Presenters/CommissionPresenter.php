@@ -8,12 +8,13 @@ use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Forms\Form;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
-use PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory;
-use PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory;
-use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory;
-use PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseForm;
-use PAF\Modules\CommissionModule\Facade\PafCases;
-use PAF\Modules\CommissionModule\Model\PafCase;
+use PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory;
+use PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory;
+use PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory;
+use PAF\Modules\CommissionModule\Components\CommissionForm\CommissionForm;
+use PAF\Modules\CommissionModule\Facade\CommissionService;
+use PAF\Modules\CommissionModule\Facade\ProductService;
+use PAF\Modules\CommissionModule\Model\Commission;
 use Nette\Application\BadRequestException;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControl;
 use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
@@ -21,22 +22,22 @@ use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\CommentsService;
 
-final class CasesPresenter extends BasePresenter
+final class CommissionPresenter extends BasePresenter
 {
     use DashboardComponent;
 
-    /** @var PafCases @inject */
-    public $cases;
+    /** @var CommissionService @inject */
+    public $commissionService;
 
-    /** @var CasesGridFactory @inject */
-    public $casesGridFactory;
+    /** @var CommissionsGridFactory @inject */
+    public $commissionsGridFactory;
     /** @var FormFactory @inject */
     public $formFactory;
 
-    /** @var PafCaseFormFactory @inject */
-    public $caseFormFactory;
-    /** @var CaseStateControlFactory @inject */
-    public $caseStateControlFactory;
+    /** @var CommissionFormFactory @inject */
+    public $commissionFormFactory;
+    /** @var CommissionStatusControlFactory @inject */
+    public $commissionStatusControlFactory;
 
     /** @var CommentsControlFactory @inject */
     public $commentsControlFactory;
@@ -45,6 +46,9 @@ final class CasesPresenter extends BasePresenter
 
     /** @var CommentsService @inject */
     public $commentsService;
+
+    /** @var ProductService @inject */
+    public $productService;
 
     /** @var LeanSnapshots @inject */
     public $snapshots;
@@ -57,7 +61,7 @@ final class CasesPresenter extends BasePresenter
      */
     public function actionList()
     {
-        $casesGrid = $this->casesGridFactory->create();
+        $grid = $this->commissionsGridFactory->create();
 
         $filter = null;
         if ($this->archivedFilter) {
@@ -70,14 +74,14 @@ final class CasesPresenter extends BasePresenter
                 $this->redirect('this');
             }
         }
-        
-        $casesGrid->setDataSource($this->cases->getCasesDataSource($filter));
-        $casesGrid->addAction('edit', 'generic.edit', 'detail');
 
-        $this['cases'] = $casesGrid;
+        $grid->setDataSource($this->commissionService->getCommissionsDataSource($filter));
+        $grid->addAction('edit', 'generic.edit', 'detail');
+
+        $this['commissions'] = $grid;
 
         /** @var Form $filter */
-        $filter = $this['casesFilter'];
+        $filter = $this['commissionsFilter'];
         $filter->setDefaults([
             'archived' => $this->archivedFilter,
         ]);
@@ -90,27 +94,27 @@ final class CasesPresenter extends BasePresenter
      */
     public function actionDetail($id)
     {
-        $this->template->case = $case = $this->cases->find($id);
-        if (!$case) {
-            throw new BadRequestException('case-not-found');
+        $this->template->commission = $commission = $this->commissionService->find($id);
+        if (!$commission) {
+            throw new BadRequestException('commission-not-found');
         }
 
-        $this->snapshots->store($case);
+        $this->snapshots->store($commission);
 
-        $feedControl = $this->feedControlFactory->create($this->cases->getCaseFeed($case));
+        $feedControl = $this->feedControlFactory->create($this->commissionService->getCommissionFeed($commission));
 
         $this['feed'] = $feedControl;
 
 
-        /** @var PafCaseForm $form */
-        $form = $this['caseForm'];
-        $form->setEntity($case);
+        /** @var CommissionForm $form */
+        $form = $this['commissionForm'];
+        $form->setEntity($commission);
 
         /** @var CommentsControl $commentControl */
         $commentControl = $this['comments'];
 
-        $commentControl->onCommentAdd[] = function (Comment $comment) use ($case) {
-            $comment->thread = $case->comments;
+        $commentControl->onCommentAdd[] = function (Comment $comment) use ($commission) {
+            $comment->thread = $commission->comments;
             $comment->setUserId($this->user->identity->getEntity()->id);
 
             $this->commentsService->save($comment);
@@ -130,9 +134,9 @@ final class CasesPresenter extends BasePresenter
             }
         );
 
-        $stateControl = $this->caseStateControlFactory->create($case);
-        $stateControl->onAction[] = function (string $action) use ($case) {
-            $result = $this->cases->executeAction($case, $action);
+        $stateControl = $this->commissionStatusControlFactory->create($commission);
+        $stateControl->onAction[] = function (string $action) use ($commission) {
+            $result = $this->commissionService->executeAction($commission, $action);
             if (!$result) {
                 $message = $result->getMessage() ?: 'generic.error';
                 $params = $result->getParams();
@@ -147,8 +151,8 @@ final class CasesPresenter extends BasePresenter
             }
         };
 
-        $stateControl->onArchivedChanged[] = function (bool $archived) use ($case) {
-            if (!$this->cases->setArchived($case, $archived)) {
+        $stateControl->onArchivedChanged[] = function (bool $archived) use ($commission) {
+            if (!$this->commissionService->setArchived($commission, $archived)) {
                 $this->flashTranslate('generic.operationFailed');
             } else {
                 $this->flashTranslate('generic.success');
@@ -158,6 +162,8 @@ final class CasesPresenter extends BasePresenter
         };
 
         $this['stateControl'] = $stateControl;
+
+        $this->template->productExists = $this->productService->productExists($commission->specification->slug);
     }
 
     public function createComponentComments()
@@ -165,26 +171,28 @@ final class CasesPresenter extends BasePresenter
         return $this->commentsControlFactory->create();
     }
 
-    public function createComponentCaseForm()
+    public function createComponentCommissionForm()
     {
-        $form = $this->caseFormFactory->create();
-        $form->onSave[] = function (PafCase $case) {
-            $this->cases->save($case);
-            $this->flashTranslate('paf.case.updated', ['name' => $case->specification->characterName]);
+        $form = $this->commissionFormFactory->create();
+        $form->onSave[] = function (Commission $commission) {
+            $this->commissionService->save($commission);
+            $this->flashTranslate('paf.commission.updated', [
+                'name' => $commission->specification->characterName,
+            ]);
             $this->redirect('this');
         };
 
         return $form;
     }
 
-    public function createComponentCasesFilter()
+    public function createComponentCommissionsFilter()
     {
         $form = $this->formFactory->create();
         $form->setMethod('GET');
-        $form->addSelect('archived', 'commission.cases.archivedFilter', [
+        $form->addSelect('archived', 'commission.commissions.archivedFilter', [
             null => 'generic.any',
-            'archived' => 'commission.case.status.archived',
-            'unarchived' => 'commission.case.status.unarchived',
+            'archived' => 'commission.commission.status.archived',
+            'unarchived' => 'commission.commission.status.unarchived',
         ]);
         $form->addSubmit('filter', 'generic.action.filter');
 

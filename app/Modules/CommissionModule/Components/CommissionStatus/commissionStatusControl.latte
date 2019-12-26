@@ -1,5 +1,5 @@
 <div>
-    <h2>{_'commission.case.status'} <small>{_'commission.case.status.'.$currentState}</small></h2>
+    <h2>{_'commission.commission.status'} <small>{_'commission.commission.status.'.$currentState}</small></h2>
     <span></span>
     {form actionForm}
     <dl class="row">
@@ -12,9 +12,9 @@
     </dl>
     {/form}
     {if !$archived}
-        <a n:href="archive!" class="btn btn-secondary">{_'commission.case.archive'}</a>
+        <a n:href="archive!" class="btn btn-secondary">{_'commission.commission.archive'}</a>
     {else}
-        <a n:href="unarchive!" class="btn btn-secondary">{_'commission.case.unarchive'}</a>
+        <a n:href="unarchive!" class="btn btn-secondary">{_'commission.commission.unarchive'}</a>
     {/if}
 
 

@@ -5,11 +5,9 @@ views:
     createQuote: "Create quote"
     manage: "Manage"
     settings: "Settings"
-    cases: "Cases"
+    commissions: "Commissions"
 
 entity:
-    quote: 'Quote'
-    case: 'Case'
     fursuit: 'Fursuit'
     contact: 'Contact'
 

@@ -9,7 +9,7 @@ use PAF\Modules\CommonModule\Model\Person;
 
 /**
  * @property string $id
- * @property string $status m:enum(PafCaseWorkflow::STATUS_*) m:default('accepted')
+ * @property string $status m:enum(CommissionWorkflow::STATUS_*) m:default('accepted')
  * @property Person $customer m:hasOne(customer_person_id)
  * @property Specification $specification m:hasOne(specification_id)
  * @property DateTime $acceptedOn
@@ -18,7 +18,7 @@ use PAF\Modules\CommonModule\Model\Person;
  * @property CommentThread $comments m:hasOne(comment_thread_id)
  *
  */
-class PafCase extends Entity
+class Commission extends Entity
 {
     public function getState(): string
     {

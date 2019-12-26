@@ -1,49 +1,49 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommissionModule\Components\CaseState;
+namespace PAF\Modules\CommissionModule\Components\CommissionStatus;
 
 use Nette\Application\UI\Control;
 use PAF\Common\Forms\FormFactory;
-use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
+use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 
 /**
- * Class CaseStateControl
- * @package PAF\Modules\CommissionModule\Components\CaseState
- *
  * @method onAction(string $action)
  * @method onArchivedChanged(bool $archive)
  */
-class CaseStateControl extends Control
+class CommissionStatusControl extends Control
 {
 
     public $onAction = [];
 
     public $onArchivedChanged = [];
 
-    /** @var PafCase */
-    private $case;
+    /** @var Commission */
+    private $commission;
 
     /** @var FormFactory */
     private $formFactory;
-    /** @var PafCaseWorkflow */
-    private $caseWorkflow;
+    /** @var CommissionWorkflow */
+    private $commissionWorkflow;
 
-    public function __construct(PafCase $case, FormFactory $formFactory, PafCaseWorkflow $caseWorkflow)
-    {
-        $this->case = $case;
+    public function __construct(
+        Commission $commission,
+        FormFactory $formFactory,
+        CommissionWorkflow $commissionWorkflow
+    ) {
+        $this->commission = $commission;
         $this->formFactory = $formFactory;
-        $this->caseWorkflow = $caseWorkflow;
+        $this->commissionWorkflow = $commissionWorkflow;
     }
 
     public function render()
     {
         $template = $this->createTemplate();
 
-        $template->currentState = $this->case->status;
-        $template->archived = !!$this->case->archivedOn;
+        $template->currentState = $this->commission->status;
+        $template->archived = !!$this->commission->archivedOn;
 
-        $template->setFile(__DIR__ . '/caseStateControl.latte');
+        $template->setFile(__DIR__ . '/commissionStatusControl.latte');
         $template->render();
     }
 
@@ -52,11 +52,11 @@ class CaseStateControl extends Control
         $form = $this->formFactory->create();
         $action = $form->addSelect('action')
             ->setPrompt('paf.workflow.actionPrompt')
-            ->setItems($this->caseWorkflow->getActionsLocalized($this->case));
+            ->setItems($this->commissionWorkflow->getActionsLocalized($this->commission));
 
         $submit = $form->addSubmit('submit', 'paf.workflow.actionExecute');
 
-        if ($this->case->archivedOn) {
+        if ($this->commission->archivedOn) {
             $action->setDisabled();
             $submit->setDisabled();
         } else {

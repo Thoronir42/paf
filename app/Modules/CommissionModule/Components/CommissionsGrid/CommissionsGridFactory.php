@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommissionModule\Components\CasesGrid;
+namespace PAF\Modules\CommissionModule\Components\CommissionsGrid;
 
 use Nette\Localization\ITranslator;
 use Nette\Utils\Html;
-use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
+use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Common\Localization\TranslatorUtils;
 use SeStep\Typeful\Latte\PropertyFilter;
 use Ublaboo\DataGrid\DataGrid;
 
-class CasesGridFactory
+class CommissionsGridFactory
 {
     /** @var ITranslator */
     private $translator;
@@ -25,32 +25,32 @@ class CasesGridFactory
 
     public function create()
     {
-        $casesGrid = new DataGrid();
+        $commissionGrid = new DataGrid();
 
-        $casesGrid->setTranslator($this->translator);
+        $commissionGrid->setTranslator($this->translator);
 
-        $casesGrid->addColumnText('fursuit', 'paf.entity.fursuit')
-            ->setRenderer(function (PafCase $row) {
+        $commissionGrid->addColumnText('fursuit', 'paf.entity.fursuit')
+            ->setRenderer(function (Commission $row) {
                 return $row->specification->characterName;
             });
-        $casesGrid->addColumnText('customer', 'commission.case.customer')
-            ->setRenderer(function (PafCase $row) {
+        $commissionGrid->addColumnText('customer', 'commission.customer')
+            ->setRenderer(function (Commission $row) {
                 return $row->customer->displayName;
             });
-        $casesGrid->addColumnText('status', 'commission.case.status')
-            ->setRenderer(function (PafCase $case) {
+        $commissionGrid->addColumnText('status', 'commission.commission.status')
+            ->setRenderer(function (Commission $commission) {
                 $html = Html::el('div');
                 $status = Html::el('span');
-                $status->setText($this->translator->translate('commission.case.status.' . $case->status));
+                $status->setText($this->translator->translate('commission.commission.status.' . $commission->status));
                 $html->addHtml($status);
-                if ($case->archivedOn) {
+                if ($commission->archivedOn) {
                     $archivedOn = $this->propertyFilter->displayEntityProperty(
-                        $case->archivedOn,
-                        PafCase::class,
+                        $commission->archivedOn,
+                        Commission::class,
                         'archivedOn'
                     );
                     $archivedOnEl = Html::el('span');
-                    $archivedOnEl->setText($this->translator->translate('commission.case.archivedOn', [
+                    $archivedOnEl->setText($this->translator->translate('commission.commission.archivedOn', [
                         'archivedOn' => $archivedOn,
                     ]));
                     $html->addHtml($archivedOnEl);
@@ -59,15 +59,15 @@ class CasesGridFactory
                 return $html;
             })
             ->setFilterMultiSelect(TranslatorUtils::mapTranslate(
-                PafCaseWorkflow::getCaseStatesLocalized(),
+                CommissionWorkflow::getStatusesLocalized(),
                 $this->translator
             ));
 
-        $casesGrid->addColumnDateTime('acceptedOn', 'commission.case.acceptedOn')
+        $commissionGrid->addColumnDateTime('acceptedOn', 'commission.commission.acceptedOn')
             ->setSortable();
-        $casesGrid->addColumnDateTime('targetDelivery', 'commission.case.targetDelivery')
+        $commissionGrid->addColumnDateTime('targetDelivery', 'commission.commission.targetDelivery')
             ->setSortable();
 
-        return $casesGrid;
+        return $commissionGrid;
     }
 }

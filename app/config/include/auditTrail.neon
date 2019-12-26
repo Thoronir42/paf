@@ -3,11 +3,11 @@ services:
         class: PAF\Common\AuditTrail\Components\FeedControl\AuditTrailFeedControlFactory
         arguments:
             templateByType:
-                commission.log.caseCreated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
-                commission.log.caseUpdated: %appDir%/Modules/CommissionModule/AuditTrail/caseUpdated-log.latte
-                commission.log.caseArchived: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
-                commission.log.caseUnarchived: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
-                commission.case.action.*: %appDir%/Modules/CommissionModule/AuditTrail/caseWorkflowExecuted.latte
+                commission.log.commissionCreated: %appDir%/Modules/CommissionModule/AuditTrail/commissionUpdated.latte
+                commission.log.commissionUpdated: %appDir%/Modules/CommissionModule/AuditTrail/commissionUpdated.latte
+                commission.log.commissionArchived: %appDir%/Modules/CommissionModule/AuditTrail/commissionWorkflowExecuted.latte
+                commission.log.commissionUnarchived: %appDir%/Modules/CommissionModule/AuditTrail/commissionWorkflowExecuted.latte
+                commission.commission.action.*: %appDir%/Modules/CommissionModule/AuditTrail/commissionWorkflowExecuted.latte
 
 pafFeed:
     entryControlClasses:

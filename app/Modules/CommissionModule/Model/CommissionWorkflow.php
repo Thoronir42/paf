@@ -8,7 +8,7 @@ use Symfony\Component\Workflow\Transition;
 use Symfony\Component\Workflow\Workflow;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class PafCaseWorkflow extends Workflow
+class CommissionWorkflow extends Workflow
 {
     const STATUS_ACCEPTED = "accepted";
     const STATUS_WIP = "wip";
@@ -27,7 +27,7 @@ class PafCaseWorkflow extends Workflow
             self::createDefinition(),
             new MethodMarkingStore(true, 'state'),
             $eventDispatcher,
-            'commission.case'
+            'commission.commissionWorkflow'
         );
     }
 
@@ -35,7 +35,7 @@ class PafCaseWorkflow extends Workflow
     /**
      * @return string[]
      */
-    public static function getStates(): array
+    public static function getStatuses(): array
     {
         return [
             self::STATUS_ACCEPTED,
@@ -62,31 +62,31 @@ class PafCaseWorkflow extends Workflow
 
     private static function createDefinition(): Definition
     {
-        return new Definition(self::getStates(), self::getTransitions(), [self::STATUS_ACCEPTED]);
+        return new Definition(self::getStatuses(), self::getTransitions(), [self::STATUS_ACCEPTED]);
     }
 
     /**
      * @return string[]
      */
-    public static function getCaseStatesLocalized()
+    public static function getStatusesLocalized()
     {
         $states = [];
-        foreach (PafCaseWorkflow::getStates() as $status) {
-            $states[$status] = "commission.case.status.$status";
+        foreach (CommissionWorkflow::getStatuses() as $status) {
+            $states[$status] = "commission.commission.status.$status";
         }
 
         return $states;
     }
 
     /**
-     * @param PafCase $subject
+     * @param Commission $subject
      * @return string[]
      */
-    public function getActionsLocalized(PafCase $subject): array
+    public function getActionsLocalized(Commission $subject): array
     {
         $actions = [];
         foreach ($this->getEnabledTransitions($subject) as $transition) {
-            $actions[$transition->getName()] = 'commission.case.action.' . $transition->getName();
+            $actions[$transition->getName()] = 'commission.commission.action.' . $transition->getName();
         }
 
         return $actions;

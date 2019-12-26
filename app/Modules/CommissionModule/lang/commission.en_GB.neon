@@ -1,4 +1,4 @@
-entity.case: Case
+entity.commission: Commission
 
 quotes.title: "Quotes"
 quotes.currently-closed: "are currently closed"
@@ -49,16 +49,16 @@ productType:
     halfSuit: 'Half suit'
     fullSuit: 'Fullbody fursuit'
 
-case.customer: Customer
-case.fursuitSpecification: Fursuit Specification
+customer: Customer
+commission.specification: Fursuit Specification
 
-case:
+commission:
     notes: Notes
-    details: Case details
-    created: "Case %name% has been created"
-    already-exists: "Case %name% already exists"
-    create-error: "Case could not be created"
-    updated: Case %name% has been updated
+    details: Commission details
+    created: "Commission %name% has been created"
+    already-exists: "Commission %name% already exists"
+    create-error: "Commission could not be created"
+    updated: Commission %name% has been updated
     acceptedOn: Accepted on
     targetDelivery: Target delivery date
 
@@ -82,22 +82,24 @@ case:
     action.archive: Archive
     action.unarchive: Unarchive
 
-    action.commence.executed: %actor% commenced work on the case.
-    action.finish.executed: %actor% finished this case.
+    action.commence.executed: %actor% commenced work on the commission.
+    action.finish.executed: %actor% finished this commission.
     action.ship.executed: %actor% shipped the work.
-    action.cancel.executed: %actor% cancelled the case.
-    action.archive.executed: %actor% archived the case
+    action.cancel.executed: %actor% cancelled the commission.
+    action.archive.executed: %actor% archived the commission
 
 log:
-    caseCreated: %actor% created the case
-    caseUpdated: %actor% updated the case
-    caseArchived.executed: %actor% archived the case
-    caseUnarchived.executed: %actor% un-archived the case
+    commissionCreated: %actor% created the commission
+    commissionUpdated: %actor% updated the commission
+    commissionArchived.executed: %actor% archived the commission
+    commissionUnarchived.executed: %actor% un-archived the commission
 
-cases:
-    label: "Running cases"
-    detailTitle: "Detail of case %name%"
-    detail: "Case"
+views:
+    commissionDetail: "Detail of commission %name%"
+
+commissions:
+    label: "Running commissions"
+    detail: "Commission"
     notes: "Notes"
 
     archivedFilter: "Archived"

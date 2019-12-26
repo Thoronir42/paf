@@ -6,7 +6,7 @@ use SeStep\Typeful\EntityDescriptor;
 use SeStep\Typeful\Latte\PropertyFilter;
 use SeStep\Typeful\Property;
 
-class PafCaseDescriptor implements EntityDescriptor
+class CommissionDescriptor implements EntityDescriptor
 {
     /**
      * @var Property[]
@@ -16,7 +16,7 @@ class PafCaseDescriptor implements EntityDescriptor
     public function __construct()
     {
         $this->properties = [
-            'status' => new Property('status', 'commission.case.status'),
+            'status' => new Property('status', 'commission.commission.status'),
             'targetDelivery' => new Property('targetDelivery', 'date'),
             'archivedOn' => new Property('archivedOn', 'datetime'),
         ];
@@ -33,6 +33,6 @@ class PafCaseDescriptor implements EntityDescriptor
             return null;
         }
 
-        return 'commission.case.' . $property;
+        return 'commission.commission.' . $property;
     }
 }
