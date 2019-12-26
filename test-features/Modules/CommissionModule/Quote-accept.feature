@@ -1,10 +1,8 @@
 Feature: Create and accept quote
 
   Scenario: Guest creates an quote
-    Given I am new visitor
-    And I am on homepage
-    And Setting "commission.quotes.enable" is "1"
-    And I am on "/quotes"
+    Given Setting "commission.quotes.enable" is "1"
+    And I am on "/create-quote"
     Then I should see "Contact information"
     When I fill in the following:
     | contact[email] | john@maden.com |
