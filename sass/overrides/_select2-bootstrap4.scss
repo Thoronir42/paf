@@ -1,0 +1,8 @@
+.select2-container--bootstrap4 {
+  .select2-results {
+    [aria-disabled='true'] {
+      background: #F8F8F8;
+      color: dimgray;
+    }
+  }
+}

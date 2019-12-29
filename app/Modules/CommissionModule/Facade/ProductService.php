@@ -36,13 +36,18 @@ class ProductService
         $this->filesService = $filesService;
     }
 
-    public function getTypes()
+    public function getTypes(): array
     {
         return [
             'partial' => 'commission.productType.partial',
             'halfSuit' => 'commission.productType.halfSuit',
             'fullSuit' => 'commission.productType.fullSuit',
         ];
+    }
+
+    public function getEnabledTypes(): array
+    {
+        return ['partial'];
     }
 
     public function createFromCommission(Commission $commission)
