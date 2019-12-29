@@ -54,7 +54,7 @@ CREATE TABLE commission__commission
 
 CREATE TABLE commission__product
 (
-    id               INT         NOT NULL AUTO_INCREMENT,
+    id               VARCHAR(10) NOT NULL,
     slug             VARCHAR(64) NOT NULL,
     title            VARCHAR(64) NOT NULL,
     description      TEXT        NULL,

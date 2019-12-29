@@ -53,8 +53,12 @@ final class CommissionPresenter extends BasePresenter
     /** @var LeanSnapshots @inject */
     public $snapshots;
 
+    // variables
     /** @var string @persistent */
     public $archivedFilter;
+    /** @var Commission */
+    private $varCommission;
+
 
     /**
      * @authorize manage-commissions
@@ -94,7 +98,7 @@ final class CommissionPresenter extends BasePresenter
      */
     public function actionDetail($id)
     {
-        $this->template->commission = $commission = $this->commissionService->find($id);
+        $this->varCommission = $commission = $this->commissionService->find($id);
         if (!$commission) {
             throw new BadRequestException('commission-not-found');
         }
@@ -163,7 +167,8 @@ final class CommissionPresenter extends BasePresenter
 
         $this['stateControl'] = $stateControl;
 
-        $this->template->productExists = $this->productService->productExists($commission->specification->slug);
+        $this->template->productExists = $this->productService->productExists($commission->slug);
+        $this->template->commission = $this->varCommission;
     }
 
     public function createComponentComments()
@@ -201,5 +206,16 @@ final class CommissionPresenter extends BasePresenter
             $this->redirect('this');
         };
         return $form;
+    }
+
+    public function handleCreateProduct()
+    {
+        $error = $this->productService->createFromCommission($this->varCommission);
+        if ($error) {
+            $this->flashTranslate($error);
+            $this->redirect('this');
+        }
+
+        $this->redirect(':Commission:Product:view', $this->varCommission->slug->id);
     }
 }

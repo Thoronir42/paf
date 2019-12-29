@@ -19,8 +19,13 @@
             </div>
             <div class="card-body">
                 {control stateControl}
-                {if }
-                <a n:href="c"></a>
+                {if $productExists}
+                    <a n:href="Product:view $commission->slug->id"
+                      class="btn btn-link">{_'commission.commission.action.visitProductPage'}</a>
+                {else}
+                    <a n:href="createProduct!"
+                            class="btn btn-primary">{_'commission.commission.action.createProduct'}</a>
+                {/if}
             </div>
         </div>
     </div>

@@ -15,6 +15,7 @@ class CommissionRouterModule extends RouterModule
         $router[] = new Route('commission/<id>', 'Commission:detail');
         $router[] = new Route('create-quote', "Quotes:create");
         $router[] = new Route('commissions', 'Commission:list');
+        $router[] = new Route('product/<slug>', 'Product:view');
         $router[] = new Route('<presenter quotes|commission|price-list>[/<action=default>[/<id>]]');
 
         return $router;
