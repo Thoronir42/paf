@@ -1,0 +1,13 @@
+{if count($thread) > 0}
+    <div n:class="photo-box, $center ? 'text-center'">
+        {foreach $thread as $file}
+            <a href="{$baseUrl .'/images/'. $file->getFilename()}">
+                <img class="img-thumbnail" src="{$baseUrl .'/images/'. $file->getFilename()}"/>
+            </a>
+        {/foreach}
+    </div>
+{else}
+    <div>
+        no photos bro
+    </div>
+{/if}

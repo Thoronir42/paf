@@ -6,9 +6,11 @@ use DateTime;
 use LeanMapper\Entity;
 use PAF\Modules\CommonModule\Model\CommentThread;
 use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\CommonModule\Model\Slug;
 
 /**
  * @property string $id
+ * @property Slug $slug m:hasOne(slug)
  * @property string $status m:enum(CommissionWorkflow::STATUS_*) m:default('accepted')
  * @property Person $customer m:hasOne(customer_person_id)
  * @property Specification $specification m:hasOne(specification_id)

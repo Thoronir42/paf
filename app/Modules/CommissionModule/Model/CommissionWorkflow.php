@@ -86,7 +86,7 @@ class CommissionWorkflow extends Workflow
     {
         $actions = [];
         foreach ($this->getEnabledTransitions($subject) as $transition) {
-            $actions[$transition->getName()] = 'commission.commission.action.' . $transition->getName();
+            $actions[$transition->getName()] = 'commission.commissionWorkflow.action.' . $transition->getName();
         }
 
         return $actions;

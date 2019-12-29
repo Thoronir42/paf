@@ -10,12 +10,12 @@ use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property string $id
- * @property Person $issuer m:hasOne(issuer_person_id)
  * @property Slug $slug m:hasOne(slug)
  * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated
+ *
+ * @property Person $issuer m:hasOne(issuer_person_id)
  * @property Specification $specification m:hasOne(specification_id)
- * @property UserFileThread|null $references m:hasOne(references_thread_id)
  */
 class Quote extends Entity
 {

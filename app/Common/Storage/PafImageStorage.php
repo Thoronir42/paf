@@ -22,19 +22,15 @@ class PafImageStorage
         $this->files = $files;
     }
 
-    /**
-     * @param Quote $quote
-     * @param FileUpload[] $references
-     */
-    public function setQuoteReferences(Quote $quote, array $references)
+    public function createFileThread(array $files, string $category, string $subjectName): UserFileThread
     {
-        if (!$quote->hasReferences()) {
-            $quote->references = $this->files->createThread(true);
+        $thread = $this->files->createThread(true);
+
+        foreach ($files as $file) {
+            $this->saveImageFile($category, $file, $subjectName, $thread);
         }
 
-        foreach ($references as $file) {
-            $this->saveImageFile('quote', $file, $quote->slug->id, $quote->references);
-        }
+        return $thread;
     }
 
     public function saveImageFile(

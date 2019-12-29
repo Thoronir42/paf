@@ -82,18 +82,17 @@ class Commissions
         $references
     ): ?string {
         return $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
+            $slug = $this->slugRepository->createSlug($specification->characterName, true);
+
+            $specification->references = $this->imageStorage->createFileThread($references, 'quote', $slug->id);
             if (!$this->saveSpecification($specification)) {
                 throw new \UnexpectedValueException("Could not save specification");
             }
-
-            $slug = $this->slugRepository->createSlug($specification->characterName, true);
 
             $quote->status = Quote::STATUS_NEW;
             $quote->slug = $slug;
             $quote->specification = $specification;
             $quote->issuer = $issuer;
-
-            $this->imageStorage->setQuoteReferences($quote, $references);
 
 
             $this->quoteRepository->persist($quote);
@@ -170,6 +169,7 @@ class Commissions
             $this->quoteRepository->persist($quote);
 
             $commission = new Commission();
+            $commission->slug = $quote->slug;
             $commission->customer = $quote->issuer;
             $commission->specification = $quote->specification;
             $commission->acceptedOn = $this->momentProvider->now();

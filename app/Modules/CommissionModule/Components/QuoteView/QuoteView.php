@@ -4,6 +4,7 @@ namespace PAF\Modules\CommissionModule\Components\QuoteView;
 
 use Nette\Application\UI\Control;
 use PAF\Modules\CommissionModule\Model\Quote;
+use PAF\Modules\CommonModule\Components\PhotoBox\PhotoBoxControl;
 
 /**
  * Class QuoteView
@@ -43,5 +44,10 @@ class QuoteView extends Control
     public function handleReject()
     {
         $this->onReject($this->quote);
+    }
+
+    public function createComponentReferences()
+    {
+        return new PhotoBoxControl($this->quote->specification->references);
     }
 }

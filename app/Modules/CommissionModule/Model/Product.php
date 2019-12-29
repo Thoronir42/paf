@@ -3,19 +3,20 @@
 namespace PAF\Modules\CommissionModule\Model;
 
 use LeanMapper\Entity;
-use Nette\Utils\DateTime;
-use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\CommonModule\Model\Slug;
+use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
- * @property int $id
- * @property string $slug
- * @property string $name
- * @property Specification|null m:hasOne(specification_id)
+ * @property string $id
+ * @property Slug $slug m:hasOne(slug)
+ * @property string $title
+ * @property string|null $description
  * @property string $type m:enum(ProductType::TYPE_*)
- * @property Person $owner(owner_person_id)
- * @property DateTime $issuedOn
- * @property DateTime $completedOn
+ *
+ * @property Commission|null $commission m:hasOne(commission_id)
+ * @property Person $owner m:hasOne(owner_person_id)
+ * @property UserFileThread $photos m:hasOne(photos_thread_id)
  */
 class Product extends Entity
 {
