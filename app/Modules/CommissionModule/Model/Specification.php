@@ -3,15 +3,17 @@
 namespace PAF\Modules\CommissionModule\Model;
 
 use LeanMapper\Entity;
-use PAF\Modules\PortfolioModule\Model\Fursuit;
+use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property int $id
  * @property string $characterName
- * @property string $type m:enum(Fursuit::TYPE_*)
+ * @property string $type m:enum(ProductType::TYPE_*)
  * @property string $characterDescription
  *
- * @see Fursuit possible type values
+ * @property UserFileThread|null $references m:hasOne(references_thread_id)
+ *
+ * @see ProductType possible type values
  */
 class Specification extends Entity
 {

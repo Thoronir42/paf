@@ -1,0 +1,20 @@
+<div class="offer" id="{$control->lookupPath()}">
+    <h3 class="name">{_$offer->getName()}</h3>
+    <div class="media">
+        <img n:if="$offer->getPreview()" src="{$offer->getPreview()}">
+        <div class="media-body">
+            {if !empty($offer->getFeatures())}
+                <span>{_'priceList.product.featureList'}</span>
+                <ul class="features">
+                    <li n:foreach="$offer->getFeatures() as $feature">
+                        <b>{_$feature->getName()}</b>
+                        <p>{_$feature->getName().'.description'}</p>
+                    </li>
+                </ul>
+            {/if}
+            {if $offer->getPrice()}
+                <span class="price">{$offer->getPrice()|price}</span>
+            {/if}
+        </div>
+    </div>
+</div>

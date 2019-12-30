@@ -28,7 +28,7 @@ class SlugRepository extends BaseRepository
 
         if ($this->slugExists($slugId)) {
             if (!$numberSuffixIfExists) {
-                throw new InvalidStateException('paf.case.already-exists');
+                throw new InvalidStateException('paf.commission.already-exists');
             }
             $sequence = $this->getMaxSlugSuffix($slugId) + 1;
             $slugId = "$slugId-$sequence";

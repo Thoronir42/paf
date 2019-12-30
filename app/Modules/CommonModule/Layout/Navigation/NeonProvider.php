@@ -5,6 +5,7 @@ namespace PAF\Modules\CommonModule\Layout\Navigation;
 use Nette\FileNotFoundException;
 use Nette\Neon\Neon;
 use Nette\Security\User;
+use SeStep\GeneralSettings\Settings;
 use SeStep\Navigation\Provider\AssociativeArrayProvider;
 use SeStep\Navigation\Provider\NavigationItemsProvider;
 
@@ -14,8 +15,12 @@ final class NeonProvider implements NavigationItemsProvider
     private $file;
     /** @var User */
     private $user;
+    /**
+     * @var Settings
+     */
+    private $settings;
 
-    public function __construct(string $file, User $user)
+    public function __construct(string $file, User $user, Settings $settings)
     {
         if (!file_exists($file)) {
             throw new FileNotFoundException($file);
@@ -23,23 +28,59 @@ final class NeonProvider implements NavigationItemsProvider
 
         $this->file = $file;
         $this->user = $user;
+        $this->settings = $settings;
     }
 
     /** @inheritDoc */
     public function getItems()
     {
+        // todo: don't decode neon files on every load!
         $data = Neon::decode(file_get_contents($this->file));
 
-        return iterator_to_array(new AssociativeArrayProvider($data['items'], [$this, 'isUserAllowed']));
+        foreach ($data['items'] as &$item) {
+            if (isset($item['includeSubItems'])) {
+                $includePath = dirname($this->file) . $item['includeSubItems'];
+                $subItemsData = Neon::decode(file_get_contents($includePath));
+                $item['subItems'] = $subItemsData['items'];
+                unset($item['includeSubItems']);
+            }
+        }
+
+        return iterator_to_array(new AssociativeArrayProvider($data['items'], [$this, 'checkRequirements']));
     }
 
-    public function isUserAllowed($item)
+    public function checkRequirements($item): bool
     {
-        $requiredPermission = $item['requiredPermission'] ?? null;
-        if ($requiredPermission && !$this->user->isAllowed($requiredPermission)) {
-            return false;
+        foreach ($item['requirements'] ?? [] as $requirement) {
+            if (!$this->checkRequirement($requirement['type'], $requirement['value'])) {
+                return false;
+            }
         }
 
         return true;
+    }
+
+    private function checkRequirement(string $type, $value): bool
+    {
+        switch ($type) {
+            case 'permission':
+                return $this->checkPermission($value);
+
+            case 'setting':
+                return $this->checkSetting($value);
+        }
+
+        trigger_error("Unknown requirement type '$type'");
+        return false;
+    }
+
+    private function checkPermission(string $permission): bool
+    {
+        return $this->user->isAllowed($permission);
+    }
+
+    private function checkSetting(string $settingName): bool
+    {
+        return (bool)$this->settings->getValue($settingName);
     }
 }

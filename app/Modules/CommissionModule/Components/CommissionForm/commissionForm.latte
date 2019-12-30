@@ -1,0 +1,38 @@
+<div>
+    {form form}
+        {var $renderer = $form->getRenderer()}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2>{_'commission.commission.specification'}</h2>
+                </div>
+                <div class="col-sm-12">
+                    {$renderer->renderPair($form['specification-characterName'])|noescape}
+                    {$renderer->renderPair($form['specification-type'])|noescape}
+                    {$renderer->renderPair($form['specification-characterDescription'])|noescape}
+                </div>
+
+                <div class="col-sm-12">
+                    <h2>{_'paf.entity.contact'}</h2>
+                </div>
+                <div class="col-sm-12">
+                    {$renderer->renderPair($form['contact-name'])|noescape}
+                    {$renderer->renderPair($form['contact-telegram'])|noescape}
+                    {$renderer->renderPair($form['contact-email'])|noescape}
+                    {$renderer->renderPair($form['contact-telephone'])|noescape}
+                </div>
+                <div class="col-sm-12">
+                    <h2>{_'commission.commission.details'}</h2>
+                </div>
+                <div class="col-sm-12">
+                    {$renderer->renderPair($form['targetDelivery'])|noescape}
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        {input submit, class => 'btn btn-primary'}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/form}
+</div>

@@ -1,0 +1,25 @@
+.card-offers {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.offer {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1.25rem;
+  background: #fff;
+
+  .media > img {
+    margin-inline-end: 1rem;
+    max-width: 150px;
+  }
+
+  ul.features {
+    list-style: none;
+    padding-inline-start: 0;
+
+    li:not(:first-child) {
+      border-top: 1px gray solid;
+    }
+  }
+}

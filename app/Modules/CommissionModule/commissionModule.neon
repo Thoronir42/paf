@@ -1,30 +1,38 @@
 services:
-    specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
-    pafCaseRepository:
-            class: PAF\Modules\CommissionModule\Repository\PafCaseRepository
-            setup:
-                - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CaseAuditTrailAdapter())
-
-    pafCaseWorkflow: PAF\Modules\CommissionModule\Model\PafCaseWorkflow
-
-    pafCases: PAF\Modules\CommissionModule\Facade\PafCases
-
-    commissions: PAF\Modules\CommissionModule\Facade\Commissions
-    quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
-
-    pafCasesGridFactory: PAF\Modules\CommissionModule\Components\CasesGrid\CasesGridFactory
-
-    quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
-    pafCaseFormFactory: PAF\Modules\CommissionModule\Components\PafCaseForm\PafCaseFormFactory
-    caseStateControlFactory: PAF\Modules\CommissionModule\Components\CaseState\CaseStateControlFactory
-
-    pafCaseDescriptor:
-        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseDescriptor
-        autowired: false
-        tags:
-            typeful.entity: PAF\Modules\CommissionModule\Model\PafCase
-    pafCaseStatusType:
-        class: PAF\Modules\CommissionModule\Model\Typeful\PafCaseStatusType
+    # Typeful
+    commissionDescriptor:
+            class: PAF\Modules\CommissionModule\Model\Typeful\CommissionDescriptor
+            autowired: false
+            tags:
+                typeful.entity: PAF\Modules\CommissionModule\Model\Commission
+    commissionStatusType:
+        class: PAF\Modules\CommissionModule\Model\Typeful\CommissionStatusType
         autowired: false
         tags:
             - typeful.propertyType
+
+    # Repositories
+    specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
+    quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
+    commissionRepository:
+            class: PAF\Modules\CommissionModule\Repository\CommissionRepository
+            setup:
+                - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CommissionAuditTrailAdapter())
+
+    commissionWorkflow: PAF\Modules\CommissionModule\Model\CommissionWorkflow
+    productRepository: PAF\Modules\CommissionModule\Repository\ProductRepository
+
+    # Services
+    productService: PAF\Modules\CommissionModule\Facade\ProductService
+    commissionService: PAF\Modules\CommissionModule\Facade\CommissionService
+
+    priceList: PAF\Modules\CommissionModule\Facade\PriceListService
+
+    commissions: PAF\Modules\CommissionModule\Facade\Commissions
+
+    # Components
+    commissionsGridFactory: PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory
+
+    quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
+    commissionFormFactory: PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory
+    commissionStatusControlFactory: PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory

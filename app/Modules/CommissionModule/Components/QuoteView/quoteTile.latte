@@ -4,25 +4,19 @@
             <h2>{$quote->specification->characterName}</h2>
             <div class="row">
                 <dt class="col-sm-3">{_paf.fursuit.type}:</dt>
-                <dd class="col-sm-3">{_'paf.fursuit.types.'.$quote->specification->type}</dd>
+                <dd class="col-sm-3">{_'commission.productType.'.$quote->specification->type}</dd>
                 <dt class="col-sm-3">{_'generic.createdAt'}:</dt>
                 <dd class="col-sm-3">{$quote->dateCreated|date}</dd>
             </div>
             <h3>{_'commission.quote-form.character-description'}</h3>
             <textarea class="form-control" readonly>{$quote->specification->characterDescription}</textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group references">
             <h3>{_"commission.quote-form.references"}</h3>
-            {if !$quote->references || $quote->references->count() < 1}
+            {if count($quote->specification->references) < 1}
                 {_'commission.quote.noReferences'}
             {else}
-            <div class="row references text-center" n:if="$quote->references->count() > 0">
-                {foreach $quote->getReferences() as $file}
-                <a href="{$baseUrl .'/images/'. $file->getFilename()}">
-                    <img class="img-thumbnail" src="{$baseUrl .'/images/'. $file->getFilename()}"/>
-                </a>
-                {/foreach}
-            </div>
+                {control references}
             {/if}
         </div>
         <div class="form-group">

@@ -1,16 +1,18 @@
+@import "offers";
+@import "commissions";
+
 .quote-overview {
   .references {
-    height: 80px;
-    overflow-y: scroll;
-  }
+    .photo-box {
+      height: 160px;
+      overflow-y: scroll;
 
-  .references a {
-    text-decoration: none;
-  }
+      img {
+        max-inline-size: 10em;
+        max-block-size: 10em;
+      }
+    }
 
-  .references img {
-    max-height: 60px;
-    max-width: 60px;
   }
 }
 

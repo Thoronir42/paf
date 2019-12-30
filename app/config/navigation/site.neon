@@ -1,15 +1,19 @@
 items:
+    priceList:
+        target: ':Commission:PriceList:default'
+        caption: 'commission.priceList.title'
     quotes:
-        target: ':Commission:Quotes:default'
-        caption: paf.views.quotes
+        target: ':Commission:Quotes:create'
+        caption: paf.views.createQuote
+        requirements:
+             -
+                 type: setting
+                 value: 'commission.quotes.enable'
     configuration:
-        caption: paf.views.manage
-        requiredPermission: admin-settings
-        subItems:
-            settings:
-                target: ':Settings:Settings:'
-                caption: paf.views.settings
-            cases:
-                target: :Commission:Cases:list
-                caption: paf.views.cases
+        caption: paf.views.dashboard
+        requirements:
+             -
+                 type: permission
+                 value: admin-settings
+        includeSubItems: ./dashboard.neon
 

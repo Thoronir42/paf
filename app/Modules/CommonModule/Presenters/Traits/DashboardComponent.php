@@ -33,9 +33,9 @@ trait DashboardComponent
             $navigation['quoteList']->getItem()->addLabel((string)$quotes, 'info');
         }
 
-        $cases = $this->commissions->countUnresolvedCases();
-        if ($cases > 0) {
-            $navigation['caseList']->getItem()->addLabel((string)$cases, 'info');
+        $commissions = $this->commissions->countUnresolvedCommissions();
+        if ($commissions > 0) {
+            $navigation['commissionList']->getItem()->addLabel((string)$commissions, 'info');
         }
     }
 }

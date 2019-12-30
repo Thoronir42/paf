@@ -1,0 +1,14 @@
+product:
+    featureList: 'Feature list'
+    partial: 'Partial suit'
+
+extras:
+    antlers: 'Antlers'
+    piercings: 'Piercings'
+    complexMarkings: 'Complex markings'
+
+feature:
+    fursuitHead: 'Fursuit head'
+    fursuitPaws: 'Fursuit paws'
+    fursuitTail: 'Fursuit tail'
+    fursuitOutdoorFeet: 'Fursuit outdoor feet'

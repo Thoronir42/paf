@@ -80,14 +80,14 @@ class QuoteForm extends Form
     public function processForm(Form $form, $values)
     {
 
-        $fursuitSpecification = new Specification();
-        $fursuitSpecification->characterName = $values->fursuit->name;
-        $fursuitSpecification->type = $values->fursuit->type;
-        $fursuitSpecification->characterDescription = $values->fursuit->characterDescription;
+        $specification = new Specification();
+        $specification->characterName = $values->fursuit->name;
+        $specification->type = $values->fursuit->type;
+        $specification->characterDescription = $values->fursuit->characterDescription;
 
         $this->onSave(
             $this->quote,
-            $fursuitSpecification,
+            $specification,
             $this->getContacts($values['contact']),
             $values->reference,
             $this

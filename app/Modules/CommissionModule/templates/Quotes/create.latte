@@ -1,0 +1,23 @@
+{block content}
+
+{if $user->isAllowed('option')}
+{control option-paf-quotes-enable:pair}
+{/if}
+
+{if !$enableQuotes}
+    <h1>{_'commission.views.quotesClosed'}</h1>
+    <div class="card">
+        <div class="card-body text-center">
+            <div class="text-info">{$_ = 'commission.quotes.currently-closed-text'|translate|noescape}</div>
+            <a n:href=":Common:Homepage:" class="btn btn-lg btn-link">{_'generic.return'}</a>
+        </div>
+    </div>
+
+{else}
+    <h1>{_'commission.views.createQuote'}</h1>
+    <div class="card">
+        <div class="card-body">
+            {control quoteForm}
+        </div>
+    </div>
+{/if}

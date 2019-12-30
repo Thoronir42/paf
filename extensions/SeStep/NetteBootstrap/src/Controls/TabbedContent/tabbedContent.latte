@@ -1,0 +1,15 @@
+{var $controlPath = $control->lookupPath()}
+<ul class="nav nav-tabs" id="{$controlPath}-tab-list" role="tablist">
+    <li class="nav-item" role="tab" n:foreach="$tabs as $tabName => $tab">
+        <a n:class="nav-link, $activeTab == $tabName ? active" id="{$controlPath.'-'.$tabName.'-tab'}"
+           data-toggle="tab" href="#{$controlPath.'-'.$tabName.'-content'}">{_$tab['caption']}</a>
+    </li>
+</ul>
+<div class="tab-content" id="{$control->lookupPath()}-tab-content">
+    <div n:foreach="$tabs as $tabName => $tab" role="tabpanel"
+            n:class="tab-pane, fade, $activeTab == $tabName ? 'show active'" id="{$controlPath.'-'.$tabName.'-content'}"
+            aria-labelledby="{$controlPath.'-'.$tabName.'-tab'}"
+    >
+        {$control->renderTabContent($tabName)}
+    </div>
+</div>

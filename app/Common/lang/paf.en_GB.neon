@@ -2,13 +2,12 @@ views:
     home: "Home"
     dashboard: "Dashboard"
     quotes: "Quotes"
+    createQuote: "Create quote"
     manage: "Manage"
     settings: "Settings"
-    cases: "Cases"
+    commissions: "Commissions"
 
 entity:
-    quote: 'Quote'
-    case: 'Case'
     fursuit: 'Fursuit'
     contact: 'Contact'
 
@@ -25,10 +24,6 @@ fursuit:
     name: "Fursuit name"
     type: "Fursuit type"
     description: "Description"
-    types:
-        partial: "Partial"
-        halfsuit: "Half-suit"
-        fullsuit: "Fullboddy fursuit"
 
 workflow:
     actionPrompt: Do...

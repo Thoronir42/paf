@@ -1,13 +1,13 @@
-entity.case: Case
+entity.commission: Commission
 
-quotes.title: "Quotes"
 quotes.currently-closed: "are currently closed"
-quotes.currently-closed-text: "If you wanted to apply for a commission, you are at correct place. <br/> Alas I'm currently not accepting any new quotes."
+quotes.currently-closed-text: "If you wanted to apply for a commission, you are at correct place. <br/> Alas I'm currently not accepting any new quotes. Please come back later."
 
 quotes.enabled: "Quotes are currently enabled"
 quotes.enable: "Enable quotes"
 quotes.disabled: "Quotes are currently disabled"
 quotes.disable: "Disable"
+quotes.allResolved: "All quotes are resolved"
 
 quote.issuer: Issuer
 quote.references: "%count% references"
@@ -37,19 +37,31 @@ unresolvedQuotes: "Unresolved quotes"
 
 quote.noReferences: There are no references
 
+priceList:
+    title: 'MY SHIT FOR YOUS'
+    intro: 'HI! BUY MY STUFF!'
+    products: 'Products'
+    extras: 'Extras'
 
-case.customer: Customer
-case.fursuitSpecification: Fursuit Specification
+productType:
+    partial: 'Partial suit'
+    halfSuit: 'Half suit'
+    fullSuit: 'Fullbody fursuit'
 
-case:
+customer: Customer
+commission.specification: Fursuit Specification
+
+commission:
     notes: Notes
-    details: Case details
-    created: "Case %name% has been created"
-    already-exists: "Case %name% already exists"
-    create-error: "Case could not be created"
-    updated: Case %name% has been updated
+    details: Commission details
+    created: "Commission %name% has been created"
+    already-exists: "Commission %name% already exists"
+    create-error: "Commission could not be created"
+    updated: Commission %name% has been updated
     acceptedOn: Accepted on
     targetDelivery: Target delivery date
+
+    archivedOn: Archived on %archivedOn%
 
     status: Status
     status.accepted: Accepted
@@ -57,26 +69,42 @@ case:
     status.finished: Finished
     status.cancelled: Cancelled
     status.shipped: Shipped
-    status.archived: Archived
 
+    status.archived: Archived
+    status.unarchived: Unarchived
+
+    action.archive: Archive
+    action.unarchive: Unarchive
+
+    action.createProduct: Create product
+    action.visitProductPage: Go to product page
+
+commissionWorkflow:
     action.commence: Commence
     action.finish: Finish
     action.ship: Ship
     action.cancel: Cancel
-    action.archive: Archive
 
-    action.commence.executed: %actor% commenced work on the case.
-    action.finish.executed: %actor% finished this case.
+    action.commence.executed: %actor% commenced work on the commission.
+    action.finish.executed: %actor% finished this commission.
     action.ship.executed: %actor% shipped the work.
-    action.cancel.executed: %actor% cancelled the case.
-    action.archive.executed: %actor% archived the case
+    action.cancel.executed: %actor% cancelled the commission.
+    action.archive.executed: %actor% archived the commission
 
 log:
-    caseCreated: %actor% created the case
-    caseUpdated: %actor% updated the case
+    commissionCreated: %actor% created the commission
+    commissionUpdated: %actor% updated the commission
+    commissionArchived.executed: %actor% archived the commission
+    commissionUnarchived.executed: %actor% un-archived the commission
 
-cases:
-    label: "Running cases"
-    detailTitle: "Detail of case %name%"
-    detail: "Case"
+views:
+    createQuote: New quote
+    quotesClosed: Quotes are currently closed
+    commissionDetail: "Detail of commission %name%"
+
+commissions:
+    label: "Running commissions"
+    detail: "Commission"
     notes: "Notes"
+
+    archivedFilter: "Archived"

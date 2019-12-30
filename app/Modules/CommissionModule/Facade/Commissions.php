@@ -7,11 +7,11 @@ use Nette\InvalidStateException;
 use Nette\Utils\Strings;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Storage\PafImageStorage;
-use PAF\Modules\CommissionModule\Model\PafCase;
-use PAF\Modules\CommissionModule\Model\PafCaseWorkflow;
+use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Model\Specification;
-use PAF\Modules\CommissionModule\Repository\PafCaseRepository;
+use PAF\Modules\CommissionModule\Repository\CommissionRepository;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\CommissionModule\Repository\SpecificationRepository;
 use PAF\Modules\CommonModule\Model\Contact;
@@ -22,6 +22,11 @@ use PAF\Modules\CommonModule\Repository\SlugRepository;
 use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
 
+/**
+ * Class Commissions
+ *
+ * todo: split up into smaller parts
+ */
 class Commissions
 {
     use HasMomentProvider;
@@ -36,8 +41,8 @@ class Commissions
     private $slugRepository;
     /** @var QuoteRepository */
     private $quoteRepository;
-    /** @var PafCaseRepository */
-    private $caseRepository;
+    /** @var CommissionRepository */
+    private $commissionRepository;
     /** @var PafImageStorage */
     private $imageStorage;
     /** @var CommentsService */
@@ -52,7 +57,7 @@ class Commissions
         SlugRepository $slugRepository,
         QuoteRepository $quoteRepository,
         PafImageStorage $imageStorage,
-        PafCaseRepository $caseRepository,
+        CommissionRepository $commissionRepository,
         CommentsService $commentsService,
         TransactionManager $transactionManager
     ) {
@@ -62,7 +67,7 @@ class Commissions
         $this->slugRepository = $slugRepository;
         $this->quoteRepository = $quoteRepository;
         $this->imageStorage = $imageStorage;
-        $this->caseRepository = $caseRepository;
+        $this->commissionRepository = $commissionRepository;
         $this->commentsService = $commentsService;
         $this->transactionManager = $transactionManager;
     }
@@ -82,18 +87,17 @@ class Commissions
         $references
     ): ?string {
         return $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
+            $slug = $this->slugRepository->createSlug($specification->characterName, true);
+
+            $specification->references = $this->imageStorage->createFileThread($references, 'quote', $slug->id);
             if (!$this->saveSpecification($specification)) {
                 throw new \UnexpectedValueException("Could not save specification");
             }
-
-            $slug = $this->slugRepository->createSlug($specification->characterName, true);
 
             $quote->status = Quote::STATUS_NEW;
             $quote->slug = $slug;
             $quote->specification = $specification;
             $quote->issuer = $issuer;
-
-            $this->imageStorage->setQuoteReferences($quote, $references);
 
 
             $this->quoteRepository->persist($quote);
@@ -169,15 +173,16 @@ class Commissions
             $quote->status = Quote::STATUS_ACCEPTED;
             $this->quoteRepository->persist($quote);
 
-            $case = new PafCase();
-            $case->customer = $quote->issuer;
-            $case->specification = $quote->specification;
-            $case->acceptedOn = $this->momentProvider->now();
-            $case->comments = $this->commentsService->createNewThread();
+            $commission = new Commission();
+            $commission->slug = $quote->slug;
+            $commission->customer = $quote->issuer;
+            $commission->specification = $quote->specification;
+            $commission->acceptedOn = $this->momentProvider->now();
+            $commission->comments = $this->commentsService->createNewThread();
 
-            $this->caseRepository->persist($case);
+            $this->commissionRepository->persist($commission);
 
-            return $case;
+            return $commission;
         });
 
         return true;
@@ -190,13 +195,13 @@ class Commissions
         ]);
     }
 
-    public function countUnresolvedCases(): int
+    public function countUnresolvedCommissions(): int
     {
-        return $this->caseRepository->countBy([
+        return $this->commissionRepository->countBy([
             '!status' => [
-                PafCaseWorkflow::STATUS_FINISHED,
-                PafCaseWorkflow::STATUS_SHIPPED,
-                PafCaseWorkflow::STATUS_CANCELLED,
+                CommissionWorkflow::STATUS_FINISHED,
+                CommissionWorkflow::STATUS_SHIPPED,
+                CommissionWorkflow::STATUS_CANCELLED,
             ],
         ]);
     }

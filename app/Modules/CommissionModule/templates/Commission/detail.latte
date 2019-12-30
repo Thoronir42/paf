@@ -1,0 +1,33 @@
+{block content}
+<h1>{_'commission.views.commissionDetail', ['name' => $commission->specification->characterName]}</h1>
+
+<div class="row">
+    <div class="col-md-8" id="notes">
+        <div class="form-group">
+            {control comments:input, noLabels => true}
+        </div>
+        <div class="card">
+            <div class="card-body">
+                {control feed}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4" id="detail">
+        <div class="card">
+            <div class="card-body">
+                {control commissionForm}
+            </div>
+            <div class="card-body">
+                {control stateControl}
+                {if $productExists}
+                    <a n:href="Product:view $commission->slug->id"
+                      class="btn btn-link">{_'commission.commission.action.visitProductPage'}</a>
+                {else}
+                    <a n:href="createProduct!"
+                            class="btn btn-primary">{_'commission.commission.action.createProduct'}</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+

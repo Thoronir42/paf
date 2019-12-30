@@ -3,6 +3,8 @@ save: Save
 update: Update
 return: "Return"
 
+any: 'Any'
+
 sign-in: "Sign in"
 sign-out: "Sign out"
 sign-in-action: "Sign in"
@@ -18,6 +20,9 @@ createdAt: 'Created at'
 
 actions: 'Actions'
 edit: 'Edit'
+
+action:
+    filter: 'Filter'
 
 form-validator:
     csrf: 'Your session has expired. Please return to the home page and try again.'

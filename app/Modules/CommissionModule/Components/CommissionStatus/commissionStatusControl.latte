@@ -1,0 +1,21 @@
+<div>
+    <h2>{_'commission.commission.status'} <small>{_'commission.commission.status.'.$currentState}</small></h2>
+    <span></span>
+    {form actionForm}
+    <dl class="row">
+        <dt class="col-md-12 form-group">
+            {input action, class => 'form-control'}
+        </dt>
+        <dd class="col-md-12 text-right">
+            {input submit, class => 'btn btn-primary'}
+        </dd>
+    </dl>
+    {/form}
+    {if !$archived}
+        <a n:href="archive!" class="btn btn-secondary">{_'commission.commission.archive'}</a>
+    {else}
+        <a n:href="unarchive!" class="btn btn-secondary">{_'commission.commission.unarchive'}</a>
+    {/if}
+
+
+</div>

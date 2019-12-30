@@ -4,7 +4,6 @@ namespace PAF\Modules\CommonModule\Model;
 
 use LeanMapper\Entity;
 use Nette\InvalidStateException;
-use PAF\Modules\PortfolioModule\Model\Fursuit;
 
 /**
  * @property string $id
