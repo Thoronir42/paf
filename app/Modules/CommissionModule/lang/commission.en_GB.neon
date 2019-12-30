@@ -1,8 +1,7 @@
 entity.commission: Commission
 
-quotes.title: "Quotes"
 quotes.currently-closed: "are currently closed"
-quotes.currently-closed-text: "If you wanted to apply for a commission, you are at correct place. <br/> Alas I'm currently not accepting any new quotes."
+quotes.currently-closed-text: "If you wanted to apply for a commission, you are at correct place. <br/> Alas I'm currently not accepting any new quotes. Please come back later."
 
 quotes.enabled: "Quotes are currently enabled"
 quotes.enable: "Enable quotes"
@@ -99,6 +98,8 @@ log:
     commissionUnarchived.executed: %actor% un-archived the commission
 
 views:
+    createQuote: New quote
+    quotesClosed: Quotes are currently closed
     commissionDetail: "Detail of commission %name%"
 
 commissions:

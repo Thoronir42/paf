@@ -22,6 +22,11 @@ use PAF\Modules\CommonModule\Repository\SlugRepository;
 use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
 
+/**
+ * Class Commissions
+ *
+ * todo: split up into smaller parts
+ */
 class Commissions
 {
     use HasMomentProvider;

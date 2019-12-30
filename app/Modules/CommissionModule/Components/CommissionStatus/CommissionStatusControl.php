@@ -13,9 +13,9 @@ use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
  */
 class CommissionStatusControl extends Control
 {
-
+    /** @var callable[] */
     public $onAction = [];
-
+    /** @var callable[] */
     public $onArchivedChanged = [];
 
     /** @var Commission */
@@ -64,7 +64,6 @@ class CommissionStatusControl extends Control
                 $this->onAction($values['action']);
             };
         }
-
 
         return $form;
     }

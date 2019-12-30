@@ -27,9 +27,7 @@ class CommissionForm extends FormWrapperControl
 
     /** @var ContactDefinitions */
     private $contactDefinitions;
-    /**
-     * @var ProductService
-     */
+    /** @var ProductService */
     private $productService;
 
     public function __construct(

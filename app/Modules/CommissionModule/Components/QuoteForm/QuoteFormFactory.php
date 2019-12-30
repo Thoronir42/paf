@@ -13,9 +13,7 @@ class QuoteFormFactory
     private $formFactory;
     /** @var ITranslator */
     private $translator;
-    /**
-     * @var ProductService
-     */
+    /** @var ProductService */
     private $productService;
 
     public function __construct(FormFactory $formFactory, ITranslator $translator, ProductService $productService)

@@ -4,8 +4,8 @@
 {control option-paf-quotes-enable:pair}
 {/if}
 
-<h1>{_'commission.quotes.title'}{if !$enableQuotes} {_'currently-closed'}{/if}</h1>
 {if !$enableQuotes}
+    <h1>{_'commission.views.quotesClosed'}</h1>
     <div class="card">
         <div class="card-body text-center">
             <div class="text-info">{$_ = 'commission.quotes.currently-closed-text'|translate|noescape}</div>
@@ -14,6 +14,7 @@
     </div>
 
 {else}
+    <h1>{_'commission.views.createQuote'}</h1>
     <div class="card">
         <div class="card-body">
             {control quoteForm}
