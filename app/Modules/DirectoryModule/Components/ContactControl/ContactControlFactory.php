@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommonModule\Components\ContactControl;
+namespace PAF\Modules\DirectoryModule\Components\ContactControl;
 
-use PAF\Modules\CommonModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Model\Contact;
 
 interface ContactControlFactory
 {

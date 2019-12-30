@@ -23,7 +23,7 @@ CREATE TABLE `commission__quote`
 
     CONSTRAINT PRIMARY KEY (id),
     CONSTRAINT `quote_issuer_fk` FOREIGN KEY
-        (issuer_person_id) REFERENCES common__person (id),
+        (issuer_person_id) REFERENCES directory__person (id),
 
     CONSTRAINT `quote_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id)
@@ -45,7 +45,7 @@ CREATE TABLE commission__commission
     CONSTRAINT PRIMARY KEY (id),
 
     CONSTRAINT `commission_customer_fk` FOREIGN KEY
-        (customer_person_id) REFERENCES common__person (id),
+        (customer_person_id) REFERENCES directory__person (id),
     CONSTRAINT `commission_specification_fk` FOREIGN KEY
         (specification_id) REFERENCES commission__specification (id),
     CONSTRAINT `commission_comment_thread_fk` FOREIGN KEY
@@ -66,7 +66,7 @@ CREATE TABLE commission__product
     CONSTRAINT PRIMARY KEY (id),
 
     CONSTRAINT `product_owner_fk` FOREIGN KEY
-        (owner_person_id) REFERENCES common__person (id),
+        (owner_person_id) REFERENCES directory__person (id),
     CONSTRAINT `product_commission_fk` FOREIGN KEY
         (commission_id) REFERENCES commission__commission (id),
     CONSTRAINT `product_photos_fk` FOREIGN KEY

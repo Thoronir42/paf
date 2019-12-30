@@ -4,6 +4,7 @@ namespace PAF\Modules\CommonModule\Model;
 
 use LeanMapper\Entity;
 use Nette\InvalidStateException;
+use PAF\Modules\DirectoryModule\Model\Person;
 
 /**
  * @property string $id

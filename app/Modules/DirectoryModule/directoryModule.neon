@@ -1,0 +1,23 @@
+services:
+    # Repositories
+    personRepository: PAF\Modules\DirectoryModule\Repository\PersonRepository
+    contactRepository: PAF\Modules\DirectoryModule\Repository\ContactRepository
+
+    # Services
+    personService: PAF\Modules\DirectoryModule\Services\PersonService
+    contactDefinitions:
+        class: PAF\Modules\DirectoryModule\Services\ContactDefinitions
+        arguments:
+            contactSpecification:
+                telegram:
+                    format: 'https://t.me/%s'
+                    icon: 'fa-telegram'
+                email:
+                    format: 'mailto:%s'
+                    icon: 'fa-envelope'
+                telephone:
+                    format: 'tel:%s'
+                    icon: 'fa-phone'
+
+    # Components
+    contactControlFactory: PAF\Modules\DirectoryModule\Components\ContactControl\ContactControlFactory

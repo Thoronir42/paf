@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommonModule\Repository;
+namespace PAF\Modules\DirectoryModule\Repository;
 
 use LeanMapper\Entity;
 use PAF\Common\Lean\BaseRepository;

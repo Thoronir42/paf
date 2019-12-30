@@ -14,6 +14,7 @@ use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
+use PAF\Modules\DirectoryModule\Services\PersonService;
 
 /**
  * Class QuotesPresenter
@@ -31,6 +32,8 @@ final class QuotesPresenter extends BasePresenter
 
     /** @var Commissions @inject */
     public $commissions;
+    /** @var PersonService @inject */
+    public $personService;
 
     /** @var PafImageStorage @inject */
     public $pafImages;
@@ -89,7 +92,7 @@ final class QuotesPresenter extends BasePresenter
             $references,
             QuoteForm $form
         ) {
-            $issuer = $this->commissions->createIssuerByContacts($contacts);
+            $issuer = $this->personService->createPersonByContacts($contacts);
 
             $result = $this->commissions->createNewQuote($quote, $specification, $issuer, $references);
             if (is_string($result)) {

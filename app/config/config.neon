@@ -45,6 +45,7 @@ extensions:
     commonEvents: PAF\Common\Events\EventsExtension
 
     pafFeed: PAF\Common\Feed\FeedExtension
+    pafDirectory: PAF\Modules\DirectoryModule\DirectoryModuleExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 

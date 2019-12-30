@@ -4,7 +4,7 @@ namespace PAF\Modules\CommissionModule\Model;
 
 use DateTime;
 use LeanMapper\Entity;
-use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\DirectoryModule\Model\Person;
 use PAF\Modules\CommonModule\Model\Slug;
 use PAF\Modules\CommonModule\Model\UserFileThread;
 

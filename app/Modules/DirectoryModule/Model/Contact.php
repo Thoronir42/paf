@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommonModule\Model;
+namespace PAF\Modules\DirectoryModule\Model;
 
 use LeanMapper\Entity;
 

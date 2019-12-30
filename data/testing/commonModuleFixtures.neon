@@ -15,7 +15,7 @@ users:
 
 
 person:
-    class: PAF\Modules\CommonModule\Model\Person
+    class: PAF\Modules\DirectoryModule\Model\Person
     data:
         -
             id: r4o7xP
@@ -29,7 +29,7 @@ person:
 
 
 userContact:
-    class: PAF\Modules\CommonModule\Model\Contact
+    class: PAF\Modules\DirectoryModule\Model\Contact
     data:
         -
             person: r4o7xP

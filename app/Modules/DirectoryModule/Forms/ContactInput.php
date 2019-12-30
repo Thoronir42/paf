@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Forms\Controls;
+namespace PAF\Modules\DirectoryModule\Forms;
 
 use Nette;
 use Nette\Forms\Controls\TextInput;
-use PAF\Modules\CommonModule\Components\ContactControl\ContactControl;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use PAF\Modules\DirectoryModule\Components\ContactControl\ContactControl;
+use PAF\Modules\DirectoryModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Services\ContactDefinitions;
 use SeStep\NetteBootstrap as NBS;
 
 class ContactInput extends TextInput

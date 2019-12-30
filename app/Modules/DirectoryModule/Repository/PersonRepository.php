@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\CommonModule\Repository;
+namespace PAF\Modules\DirectoryModule\Repository;
 
 use Dibi\Expression;
 use PAF\Common\Lean\BaseRepository;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\DirectoryModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Model\Person;
 
 class PersonRepository extends BaseRepository
 {

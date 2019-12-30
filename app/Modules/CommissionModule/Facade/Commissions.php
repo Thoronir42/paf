@@ -3,8 +3,7 @@
 namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Http\FileUpload;
-use Nette\InvalidStateException;
-use Nette\Utils\Strings;
+use PAF\Common\Model\Exceptions\TransactionFailedException;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Model\Commission;
@@ -14,13 +13,11 @@ use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\CommissionModule\Repository\SpecificationRepository;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Model\Person;
-use PAF\Modules\CommonModule\Repository\ContactRepository;
-use PAF\Modules\CommonModule\Repository\PersonRepository;
+use PAF\Modules\DirectoryModule\Model\Person;
 use PAF\Modules\CommonModule\Repository\SlugRepository;
 use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
+use UnexpectedValueException;
 
 /**
  * Class Commissions
@@ -33,10 +30,6 @@ class Commissions
 
     /** @var SpecificationRepository */
     private $specificationRepository;
-    /** @var PersonRepository */
-    private $personRepository;
-    /** @var ContactRepository */
-    private $contactRepository;
     /** @var SlugRepository */
     private $slugRepository;
     /** @var QuoteRepository */
@@ -52,8 +45,6 @@ class Commissions
 
     public function __construct(
         SpecificationRepository $specificationRepository,
-        PersonRepository $personRepository,
-        ContactRepository $contactRepository,
         SlugRepository $slugRepository,
         QuoteRepository $quoteRepository,
         PafImageStorage $imageStorage,
@@ -62,8 +53,6 @@ class Commissions
         TransactionManager $transactionManager
     ) {
         $this->specificationRepository = $specificationRepository;
-        $this->personRepository = $personRepository;
-        $this->contactRepository = $contactRepository;
         $this->slugRepository = $slugRepository;
         $this->quoteRepository = $quoteRepository;
         $this->imageStorage = $imageStorage;
@@ -79,6 +68,8 @@ class Commissions
      * @param FileUpload[] $references
      *
      * @return string - error code
+     *
+     * @throws TransactionFailedException
      */
     public function createNewQuote(
         Quote $quote,
@@ -91,7 +82,7 @@ class Commissions
 
             $specification->references = $this->imageStorage->createFileThread($references, 'quote', $slug->id);
             if (!$this->saveSpecification($specification)) {
-                throw new \UnexpectedValueException("Could not save specification");
+                throw new UnexpectedValueException("Could not save specification");
             }
 
             $quote->status = Quote::STATUS_NEW;
@@ -111,55 +102,6 @@ class Commissions
         return $result > 0;
     }
 
-    /**
-     * @param Contact[] $contacts
-     * @return Person
-     */
-    public function createIssuerByContacts(array $contacts): Person
-    {
-        $issuer = $this->personRepository->findByContact($contacts);
-        if ($issuer) {
-            if ($issuer->user) {
-                throw new InvalidStateException("Person with this contact information already exists");
-            }
-        } else {
-            $issuer = new Person();
-            $issuer->displayName = $this->getDisplayNameByContacts($contacts);
-            $this->personRepository->persist($issuer);
-        }
-
-
-        foreach ($contacts as $contact) {
-            if (!$issuer->contactExists($contact)) {
-                $contact->person = $issuer;
-                $this->contactRepository->persist($contact);
-            }
-        }
-
-        return $issuer;
-    }
-
-    /**
-     * @param Contact[] $contacts
-     * @return string
-     */
-    private function getDisplayNameByContacts(array $contacts)
-    {
-        if (empty($contacts)) {
-            throw new \InvalidArgumentException("Contacts array must not be empty");
-        }
-
-        foreach ([Contact::TYPE_TELEGRAM, Contact::TYPE_EMAIL] as $type) {
-            if (isset($contacts[$type])) {
-                return $contacts[$type]->value;
-            }
-        }
-
-        $defaultContact = current($contacts);
-
-        return $defaultContact->value;
-    }
-
     public function rejectQuote(Quote $quote)
     {
         $quote->status = Quote::STATUS_REJECTED;
@@ -167,6 +109,11 @@ class Commissions
         return true;
     }
 
+    /**
+     * @param Quote $quote
+     * @return bool
+     * @throws TransactionFailedException
+     */
     public function acceptQuote(Quote $quote)
     {
         $this->transactionManager->execute(function () use ($quote) {

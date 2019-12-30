@@ -3,7 +3,7 @@
 namespace PAF\Common\Latte;
 
 use Nette\InvalidArgumentException;
-use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use PAF\Modules\DirectoryModule\Services\ContactDefinitions;
 
 final class ContactUrlFilter extends BaseFilter
 {

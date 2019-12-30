@@ -11,8 +11,6 @@ services:
         class: PAF\Modules\CommonModule\Repository\UserRepository
         arguments:
             index: 'username'
-    common.personRepository: PAF\Modules\CommonModule\Repository\PersonRepository
-    common.contactRepository: PAF\Modules\CommonModule\Repository\ContactRepository
     common.slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
 
     common.users:
@@ -57,20 +55,7 @@ services:
         arguments:
             fileStorage: @fileStorage.image
 
-    common.contactDefinitions:
-        class: PAF\Modules\CommonModule\Services\ContactDefinitions
-        arguments:
-            contactSpecification:
-                telegram:
-                    format: 'https://t.me/%s'
-                    icon: 'fa-telegram'
-                email:
-                    format: 'mailto:%s'
-                    icon: 'fa-envelope'
-                telephone:
-                    format: 'tel:%s'
-                    icon: 'fa-phone'
-    common.contactControlFactory: PAF\Modules\CommonModule\Components\ContactControl\ContactControlFactory
+
 
 
     nette.latteFactory:

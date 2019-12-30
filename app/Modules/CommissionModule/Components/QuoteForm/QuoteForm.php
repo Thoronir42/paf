@@ -6,7 +6,7 @@ use PAF\Common\Forms\Form;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
-use PAF\Modules\CommonModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Model\Contact;
 
 /**
  * Class QuoteForm
