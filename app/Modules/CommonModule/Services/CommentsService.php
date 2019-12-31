@@ -2,6 +2,8 @@
 
 namespace PAF\Modules\CommonModule\Services;
 
+use PAF\Common\Feed\Source\FeedSource;
+use PAF\Common\Lean\LeanRepositoryFeedSource;
 use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Model\CommentThread;
 use PAF\Modules\CommonModule\Repository\CommentRepository;
@@ -36,5 +38,11 @@ class CommentsService
     public function delete(Comment $comment)
     {
         return $this->commentRepository->delete($comment);
+    }
+
+    public function getFeedSource(CommentThread $comments): FeedSource
+    {
+        $select = $this->commentRepository->getCommentFeedQuery($comments);
+        return new LeanRepositoryFeedSource($this->commentRepository, $select);
     }
 }
