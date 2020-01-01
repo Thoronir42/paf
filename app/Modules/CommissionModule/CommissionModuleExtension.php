@@ -30,4 +30,23 @@ class CommissionModuleExtension extends CompilerExtension
 
         $this->compiler->addDependencies([$priceListNeon]);
     }
+
+    public function beforeCompile()
+    {
+        $builder = $this->getContainerBuilder();
+
+        $commissionService = $builder->getDefinition($this->prefix('commissionService'));
+        $quoteService = $builder->getDefinition($this->prefix('quoteService'));
+
+        /** @var ServiceDefinition $dashboardStats */
+        $dashboardStats = $builder->getDefinition('common.dashboardService');
+        $dashboardStats->addSetup(
+            '$service->registerStat(?, [?, "countUnresolvedQuotes"])',
+            ['quotes', $quoteService]
+        );
+        $dashboardStats->addSetup(
+            '$service->registerStat(?, [?, "countUnresolvedCommissions"])',
+            ['commissions', $commissionService]
+        );
+    }
 }

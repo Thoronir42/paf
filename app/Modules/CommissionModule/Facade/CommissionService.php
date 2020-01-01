@@ -9,6 +9,7 @@ use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
 use PAF\Common\Feed\Service\FeedService;
@@ -125,5 +126,16 @@ class CommissionService
     public function getCommissionsDataSource(array $conditions = null): LeanMapperDataSource
     {
         return $this->commissionRepository->getEntityDataSource($conditions);
+    }
+
+    public function countUnresolvedCommissions(): int
+    {
+        return $this->commissionRepository->countBy([
+            '!status' => [
+                CommissionWorkflow::STATUS_FINISHED,
+                CommissionWorkflow::STATUS_SHIPPED,
+                CommissionWorkflow::STATUS_CANCELLED,
+            ],
+        ]);
     }
 }

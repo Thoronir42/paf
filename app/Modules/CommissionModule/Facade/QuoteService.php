@@ -125,4 +125,11 @@ class QuoteService
     {
         return $this->quoteRepository->findForOverview($paginator);
     }
+
+    public function countUnresolvedQuotes(): int
+    {
+        return $this->quoteRepository->countBy([
+            'status' => [Quote::STATUS_NEW],
+        ]);
+    }
 }

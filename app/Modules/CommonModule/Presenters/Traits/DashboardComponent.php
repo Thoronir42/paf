@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommonModule\Presenters\Traits;
 
 use Nette\DI\Container;
-use PAF\Modules\CommissionModule\Facade\Commissions;
+use PAF\Modules\CommonModule\Services\DashboardService;
 use SeStep\NetteBootstrap\Controls\Menu\MenuControl;
 
 /**
@@ -14,8 +14,8 @@ use SeStep\NetteBootstrap\Controls\Menu\MenuControl;
  */
 trait DashboardComponent
 {
-    /** @var Commissions @inject */
-    public $commissions;
+    /** @var DashboardService @inject */
+    public $dashboardService;
 
     public function createComponentDashboardNavigation()
     {
@@ -28,14 +28,13 @@ trait DashboardComponent
         /** @var MenuControl $navigation */
         $navigation = $this['dashboardNavigation'];
 
-        $quotes = $this->commissions->countUnresolvedQuotes();
-        if ($quotes > 0) {
-            $navigation['quoteList']->getItem()->addLabel((string)$quotes, 'info');
+        $dashboardStats = $this->dashboardService->getStats();
+        if ($dashboardStats['quotes'] > 0) {
+            $navigation['quoteList']->getItem()->addLabel((string)$dashboardStats['quotes'], 'info');
         }
 
-        $commissions = $this->commissions->countUnresolvedCommissions();
-        if ($commissions > 0) {
-            $navigation['commissionList']->getItem()->addLabel((string)$commissions, 'info');
+        if ($dashboardStats['commissions'] > 0) {
+            $navigation['commissionList']->getItem()->addLabel((string)$dashboardStats['commissions'], 'info');
         }
     }
 }

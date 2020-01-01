@@ -17,6 +17,7 @@ services:
         class: PAF\Modules\CommonModule\Services\Users
         arguments:
             powerUsers: %powerUsers%
+    common.dashboardService: PAF\Modules\CommonModule\Services\DashboardService
 
     paf.navbar:
         class: SeStep\NetteBootstrap\Controls\Menu\Navbar
