@@ -61,79 +61,7 @@ class Commissions
         $this->transactionManager = $transactionManager;
     }
 
-    /**
-     * @param Quote $quote
-     * @param Specification $specification
-     * @param Person $issuer
-     * @param FileUpload[] $references
-     *
-     * @return string - error code
-     *
-     * @throws TransactionFailedException
-     */
-    public function createNewQuote(
-        Quote $quote,
-        Specification $specification,
-        Person $issuer,
-        $references
-    ): ?string {
-        return $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
-            $slug = $this->slugRepository->createSlug($specification->characterName, true);
 
-            $specification->references = $this->imageStorage->createFileThread($references, 'quote', $slug->id);
-            if (!$this->saveSpecification($specification)) {
-                throw new UnexpectedValueException("Could not save specification");
-            }
-
-            $quote->status = Quote::STATUS_NEW;
-            $quote->slug = $slug;
-            $quote->specification = $specification;
-            $quote->issuer = $issuer;
-
-
-            $this->quoteRepository->persist($quote);
-            return null;
-        });
-    }
-
-    public function saveSpecification(Specification $specification): bool
-    {
-        $result = $this->specificationRepository->persist($specification);
-        return $result > 0;
-    }
-
-    public function rejectQuote(Quote $quote)
-    {
-        $quote->status = Quote::STATUS_REJECTED;
-        $this->quoteRepository->persist($quote);
-        return true;
-    }
-
-    /**
-     * @param Quote $quote
-     * @return bool
-     * @throws TransactionFailedException
-     */
-    public function acceptQuote(Quote $quote)
-    {
-        $this->transactionManager->execute(function () use ($quote) {
-            $quote->status = Quote::STATUS_ACCEPTED;
-            $this->quoteRepository->persist($quote);
-
-            $commission = new Commission();
-            $commission->slug = $quote->slug;
-            $commission->customer = $quote->issuer;
-            $commission->specification = $quote->specification;
-            $commission->acceptedOn = $this->momentProvider->now();
-            $commission->comments = $this->commentsService->createNewThread();
-
-            $this->commissionRepository->persist($commission);
-
-            return $commission;
-        });
-
-        return true;
-    }
 
     public function countUnresolvedQuotes(): int
     {

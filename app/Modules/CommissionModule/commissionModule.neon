@@ -23,6 +23,7 @@ services:
     productRepository: PAF\Modules\CommissionModule\Repository\ProductRepository
 
     # Services
+    quoteService: PAF\Modules\CommissionModule\Facade\QuoteService
     productService: PAF\Modules\CommissionModule\Facade\ProductService
     commissionService: PAF\Modules\CommissionModule\Facade\CommissionService
 

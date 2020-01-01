@@ -9,6 +9,7 @@ use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
 use PAF\Common\Feed\Service\FeedService;
 use PAF\Modules\CommonModule\Services\CommentsService;
@@ -45,6 +46,18 @@ class CommissionService
         $this->feedService = $feedService;
         $this->transactionManager = $transactionManager;
         $this->auditTrailService = $auditTrailService;
+    }
+
+    public function createFromQuote(Quote $quote)
+    {
+        $commission = new Commission();
+        $commission->slug = $quote->slug;
+        $commission->customer = $quote->issuer;
+        $commission->specification = $quote->specification;
+        $commission->acceptedOn = $this->momentProvider->now();
+        $commission->comments = $this->commentsService->createNewThread();
+
+        $this->commissionRepository->persist($commission);
     }
 
     public function save(Commission $commission)

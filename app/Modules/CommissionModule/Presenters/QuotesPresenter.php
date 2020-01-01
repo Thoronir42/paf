@@ -6,14 +6,13 @@ use Nette\Application\UI\Multiplier;
 use PAF\Common\BasePresenter;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
-use PAF\Modules\CommissionModule\Facade\Commissions;
+use PAF\Modules\CommissionModule\Facade\QuoteService;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\FilesService;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
 use PAF\Modules\CommissionModule\Model\Quote;
-use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\DirectoryModule\Services\PersonService;
 
 /**
@@ -24,14 +23,12 @@ final class QuotesPresenter extends BasePresenter
 {
     use DashboardComponent;
 
-    /** @var QuoteRepository @inject */
+    /** @var QuoteService @inject */
     public $quotes;
 
     /** @var QuoteFormFactory @inject */
     public $quoteFormFactory;
 
-    /** @var Commissions @inject */
-    public $commissions;
     /** @var PersonService @inject */
     public $personService;
 
@@ -64,14 +61,14 @@ final class QuotesPresenter extends BasePresenter
         return new Multiplier(function ($name) {
             $quoteView = new QuoteView($this->template->quotes[$name]);
             $quoteView->onAccept[] = function (Quote $quote) {
-                $this->commissions->acceptQuote($quote);
+                $this->quotes->acceptQuote($quote);
                 $this->flashTranslate('commission.quote.accepted', [
                     'name' => $quote->specification->characterName,
                 ]);
                 $this->redirect('this');
             };
             $quoteView->onReject[] = function (Quote $quote) {
-                $this->commissions->rejectQuote($quote);
+                $this->quotes->rejectQuote($quote);
                 $this->flashTranslate("commission.quote.rejected", [
                     'name' => $quote->specification->characterName,
                 ]);
@@ -94,7 +91,7 @@ final class QuotesPresenter extends BasePresenter
         ) {
             $issuer = $this->personService->createPersonByContacts($contacts);
 
-            $result = $this->commissions->createNewQuote($quote, $specification, $issuer, $references);
+            $result = $this->quotes->createNewQuote($quote, $specification, $issuer, $references);
             if (is_string($result)) {
                 $form->addError($result);
                 return;
