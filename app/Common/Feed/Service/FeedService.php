@@ -7,6 +7,8 @@ use Dibi\Fluent;
 use Nette\Utils\Paginator;
 use PAF\Common\Feed\Model\FeedEntry;
 use PAF\Common\Feed\Model\FeedEntryAdapter;
+use PAF\Common\Feed\Source\FeedSource;
+use PAF\Common\Lean\LeanRepositoryFeedSource;
 
 class FeedService
 {
@@ -19,12 +21,36 @@ class FeedService
     }
 
     /**
-     * @param array $queries
+     * @param FeedSource[] $sources
+     *
+     * @return FeedEntry[]
+     */
+    public function fetchFeed(array $sources)
+    {
+        $queries = [];
+        $hydrateCallbacks = [];
+        foreach ($sources as $name => $source) {
+            if ($source instanceof LeanRepositoryFeedSource) {
+                $queries[$name] = $source->getQuery();
+                $hydrateCallbacks[$name] = [$source, 'hydrateEntries'];
+            } else {
+                $sourceType = get_class($source);
+                trigger_error("Unsupported source type '$sourceType'");
+            }
+        }
+
+        $entries = $this->sqlFetchEntries($queries);
+
+        return $this->hydrateFeed($entries, $hydrateCallbacks);
+    }
+
+    /**
+     * @param Fluent[] $queries
      * @param Paginator|null $paginator
      *
      * @return array[]
      */
-    public function fetchEntries(array $queries, Paginator $paginator = null): array
+    public function sqlFetchEntries(array $queries, Paginator $paginator = null): array
     {
         if (empty($queries)) {
             return [];
@@ -52,7 +78,7 @@ class FeedService
             $feedQuery->limit($paginator->getItemsPerPage());
         }
 
-        $result = $feedQuery->fetchAll();
+        $result = $feedQuery->fetchAssoc('id');
 
         return $result;
     }

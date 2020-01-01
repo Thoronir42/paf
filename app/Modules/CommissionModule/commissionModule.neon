@@ -23,12 +23,11 @@ services:
     productRepository: PAF\Modules\CommissionModule\Repository\ProductRepository
 
     # Services
+    quoteService: PAF\Modules\CommissionModule\Facade\QuoteService
     productService: PAF\Modules\CommissionModule\Facade\ProductService
     commissionService: PAF\Modules\CommissionModule\Facade\CommissionService
 
     priceList: PAF\Modules\CommissionModule\Facade\PriceListService
-
-    commissions: PAF\Modules\CommissionModule\Facade\Commissions
 
     # Components
     commissionsGridFactory: PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory

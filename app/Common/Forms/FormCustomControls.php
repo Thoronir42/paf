@@ -5,7 +5,8 @@ namespace PAF\Common\Forms;
 use Nette\Forms\Controls\Checkbox;
 use Nette\Forms\Controls\UploadControl;
 use PAF\Common\Forms\Controls\DateInput;
-use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use PAF\Modules\DirectoryModule\Forms\ContactInput;
+use PAF\Modules\DirectoryModule\Services\ContactDefinitions;
 use SeStep\NetteBootstrap\Controls as NBSC;
 
 trait FormCustomControls
@@ -24,8 +25,8 @@ trait FormCustomControls
         string $name,
         ContactDefinitions $definitions,
         string $label = null
-    ): Controls\ContactInput {
-        return $this[$name] = new Controls\ContactInput($definitions, $label);
+    ): ContactInput {
+        return $this[$name] = new ContactInput($definitions, $label);
     }
 
     public function addUpload(string $name, $label = null): UploadControl

@@ -11,9 +11,9 @@ use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
 use PAF\Modules\CommissionModule\Facade\ProductService;
 use PAF\Modules\CommissionModule\Model\Commission;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Model\Person;
-use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use PAF\Modules\DirectoryModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Model\Person;
+use PAF\Modules\DirectoryModule\Services\ContactDefinitions;
 use stdClass;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace PAF\Common\Lean;
 
-use PAF\Modules\CommonModule\Model\Person;
+use PAF\Modules\DirectoryModule\Model\Person;
 use PHPUnit\Framework\TestCase;
 
 class LeanSnapshotsTest extends TestCase

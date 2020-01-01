@@ -4,6 +4,7 @@ namespace PAF\Common\Model;
 
 use Dibi\Exception;
 use LeanMapper\Connection;
+use PAF\Common\Logging\HasLogger;
 use PAF\Common\Model\Exceptions\TransactionFailedException;
 
 /**
@@ -11,6 +12,8 @@ use PAF\Common\Model\Exceptions\TransactionFailedException;
  */
 class TransactionManager
 {
+    use HasLogger;
+
     /** @var Connection */
     private $connection;
 
@@ -26,7 +29,7 @@ class TransactionManager
      * @param mixed ...$arguments
      *
      * @return mixed
-     * @throws Exception|TransactionFailedException
+     * @throws TransactionFailedException
      */
     public function execute(callable $callback, ...$arguments)
     {
@@ -37,7 +40,11 @@ class TransactionManager
 
             return $result;
         } catch (\Exception $exception) {
-            $this->connection->rollback();
+            try {
+                $this->connection->rollback();
+            } catch (Exception $ex) {
+                $this->getLogger()->error("Rollback failed");
+            }
 
             throw new TransactionFailedException("Transaction failed: " . $exception->getMessage(), $exception);
         }

@@ -9,9 +9,11 @@ use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\Commission;
+use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
+use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
 use PAF\Common\Feed\Service\FeedService;
-use PAF\Modules\CommonModule\Repository\CommentRepository;
+use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
 
 class CommissionService
@@ -20,8 +22,8 @@ class CommissionService
 
     /** @var CommissionRepository */
     private $commissionRepository;
-    /** @var CommentRepository */
-    private $commentRepository;
+    /** @var CommentsService */
+    private $commentsService;
     /** @var EntryRepository */
     private $entryRepository;
     /** @var FeedService */
@@ -33,18 +35,30 @@ class CommissionService
 
     public function __construct(
         CommissionRepository $commissionRepository,
-        CommentRepository $commentRepository,
+        CommentsService $commentsService,
         EntryRepository $entryRepository,
         FeedService $feedService,
         TransactionManager $transactionManager,
         AuditTrailService $auditTrailService
     ) {
         $this->commissionRepository = $commissionRepository;
-        $this->commentRepository = $commentRepository;
+        $this->commentsService = $commentsService;
         $this->entryRepository = $entryRepository;
         $this->feedService = $feedService;
         $this->transactionManager = $transactionManager;
         $this->auditTrailService = $auditTrailService;
+    }
+
+    public function createFromQuote(Quote $quote)
+    {
+        $commission = new Commission();
+        $commission->slug = $quote->slug;
+        $commission->customer = $quote->issuer;
+        $commission->specification = $quote->specification;
+        $commission->acceptedOn = $this->momentProvider->now();
+        $commission->comments = $this->commentsService->createNewThread();
+
+        $this->commissionRepository->persist($commission);
     }
 
     public function save(Commission $commission)
@@ -64,14 +78,9 @@ class CommissionService
 
     public function getCommissionFeed(Commission $commission, Paginator $paginator = null): array
     {
-        $entries = $this->feedService->fetchEntries([
-            'comment' => $this->commentRepository->getCommentFeedQuery($commission->comments),
-            'logEvent' => $this->entryRepository->getEventFeedQuery($commission->id),
-        ], $paginator);
-
-        return $this->feedService->hydrateFeed($entries, [
-            'comment' => [$this->commentRepository, 'find'],
-            'logEvent' => [$this->entryRepository, 'find'],
+        return $this->feedService->fetchFeed([
+            'comment' => $this->commentsService->getFeedSource($commission->comments),
+            'logEvent' => $this->entryRepository->getFeedSource($commission->id),
         ]);
     }
 
@@ -117,5 +126,16 @@ class CommissionService
     public function getCommissionsDataSource(array $conditions = null): LeanMapperDataSource
     {
         return $this->commissionRepository->getEntityDataSource($conditions);
+    }
+
+    public function countUnresolvedCommissions(): int
+    {
+        return $this->commissionRepository->countBy([
+            '!status' => [
+                CommissionWorkflow::STATUS_FINISHED,
+                CommissionWorkflow::STATUS_SHIPPED,
+                CommissionWorkflow::STATUS_CANCELLED,
+            ],
+        ]);
     }
 }

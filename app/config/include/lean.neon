@@ -6,8 +6,8 @@ leanFixtures:
         - %rootDir%/data/testing/commonModuleFixtures.neon
     daos:
         - PAF\Modules\CommonModule\Fixtures\UserFixtureDao()
-        - PAF\Common\Lean\RepositoryFixtureDao(@common.personRepository)
-        - PAF\Common\Lean\RepositoryFixtureDao(@common.contactRepository)
+        - PAF\Common\Lean\RepositoryFixtureDao(@pafDirectory.personRepository)
+        - PAF\Common\Lean\RepositoryFixtureDao(@pafDirectory.contactRepository)
 
 services:
     leanMapper.mapper:
@@ -18,4 +18,5 @@ services:
                 ss_settings__: SeStep\LeanSettings\LeanOptionsMapperModule()
                 audit__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Common\AuditTrail')
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
+                directory__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\DirectoryModule', 'Model')
                 commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')

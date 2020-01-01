@@ -1,12 +1,12 @@
 <?php
 
 
-namespace PAF\Modules\CommonModule\Components\ContactControl;
+namespace PAF\Modules\DirectoryModule\Components\ContactControl;
 
 use Nette\Application\UI\Control;
 use Nette\Utils\Html;
-use PAF\Modules\CommonModule\Model\Contact;
-use PAF\Modules\CommonModule\Services\ContactDefinitions;
+use PAF\Modules\DirectoryModule\Model\Contact;
+use PAF\Modules\DirectoryModule\Services\ContactDefinitions;
 
 class ContactControl extends Control
 {
