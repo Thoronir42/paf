@@ -1,15 +1,14 @@
 @import "common.vars";
 
 body {
-  font-size: 15px;
-  line-height: 1.6;
+  background-image: url("/images/bgt.png");
+  background-color: #2be2db;
 }
 
 #body-container {
-  min-height: calc(100vh - #{$header-height + $footer-height + $footer-padding-top});
+  min-height: calc(100vh - #{$header-height + $footer-height});
 
-  margin-top: $header-height;
-  margin-bottom: $footer-height + $footer-padding-top;
+  margin-bottom: $footer-height;
 
   padding: 8px 0;
 

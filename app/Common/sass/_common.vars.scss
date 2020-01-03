@@ -1,4 +1,6 @@
 $header-height: 60px;
 
-$footer-height: 40px;
+$footer-content-height: 40px;
 $footer-padding-top: 8px;
+
+$footer-height: $footer-content-height + $footer-padding-top;

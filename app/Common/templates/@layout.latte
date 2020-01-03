@@ -6,6 +6,7 @@
 <html lang="{$lang}">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
 
     <title>{ifset title}{include title|striptags} | {/ifset}{$appName}</title>
 
@@ -20,17 +21,11 @@
     <link rel="stylesheet" href="{$basePath}/dist/css/paf.css">
 
     {block style}
-        <style>
-            body {
-                background: url({$basePath . "/images/bgt.png"}){$background_color|noescape};
-            }
-        </style>
+    <style></style>
     {/block}
 
-    <meta name="viewport" content="width=device-width">
     {block head}{/block}
 </head>
-
 <body>
 {control navbar}
 
@@ -42,7 +37,7 @@
 </div>
 
 {include 'components/footer.latte'}
-
+<div id="scripts">
 {block scripts}
     <script src="{$basePath}/vendor/jQuery/jquery.min.js"></script>
     <script src="{$basePath}/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -62,5 +57,6 @@
     <script src="{$basePath}/js/input-file.js"></script>
     <script src="{$basePath}/js/main.js"></script>
 {/block}
+</div>
 </body>
 </html>

@@ -1,9 +1,11 @@
+$list-margin: 4px;
+
 .footer {
   position: fixed;
   bottom: 0;
 
-  margin: 0 8px 0;
-  padding: 8px 0 2px;
+  margin: 0 8px;
+  padding: 8px 0;
 
   /* Set the fixed height of the footer here */
   background-color: rgba(240, 240, 240, 0.8);
@@ -12,21 +14,22 @@
   border-bottom-width: 0;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
-}
 
-.footer ul {
-  padding: 0;
-}
+  ul {
+    padding: 0;
+    margin-block-end: 0;
+    text-align: center;
 
-.footer ul li {
-  list-style: none;
-  display: inline-block;
-}
-.footer ul li::after {
-  content: ' ';
-  display: inline-block;
-  width: 6px;
-}
-.footer ul li:last-child::after {
-  content: none;
+    li {
+      display: inline-block;
+    }
+
+    li:not(:first-child)::before {
+      content: '○';
+      color: #AAAAAA88;
+      margin-inline-start: $list-margin;
+      margin-inline-end: $list-margin;
+    }
+
+  }
 }
