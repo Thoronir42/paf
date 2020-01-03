@@ -45,7 +45,6 @@ abstract class BasePresenter extends Presenter implements LoggerAwareInterface
 
         $template->lang = $this->lang;
         $template->appName = $this->context->parameters['appName'];
-        $template->background_color = '#25c887';
         $template->title = '';
 
         return $template;

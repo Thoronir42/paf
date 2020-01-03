@@ -5,7 +5,7 @@ const sourcemaps = require('gulp-sourcemaps');
 module.exports.sass = async () => {
     await gulp.src(['sass/*.sass', 'sass/*.scss'])
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('www/dist/css/', {sourcemaps: true}))
 };
