@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.nette.init();
+    naja.initialize();
 
     bsCustomFileInput.init();
     // initConfirmation();

@@ -43,6 +43,14 @@ const dependencies = [
         src: 'node_modules/@ttskch/select2-bootstrap4-theme/dist/*',
         dst: 'select2/bootstrap4-theme',
     },
+    {
+        src: 'node_modules/nette-forms/src/assets/*',
+        dst: 'nette/forms',
+    },
+    {
+        src: 'node_modules/naja/dist/*',
+        dst: 'nette/naja',
+    },
 ];
 
 
