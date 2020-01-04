@@ -7,18 +7,18 @@ const vendorTasks = require('./vendor.gulp');
 gulp.task('sass', sassTasks.sass);
 
 gulp.task('sass:watch', () => {
-    return gulp.watch([
-        'app/**/*.scss',
-        'sass/**/*.scss'
-    ], gulp.task('sass'));
+    return gulp.watch(sassTasks.watch, gulp.task('sass'));
 });
 
 gulp.task('js', jsSrc.concatSources);
 
 gulp.task('js:watch', () => {
-    return gulp.watch(
-        jsSrc.sources,
-        gulp.task('js'));
+    return gulp.watch(jsSrc.sources, gulp.task('js'));
+});
+
+gulp.task('watch', () => {
+    gulp.watch(sassTasks.watch, gulp.task('sass'));
+    gulp.watch(jsSrc.sources, gulp.task('js'));
 });
 
 gulp.task('vendor', vendorTasks.copyVendor);

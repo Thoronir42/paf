@@ -2,8 +2,17 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 
+module.exports.watch = [
+    'sass/*.scss',
+    'app/Common/**/*.scss',
+    'app/Modules/**/*.scss',
+];
+module.exports.files = [
+    'sass/*.scss',
+];
+
 module.exports.sass = async () => {
-    await gulp.src(['sass/*.sass', 'sass/*.scss'])
+    await gulp.src(module.exports.files)
         .pipe(sourcemaps.init())
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(sourcemaps.write('./'))
