@@ -1660,7 +1660,7 @@ jquery-param@^0.1.2:
   resolved "https://registry.yarnpkg.com/jquery-param/-/jquery-param-0.1.2.tgz#17b1871fd7907e03706464bb6f66485b9b9af293"
   integrity sha1-F7GHH9eQfgNwZGS7b2ZIW5ua8pM=
 
-jquery@^3.0, jquery@^3.2.1:
+jquery@^3.0, jquery@^3.2.1, jquery@^3.4.1:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.1.tgz#714f1f8d9dde4bdfa55764ba37ef214630d80ef2"
   integrity sha512-36+AdBzCL+y6qjw5Tx7HgzeGCzC81MDDgaUP8ld2zhx58HdqXGoBd+tHdrBMiyjGQs0Hxs/MLZTu/eHNJJuWPw==
@@ -1975,14 +1975,14 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
-moment-timezone@^0.5.11:
+moment-timezone@^0.5.11, moment-timezone@^0.5.27:
   version "0.5.27"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.27.tgz#73adec8139b6fe30452e78f210f27b1f346b8877"
   integrity sha512-EIKQs7h5sAsjhPCqN6ggx6cEbs94GK050254TIJySD1bzoM5JTYDwAU1IoVOeTOL6Gm27kYJ51/uuvq1kIlrbw==
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.22.2:
+"moment@>= 2.9.0", moment@^2.22.2, moment@^2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
@@ -2405,7 +2405,7 @@ plugin-error@^1.0.1:
     arr-union "^3.1.0"
     extend-shallow "^3.0.2"
 
-popper.js@^1.14.3:
+popper.js@^1.14.3, popper.js@^1.16.0:
   version "1.16.0"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.0.tgz#2e1816bcbbaa518ea6c2e15a466f4cb9c6e2fbb3"
   integrity sha512-+G+EkOPoE5S/zChTpmBSSDYmhXJ5PsW8eMhH8cP/CQHMFPBG/kC9Y5IIw6qNYgdJ+/COf0ddY2li28iHaZRSjw==
@@ -2985,6 +2985,13 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
+
+summernote@^0.8.15:
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/summernote/-/summernote-0.8.15.tgz#f783f23b2c1f85c1609855ad37205595147a3c39"
+  integrity sha512-52DYp7BWOLsAteMLHg+1pDgQMP5e6IfXmTpl4XnfY5JIMlOLUQtq6/5xwoV4C2d8T6xjvfuYJom9W2/4z28IeQ==
+  dependencies:
+    jquery "^3.4.1"
 
 supports-color@^2.0.0:
   version "2.0.0"

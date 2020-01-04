@@ -20,6 +20,10 @@ const dependencies = [
         dst: 'moment',
     },
     {
+        src: 'node_modules/popper.js/dist/umd/*.js',
+        dst: 'popper.js',
+    },
+    {
         src: 'node_modules/bootstrap/dist/**/*',
         dst: 'bootstrap',
     },
@@ -50,6 +54,17 @@ const dependencies = [
     {
         src: 'node_modules/naja/dist/*',
         dst: 'nette/naja',
+    },
+    {
+        src: [
+            "node_modules/summernote/dist/font/*",
+            "node_modules/summernote/dist/lang/*",
+            "node_modules/summernote/dist/summernote-bs4*",
+        ],
+        srcOptions: {
+            base: 'node_modules/summernote/dist',
+        },
+        dst: 'summernote',
     },
 ];
 

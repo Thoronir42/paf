@@ -8,6 +8,7 @@ const pipeline = require('readable-stream').pipeline;
 
 module.exports.sources = [
     'jsSrc/**/*',
+    'app/Modules/CmsModule/js/**/*.js',
 ];
 
 module.exports.concatSources = () => {

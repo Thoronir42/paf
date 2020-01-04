@@ -1,0 +1,9 @@
+.cms-page-controls {
+  &.active .inactive {
+    display: none;
+  }
+
+  &:not(.active) .active {
+    display: none;
+  }
+}
