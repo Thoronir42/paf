@@ -2,7 +2,6 @@ $(document).ready(function () {
     naja.initialize();
 
     bsCustomFileInput.init();
-    // initConfirmation();
 
     initTags();
 
@@ -13,19 +12,6 @@ $(document).ready(function () {
     initDatePicker();
 
 });
-
-function initConfirmation() {
-    var options = {
-        title: "Wowie, opravdu?",
-        singleton: true,
-        popout: true,
-        placement: 'bottom',
-
-        btnOkLabel: "Jasně",
-        btnCancelLabel: "Ne-e"
-    };
-    $('[data-toggle=confirmation]').confirmation(options);
-}
 
 function initTags() {
     var options = {
@@ -75,9 +61,9 @@ function initSelect2() {
 
 function initDatePicker() {
     $('.td-wrapper').each(function (a, el) {
-        let $el = $(el);
+        var $el = $(el);
 
-        let options = {
+        var options = {
             debug: true,
         };
         Object.assign(options, $el.data());
@@ -85,6 +71,3 @@ function initDatePicker() {
         $el.datetimepicker(options);
     });
 }
-
-
-
