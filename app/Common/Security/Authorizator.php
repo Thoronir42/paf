@@ -6,6 +6,7 @@ use Nette\Security\IAuthorizator;
 use Nette\Security\IResource;
 use Nette\Security\IRole;
 use Nette\Security\Permission;
+use PAF\Modules\CmsModule\Model\Page;
 
 class Authorizator extends Permission implements IAuthorizator
 {
@@ -22,6 +23,7 @@ class Authorizator extends Permission implements IAuthorizator
 
         $this->addResource('admin-section');
         $this->addResource('manage-commissions');
+        $this->addResource(Page::class);
 
         $this->addResource("admin-settings", 'admin-section');
 
@@ -29,6 +31,7 @@ class Authorizator extends Permission implements IAuthorizator
 
         $this->allow('power-user', 'admin-section');
         $this->allow('power-user', 'manage-commissions');
+        $this->allow('power-user', Page::class);
     }
 
     /**

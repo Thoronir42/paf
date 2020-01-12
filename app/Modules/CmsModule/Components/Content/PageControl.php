@@ -6,8 +6,14 @@ use Nette\Application\UI;
 use Nette\Utils\Html;
 use PAF\Modules\CmsModule\Model\Page;
 
+/**
+ * @method onUpdate(string $content)
+ */
 class PageControl extends UI\Control
 {
+    /** @var callable[] */
+    public $onUpdate = [];
+
     /** @var Page */
     private $page;
 
@@ -58,5 +64,10 @@ class PageControl extends UI\Control
         }
 
         return $this->controlPrototype;
+    }
+
+    public function handleSave($content)
+    {
+        $this->onUpdate($content);
     }
 }

@@ -47,6 +47,7 @@ extensions:
     pafFeed: PAF\Common\Feed\FeedExtension
     pafDirectory: PAF\Modules\DirectoryModule\DirectoryModuleExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
+    pafCms: PAF\Modules\CmsModule\CmsExtension
 
 
 commonEvents:
@@ -84,6 +85,7 @@ translation:
     dirs:
         - %appDir%/Common/lang
         - %appDir%/Modules/CommissionModule/lang
+        - %appDir%/Modules/CmsModule/lang
 
 #translation:
 #    default: en_GB

@@ -1,1 +1,24 @@
-@import "page";
+
+.cms-page-controls {
+
+  .buttons {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &.active .inactive,
+  &:not(.active) .active,
+  &.initialized .uninitialized,
+  &:not(.initialized) .initialized
+  {
+    display: none;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    margin: 0.75em 2em 0.125em;
+    border-bottom: 1px gray solid;
+    flex-basis: 100%;
+  }
+}

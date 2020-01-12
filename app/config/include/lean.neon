@@ -20,3 +20,4 @@ services:
                 common__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
                 directory__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\DirectoryModule', 'Model')
                 commission__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
+                cms__: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CmsModule', 'Model')

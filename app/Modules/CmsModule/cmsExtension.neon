@@ -1,0 +1,5 @@
+services:
+
+    pageRepository: PAF\Modules\CmsModule\Repository\PageRepository
+
+    pageService: PAF\Modules\CmsModule\Facade\CmsPages

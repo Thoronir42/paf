@@ -2,4 +2,15 @@
 
 {control page}
 
-{define #title}{_'db.cms.'.$page->title}{/define}
+{define #title}{_'db.cms.'.$page->slug}{/define}
+
+{/block}
+
+{block scripts}
+{include #parent}
+<script n:if="!$pageExists">
+    $(function() {
+        $('.editable-init').click();
+    });
+</script>
+{/block}

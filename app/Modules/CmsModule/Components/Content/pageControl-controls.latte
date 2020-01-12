@@ -1,8 +1,13 @@
 <div class="cms-page-controls" id="{$control->lookupPath()}-controls">
-    <a class="btn btn-secondary editable-toggle inactive">
-        <i class="fa fa-wrench"></i>
-    </a>
-    <a class="btn btn-outline-secondary editable-toggle active">
-        <i class="fa fa-close"></i>
-    </a>
+    <div class="buttons">
+        <a class="btn btn-secondary editable-init uninitialized">
+            <i class="fa fa-wrench"></i>
+        </a>
+        <a class="btn btn-outline-secondary preview-toggle initialized">
+            <i class="fa fa-eye"></i>
+        </a>
+        <a class="btn btn-primary editable-save initialized">
+            <i class="fa fa-save"></i>
+        </a>
+    </div>
 </div>

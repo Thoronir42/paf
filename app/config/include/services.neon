@@ -35,8 +35,6 @@ services:
 
         autowired: false
 
-    - PAF\Modules\CmsModule\Facade\CmsPages
-
     - PAF\Modules\CommonModule\Services\FilesService
     - PAF\Modules\CommonModule\Repository\UserFileRepository
     - PAF\Modules\CommonModule\Repository\UserFileThreadRepository

@@ -5,8 +5,10 @@ namespace PAF\Modules\CmsModule\Presenters;
 use Nette\Application\BadRequestException;
 use Nette\Http\IResponse;
 use PAF\Common\BasePresenter;
+use PAF\Common\Security\Authorizator;
 use PAF\Modules\CmsModule\Components\Content\PageControl;
 use PAF\Modules\CmsModule\Facade\CmsPages;
+use PAF\Modules\CmsModule\Model\Page;
 
 final class PagePresenter extends BasePresenter
 {
@@ -17,12 +19,37 @@ final class PagePresenter extends BasePresenter
     {
         $page = $this->pages->getPage($pageName);
 
-        if (!$page) {
-            $code = IResponse::S404_NOT_FOUND;
-            throw new BadRequestException("Page $pageName could not be found", $code);
+        $pageExists = !!$page;
+
+        if (!$pageExists) {
+            if (!$this->user->isAllowed(Page::class, Authorizator::CREATE)) {
+                $this->error("Page $pageName could not be found");
+            }
+
+            $page = new Page();
+            $page->slug = $pageName;
+
+            $this->flashTranslate('cms.page.missingNotice');
         }
 
-        $this['page'] = new PageControl($page);
+        $pageControl = new PageControl($page);
+
+        $pageControl->onUpdate[] = function (string $content) use ($page) {
+            $page->content = $content;
+            $this->pages->setContent($page, $content);
+            if ($this->isAjax()) {
+                $this->sendJson([
+                    'status' => 'wip',
+                    'content' => $content,
+                ]);
+            }
+
+            $this->flashTranslate('cms.page.updated');
+            $this->redirect('this');
+        };
+        $this['page'] = $pageControl;
+
         $this->template->page = $page;
+        $this->template->pageExists = $pageExists;
     }
 }
