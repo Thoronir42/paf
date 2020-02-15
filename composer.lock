@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fc02fc95a505e632e47dbcfee5ab45d",
+    "content-hash": "ae375ea28eec2d2b5dfb79ca6f0b3f45",
     "packages": [
         {
             "name": "behat/behat",
@@ -2738,6 +2738,53 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2019-03-08T08:55:37+00:00"
+        },
+        {
+            "name": "sestep/entity-ids",
+            "version": "v0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SeStep/entity-ids.git",
+                "reference": "3cfaceba21cc230308d7343781cc643064b1accd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SeStep/entity-ids/zipball/3cfaceba21cc230308d7343781cc643064b1accd",
+                "reference": "3cfaceba21cc230308d7343781cc643064b1accd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "nette/di": "^3.0",
+                "nette/utils": "^3.1",
+                "phpstan/phpstan": "^0.12.10",
+                "phpunit/phpunit": "^9.0",
+                "symfony/console": "^5.0"
+            },
+            "suggest": {
+                "nette/utils": "for more sophisticated inputs of id generator",
+                "symfony/console": "for CLI access of ID generator"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SeStep\\EntityIds\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Štěpán Śevčík",
+                    "email": "Thoronir42@Gmail.com"
+                }
+            ],
+            "description": "ID generator with capability of carrying type information",
+            "time": "2020-02-15T14:26:41+00:00"
         },
         {
             "name": "sestep/modular-lean-mapper",

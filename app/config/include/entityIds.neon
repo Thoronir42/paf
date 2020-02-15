@@ -1,7 +1,7 @@
 entityIds:
     charList: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     idLength: 6
-    distinctPositions: [2, 3]
+    distinctionPositions: [2, 3]
     registerCommands: true
     types:
         3: PAF\Modules\CommonModule\Model\User

@@ -5,7 +5,7 @@ namespace PAF\Common\AuditTrail;
 use Nette\DI\CompilerExtension;
 use PAF\Common\AuditTrail\Facade\AuditTrailService;
 use PAF\Common\AuditTrail\Repository\EntryRepository;
-use SeStep\EntityIds\TextIdGenerator;
+use SeStep\EntityIds\Generator\SingleTypeIdGenerator;
 
 class AuditTrailExtension extends CompilerExtension
 {
@@ -14,8 +14,8 @@ class AuditTrailExtension extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $idGenerator = $builder->addDefinition($this->prefix('eventIdGenerator'))
-            ->setType(TextIdGenerator::class)
-            ->setArguments([$builder->getDefinition('entityIds.charSet'), 5])
+            ->setType(SingleTypeIdGenerator::class)
+            ->setArguments([AuditTrailService::class, $builder->getDefinition('entityIds.charSet'), 5])
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('eventRepository'))

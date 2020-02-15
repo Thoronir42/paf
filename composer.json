@@ -42,6 +42,7 @@
 
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
+    "sestep/entity-ids": "^0.9.0",
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1",
     "contributte/monolog": "^0.3.0",
@@ -64,7 +65,6 @@
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
-      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
@@ -79,7 +79,6 @@
       "Test\\SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/test/",
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
       "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
-      "SeStep\\EntityIds\\": "extensions/SeStep/EntityIds/test/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/test/",
       "SeStep\\Typeful\\": "extensions/SeStep/Typeful/test/",
       "Behat\\PAF\\": "test-features/"
