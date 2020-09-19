@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    hideNoScript();
     naja.initialize();
 
     bsCustomFileInput.init();
@@ -11,7 +12,7 @@ $(document).ready(function () {
     initSelect2();
 
     initDatePicker();
-
+    initAjax();
 });
 
 function initConfirmation() {
@@ -86,5 +87,30 @@ function initDatePicker() {
     });
 }
 
+function initAjax() {
+    let submitters = window.document.querySelectorAll('.submit-on-change');
+    submitters.forEach((submitter) => {
+        $(submitter).on('change', () => {
+            let parentForm = submitter.form;
+            if (!parentForm) {
+                console.warn("Element", submitter, "does not belong to a form");
+                return;
+            }
 
+            let result = naja.uiHandler.submitForm(parentForm);
+            console.log(result);
+        });
+    });
+}
+
+function hideNoScript() {
+    window.document.querySelectorAll('.d-noscript-hidden').forEach((element) => {
+        let inputContainer = element.closest('.form-group');
+        if (inputContainer) {
+            inputContainer.classList.add('d-none');
+        } else {
+            element.classList.add('d-none');
+        }
+    });
+}
 

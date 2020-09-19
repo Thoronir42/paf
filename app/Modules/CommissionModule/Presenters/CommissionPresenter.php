@@ -21,6 +21,7 @@ use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
 use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\CommentsService;
+use Ublaboo\DataGrid\DataGrid;
 
 final class CommissionPresenter extends BasePresenter
 {
@@ -65,8 +66,15 @@ final class CommissionPresenter extends BasePresenter
      */
     public function actionList()
     {
-        $grid = $this->commissionsGridFactory->create();
+        /** @var Form $filter */
+        $filter = $this['commissionsFilter'];
+        $filter->setDefaults([
+            'archived' => $this->archivedFilter,
+        ]);
+    }
 
+    public function renderList()
+    {
         $filter = null;
         if ($this->archivedFilter) {
             if ($this->archivedFilter == 'archived') {
@@ -79,16 +87,9 @@ final class CommissionPresenter extends BasePresenter
             }
         }
 
+        /** @var DataGrid $grid */
+        $grid = $this['commissions'];
         $grid->setDataSource($this->commissionService->getCommissionsDataSource($filter));
-        $grid->addAction('edit', 'generic.edit', 'detail');
-
-        $this['commissions'] = $grid;
-
-        /** @var Form $filter */
-        $filter = $this['commissionsFilter'];
-        $filter->setDefaults([
-            'archived' => $this->archivedFilter,
-        ]);
     }
 
     /**
@@ -171,6 +172,14 @@ final class CommissionPresenter extends BasePresenter
         $this->template->commission = $this->varCommission;
     }
 
+    public function createComponentCommissions()
+    {
+        $grid = $this->commissionsGridFactory->create();
+        $grid->addAction('edit', 'generic.edit', 'detail');
+
+        return $grid;
+    }
+
     public function createComponentComments()
     {
         return $this->commentsControlFactory->create();
@@ -193,18 +202,27 @@ final class CommissionPresenter extends BasePresenter
     public function createComponentCommissionsFilter()
     {
         $form = $this->formFactory->create();
-        $form->setMethod('GET');
-        $form->addSelect('archived', 'commission.commissions.archivedFilter', [
+        $archived = $form->addSelect('archived', 'commission.commissions.archivedFilter', [
             null => 'generic.any',
             'archived' => 'commission.commission.status.archived',
             'unarchived' => 'commission.commission.status.unarchived',
         ]);
-        $form->addSubmit('filter', 'generic.action.filter');
+        $form->addSubmit('filter', 'generic.action.filter')
+            ->controlPrototype->class[] = 'd-noscript-hidden';
+
+        $archived->controlPrototype->class[] = 'submit-on-change';
 
         $form->onSuccess[] = function ($form, $values) {
             $this->archivedFilter = $values['archived'];
-            $this->redirect('this');
+            if ($this->isAjax()) {
+                $this->redrawControl('commissions');
+                $this->payload->postGet = true;
+                $this->payload->url = $this->link('this');
+            } else {
+                $this->redirect('this');
+            }
         };
+
         return $form;
     }
 
