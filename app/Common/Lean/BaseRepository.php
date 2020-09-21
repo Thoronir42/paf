@@ -8,6 +8,7 @@ use LeanMapper\Connection;
 use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
+use LeanMapper\Reflection\EntityReflection;
 use LeanMapper\Repository;
 use SeStep\EntityIds\IdGenerator;
 
@@ -89,6 +90,8 @@ abstract class BaseRepository extends Repository implements IQueryable
     private function applyCriteria(Fluent $fluent, array &$criteria)
     {
         $entityClass = $this->getEntityClass();
+        /** @var EntityReflection $entityReflection */
+        $entityReflection = $entityClass::getReflection($this->mapper);
 
         foreach ($criteria as $property => $value) {
             if ($property[0] === '!') {
@@ -98,7 +101,11 @@ abstract class BaseRepository extends Repository implements IQueryable
                 $conditions = &self::$CONDITIONS[true];
             }
 
-            $column = $this->mapper->getColumn($entityClass, $property);
+            $value = $this->normalizeValue($value);
+
+            $propertyReflection = $entityReflection->getEntityProperty($property);
+            $column = $propertyReflection->getColumn();
+
             if (is_array($value)) {
                 $fluent->where("$column $conditions[IN] %in", $value);
             } elseif (is_null($value)) {
@@ -109,6 +116,20 @@ abstract class BaseRepository extends Repository implements IQueryable
                 $fluent->where("$column $conditions[EQ] %s", $value);
             }
         }
+    }
+
+    private function normalizeValue($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'normalizeValue'], $value);
+        }
+        if ($value instanceof Entity) {
+            $table = $this->mapper->getTable(get_class($value));
+            $primary = $this->mapper->getPrimaryKey($table);
+            return $value->$primary;
+        }
+
+        return $value;
     }
 
     public function find($primaryKeyValue)
