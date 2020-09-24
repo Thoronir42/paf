@@ -8,6 +8,7 @@ use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Forms\Form;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
+use PAF\Common\Presenter\HasAppUser;
 use PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory;
 use PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory;
 use PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory;
@@ -26,6 +27,7 @@ use Ublaboo\DataGrid\DataGrid;
 final class CommissionPresenter extends BasePresenter
 {
     use DashboardComponent;
+    use HasAppUser;
 
     /** @var CommissionService @inject */
     public $commissionService;
@@ -56,7 +58,7 @@ final class CommissionPresenter extends BasePresenter
 
     // variables
     /** @var string @persistent */
-    public $archivedFilter;
+    public $archivedFilter = 'active';
     /** @var Commission */
     private $varCommission;
 
@@ -75,13 +77,13 @@ final class CommissionPresenter extends BasePresenter
 
     public function renderList()
     {
-        $filter = null;
+        $filter = ['supplier' => $this->dirPerson];
         if ($this->archivedFilter) {
             if ($this->archivedFilter == 'archived') {
-                $filter = ['!archivedOn' => null];
-            } elseif ($this->archivedFilter == 'unarchived') {
-                $filter = ['archivedOn' => null];
-            } else {
+                $filter['!archivedOn'] = null;
+            } elseif ($this->archivedFilter == 'active') {
+                $filter['archivedOn'] = null;
+            } elseif ($this->archivedFilter !== 'any') {
                 $this->archivedFilter = null;
                 $this->redirect('this');
             }
@@ -203,9 +205,9 @@ final class CommissionPresenter extends BasePresenter
     {
         $form = $this->formFactory->create();
         $archived = $form->addSelect('archived', 'commission.commissions.archivedFilter', [
-            null => 'generic.any',
+            'any' => 'generic.any',
+            'active' => 'commission.commission.status.active',
             'archived' => 'commission.commission.status.archived',
-            'unarchived' => 'commission.commission.status.unarchived',
         ]);
         $form->addSubmit('filter', 'generic.action.filter')
             ->controlPrototype->class[] = 'd-noscript-hidden';

@@ -16,11 +16,19 @@ class QuoteFormFactory
     /** @var ProductService */
     private $productService;
 
+    /** @var string */
+    private $primarySupplier;
+
     public function __construct(FormFactory $formFactory, ITranslator $translator, ProductService $productService)
     {
         $this->formFactory = $formFactory;
         $this->translator = $translator;
         $this->productService = $productService;
+    }
+
+    public function setPrimarySupplier(string $primarySupplier)
+    {
+        $this->primarySupplier = $primarySupplier;
     }
 
     /** @return QuoteForm */
@@ -35,6 +43,14 @@ class QuoteFormFactory
         $fursuitType = $form['fursuit']['type'];
         $disabledTypes = array_diff(array_keys($fursuitTypes), $this->productService->getEnabledTypes());
         $fursuitType->setDisabled($disabledTypes);
+
+        if ($this->primarySupplier) {
+            $form->setDefaults([
+                'quote' => [
+                    'supplier' => $this->primarySupplier,
+                ],
+            ]);
+        }
 
         return $form;
     }

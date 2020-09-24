@@ -14,14 +14,18 @@ CREATE TABLE commission__specification
 
 CREATE TABLE `commission__quote`
 (
-    id               VARCHAR(10) NOT NULL,
-    slug             VARCHAR(64) NOT NULL,
-    issuer_person_id VARCHAR(10) NOT NULL,
-    status           VARCHAR(24) NOT NULL,
-    date_created     DATE        NOT NULL,
-    specification_id INT         NOT NULL,
+    id                 VARCHAR(10) NOT NULL,
+    slug               VARCHAR(64) NOT NULL,
+    issuer_person_id   VARCHAR(10) NOT NULL,
+    supplier_person_id VARCHAR(10) NOT NULL,
+    status             VARCHAR(24) NOT NULL,
+    date_created       DATE        NOT NULL,
+    specification_id   INT         NOT NULL,
 
     CONSTRAINT PRIMARY KEY (id),
+
+    CONSTRAINT `quote_supplier_fk` FOREIGN KEY
+        (supplier_person_id) REFERENCES directory__person (id),
     CONSTRAINT `quote_issuer_fk` FOREIGN KEY
         (issuer_person_id) REFERENCES directory__person (id),
 
@@ -33,6 +37,7 @@ CREATE TABLE `commission__quote`
 CREATE TABLE commission__commission
 (
     id                 VARCHAR(10) NOT NULL,
+    supplier_person_id VARCHAR(10) NOT NULL,
     slug               VARCHAR(64) NOT NULL,
     status             VARCHAR(20) NOT NULL,
     customer_person_id VARCHAR(10) NOT NULL,
@@ -44,6 +49,8 @@ CREATE TABLE commission__commission
 
     CONSTRAINT PRIMARY KEY (id),
 
+    CONSTRAINT `commission_supplier_fk` FOREIGN KEY
+        (supplier_person_id) REFERENCES directory__person (id),
     CONSTRAINT `commission_customer_fk` FOREIGN KEY
         (customer_person_id) REFERENCES directory__person (id),
     CONSTRAINT `commission_specification_fk` FOREIGN KEY

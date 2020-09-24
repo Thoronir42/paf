@@ -4,39 +4,30 @@ namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
 use PAF\Common\Forms\Form;
 use PAF\Modules\CommissionModule\Model\Specification;
-use PAF\Modules\CommissionModule\Model\Quote;
-use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\DirectoryModule\Model\Contact;
 
 /**
  * Class QuoteForm
  *
- * @method onSave($quote, $specification, $contact, $references, $form)
+ * @method onSave(string $supplier, $specification, $contact, $references)
  */
 class QuoteForm extends Form
 {
-    /** @var callable[]  function (Form $form, ArrayHash $values); Occurs when form successfully validates input. */
     public $onSave;
 
-    /** @var QuoteRepository */
-    private $quote;
-
-    public function __construct()
+    public function initialize(array $fursuitTypes, array $suppliers = null): void
     {
-        parent::__construct();
-        $this->quote = new Quote();
-    }
+        if ($suppliers) {
+            $this->addGroup('commission.quote-form.quote');
+        }
 
+        $quote = $this->addContainer('quote');
+        if (is_array($suppliers)) {
+            $quote->addSelect('supplier', 'commission.person.supplier', $suppliers);
+        } else {
+            $quote->addHidden('supplier');
+        }
 
-    public function setEntity(Quote $quote)
-    {
-        $this->quote = $quote;
-
-        $this->setDefaults($quote->getRowData());
-    }
-
-    public function initialize(array $fursuitTypes): void
-    {
         $this->addGroup('commission.quote-form.group-contact');
         $contact = $this->addContainer('contact');
 
@@ -86,11 +77,10 @@ class QuoteForm extends Form
         $specification->characterDescription = $values->fursuit->characterDescription;
 
         $this->onSave(
-            $this->quote,
+            $values->quote->supplier,
             $specification,
             $this->getContacts($values['contact']),
-            $values->reference,
-            $this
+            $values->reference
         );
     }
 

@@ -2,19 +2,41 @@
 
 namespace PAF\Modules\CommissionModule;
 
+use Nette;
+use Nette\Schema\Expect;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Neon\Neon;
+use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 
 class CommissionModuleExtension extends CompilerExtension
 {
+    const MODE_SINGLE_SUPPLIER = 'singleSupplier';
+    const MODE_MULTI_SUPPLIERS = 'multipleSuppliers';
+
+    public function getConfigSchema(): Nette\Schema\Schema
+    {
+        return Expect::structure([
+            'mode' => Expect::anyOf(self::MODE_SINGLE_SUPPLIER, self::MODE_MULTI_SUPPLIERS)
+                ->default(self::MODE_SINGLE_SUPPLIER),
+            'primarySupplier' => Expect::string(),
+        ]);
+    }
+
     public function loadConfiguration()
     {
         $this->loadDefinitionsFromConfig($this->loadFromFile(__DIR__ . '/commissionModule.neon')['services']);
 
-        /** @var ServiceDefinition $priceList */
         $builder = $this->getContainerBuilder();
+        $config = $this->getConfig();
 
+        $this->loadCommon($builder, $config);
+        $this->loadConfigurable($builder, $config);
+    }
+
+    private function loadCommon(Nette\DI\ContainerBuilder $builder, $config)
+    {
+        /** @var ServiceDefinition $priceList */
         $priceList = $builder->getDefinition($this->prefix('priceList'));
         $priceListNeon = __DIR__ . '/../../config/priceList.neon';
         $priceList->setArgument('data', Neon::decode(file_get_contents($priceListNeon)));
@@ -29,6 +51,22 @@ class CommissionModuleExtension extends CompilerExtension
         }', [$commissionService]);
 
         $this->compiler->addDependencies([$priceListNeon]);
+    }
+
+    private function loadConfigurable(Nette\DI\ContainerBuilder $builder, $config)
+    {
+        $mode = $config->mode;
+        switch ($mode) {
+            case self::MODE_SINGLE_SUPPLIER:
+                if (!$config->primarySupplier) {
+                    $paramName = $this->prefix('primarySupplier');
+                    throw new Nette\InvalidStateException("For mode '$mode' a '$paramName' parameter is required");
+                }
+        }
+
+        /** @var ServiceDefinition $quoteFormFactory */
+        $quoteFormFactory = $builder->getDefinitionByType(QuoteFormFactory::class);
+        $quoteFormFactory->addSetup('setPrimarySupplier', [$config->primarySupplier]);
     }
 
     public function beforeCompile()

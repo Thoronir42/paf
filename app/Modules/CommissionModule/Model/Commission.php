@@ -10,6 +10,7 @@ use PAF\Modules\CommonModule\Model\Slug;
 
 /**
  * @property string $id
+ * @property Person $supplier m:hasOne(supplier_person_id)
  * @property Slug $slug m:hasOne(slug)
  * @property string $status m:enum(CommissionWorkflow::STATUS_*) m:default('accepted')
  * @property Person $customer m:hasOne(customer_person_id)

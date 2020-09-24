@@ -30,6 +30,15 @@ class PersonService
         $this->contactRepository = $contactRepository;
     }
 
+    public function findOne(string $id): ?Person
+    {
+        return $this->personRepository->find($id);
+    }
+
+    public function findOneBy(array $criteria): ?Person
+    {
+        return $this->personRepository->findOneBy($criteria);
+    }
 
     /**
      * @param Contact[] $contacts

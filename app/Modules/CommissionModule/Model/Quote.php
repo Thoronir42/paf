@@ -10,6 +10,7 @@ use PAF\Modules\CommonModule\Model\UserFileThread;
 
 /**
  * @property string $id
+ * @property Person $supplier m:hasOne(supplier_person_id)
  * @property Slug $slug m:hasOne(slug)
  * @property string $status m:enum(self::STATUS*)
  * @property DateTime $dateCreated

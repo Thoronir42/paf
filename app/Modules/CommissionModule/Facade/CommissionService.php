@@ -53,6 +53,7 @@ class CommissionService
     {
         $commission = new Commission();
         $commission->slug = $quote->slug;
+        $commission->supplier = $quote->supplier;
         $commission->customer = $quote->issuer;
         $commission->specification = $quote->specification;
         $commission->acceptedOn = $this->momentProvider->now();

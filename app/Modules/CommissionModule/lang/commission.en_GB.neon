@@ -71,7 +71,7 @@ commission:
     status.shipped: Shipped
 
     status.archived: Archived
-    status.unarchived: Unarchived
+    status.active: Active
 
     action.archive: Archive
     action.unarchive: Unarchive

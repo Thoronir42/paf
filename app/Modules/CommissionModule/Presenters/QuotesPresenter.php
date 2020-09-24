@@ -3,9 +3,11 @@
 namespace PAF\Modules\CommissionModule\Presenters;
 
 use Nette\Application\UI\Multiplier;
+use Nette\Forms\Controls\HiddenField;
+use Nette\Forms\Controls\SelectBox;
 use PAF\Common\BasePresenter;
+use PAF\Common\Presenter\HasAppUser;
 use PAF\Common\Storage\PafImageStorage;
-use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteForm;
 use PAF\Modules\CommissionModule\Facade\QuoteService;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
@@ -22,6 +24,7 @@ use PAF\Modules\DirectoryModule\Services\PersonService;
 final class QuotesPresenter extends BasePresenter
 {
     use DashboardComponent;
+    use HasAppUser;
 
     /** @var QuoteService @inject */
     public $quotes;
@@ -38,11 +41,6 @@ final class QuotesPresenter extends BasePresenter
     /** @var FilesService @inject */
     public $files;
 
-    public function startup()
-    {
-        parent::startup();
-    }
-
     public function actionCreate()
     {
         $this->template->enableQuotes = $this->settings->getValue('commission.quotes.enable');
@@ -53,7 +51,7 @@ final class QuotesPresenter extends BasePresenter
      */
     public function actionList()
     {
-        $this->template->quotes = $this->quotes->findForOverview();
+        $this->template->quotes = $this->quotes->findForOverview($this->dirPerson);
     }
 
     public function createComponentQuote()
@@ -83,15 +81,26 @@ final class QuotesPresenter extends BasePresenter
         $form = $this->quoteFormFactory->create();
 
         $form->onSave[] = function (
-            Quote $quote,
+            string $supplier,
             Specification $specification,
             array $contacts,
-            $references,
-            QuoteForm $form
-        ) {
-            $issuer = $this->personService->createPersonByContacts($contacts);
+            $references
+        ) use ($form) {
+            $supplier = $this->personService->findOne($supplier);
 
-            $result = $this->quotes->createNewQuote($quote, $specification, $issuer, $references);
+            if (!$supplier) {
+                $supplierField = $form['quote']['supplier'];
+                if ($supplierField instanceof HiddenField) {
+                    $form->addError('messages.unexpected-error');
+                } else {
+                    /** @var SelectBox $supplierField */
+                    $supplierField->addError('messages.invalidValue');
+                }
+
+                return;
+            }
+
+            $result = $this->quotes->submitNewQuote($supplier, $specification, $contacts, $references);
             if (is_string($result)) {
                 $form->addError($result);
                 return;

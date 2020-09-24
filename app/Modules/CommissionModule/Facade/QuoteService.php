@@ -12,7 +12,9 @@ use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\CommissionModule\Repository\QuoteRepository;
 use PAF\Modules\CommissionModule\Repository\SpecificationRepository;
 use PAF\Modules\CommonModule\Repository\SlugRepository;
+use PAF\Modules\DirectoryModule\Model\Contact;
 use PAF\Modules\DirectoryModule\Model\Person;
+use PAF\Modules\DirectoryModule\Services\PersonService;
 use SeStep\Moment\HasMomentProvider;
 use UnexpectedValueException;
 
@@ -23,6 +25,8 @@ class QuoteService
     /** @var callable[] */
     public $onQuoteAccept = [];
 
+    /** @var PersonService */
+    private $personService;
     /** @var TransactionManager */
     private $transactionManager;
     /** @var QuoteRepository */
@@ -35,6 +39,7 @@ class QuoteService
     private $specificationRepository;
 
     public function __construct(
+        PersonService $personService,
         TransactionManager $transactionManager,
         QuoteRepository $quoteRepository,
         SlugRepository $slugRepository,
@@ -46,26 +51,36 @@ class QuoteService
         $this->slugRepository = $slugRepository;
         $this->imageStorage = $imageStorage;
         $this->specificationRepository = $specificationRepository;
+        $this->personService = $personService;
     }
 
 
     /**
-     * @param Quote $quote
+     * @param Person $supplier
      * @param Specification $specification
-     * @param Person $issuer
+     * @param Contact[] $issuerContacts
      * @param FileUpload[] $references
      *
      * @return string - error code
      *
      * @throws TransactionFailedException
      */
-    public function createNewQuote(
-        Quote $quote,
+    public function submitNewQuote(
+        Person $supplier,
         Specification $specification,
-        Person $issuer,
+        array $issuerContacts,
         $references
     ): ?string {
-        return $this->transactionManager->execute(function () use ($quote, $specification, $issuer, $references) {
+        $quote = new Quote();
+        $quote->supplier = $supplier;
+        $quote->status = Quote::STATUS_NEW;
+
+        return $this->transactionManager->execute(function () use (
+            $quote,
+            $specification,
+            $issuerContacts,
+            $references
+        ) {
             $slug = $this->slugRepository->createSlug($specification->characterName, true);
 
             $specification->references = $this->imageStorage->createFileThread($references, 'quote', $slug->id);
@@ -73,11 +88,9 @@ class QuoteService
                 throw new UnexpectedValueException("Could not save specification");
             }
 
-            $quote->status = Quote::STATUS_NEW;
             $quote->slug = $slug;
             $quote->specification = $specification;
-            $quote->issuer = $issuer;
-
+            $quote->issuer = $this->personService->createPersonByContacts($issuerContacts);
 
             $this->quoteRepository->persist($quote);
             return null;
@@ -121,9 +134,9 @@ class QuoteService
      *
      * @return Quote[]
      */
-    public function findForOverview(Paginator $paginator = null)
+    public function findForOverview(Person $supplier, Paginator $paginator = null)
     {
-        return $this->quoteRepository->findForOverview($paginator);
+        return $this->quoteRepository->findForOverview($supplier, $paginator);
     }
 
     public function countUnresolvedQuotes(): int
