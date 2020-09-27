@@ -14,22 +14,34 @@ class InitDefaultSettingsCommand extends Command
     /** @var Settings */
     private $settings;
 
-    public function __construct(Settings $settings)
+    /** @var array */
+    private $defaultSettings;
+
+    /**
+     * InitDefaultSettingsCommand constructor.
+     * @param Settings $settings
+     * @param array $defaultSettings associative array of settings to be initialized
+     */
+    public function __construct(Settings $settings, array $defaultSettings)
     {
         parent::__construct();
         $this->settings = $settings;
+        $this->defaultSettings = $defaultSettings;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->settings->setValue('commission.quotes.enable', true);
-        $this->settings->setValue('commission.quotes.preferredSpecies', [
-            'puppy',
-            'get & killing',
-        ]);
-        $this->settings->setValue('commission.priceList', [
-            'basePrice' => 420,
-            'extraFeature' => 69
-        ]);
+        if (empty($this->defaultSettings)) {
+            $output->writeln("Nothing to initialize");
+            return;
+        }
+
+        foreach ($this->defaultSettings as $name => $value) {
+            $this->settings->setValue($name, $value);
+            $output->writeln("Initialized value for $name", $output::VERBOSITY_VERBOSE);
+        }
+
+        $count = count($this->defaultSettings);
+        $output->writeln("Initialized $count settings fields");
     }
 }

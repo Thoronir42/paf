@@ -5,6 +5,7 @@
 parameters:
     appName: 'Pretty Acceptable Fursuits'
     powerUsers: []
+    defaultSettings: []
     database:
         driver: mysqli
         host: localhost

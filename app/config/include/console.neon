@@ -20,3 +20,5 @@ services:
 
     command.initDefaultSettings:
         class: Data\InitDefaultSettingsCommand
+        arguments:
+            defaultSettings: %defaultSettings%
