@@ -6,22 +6,13 @@ use Nette\Application\Routers\Route;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
-use Nette\Schema\Expect;
-use Nette\Schema\Schema;
 
 class RoutingExtension extends CompilerExtension
 {
-    public function getConfigSchema(): Schema
-    {
-        return Expect::structure([
-            'modules' => Expect::arrayOf(Statement::class),
-        ])->castTo('array');
-    }
-
-
+    const TAG_ROUTER_MODULE = 'routerModule';
+    
     public function loadConfiguration()
     {
-        $config = $this->getConfig();
         $builder = $this->getContainerBuilder();
 
         $factoryDefinition = $builder->addDefinition($this->prefix('routerFactory'))
@@ -31,12 +22,8 @@ class RoutingExtension extends CompilerExtension
                 [
                     'presenter' => 'Common:Homepage',
                     'action' => 'default',
-                ]
+                ],
             ]));
-        
-        foreach ($config['modules'] as $key => $module) {
-            $factoryDefinition->addSetup('addModule', [$key, $module]);
-        }
 
         $routerDefinition = $builder->getDefinition('routing.router');
         if (!$routerDefinition instanceof ServiceDefinition) {
@@ -45,5 +32,22 @@ class RoutingExtension extends CompilerExtension
         }
 
         $routerDefinition->setFactory(new Statement('@' . $this->prefix('routerFactory') . '::create'));
+    }
+
+    public function beforeCompile()
+    {
+        $builder = $this->getContainerBuilder();
+
+        /** @var ServiceDefinition $routerFactory */
+        $routerFactory = $builder->getDefinition($this->prefix('routerFactory'));
+
+        $moduleDefinitions = $builder->findByTag(self::TAG_ROUTER_MODULE);
+
+        $modules = [];
+        foreach ($moduleDefinitions as $definitionName => $appModuleName) {
+            $modules[$appModuleName] = $builder->getDefinition($definitionName);
+        }
+
+        $routerFactory->setArgument('modules', $modules);
     }
 }

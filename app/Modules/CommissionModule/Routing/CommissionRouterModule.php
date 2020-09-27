@@ -2,22 +2,17 @@
 
 namespace PAF\Modules\CommissionModule\Routing;
 
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
-use Nette\Routing\Router;
 use PAF\Common\Router\RouterModule;
 
-class CommissionRouterModule extends RouterModule
+class CommissionRouterModule implements RouterModule
 {
-    public function getRoutes(): Router
+    public function setRoutes(RouteList $routeList): void
     {
-        $router = new RouteList('Commission');
-        $router[] = new Route('commission/<id>', 'Commission:detail');
-        $router[] = new Route('create-quote', "Quotes:create");
-        $router[] = new Route('commissions', 'Commission:list');
-        $router[] = new Route('product/<slug>', 'Product:view');
-        $router[] = new Route('<presenter quotes|commission|price-list>[/<action=default>[/<id>]]');
-
-        return $router;
+        $routeList->addRoute('commission/<id>', 'Commission:detail');
+        $routeList->addRoute('create-quote', "Quotes:create");
+        $routeList->addRoute('commissions', 'Commission:list');
+        $routeList->addRoute('product/<slug>', 'Product:view');
+        $routeList->addRoute('<presenter quotes|commission|price-list>[/<action=default>[/<id>]]');
     }
 }

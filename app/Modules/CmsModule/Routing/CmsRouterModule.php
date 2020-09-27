@@ -2,25 +2,19 @@
 
 namespace PAF\Modules\CmsModule\Routing;
 
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
-use Nette\Routing\Router;
 use PAF\Common\Router\RouterModule;
 
-class CmsRouterModule extends RouterModule
+class CmsRouterModule implements RouterModule
 {
 
-    public function getRoutes(): Router
+    public function setRoutes(RouteList $router): void
     {
-        $router = new RouteList('Cms');
-
         $availablePages = ['terms-of-service'];
         $pageList = implode('|', $availablePages);
 
-        $router[] = new Route("<pageName $pageList>[/<action=display>]", [
+        $router->addRoute("<pageName $pageList>[/<action=display>]", [
             'presenter' => 'Page',
         ]);
-
-        return $router;
     }
 }

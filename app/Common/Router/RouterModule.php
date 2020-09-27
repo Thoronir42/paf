@@ -2,9 +2,9 @@
 
 namespace PAF\Common\Router;
 
-use Nette\Routing\Router;
+use Nette\Application\Routers\RouteList;
 
-abstract class RouterModule
+interface RouterModule
 {
-    abstract public function getRoutes(): Router;
+    public function setRoutes(RouteList $routeList): void;
 }

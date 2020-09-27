@@ -3,7 +3,6 @@
 namespace PAF\Common\Router;
 
 use Nette\Application\Routers\RouteList;
-use Nette\InvalidStateException;
 use Nette\Routing\Router;
 
 final class RouterFactory
@@ -13,19 +12,15 @@ final class RouterFactory
     /** @var Router */
     private $fallbackRouter;
 
-    public function __construct(Router $fallbackRouter)
+    /**
+     * RouterFactory constructor.
+     * @param Router $fallbackRouter
+     * @param RouterModule[] $modules associative array of application router modules
+     */
+    public function __construct(Router $fallbackRouter, array $modules)
     {
-
         $this->fallbackRouter = $fallbackRouter;
-    }
-
-    public function addModule(string $name, RouterModule $module)
-    {
-        if (isset($this->modules[$name])) {
-            throw new InvalidStateException("Router module '$name' already exists");
-        }
-
-        $this->modules[$name] = $module;
+        $this->modules = $modules;
     }
 
     /** @return Router */
@@ -33,8 +28,10 @@ final class RouterFactory
     {
         $router = new RouteList();
 
-        foreach ($this->modules as $module) {
-            $router[] = $module->getRoutes();
+        foreach ($this->modules as $appModuleName => $routerModule) {
+            $moduleRouteList = new RouteList($appModuleName);
+            $routerModule->setRoutes($moduleRouteList);
+            $router->add($moduleRouteList);
         }
 
         $router[] = $this->fallbackRouter;

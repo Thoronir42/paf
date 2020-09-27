@@ -30,7 +30,6 @@ session:
 extensions:
     entityIds: SeStep\EntityIds\DI\EntityIdsExtension
     auditTrail: PAF\Common\AuditTrail\AuditTrailExtension
-    appRouting: PAF\Common\Router\RoutingExtension
     appForms: PAF\Common\Forms\FormsExtension
     repository: PAF\Common\Lean\DI\RepositoryExtension
     leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
@@ -52,13 +51,6 @@ extensions:
 commonEvents:
     subscribers:
         - PAF\Common\Workflow\EntityWorkflowListener()
-
-
-appRouting:
-    modules:
-        Cms: PAF\Modules\CmsModule\Routing\CmsRouterModule()
-        Commission: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
-        Settings: PAF\Modules\SettingsModule\Routing\SettingsRouterModule()
 
 typeful:
     filters:
@@ -95,6 +87,7 @@ translation:
 
 includes:
     - include/services.neon
+    - include/routing.neon
     - include/console.neon
     - include/formsMessages.neon
     - include/entityIds.neon

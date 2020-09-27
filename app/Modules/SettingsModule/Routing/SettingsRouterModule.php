@@ -2,22 +2,17 @@
 
 namespace PAF\Modules\SettingsModule\Routing;
 
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
-use Nette\Routing\Router;
 use PAF\Common\Router\RouterModule;
 
-class SettingsRouterModule extends RouterModule
+class SettingsRouterModule implements RouterModule
 {
 
-    public function getRoutes(): Router
+    public function setRoutes(RouteList $routeList): void
     {
-        $router = new RouteList('Settings');
-        $router[] = new Route('settings', [
+        $routeList->addRoute('settings', [
             'presenter' => 'Settings',
             'action' => 'default',
         ]);
-
-        return $router;
     }
 }
