@@ -3,9 +3,10 @@
 namespace PAF\Modules\CommissionModule\Model\Typeful;
 
 use Nette\Localization\ITranslator;
-use SeStep\Typeful\PropertyType;
+use SeStep\Typeful\Types\PropertyType;
+use SeStep\Typeful\Validation\ValidationError;
 
-class CommissionStatusType extends PropertyType
+class CommissionStatusType implements PropertyType
 {
     /** @var ITranslator */
     private $translator;
@@ -20,8 +21,8 @@ class CommissionStatusType extends PropertyType
         return $this->translator->translate('commission.commission.status.' . $value);
     }
 
-    public static function getName(): string
+    public function validateValue($value, array $options = []): ?ValidationError
     {
-        return 'commission.commission.status';
+        return null;
     }
 }

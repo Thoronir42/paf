@@ -7,7 +7,7 @@ use Nette\Utils\Html;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Common\Localization\TranslatorUtils;
-use SeStep\Typeful\Latte\PropertyFilter;
+use SeStep\NetteTypeful\Latte\PropertyFilter;
 use Ublaboo\DataGrid\DataGrid;
 
 class CommissionsGridFactory

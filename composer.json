@@ -35,7 +35,7 @@
     "nette/robot-loader": "^3.0",
     "nette/safe-stream": "^2.4",
     "nette/security": "^3.0",
-    "nette/utils": "^3.0",
+    "nette/utils": "^3.1",
     "latte/latte": "^2.5",
     "tracy/tracy": "^2.6",
     "tharos/leanmapper": "^3.4",
@@ -43,9 +43,11 @@
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
     "sestep/entity-ids": "^0.9.0",
+    "sestep/typeful": "^0.5.4",
+    "sestep/nette-typeful": "^0.6.0",
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1",
-    "contributte/monolog": "^0.3.0",
+    "contributte/monolog": "^0.4.1",
     "symfony/workflow": "^4.3",
     "symfony/event-dispatcher": "^4.3",
     "ublaboo/datagrid": "^6.2",
@@ -62,8 +64,7 @@
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
-      "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
-      "SeStep\\Typeful\\": "extensions/SeStep/Typeful/src/"
+      "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/"
     }
   },
   "autoload-dev": {
@@ -74,7 +75,6 @@
       "Test\\SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/test/",
       "Test\\SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/test/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/test/",
-      "SeStep\\Typeful\\": "extensions/SeStep/Typeful/test/",
       "Behat\\PAF\\": "test-features/"
     }
   },

@@ -1,16 +1,4 @@
 services:
-    # Typeful
-    commissionDescriptor:
-            class: PAF\Modules\CommissionModule\Model\Typeful\CommissionDescriptor
-            autowired: false
-            tags:
-                typeful.entity: PAF\Modules\CommissionModule\Model\Commission
-    commissionStatusType:
-        class: PAF\Modules\CommissionModule\Model\Typeful\CommissionStatusType
-        autowired: false
-        tags:
-            - typeful.propertyType
-
     # Repositories
     specificationRepository: PAF\Modules\CommissionModule\Repository\SpecificationRepository
     quoteRepository: PAF\Modules\CommissionModule\Repository\QuoteRepository
@@ -35,3 +23,19 @@ services:
     quoteFormFactory: PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory
     commissionFormFactory: PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory
     commissionStatusControlFactory: PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory
+
+typeful:
+    types:
+        commissionStatus:
+            class: PAF\Modules\CommissionModule\Model\Typeful\CommissionStatusType
+
+    entities:
+        commission:
+            name: PAF\Modules\CommissionModule\Model\Commission
+            properties:
+                status:
+                    type: commission.commissionStatus
+                targetDelivery:
+                    type: typeful.date
+                archivedOn:
+                    type: typeful.dateTime

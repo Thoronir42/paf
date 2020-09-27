@@ -39,7 +39,8 @@ extensions:
     translation: Contributte\Translation\DI\TranslationExtension
     leanFixtures: SeStep\LeanFixtures\Bridges\DI\LeanFixturesExtension
     monolog: Contributte\Monolog\DI\MonologExtension
-    typeful: SeStep\Typeful\TypefulExtension
+    typeful: SeStep\Typeful\DI\TypefulExtension
+    netteTypeful: SeStep\NetteTypeful\DI\NetteTypefulExtension
 
     commonEvents: PAF\Common\Events\EventsExtension
 
