@@ -40,7 +40,13 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
      */
     public function getCount(): int
     {
-        return $this->dataSource->count();
+        $table = $this->mapper->getTable($this->entityClass);
+        $primary = $this->mapper->getPrimaryKey($table);
+        $select = clone $this->dataSource;
+        $select->removeClause('SELECT');
+        $select->select("COUNT($primary)");
+
+        return $select->fetchSingle();
     }
 
     /**
