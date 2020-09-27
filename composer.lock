@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae375ea28eec2d2b5dfb79ca6f0b3f45",
+    "content-hash": "e233369ec85a0f881cda6a5be2af7bdc",
     "packages": [
         {
             "name": "behat/behat",
@@ -1350,16 +1350,16 @@
         },
         {
             "name": "nette/application",
-            "version": "dev-master",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Thoronir42/application.git",
-                "reference": "c99c04ed665e69ca547df6c490d2ccc47d47855f"
+                "url": "https://github.com/nette/application.git",
+                "reference": "f7df426a5af59daec71f43e8ba6057422d8aaaef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Thoronir42/application/zipball/c99c04ed665e69ca547df6c490d2ccc47d47855f",
-                "reference": "c99c04ed665e69ca547df6c490d2ccc47d47855f",
+                "url": "https://api.github.com/repos/nette/application/zipball/f7df426a5af59daec71f43e8ba6057422d8aaaef",
+                "reference": "f7df426a5af59daec71f43e8ba6057422d8aaaef",
                 "shasum": ""
             },
             "require": {
@@ -1370,10 +1370,10 @@
                 "php": ">=7.1"
             },
             "conflict": {
-                "nette/bootstrap": "<3.0.1",
+                "latte/latte": "<2.4",
                 "nette/di": "<3.0-stable",
                 "nette/forms": "<3.0",
-                "nette/latte": "<3.0"
+                "tracy/tracy": "<2.5"
             },
             "require-dev": {
                 "latte/latte": "^2.5.1",
@@ -1403,6 +1403,7 @@
                     "src/compatibility.php"
                 ]
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause",
                 "GPL-2.0",
@@ -1421,9 +1422,9 @@
             "description": "🏆 Nette Application: a full-stack component-based MVC kernel for PHP that helps you write powerful and modern web applications. Write less, have cleaner code and your work will bring you joy.",
             "homepage": "https://nette.org",
             "keywords": [
+                "Forms",
                 "component-based",
                 "control",
-                "forms",
                 "framework",
                 "mvc",
                 "mvp",
@@ -1433,9 +1434,10 @@
                 "seo"
             ],
             "support": {
-                "source": "https://github.com/Thoronir42/application/tree/master"
+                "issues": "https://github.com/nette/application/issues",
+                "source": "https://github.com/nette/application/tree/v3.0.2"
             },
-            "time": "2019-08-17T21:19:41+00:00"
+            "time": "2019-10-21T19:22:14+00:00"
         },
         {
             "name": "nette/bootstrap",
@@ -5809,7 +5811,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "nette/application": 20,
         "sestep/navigation": 20,
         "sestep/modular-lean-mapper": 20
     },
@@ -5819,5 +5820,6 @@
         "php": "^7.3.0",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
