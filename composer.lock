@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2282f7165371be4be0db07e4d219ef00",
+    "content-hash": "a2a14b9047ebd32d30341e0fb0931514",
     "packages": [
         {
             "name": "behat/behat",
@@ -2996,16 +2996,16 @@
         },
         {
             "name": "sestep/typeful",
-            "version": "v0.7.1",
+            "version": "v0.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/typeful.git",
-                "reference": "b99630fca9b86cd75ba2bcdf707c39a5048f6eb2"
+                "reference": "85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/typeful/zipball/b99630fca9b86cd75ba2bcdf707c39a5048f6eb2",
-                "reference": "b99630fca9b86cd75ba2bcdf707c39a5048f6eb2",
+                "url": "https://api.github.com/repos/SeStep/typeful/zipball/85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb",
+                "reference": "85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb",
                 "shasum": ""
             },
             "require": {
@@ -3039,9 +3039,9 @@
             "description": "Generic approach to entity and property description",
             "support": {
                 "issues": "https://github.com/SeStep/typeful/issues",
-                "source": "https://github.com/SeStep/typeful/tree/v0.7.1"
+                "source": "https://github.com/SeStep/typeful/tree/v0.7.3"
             },
-            "time": "2020-10-12T08:49:48+00:00"
+            "time": "2020-10-12T15:25:36+00:00"
         },
         {
             "name": "symfony/browser-kit",

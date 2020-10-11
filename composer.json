@@ -43,7 +43,7 @@
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
     "sestep/entity-ids": "^0.9.0",
-    "sestep/typeful": "^0.7.1",
+    "sestep/typeful": "^0.7.3",
     "sestep/nette-typeful": "^0.7.1",
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1",
@@ -64,7 +64,8 @@
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
-      "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/"
+      "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
+      "SeStep\\LeanTypeful\\": "extensions/SeStep/LeanTypeful/src/"
     }
   },
   "autoload-dev": {

@@ -41,6 +41,7 @@ extensions:
     monolog: Contributte\Monolog\DI\MonologExtension
     typeful: SeStep\Typeful\DI\TypefulExtension
     netteTypeful: SeStep\NetteTypeful\DI\NetteTypefulExtension
+    leanTypeful: SeStep\LeanTypeful\LeanTypefulExtension
 
     commonEvents: PAF\Common\Events\EventsExtension
 
@@ -57,6 +58,10 @@ typeful:
     filters:
         displayEntityProperty: 'entityProperty'
         displayPropertyName: 'entityPropertyName'
+
+leanTypeful:
+    schemaName: %database.database%
+#    cachePath: %tempDir%/cache/sqlTypeful/
 
 monolog:
     channel:

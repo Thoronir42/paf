@@ -30,6 +30,8 @@ typeful:
             class: PAF\Modules\CommissionModule\Model\Typeful\CommissionStatusType
 
     entities:
+        specification:
+            leanInferTable: commission__specification
         commission:
             name: PAF\Modules\CommissionModule\Model\Commission
             properties:
