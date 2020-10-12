@@ -8,14 +8,14 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Neon\Neon;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
-use SeStep\Typeful\DI\TypefulLoader;
+use SeStep\Typeful\DI\RegisterTypeful;
 
 class CommissionModuleExtension extends CompilerExtension
 {
     const MODE_SINGLE_SUPPLIER = 'singleSupplier';
     const MODE_MULTI_SUPPLIERS = 'multipleSuppliers';
 
-    use TypefulLoader;
+    use RegisterTypeful;
 
     public function getConfigSchema(): Nette\Schema\Schema
     {
@@ -33,7 +33,7 @@ class CommissionModuleExtension extends CompilerExtension
 
         $builder = $this->getContainerBuilder();
 
-        $this->initTypeful($builder, $staticConfig['typeful']);
+        $this->registerTypeful($staticConfig['typeful']);
 
         $config = $this->getConfig();
 

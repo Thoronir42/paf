@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "82ebd33037e6cdf7e40f17ebc13eaa43",
+    "content-hash": "2282f7165371be4be0db07e4d219ef00",
     "packages": [
         {
             "name": "behat/behat",
@@ -2946,22 +2946,22 @@
         },
         {
             "name": "sestep/nette-typeful",
-            "version": "v0.6",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/nette-typeful.git",
-                "reference": "1b2e552d51a64955cfe4f8edd69a53cdfc2bbec2"
+                "reference": "71646e5f3eff048a4197628e736184da243b939d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/1b2e552d51a64955cfe4f8edd69a53cdfc2bbec2",
-                "reference": "1b2e552d51a64955cfe4f8edd69a53cdfc2bbec2",
+                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/71646e5f3eff048a4197628e736184da243b939d",
+                "reference": "71646e5f3eff048a4197628e736184da243b939d",
                 "shasum": ""
             },
             "require": {
                 "nette/forms": "^3.0",
                 "php": "^7.3",
-                "sestep/typeful": "^0.5.1"
+                "sestep/typeful": "^0.7.0"
             },
             "require-dev": {
                 "nette/di": "^3.0",
@@ -2990,22 +2990,22 @@
             "description": "Extension of Typeful package for Nette framework",
             "support": {
                 "issues": "https://github.com/SeStep/nette-typeful/issues",
-                "source": "https://github.com/SeStep/nette-typeful/tree/v0.6"
+                "source": "https://github.com/SeStep/nette-typeful/tree/v0.7.1"
             },
-            "time": "2020-09-27T13:37:10+00:00"
+            "time": "2020-10-12T09:48:15+00:00"
         },
         {
             "name": "sestep/typeful",
-            "version": "v0.5.4",
+            "version": "v0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/typeful.git",
-                "reference": "4feae6684f25c00eb95a0504ef618916b67cdaac"
+                "reference": "b99630fca9b86cd75ba2bcdf707c39a5048f6eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/typeful/zipball/4feae6684f25c00eb95a0504ef618916b67cdaac",
-                "reference": "4feae6684f25c00eb95a0504ef618916b67cdaac",
+                "url": "https://api.github.com/repos/SeStep/typeful/zipball/b99630fca9b86cd75ba2bcdf707c39a5048f6eb2",
+                "reference": "b99630fca9b86cd75ba2bcdf707c39a5048f6eb2",
                 "shasum": ""
             },
             "require": {
@@ -3039,9 +3039,9 @@
             "description": "Generic approach to entity and property description",
             "support": {
                 "issues": "https://github.com/SeStep/typeful/issues",
-                "source": "https://github.com/SeStep/typeful/tree/v0.5.4"
+                "source": "https://github.com/SeStep/typeful/tree/v0.7.1"
             },
-            "time": "2020-10-10T16:45:31+00:00"
+            "time": "2020-10-12T08:49:48+00:00"
         },
         {
             "name": "symfony/browser-kit",
