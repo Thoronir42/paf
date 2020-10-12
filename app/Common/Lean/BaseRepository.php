@@ -104,6 +104,9 @@ abstract class BaseRepository extends Repository implements IQueryable
             $value = $this->normalizeValue($value);
 
             $propertyReflection = $entityReflection->getEntityProperty($property);
+            if (!$propertyReflection) {
+                throw new \InvalidArgumentException("Property '$property' not found on $entityClass");
+            }
             $column = $propertyReflection->getColumn();
 
             if (is_array($value)) {
