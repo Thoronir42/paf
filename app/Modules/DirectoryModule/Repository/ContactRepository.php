@@ -9,7 +9,7 @@ class ContactRepository extends BaseRepository
 {
     protected function isUnique(Entity $entity)
     {
-        $data = $entity->getRowData();
+        $data = $entity->getData(['person', 'type', 'value']);
         unset($data[$this->getPrimaryKey()]);
 
         return is_null($this->findOneBy($data));
