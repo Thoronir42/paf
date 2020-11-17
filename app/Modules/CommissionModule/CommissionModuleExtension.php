@@ -62,6 +62,7 @@ class CommissionModuleExtension extends CompilerExtension
 
     private function loadConfigurable(Nette\DI\ContainerBuilder $builder, $config)
     {
+        /*
         $mode = $config->mode;
         switch ($mode) {
             case self::MODE_SINGLE_SUPPLIER:
@@ -70,6 +71,7 @@ class CommissionModuleExtension extends CompilerExtension
                     throw new Nette\InvalidStateException("For mode '$mode' a '$paramName' parameter is required");
                 }
         }
+        */
 
         /** @var ServiceDefinition $quoteFormFactory */
         $quoteFormFactory = $builder->getDefinitionByType(QuoteFormFactory::class);
