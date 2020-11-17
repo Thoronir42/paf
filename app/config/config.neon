@@ -80,18 +80,13 @@ monolog:
 translation:
     locales:
         default: 'en'
+        fallback: ['en']
 
     dirs:
         - %appDir%/Common/lang
         - %appDir%/Modules/CommissionModule/lang
+        - %vendorDir%/sestep/nette-typeful/locale
 
-#translation:
-#    default: en_GB
-#    fallback: [en_GB]
-#    dirs:
-#        - '%appDir%/Common/lang'
-#        - '%appDir%/Modules/Front/lang'
-#        - '%appDir%/Modules/Admin/lang'
 
 includes:
     - include/services.neon
