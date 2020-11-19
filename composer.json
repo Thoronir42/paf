@@ -12,6 +12,7 @@
     }
   ],
   "scripts": {
+    "initialize-workdir": "@php bin/console a:d:i --drop-all-tables -d && @php bin/console l:i && @php bin/console a:s:s",
     "test": "phpunit",
     "phpcs": "phpcs app/ test/ extensions/",
     "phpcbf": "phpcbf app/ test/ extensions/"
@@ -19,7 +20,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.3.0",
+    "php": "^7.4",
 
     "ext-json": "*",
 
