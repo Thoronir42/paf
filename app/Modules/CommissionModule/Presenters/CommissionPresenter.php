@@ -2,10 +2,11 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
+use Nette\Application\UI\Form;
 use PAF\Common\BasePresenter;
 use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
-use PAF\Common\Forms\Form;
+use PAF\Common\Lean\GenericEntityForm;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
 use PAF\Common\Presenter\HasAppUser;
@@ -201,9 +202,10 @@ final class CommissionPresenter extends BasePresenter
         return $form;
     }
 
-    public function createComponentCommissionsFilter()
+    public function createComponentCommissionsFilter(): Form
     {
-        $form = $this->formFactory->create();
+        /** @var Form $form */
+        $form = $this->formFactory->create(Form::class);
         $archived = $form->addSelect('archived', 'commission.commissions.archivedFilter', [
             'any' => 'generic.any',
             'active' => 'commission.commission.status.active',

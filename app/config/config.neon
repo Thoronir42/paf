@@ -49,6 +49,8 @@ extensions:
     pafDirectory: PAF\Modules\DirectoryModule\DirectoryModuleExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
 
+appForms:
+    defaultFormClass: PAF\Common\Lean\GenericEntityForm
 
 commonEvents:
     subscribers:

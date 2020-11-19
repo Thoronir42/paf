@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
-use PAF\Common\Forms\Form;
+use PAF\Common\Lean\GenericEntityForm;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\DirectoryModule\Model\Contact;
 
@@ -11,7 +11,7 @@ use PAF\Modules\DirectoryModule\Model\Contact;
  *
  * @method onSave(string $supplier, $specification, $contact, $references)
  */
-class QuoteForm extends Form
+class QuoteForm extends GenericEntityForm
 {
     public $onSave;
 
@@ -68,9 +68,8 @@ class QuoteForm extends Form
         }
     }
 
-    public function processForm(Form $form, $values)
+    public function processForm(QuoteForm $form, $values)
     {
-
         $specification = new Specification();
         $specification->characterName = $values->fursuit->name;
         $specification->type = $values->fursuit->type;

@@ -6,29 +6,37 @@ use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
 use Nette\SmartObject;
 
+use Nette\Forms\Form as NetteForm;
+
 class FormFactory
 {
     use SmartObject;
 
     /** @var ITranslator */
     private $translator;
+    /** @var string */
+    private $defaultFormClass;
 
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, string $defaultFormClass = NetteForm::class)
     {
         $this->translator = $translator;
+        $this->defaultFormClass = $defaultFormClass;
     }
 
     /**
      * @param string $formClass
      *
-     * @return Form
+     * @return NetteForm
      */
-    public function create(string $formClass = Form::class): Form
+    public function create(string $formClass = null): NetteForm
     {
-        if (!is_a($formClass, Form::class, true)) {
-            throw new InvalidArgumentException("Parameter \$formClass must be a class extending " . Form::class);
+        if (!$formClass) {
+            $formClass = $this->defaultFormClass;
         }
-        /** @var Form $form */
+        if (!is_a($formClass, NetteForm::class, true)) {
+            throw new InvalidArgumentException("Parameter \$formClass must be a class extending " . NetteForm::class);
+        }
+        /** @var NetteForm $form */
         $form = new $formClass();
         $form->setTranslator($this->translator);
 
