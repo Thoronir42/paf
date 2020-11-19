@@ -31,7 +31,7 @@ typeful:
 
     entities:
         specification:
-            leanInferTable: commission__specification
+            leanInferEntity: PAF\Modules\CommissionModule\Model\Specification
         commission:
             name: PAF\Modules\CommissionModule\Model\Commission
             properties:

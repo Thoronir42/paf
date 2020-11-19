@@ -2,6 +2,7 @@
 
 namespace SeStep\LeanTypeful;
 
+use LeanMapper\Entity;
 use Nette\Caching\Cache;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Caching\Storages\MemoryStorage;
@@ -10,10 +11,11 @@ use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use SeStep\Typeful\DI\RegisterTypeful;
+use SeStep\Typeful\Entity\GenericDescriptor;
 
 class LeanTypefulExtension extends CompilerExtension
 {
-    const TAG_LEAN_TYPEFUL_LOADER = 'leanTypeful.typefulLoader';
+    const TAG_LEAN_INFER_ENTITY = 'leanTypeful.typefulLoader';
 
     use RegisterTypeful;
 
@@ -27,7 +29,7 @@ class LeanTypefulExtension extends CompilerExtension
 
     public function loadConfiguration()
     {
-        $this->registerTypefulEntityPlugin('leanInferTable', Expect::string(), self::TAG_LEAN_TYPEFUL_LOADER);
+        $this->registerLeanTypefulPlugin();
 
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
@@ -47,20 +49,11 @@ class LeanTypefulExtension extends CompilerExtension
 
     public function beforeCompile()
     {
-        $config = $this->getConfig();
         $builder = $this->getContainerBuilder();
 
-        $entitiesToInfer = $builder->findByTag(self::TAG_LEAN_TYPEFUL_LOADER);
+        $entitiesToInfer = $builder->findByTag(self::TAG_LEAN_INFER_ENTITY);
 
         foreach ($entitiesToInfer as $entityDefinitionName => $reflectionDefinition) {
-            if (is_string($reflectionDefinition)) {
-                $table = $reflectionDefinition;
-                $reflectionArguments = [];
-            } else {
-                $table = $reflectionDefinition->table;
-                $reflectionArguments = $reflectionDefinition->arguments ?? [];
-            }
-
             /** @var ServiceDefinition $definition */
             $definition = $builder->getDefinition($entityDefinitionName);
 
@@ -71,8 +64,8 @@ class LeanTypefulExtension extends CompilerExtension
             }, $descriptorArguments['properties']);
 
             $definition->setFactory('@' . $this->prefix('reflectedDescriptorFactory') . "::create", [
-                $table,
-                $reflectionArguments,
+                $reflectionDefinition['entityClass'],
+                $reflectionDefinition['reflectionArguments'],
                 $propertiesArguments,
                 $propertyNamePrefix
             ]);
@@ -95,5 +88,32 @@ class LeanTypefulExtension extends CompilerExtension
         }
 
         return $storage;
+    }
+
+    private function registerLeanTypefulPlugin()
+    {
+        $formatToArray = function ($value) {
+            if (is_string($value)) {
+                return [
+                    'entityClass' => $value,
+                ];
+            }
+
+            return $value;
+        };
+
+        $pluginConfigSchema = Expect::anyOf(
+            Expect::string(),
+            Expect::structure([
+                'entityClass' => Expect::string()->assert(function ($value) {
+                    return is_a($value, Entity::class, true);
+                }, "Value must be a class descending " . Entity::class),
+                'reflectionArguments' => Expect::array(),
+            ]),
+        )
+            ->before($formatToArray)
+            ->castTo('array');
+
+        $this->registerTypefulEntityPlugin('leanInferEntity', $pluginConfigSchema, self::TAG_LEAN_INFER_ENTITY);
     }
 }

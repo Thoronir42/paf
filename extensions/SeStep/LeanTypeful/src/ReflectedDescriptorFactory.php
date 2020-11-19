@@ -3,6 +3,7 @@
 namespace SeStep\LeanTypeful;
 
 use LeanMapper\IMapper;
+use LeanMapper\Reflection\EntityReflection;
 use Nette\Caching\Cache;
 use SeStep\Typeful\Entity\GenericDescriptor;
 use SeStep\Typeful\Entity\Property;
@@ -24,13 +25,13 @@ class ReflectedDescriptorFactory
     }
 
     public function create(
-        string $table,
+        string $entityClass,
         array $reflectionArguments,
         array $propertiesArguments,
         string $propertyNamePrefix = ''
     ) {
 
-        $inferredArguments = $this->inferPropertyTypes($table, $reflectionArguments);
+        $inferredArguments = $this->inferPropertyTypes($entityClass, $reflectionArguments);
         $propertiesArguments = $this->mergePropertyArguments($propertiesArguments, $inferredArguments);
 
         $properties = [];
@@ -42,26 +43,41 @@ class ReflectedDescriptorFactory
         return new GenericDescriptor($properties, $propertyNamePrefix);
     }
 
-    private function inferPropertyTypes(string $table, $reflectionArguments)
+    private function inferPropertyTypes(string $entityClass, $reflectionArguments)
     {
-        return $this->cache->load([$table, $reflectionArguments], function () use ($table, $reflectionArguments) {
-            $entityClass = $this->mapper->getEntityClass($table);
-            $propertiesWhitelist = $reflectionArguments->properties ?? [];
+        /** @var EntityReflection $entityReflection */
+        $entityReflection = $entityClass::getReflection($this->mapper);
+        /** @var \LeanMapper\Reflection\Property[] $propertiesByColumn */
+        $propertiesByColumn = [];
+        foreach ($entityReflection->getEntityProperties() as $name => $property) {
+            $propertiesByColumn[$property->getColumn()] = $property;
+        }
 
-            $columnWhitelist = array_map(function ($propertyName) use ($entityClass) {
-                return $this->mapper->getColumn($entityClass, $propertyName);
-            }, $propertiesWhitelist);
+        return $this->cache->load(
+            [$entityClass, $reflectionArguments],
+            function () use ($entityClass, $reflectionArguments, $propertiesByColumn) {
+                $table = $this->mapper->getTable($entityClass);
 
-            $columnTypes = $this->provider->getColumns($table, $columnWhitelist);
+                $propertiesWhitelist = $reflectionArguments['properties'] ?? [];
 
-            $propertyTypes = [];
-            foreach ($columnTypes as $columnName => $type) {
-                $propertyName = $this->mapper->getEntityField($table, $columnName);
-                $propertyTypes[$propertyName] = $type;
+                $columnWhitelist = array_map(function ($propertyName) use ($entityClass) {
+                    return $this->mapper->getColumn($entityClass, $propertyName);
+                }, $propertiesWhitelist);
+
+                $columnTypes = $this->provider->getColumns($table, $columnWhitelist);
+
+                $propertyTypes = [];
+                foreach ($columnTypes as $columnName => $type) {
+                    $property = $propertiesByColumn[$columnName] ?? null;
+                    if (!$property) {
+                        throw new \ReflectionException("Column '$columnName' does not correspond to a property");
+                    }
+                    $propertyTypes[$property->getName()] = $type;
+                }
+
+                return $propertyTypes;
             }
-
-            return $propertyTypes;
-        });
+        );
     }
 
     private function mergePropertyArguments(array $staticArguments, $inferredArguments)
