@@ -2,6 +2,10 @@ extensions:
     appRouting: PAF\Common\Router\RoutingExtension
 
 services:
+    CommonRouterModule:
+        class: PAF\Modules\CommonModule\CommonRouterModule
+        tags:
+            routerModule: Common
     CmsRouterModule:
         class: PAF\Modules\CmsModule\Routing\CmsRouterModule
         tags:
