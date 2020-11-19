@@ -6,7 +6,6 @@ use Nette\Application\UI\Multiplier;
 use Nette\Forms\Controls\HiddenField;
 use Nette\Forms\Controls\SelectBox;
 use PAF\Common\BasePresenter;
-use PAF\Common\Presenter\HasAppUser;
 use PAF\Common\Storage\PafImageStorage;
 use PAF\Modules\CommissionModule\Facade\QuoteService;
 use PAF\Modules\CommissionModule\Model\Specification;
@@ -15,6 +14,7 @@ use PAF\Modules\CommonModule\Services\FilesService;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
 use PAF\Modules\CommissionModule\Components\QuoteView\QuoteView;
 use PAF\Modules\CommissionModule\Model\Quote;
+use PAF\Modules\DirectoryModule\Services\HasAppUser;
 use PAF\Modules\DirectoryModule\Services\PersonService;
 
 /**

@@ -6,10 +6,8 @@ use Nette\Application\UI\Form;
 use PAF\Common\BasePresenter;
 use PAF\Common\Feed\Components\Comment\CommentFeedControl;
 use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
-use PAF\Common\Lean\GenericEntityForm;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
-use PAF\Common\Presenter\HasAppUser;
 use PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory;
 use PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory;
 use PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory;
@@ -23,6 +21,7 @@ use PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory;
 use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Presenters\Traits\DashboardComponent;
 use PAF\Modules\CommonModule\Services\CommentsService;
+use PAF\Modules\DirectoryModule\Services\HasAppUser;
 use Ublaboo\DataGrid\DataGrid;
 
 final class CommissionPresenter extends BasePresenter

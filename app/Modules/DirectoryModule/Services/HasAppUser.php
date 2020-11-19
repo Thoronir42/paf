@@ -1,12 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Presenter;
+namespace PAF\Modules\DirectoryModule\Services;
 
 use PAF\Common\Security\LiveUserIdentity;
 use PAF\Modules\CommonModule\Model\User;
-use PAF\Modules\CommonModule\Services\Users;
 use PAF\Modules\DirectoryModule\Model\Person;
-use PAF\Modules\DirectoryModule\Services\PersonService;
 
 trait HasAppUser
 {
