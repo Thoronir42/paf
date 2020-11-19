@@ -44,7 +44,7 @@ abstract class BasePresenter extends Presenter implements LoggerAwareInterface
         $template->setTranslator($this->translator);
 
         $template->lang = $this->lang;
-        $template->appName = $this->context->parameters['appName'];
+        $template->appName = $this->settings->getValue('common.appName');
         $template->title = '';
 
         return $template;

@@ -22,7 +22,7 @@ services:
     paf.navbar:
         class: SeStep\NetteBootstrap\Controls\Menu\Navbar
         arguments:
-            brandTitle: %appName%
+            brandTitle: @generalSettings::getValue('common.appName')
             brandTarget: :Common:Homepage:default
             items: PAF\Modules\CommonModule\Layout\Navigation\NeonProvider(%appDir%/config/navigation/site.neon)
             signItems: PAF\Modules\CommonModule\Layout\Navigation\SignItemProvider()

@@ -3,7 +3,6 @@
 # https://nette.org/security-warning
 #
 parameters:
-    appName: 'Pretty Acceptable Fursuits'
     powerUsers: []
     defaultSettings: []
     database:
