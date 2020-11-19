@@ -42,9 +42,9 @@
 
     "sestep/navigation": "dev-master",
     "sestep/modular-lean-mapper": "dev-master",
-    "sestep/entity-ids": "^0.9.0",
-    "sestep/typeful": "^0.7.3",
-    "sestep/nette-typeful": "^0.7.1",
+    "sestep/entity-ids": "dev-master as 0.9.x-dev",
+    "sestep/typeful": "dev-main as 0.8",
+    "sestep/nette-typeful": "dev-main as 0.8",
     "contributte/translation": "^0.4.1",
     "contributte/console": "^0.7.1",
     "contributte/monolog": "^0.4.1",
@@ -57,6 +57,7 @@
   },
   "autoload": {
     "psr-4": {
+      "PAF\\Modules\\OfferModule\\": "appModules/Offer/src/",
       "PAF\\": "app/",
       "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",

@@ -3,7 +3,7 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
-use PAF\Utils\TestDBUtils;
+use PAF\Utils\LeanAwareTest;
 use SeStep\GeneralSettings\IValuePoolsAdapter;
 use SeStep\LeanSettings\LeanValuePoolsAdapter;
 use SeStep\LeanSettings\Model\OptionNode;
@@ -12,19 +12,19 @@ use Test\SeStep\GeneralSettings\GenericValuePoolTest;
 
 class LeanValuePoolsTest extends GenericValuePoolTest
 {
+    use LeanAwareTest;
+
     protected function setUp(): void
     {
-        TestDBUtils::truncateEntityTable(OptionNode::class);
+        $this->truncateEntityTable(OptionNode::class);
     }
 
     /** @return IValuePoolsAdapter */
     protected function getPoolAdapter()
     {
-        $connection = TestDBUtils::getLeanConnection();
-        $mapper = TestDBUtils::getLeanMapper();
         $entityFactory = new DefaultEntityFactory();
 
-        $repo = new OptionNodeRepository($connection, $mapper, $entityFactory);
+        $repo = new OptionNodeRepository(self::$leanConnection, self::$leanMapper, $entityFactory);
 
         return new LeanValuePoolsAdapter($repo);
     }

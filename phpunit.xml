@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap = "test/bootstrap.php"
-         colors                      = "true"
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.2/phpunit.xsd"
+
+        colors                      = "true"
          processIsolation            = "false"
          stopOnFailure               = "false"
 >
+    <php>
+        <env name="DEBUG_MODE" value="1"/>
+        <env name="CONFIG_FILE" value="config.testing.neon"/>
+    </php>
+
+    <extensions>
+        <extension class="PAF\Utils\ContainerInitializerExtension">
+            <arguments>
+                <array>
+                    <element  key="0">
+                        <string>initializeLeanAware</string>
+                    </element>
+                </array>
+            </arguments>
+        </extension>
+        <extension class="PAF\Utils\StorageInitializerExtension"/>
+    </extensions>
 
     <testsuites>
         <testsuite name="PAF Test suite">

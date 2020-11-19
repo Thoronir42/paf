@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a2a14b9047ebd32d30341e0fb0931514",
+    "content-hash": "e57c456423088faee3671067caf6cd04",
     "packages": [
         {
             "name": "behat/behat",
@@ -1279,6 +1279,156 @@
             "time": "2019-07-16T16:19:33+00:00"
         },
         {
+            "name": "league/flysystem",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/9be3b16c877d477357c015cec057548cf9b2a14a",
+                "reference": "9be3b16c877d477357c015cec057548cf9b2a14a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "league/mime-type-detection": "^1.3",
+                "php": "^7.2.5 || ^8.0"
+            },
+            "conflict": {
+                "league/flysystem-sftp": "<1.0.6"
+            },
+            "require-dev": {
+                "phpspec/prophecy": "^1.11.1",
+                "phpunit/phpunit": "^8.5.8"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "ext-ftp": "Allows you to use FTP server storage",
+                "ext-openssl": "Allows you to use FTPS server storage",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+                "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+                "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+                "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+                "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+                "league/flysystem-webdav": "Allows you to use WebDAV storage",
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter",
+                "spatie/flysystem-dropbox": "Allows you to use Dropbox storage",
+                "srmklive/flysystem-dropbox-v2": "Allows you to use Dropbox storage for PHP 5 applications"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Filesystem abstraction: Many filesystems, one API.",
+            "keywords": [
+                "Cloud Files",
+                "WebDAV",
+                "abstraction",
+                "aws",
+                "cloud",
+                "copy.com",
+                "dropbox",
+                "file systems",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "rackspace",
+                "remote",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "support": {
+                "issues": "https://github.com/thephpleague/flysystem/issues",
+                "source": "https://github.com/thephpleague/flysystem/tree/1.x"
+            },
+            "funding": [
+                {
+                    "url": "https://offset.earth/frankdejonge",
+                    "type": "other"
+                }
+            ],
+            "time": "2020-08-23T07:39:11+00:00"
+        },
+        {
+            "name": "league/mime-type-detection",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/mime-type-detection.git",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12.36",
+                "phpunit/phpunit": "^8.5.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\MimeTypeDetection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "Mime-type detection for Flysystem",
+            "support": {
+                "issues": "https://github.com/thephpleague/mime-type-detection/issues",
+                "source": "https://github.com/thephpleague/mime-type-detection/tree/1.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league/flysystem",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-10-18T11:50:25+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.1.1",
             "source": {
@@ -1885,16 +2035,16 @@
         },
         {
             "name": "nette/forms",
-            "version": "v3.0.6",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/forms.git",
-                "reference": "ecb5f7b8c82585c5fc4698ccb6815542fe6b2db4"
+                "reference": "cfe069b5880e07930e92058b774f22e491aa7b0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/forms/zipball/ecb5f7b8c82585c5fc4698ccb6815542fe6b2db4",
-                "reference": "ecb5f7b8c82585c5fc4698ccb6815542fe6b2db4",
+                "url": "https://api.github.com/repos/nette/forms/zipball/cfe069b5880e07930e92058b774f22e491aa7b0e",
+                "reference": "cfe069b5880e07930e92058b774f22e491aa7b0e",
                 "shasum": ""
             },
             "require": {
@@ -1953,22 +2103,22 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/forms/issues",
-                "source": "https://github.com/nette/forms/tree/master"
+                "source": "https://github.com/nette/forms/tree/v3.0.7"
             },
-            "time": "2020-07-13T12:29:50+00:00"
+            "time": "2020-11-02T15:52:20+00:00"
         },
         {
             "name": "nette/http",
-            "version": "v3.0.4",
+            "version": "v3.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/http.git",
-                "reference": "e4d8d360c66c8af9512ca13ab629d312af2b3ce3"
+                "reference": "24647c6c52a9ed008b2d39494a8c4fc23c48e487"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/http/zipball/e4d8d360c66c8af9512ca13ab629d312af2b3ce3",
-                "reference": "e4d8d360c66c8af9512ca13ab629d312af2b3ce3",
+                "url": "https://api.github.com/repos/nette/http/zipball/24647c6c52a9ed008b2d39494a8c4fc23c48e487",
+                "reference": "24647c6c52a9ed008b2d39494a8c4fc23c48e487",
                 "shasum": ""
             },
             "require": {
@@ -2031,9 +2181,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/http/issues",
-                "source": "https://github.com/nette/http/tree/v3.0.4"
+                "source": "https://github.com/nette/http/tree/v3.0.5"
             },
-            "time": "2020-03-31T13:31:41+00:00"
+            "time": "2020-11-02T15:42:36+00:00"
         },
         {
             "name": "nette/mail",
@@ -2820,16 +2970,16 @@
         },
         {
             "name": "sestep/entity-ids",
-            "version": "v0.9",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/entity-ids.git",
-                "reference": "3cfaceba21cc230308d7343781cc643064b1accd"
+                "reference": "05322957027061e01f12ebcb4fa5fe8903eecfd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/entity-ids/zipball/3cfaceba21cc230308d7343781cc643064b1accd",
-                "reference": "3cfaceba21cc230308d7343781cc643064b1accd",
+                "url": "https://api.github.com/repos/SeStep/entity-ids/zipball/05322957027061e01f12ebcb4fa5fe8903eecfd8",
+                "reference": "05322957027061e01f12ebcb4fa5fe8903eecfd8",
                 "shasum": ""
             },
             "require": {
@@ -2846,7 +2996,13 @@
                 "nette/utils": "for more sophisticated inputs of id generator",
                 "symfony/console": "for CLI access of ID generator"
             },
+            "default-branch": true,
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.9.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "SeStep\\EntityIds\\": "src/"
@@ -2863,7 +3019,11 @@
                 }
             ],
             "description": "ID generator with capability of carrying type information",
-            "time": "2020-02-15T14:26:41+00:00"
+            "support": {
+                "issues": "https://github.com/SeStep/entity-ids/issues",
+                "source": "https://github.com/SeStep/entity-ids/tree/master"
+            },
+            "time": "2020-10-12T20:48:42+00:00"
         },
         {
             "name": "sestep/modular-lean-mapper",
@@ -2946,22 +3106,23 @@
         },
         {
             "name": "sestep/nette-typeful",
-            "version": "v0.7.1",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/nette-typeful.git",
-                "reference": "71646e5f3eff048a4197628e736184da243b939d"
+                "reference": "cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/71646e5f3eff048a4197628e736184da243b939d",
-                "reference": "71646e5f3eff048a4197628e736184da243b939d",
+                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4",
+                "reference": "cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4",
                 "shasum": ""
             },
             "require": {
+                "league/flysystem": "^1.1",
                 "nette/forms": "^3.0",
                 "php": "^7.3",
-                "sestep/typeful": "^0.7.0"
+                "sestep/typeful": "0.8"
             },
             "require-dev": {
                 "nette/di": "^3.0",
@@ -2971,6 +3132,7 @@
                 "nette/di": "For simpler integration into Nette DI based applications",
                 "ublaboo/datagrid": "To generate grids from typeful information"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -2990,22 +3152,22 @@
             "description": "Extension of Typeful package for Nette framework",
             "support": {
                 "issues": "https://github.com/SeStep/nette-typeful/issues",
-                "source": "https://github.com/SeStep/nette-typeful/tree/v0.7.1"
+                "source": "https://github.com/SeStep/nette-typeful/tree/v0.8.0"
             },
-            "time": "2020-10-12T09:48:15+00:00"
+            "time": "2020-11-17T22:00:19+00:00"
         },
         {
             "name": "sestep/typeful",
-            "version": "v0.7.3",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/typeful.git",
-                "reference": "85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb"
+                "reference": "a1c10860b61dc05f43778f67ee6ab7f128896e9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/typeful/zipball/85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb",
-                "reference": "85b5d7b4801ba47cf42dd671ffbaf38f34e0b5fb",
+                "url": "https://api.github.com/repos/SeStep/typeful/zipball/a1c10860b61dc05f43778f67ee6ab7f128896e9f",
+                "reference": "a1c10860b61dc05f43778f67ee6ab7f128896e9f",
                 "shasum": ""
             },
             "require": {
@@ -3020,6 +3182,7 @@
                 "contributte/console": "CLI commands for interaction with Typeful",
                 "nette/di": "Straightforward integration to Nette DI based applications"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -3039,9 +3202,9 @@
             "description": "Generic approach to entity and property description",
             "support": {
                 "issues": "https://github.com/SeStep/typeful/issues",
-                "source": "https://github.com/SeStep/typeful/tree/v0.7.3"
+                "source": "https://github.com/SeStep/typeful/tree/v0.8.0"
             },
-            "time": "2020-10-12T15:25:36+00:00"
+            "time": "2020-11-17T21:49:58+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -5984,11 +6147,27 @@
             "time": "2018-12-25T11:19:39+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "sestep/entity-ids",
+            "version": "dev-master",
+            "alias": "0.9.x-dev",
+            "alias_normalized": "0.9.9999999.9999999-dev"
+        },
+        {
+            "package": "sestep/typeful",
+            "version": "dev-main",
+            "alias": "0.8",
+            "alias_normalized": "0.8.0.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "sestep/navigation": 20,
-        "sestep/modular-lean-mapper": 20
+        "sestep/modular-lean-mapper": 20,
+        "sestep/entity-ids": 20,
+        "sestep/typeful": 20,
+        "sestep/nette-typeful": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

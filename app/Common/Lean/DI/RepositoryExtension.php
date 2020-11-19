@@ -17,6 +17,10 @@ class RepositoryExtension extends CompilerExtension
             if (!$definition instanceof ServiceDefinition) {
                 continue;
             }
+            $repoClass = $definition->getType();
+            if (method_exists($repoClass, 'injectTypefulRegistry')) {
+                $definition->addSetup('injectTypefulRegistry');
+            }
 
             $definition->addSetup('$mapper = ?;', [$builder->getDefinition('leanMapper.mapper')]);
             $definition->addSetup('$entityClass = $mapper->getEntityClass($mapper->getTableByRepositoryClass(?))', [

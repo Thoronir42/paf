@@ -5,5 +5,7 @@
 @import "../app/Common/Feed/sass/auditFeed";
 @import "../app/Modules/CommonModule/sass/commonModule";
 @import "../app/Modules/CommissionModule/sass/commissionModule";
+
+@import "vendor/sestep/nette-typeful/sass/nette-typeful";
 @import "overrides/xEditable";
 @import "overrides/select2-bootstrap4";

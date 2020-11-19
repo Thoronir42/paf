@@ -75,6 +75,15 @@ services:
     userFilter: PAF\Modules\CommonModule\Latte\UserFilter
     priceFilter: PAF\Common\Latte\PriceFilter('%s €')
 
+    netteTypeful.entityFormFactory:
+        arguments:
+            createCallback: [@appForms.formFactory, 'create']
+            defaultFormClass: PAF\Common\Lean\GenericEntityForm
+
+    netteTypeful.entityGridFactory:
+        setup:
+            - setTranslator
+
     entityWorkflowListener:
         class: PAF\Common\Workflow\EntityWorkflowListener
         arguments:
