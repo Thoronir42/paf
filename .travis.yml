@@ -16,21 +16,22 @@ env:
     - CONFIG_FILE=config.travis.neon
     - DEBUG_MODE=1
 
-services:
-  - mysql
-
-
 install:
   - travis_retry composer install --no-progress --prefer-dist
 
-# execute any number of scripts before the test run, custom env's are available as variables
-before_script:
-  - mysql -e "create database IF NOT EXISTS paf_test;" -uroot
-  - php bin/console app:database:init --drop-all-tables -d
-
-script:
-  - phpunit --configuration phpunit.xml --coverage-text
-  - composer run phpcs
+jobs:
+  include:
+    - stage: "Quality Assurance"
+      name: "PHP Code Sniffer"
+      script: composer phpcs
+    -
+      name: "Tests"
+      services:
+        - mysql
+      script:
+        - mysql -e "create database IF NOT EXISTS paf_test;" -uroot
+        - php bin/console app:database:init --drop-all-tables -d
+        - composer test
 
 notifications:
   email:
