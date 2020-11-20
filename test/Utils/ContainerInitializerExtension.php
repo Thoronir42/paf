@@ -2,7 +2,10 @@
 
 namespace PAF\Utils;
 
+use Data\InitDatabaseCommand;
 use Nette\DI\Container;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ContainerInitializerExtension extends InitializerExtension
 {
@@ -19,6 +22,11 @@ class ContainerInitializerExtension extends InitializerExtension
 
     public function initializeClass(string $className): void
     {
+        // TODO: Come up with more granular approach to database initialization
+        if (in_array(LeanAwareTest::class, class_uses($className))) {
+            $this->initializeDbStructure();
+        }
+
         foreach ($this->initializerFunctions as $function) {
             if (!is_callable([$className, $function])) {
                 continue;
@@ -42,5 +50,23 @@ class ContainerInitializerExtension extends InitializerExtension
         }
 
         return $this->container;
+    }
+
+    /**
+     * Initializes whole db structure
+     *
+     * @deprecated a quick-fix, desired solution is to only initialize structure
+     *   of tested functionality
+     */
+    private function initializeDbStructure()
+    {
+        if ($this->isInitialized('_db_structure')) {
+            return;
+        }
+
+        $initCommand = $this->getContainer()->getByType(InitDatabaseCommand::class);
+        $input = new ArgvInput(['paf-test', '-d', '--drop-all-tables'], $initCommand->getDefinition());
+        $initCommand->run($input, new ConsoleOutput());
+        $this->markInitialized('_db_structure');
     }
 }
