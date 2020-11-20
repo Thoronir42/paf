@@ -1,6 +1,10 @@
 # see http://about.travis-ci.org/docs/user/languages/php/ for more hints
 language: php
 
+branches:
+  only:
+    - master
+
 php:
   - "7.4"
 cache:
