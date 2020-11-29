@@ -36,7 +36,7 @@ typeful:
             name: PAF\Modules\CommissionModule\Model\Commission
             properties:
                 status:
-                    type: commission.commissionStatus
+                    type: pafCommissions.commissionStatus
                 targetDelivery:
                     type: typeful.date
                 archivedOn:
