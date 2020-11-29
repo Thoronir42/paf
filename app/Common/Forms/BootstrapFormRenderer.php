@@ -65,6 +65,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
                 '.required' => 'required',
                 '.text' => 'form-control',
                 '.number' => 'form-control',
+                '.numeric' => 'form-control',
                 '.select' => 'form-control',
                 '.password' => 'form-control',
                 '.submit' => 'btn btn-primary pull-right',
