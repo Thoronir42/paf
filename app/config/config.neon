@@ -49,6 +49,7 @@ extensions:
     pafFeed: PAF\Modules\Feed\FeedExtension
     pafDirectory: PAF\Modules\DirectoryModule\DirectoryModuleExtension
     pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
+    pafOffer: PAF\Modules\OfferModule\OfferModuleExtension
 
 appForms:
     defaultFormClass: PAF\Common\Lean\GenericEntityForm
@@ -86,6 +87,7 @@ translation:
     dirs:
         - %appDir%/Common/lang
         - %appDir%/Modules/CommissionModule/lang
+        - %modulesDir%/Offer/lang
         - %vendorDir%/sestep/nette-typeful/locale
 
 

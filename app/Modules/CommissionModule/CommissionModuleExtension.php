@@ -43,11 +43,6 @@ class CommissionModuleExtension extends CompilerExtension
 
     private function loadCommon(Nette\DI\ContainerBuilder $builder, $config)
     {
-        /** @var ServiceDefinition $priceList */
-        $priceList = $builder->getDefinition($this->prefix('priceList'));
-        $priceListNeon = __DIR__ . '/../../config/priceList.neon';
-        $priceList->setArgument('data', Neon::decode(file_get_contents($priceListNeon)));
-
         $commissionService = $builder->getDefinition($this->prefix('commissionService'));
 
         /** @var ServiceDefinition $quoteService */
@@ -56,8 +51,6 @@ class CommissionModuleExtension extends CompilerExtension
         $commissionService = ?; 
         $commissionService->createFromQuote($quote);
         }', [$commissionService]);
-
-        $this->compiler->addDependencies([$priceListNeon]);
     }
 
     private function loadConfigurable(Nette\DI\ContainerBuilder $builder, $config)

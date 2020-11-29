@@ -5,6 +5,9 @@ items:
     commissionList:
         target: ':Commission:Commission:list'
         caption: 'paf.views.commissions'
+    offer:
+        target: ':Offer:Offer:index'
+        caption: 'paf.views.offerShort'
     settings:
         target: ':Settings:Settings:default'
         caption: 'paf.views.settings'

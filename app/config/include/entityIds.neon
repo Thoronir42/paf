@@ -11,3 +11,4 @@ entityIds:
         25: PAF\Modules\CommissionModule\Model\Product
         53: PAF\Modules\CommonModule\Model\CommentThread
         57: PAF\Modules\CommonModule\Model\Comment
+        69: PAF\Modules\OfferModule\Model\Entity\Offer

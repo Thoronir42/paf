@@ -6,6 +6,16 @@ console:
     lazy: true
 
 services:
+    typeful.listTypes:
+        factory: SeStep\Typeful\Console\ListTypesCommand('typeful:types:list')
+        tags:
+            'console.command': typeful:types:list
+    typeful.listEntities:
+        factory: SeStep\Typeful\Console\ListEntitiesCommand('typeful:entities:list')
+        tags:
+            console.command: typeful:entities:list
+
+
     command.initDatabase:
         class: PAF\Common\Console\InitDatabaseCommand
         arguments:
@@ -17,6 +27,7 @@ services:
                 - %appDir%/Common/AuditTrail/database/initialize.sql
                 - %appDir%/Modules/CommissionModule/Model/database/initialize.sql
                 - %appDir%/Modules/CmsModule/Model/database/initialize.sql
+                - %modulesDir%/Offer/Database/initialize.sql
         setup:
             - setName('app:database:init')
         tags:

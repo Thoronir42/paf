@@ -1,0 +1,17 @@
+{templateType PAF\Modules\OfferModule\templates\PriceList\PriceListDefaultTemplate}
+
+{block content}
+<div class="card card-offers">
+    <div class="card-body">
+        <h1>{_'offer.views.priceList.title'}</h1>
+        <div class="mb-3">{_'offer.priceList.intro'}</div>
+
+        <div class="row">
+            {control offerGroup-product 'col-md-8'}
+            {control offerGroup-extras 'col-md-4'}
+            {control offerGroup-service 'col-md-6'}
+        </div>
+    </div>
+</div>
+
+

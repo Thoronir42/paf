@@ -15,8 +15,6 @@ services:
     productService: PAF\Modules\CommissionModule\Facade\ProductService
     commissionService: PAF\Modules\CommissionModule\Facade\CommissionService
 
-    priceList: PAF\Modules\CommissionModule\Facade\PriceListService
-
     # Components
     commissionsGridFactory: PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory
 

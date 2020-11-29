@@ -1,0 +1,11 @@
+{extends $dashboardTemplate}
+
+{block dashboardContent}
+<h1>{_'paf.views.offer'}</h1>
+<div class="row">
+    <div class="col-md-7">
+        <h2>{_'offer.offers'}</h2>
+        {control offersGrid}
+        <a n:href="createOffer" class="btn btn-outline-secondary">{_'offer.newOffer'}</a>
+    </div>
+</div>

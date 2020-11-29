@@ -1,0 +1,6 @@
+{extends $dashboardTemplate}
+
+{block dashboardContent}
+<h1>{ifset $offer}{_'offer.editOffer'}{else}{_'offer.newOffer'}{/ifset}</h1>
+
+{control offerForm}

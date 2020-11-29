@@ -13,6 +13,6 @@ class CommissionRouterModule implements RouterModule
         $routeList->addRoute('create-quote', "Quotes:create");
         $routeList->addRoute('commissions', 'Commission:list');
         $routeList->addRoute('product/<slug>', 'Product:view');
-        $routeList->addRoute('<presenter quotes|commission|price-list>[/<action=default>[/<id>]]');
+        $routeList->addRoute('<presenter quotes|commission>[/<action=default>[/<id>]]');
     }
 }

@@ -1,0 +1,12 @@
+{templateType \PAF\Modules\OfferModule\Components\PriceList\OfferGroupTemplate}
+
+<div class="offer-group {$class}">
+    <div class="flex-space-between">
+        <h2>{_'offer.priceList.section.' . $offerType}</h2>
+        <a class="btn btn-sm btn-outline-primary flex-align-center" href="{$editLink}" n:if="$editLink">{_'generic.create'}</a>
+    </div>
+
+    {foreach array_keys($offers) as $offer}
+        {control $offer}
+    {/foreach}
+</div>

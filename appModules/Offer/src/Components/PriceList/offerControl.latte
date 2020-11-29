@@ -1,0 +1,21 @@
+{templateType PAF\Modules\OfferModule\Components\PriceList\OfferControlTemplate}
+
+<div class="offer" id="{$control->lookupPath()}">
+    <div class="flex-space-between">
+        <h3 class="name">{_$offer->name}</h3>
+        <a n:if="$canEdit"
+           class="btn btn-sm btn-outline-primary flex-align-center"
+           href="{plink :Offer:Offer:editOffer, $offer->id}">{_'generic.edit'}</a>
+    </div>
+    <div class="media">
+        <img n:if="$offer->previewImagePath" src="{$control->getPreviewUrl($offer->previewImagePath)}">
+        <div class="media-body">
+            <p>{$offer->description}</p>
+        </div>
+    </div>
+    <div class="media-footer text-right">
+        {if $offer->standardPrice}
+            <span class="price">{$offer->standardPrice|entityProperty:'pafOffer.offer':'standardPrice'}</span>
+        {/if}
+    </div>
+</div>

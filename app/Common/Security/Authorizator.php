@@ -7,6 +7,7 @@ use Nette\Security\IResource;
 use Nette\Security\IRole;
 use Nette\Security\Permission;
 use PAF\Modules\Settings\Auth\SettingsResource;
+use PAF\Modules\OfferModule\Model\ACL\PriceList;
 
 class Authorizator extends Permission implements IAuthorizator
 {
@@ -25,6 +26,8 @@ class Authorizator extends Permission implements IAuthorizator
         $this->addResource('manage-commissions');
         $this->addResource(SettingsResource::RESOURCE);
 
+        $this->addResource(PriceList::OWN);
+
         $this->addResource("admin-settings", 'admin-section');
 
         $this->addResource('option');
@@ -32,6 +35,7 @@ class Authorizator extends Permission implements IAuthorizator
         $this->allow('power-user', 'admin-section');
         $this->allow('power-user', 'manage-commissions');
         $this->allow('power-user', SettingsResource::RESOURCE);
+        $this->allow('power-user', PriceList::OWN);
     }
 
     /**

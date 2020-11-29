@@ -1,0 +1,34 @@
+offers: Offers
+
+newOffer: New offer
+editOffer: Edit offer
+
+offer.name: Name
+offer.type: Type
+
+offer.slug: Slug
+offer.description: Description
+offer.previewImagePath: Preview image
+offer.standardPrice: Standard price
+
+offerType:
+    product: Product
+    feature: Feature
+    extras: Extras
+    service: Service
+
+offer:
+    updatedMessage: Offer updated
+
+
+priceList:
+    intro: HI! BUY MY STUFF!
+    section:
+        product: Products
+        extras: Extras
+        feature: Features
+        service: Services
+
+views:
+    priceList:
+        title: MY SHIT FOR YOUS

@@ -1,0 +1,62 @@
+services:
+    #  Repositories
+    offerRepository: PAF\Modules\OfferModule\Model\Repository\OfferRepository
+
+    # Storage
+    offerImageStorage:
+        class: League\Flysystem\Filesystem
+        autowired: false
+        arguments:
+            - League\Flysystem\Adapter\Local(%wwwDir%/images/pafOffer/offer)
+
+    #  Services
+    offersService:
+        class: PAF\Modules\OfferModule\Model\Service\OffersService
+        arguments:
+            - PAF\Common\Lean\LeanTypefulRepository(@pafOffer.offerRepository, @typeful.entity.pafOffer.offer)
+
+    # Controls
+    offerControlFactory:
+        type: PAF\Modules\OfferModule\Components\PriceList\OfferControlFactory
+        arguments:
+            entityDescriptor: @typeful.entity.pafOffer.offer
+
+
+typeful:
+    types:
+        offerType:
+            class: SeStep\Typeful\Types\SelectionType
+
+    entities:
+        offer:
+            leanInferEntity: PAF\Modules\OfferModule\Model\Entity\Offer
+            propertyNamePrefix: offer.offer
+            properties:
+                id:
+                    type: typeful.text
+                    options:
+                        default: [@pafOffer.offerRepository, 'getUniqueId']
+                slug:
+                    type: typeful.text
+                    default: PAF\Utils\TypefulUtils::pickValue('name', Nette\Utils\Strings::webalize)
+                type:
+                    type: typeful.selection
+                    options:
+                        items:
+                            product: offer.offerType.product
+                            feature: offer.offerType.feature
+                            extras: offer.offerType.extras
+                            service: offer.offerType.service
+                        render: ['typeRender', 'translate']
+                previewImagePath:
+                    type: netteTypeful.file
+                    options:
+                        required: false
+                        storage: @pafOffer.offerImageStorage
+                        fileType: image
+                        publicPath: %baseUrl%/images/pafOffer/offer
+                        preferredName: '!slug'
+                standardPrice:
+                    type: typeful.number
+                    options:
+                        precision: 2
