@@ -76,7 +76,12 @@ class ReflectionProvider
             case 'int':
                 $type = 'typeful.int';
                 break;
-
+            
+            case 'decimal':
+                $type = 'typeful.number';
+                $options['precision'] = $column['NUMERIC_SCALE'];
+                break;
+            
             default:
                 throw new \UnexpectedValueException("Unknown type $dataType");
         }

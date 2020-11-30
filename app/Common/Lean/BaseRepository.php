@@ -221,6 +221,13 @@ abstract class BaseRepository extends Repository implements IQueryable
             return null;
         }
 
+        if (is_array($row)) {
+            $class = $this->getEntityClass();
+            $entity = new $class($row);
+            $this->persist($entity);
+            return $entity;
+        }
+
         return $this->createEntity($row);
     }
 

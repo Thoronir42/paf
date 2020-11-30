@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a4b720ffaa5e2fdc1adde4e343d464eb",
+    "content-hash": "94699c21071d04691dd3451a996a2299",
     "packages": [
         {
             "name": "behat/behat",
@@ -3132,23 +3132,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/nette-typeful.git",
-                "reference": "cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4"
+                "reference": "dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4",
-                "reference": "cb8c4112bc9bae9bb71d85e706fc7a99a31f11a4",
+                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf",
+                "reference": "dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf",
                 "shasum": ""
             },
             "require": {
                 "league/flysystem": "^1.1",
                 "nette/forms": "^3.0",
-                "php": "^7.3",
-                "sestep/typeful": "0.8"
+                "php": ">=7.3",
+                "sestep/typeful": "^0.10"
             },
             "require-dev": {
                 "nette/di": "^3.0",
-                "phpunit/phpunit": "^9.3"
+                "phpunit/phpunit": "^9.3",
+                "tracy/tracy": "^2.7"
             },
             "suggest": {
                 "nette/di": "For simpler integration into Nette DI based applications",
@@ -3174,9 +3175,9 @@
             "description": "Extension of Typeful package for Nette framework",
             "support": {
                 "issues": "https://github.com/SeStep/nette-typeful/issues",
-                "source": "https://github.com/SeStep/nette-typeful/tree/v0.8.0"
+                "source": "https://github.com/SeStep/nette-typeful/tree/main"
             },
-            "time": "2020-11-17T22:00:19+00:00"
+            "time": "2020-11-30T13:26:52+00:00"
         },
         {
             "name": "sestep/typeful",
@@ -3184,21 +3185,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/typeful.git",
-                "reference": "3396216362bbfff701786c5f223adf81e5d9f9be"
+                "reference": "a1ff46d0585834f8c74d9e1cd6587b4046b86389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/typeful/zipball/3396216362bbfff701786c5f223adf81e5d9f9be",
-                "reference": "3396216362bbfff701786c5f223adf81e5d9f9be",
+                "url": "https://api.github.com/repos/SeStep/typeful/zipball/a1ff46d0585834f8c74d9e1cd6587b4046b86389",
+                "reference": "a1ff46d0585834f8c74d9e1cd6587b4046b86389",
                 "shasum": ""
             },
             "require": {
                 "nette/schema": "^1.0",
-                "php": "^7.3"
+                "php": ">=7.3"
             },
             "require-dev": {
-                "contributte/console": "^0.8.0",
-                "phpunit/phpunit": "^9.0"
+                "nette/di": "^3.0",
+                "phpunit/phpunit": "^9.0",
+                "symfony/console": "^5.2",
+                "tracy/tracy": "^2.7"
             },
             "suggest": {
                 "contributte/console": "CLI commands for interaction with Typeful",
@@ -3226,7 +3229,7 @@
                 "issues": "https://github.com/SeStep/typeful/issues",
                 "source": "https://github.com/SeStep/typeful/tree/main"
             },
-            "time": "2020-11-19T10:07:11+00:00"
+            "time": "2020-11-30T12:50:21+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -6190,22 +6193,16 @@
     ],
     "aliases": [
         {
-            "package": "sestep/typeful",
-            "version": "dev-main",
-            "alias": "0.8",
-            "alias_normalized": "0.8.0.0"
-        },
-        {
             "package": "sestep/entity-ids",
             "version": "dev-master",
             "alias": "0.9.x-dev",
             "alias_normalized": "0.9.9999999.9999999-dev"
         },
         {
-            "package": "sestep/nette-typeful",
+            "package": "sestep/typeful",
             "version": "dev-main",
-            "alias": "0.8",
-            "alias_normalized": "0.8.0.0"
+            "alias": "0.10.0",
+            "alias_normalized": "0.10.0.0"
         }
     ],
     "minimum-stability": "dev",
