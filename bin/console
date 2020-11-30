@@ -1,9 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
-call_user_func(static function () {
-    /** @var \Nette\DI\Container $container */
-    $container = require dirname(__DIR__) . '/app/bootstrap.php';
+require __DIR__ . "/../vendor/autoload.php";
 
-    $application = $container->getByType(\Contributte\Console\Application::class);
-    $application->run();
-});
+PAF\Bootstrap::createContainer()
+    ->getByType(\Contributte\Console\Application::class)
+    ->run();

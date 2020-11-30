@@ -3,9 +3,8 @@
 // Uncomment this line if you must temporarily take down your site for maintenance.
 // require __DIR__ . '/.maintenance.php';
 
-/** @var Nette\DI\Container $container */
-$container = require __DIR__ . '/../app/bootstrap.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-/** @var Nette\Application\Application $application */
+$container = PAF\Bootstrap::createContainer();
 $application = $container->getByType(Nette\Application\Application::class);
 $application->run();
