@@ -3132,19 +3132,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/nette-typeful.git",
-                "reference": "dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf"
+                "reference": "dd160c060d1102646f6fa80b4c9ee18aac407829"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf",
-                "reference": "dadcfd2afa9b2a6c016b9fc9ab94cb9000f863bf",
+                "url": "https://api.github.com/repos/SeStep/nette-typeful/zipball/dd160c060d1102646f6fa80b4c9ee18aac407829",
+                "reference": "dd160c060d1102646f6fa80b4c9ee18aac407829",
                 "shasum": ""
             },
             "require": {
                 "league/flysystem": "^1.1",
                 "nette/forms": "^3.0",
                 "php": ">=7.3",
-                "sestep/typeful": "^0.10"
+                "sestep/typeful": "dev-main as 0.10.x-dev"
             },
             "require-dev": {
                 "nette/di": "^3.0",
@@ -3177,7 +3177,7 @@
                 "issues": "https://github.com/SeStep/nette-typeful/issues",
                 "source": "https://github.com/SeStep/nette-typeful/tree/main"
             },
-            "time": "2020-11-30T13:26:52+00:00"
+            "time": "2020-11-30T15:39:01+00:00"
         },
         {
             "name": "sestep/typeful",
@@ -3185,12 +3185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/SeStep/typeful.git",
-                "reference": "a1ff46d0585834f8c74d9e1cd6587b4046b86389"
+                "reference": "e476e01033e417e46e4cdb60edc3dc7c32770f89"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SeStep/typeful/zipball/a1ff46d0585834f8c74d9e1cd6587b4046b86389",
-                "reference": "a1ff46d0585834f8c74d9e1cd6587b4046b86389",
+                "url": "https://api.github.com/repos/SeStep/typeful/zipball/e476e01033e417e46e4cdb60edc3dc7c32770f89",
+                "reference": "e476e01033e417e46e4cdb60edc3dc7c32770f89",
                 "shasum": ""
             },
             "require": {
@@ -3229,7 +3229,7 @@
                 "issues": "https://github.com/SeStep/typeful/issues",
                 "source": "https://github.com/SeStep/typeful/tree/main"
             },
-            "time": "2020-11-30T12:50:21+00:00"
+            "time": "2020-11-30T15:18:34+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -6197,12 +6197,6 @@
             "version": "dev-master",
             "alias": "0.9.x-dev",
             "alias_normalized": "0.9.9999999.9999999-dev"
-        },
-        {
-            "package": "sestep/typeful",
-            "version": "dev-main",
-            "alias": "0.10.0",
-            "alias_normalized": "0.10.0.0"
         }
     ],
     "minimum-stability": "dev",

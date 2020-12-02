@@ -56,7 +56,7 @@ commonEvents:
     subscribers:
         - PAF\Common\Workflow\EntityWorkflowListener()
 
-typeful:
+netteTypeful:
     filters:
         displayEntityProperty: 'entityProperty'
         displayPropertyName: 'entityPropertyName'

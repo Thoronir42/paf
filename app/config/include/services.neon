@@ -75,6 +75,10 @@ services:
     userFilter: PAF\Modules\CommonModule\Latte\UserFilter
     priceFilter: PAF\Common\Latte\PriceFilter('%s €')
 
+    typeful.valueRenderer:
+        setup:
+            - addRenderer('translate', [@translation.translator, 'translate'])
+
     netteTypeful.entityFormFactory:
         arguments:
             createCallback: [@appForms.formFactory, 'create']
