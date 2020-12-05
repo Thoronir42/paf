@@ -30,7 +30,6 @@ jobs:
         - mysql
       script:
         - mysql -e "create database IF NOT EXISTS paf_test;" -uroot
-        - php bin/console app:database:init --drop-all-tables -d
         - composer test
 
 notifications:
