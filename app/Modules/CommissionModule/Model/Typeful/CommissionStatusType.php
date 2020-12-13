@@ -4,12 +4,12 @@ namespace PAF\Modules\CommissionModule\Model\Typeful;
 
 use Nette\Localization\ITranslator;
 use SeStep\Typeful\Types\PropertyType;
+use SeStep\Typeful\Types\RendersValue;
 use SeStep\Typeful\Validation\ValidationError;
 
-class CommissionStatusType implements PropertyType
+class CommissionStatusType implements PropertyType, RendersValue
 {
-    /** @var ITranslator */
-    private $translator;
+    private ITranslator $translator;
 
     public function __construct(ITranslator $translator)
     {

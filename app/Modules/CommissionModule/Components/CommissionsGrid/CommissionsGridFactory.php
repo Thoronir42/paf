@@ -2,25 +2,22 @@
 
 namespace PAF\Modules\CommissionModule\Components\CommissionsGrid;
 
+use Nette\Application\UI\ITemplateFactory;
 use Nette\Localization\ITranslator;
-use Nette\Utils\Html;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Common\Localization\TranslatorUtils;
-use SeStep\NetteTypeful\Latte\PropertyFilter;
 use Ublaboo\DataGrid\DataGrid;
 
 class CommissionsGridFactory
 {
-    /** @var ITranslator */
-    private $translator;
-    /** @var PropertyFilter */
-    private $propertyFilter;
+    private ITranslator $translator;
+    private ITemplateFactory $templateFactory;
 
-    public function __construct(ITranslator $translator, PropertyFilter $propertyFilter)
+    public function __construct(ITranslator $translator, ITemplateFactory $templateFactory)
     {
         $this->translator = $translator;
-        $this->propertyFilter = $propertyFilter;
+        $this->templateFactory = $templateFactory;
     }
 
     public function create()
@@ -30,34 +27,18 @@ class CommissionsGridFactory
         $commissionGrid->setTranslator($this->translator);
 
         $commissionGrid->addColumnText('fursuit', 'paf.entity.fursuit')
-            ->setRenderer(function (Commission $row) {
-                return $row->specification->characterName;
-            });
+            ->setRenderer(fn (Commission $row) => $row->specification->characterName);
         $commissionGrid->addColumnText('customer', 'commission.customer')
-            ->setRenderer(function (Commission $row) {
-                return $row->customer->displayName;
-            });
+            ->setRenderer(fn (Commission $row) => $row->customer->displayName);
         $commissionGrid->addColumnText('status', 'commission.commission.status')
             ->setRenderer(function (Commission $commission) {
-                $html = Html::el('div');
-                $status = Html::el('span');
-                $status->setText($this->translator->translate('commission.commission.status.' . $commission->status));
-                $html->addHtml($status);
-                if ($commission->archivedOn) {
-                    $archivedOn = $this->propertyFilter->displayEntityProperty(
-                        $commission->archivedOn,
-                        Commission::class,
-                        'archivedOn'
-                    );
-                    $archivedOnEl = Html::el('span');
-                    $archivedOnEl->setText($this->translator->translate('commission.commission.archivedOn', [
-                        'archivedOn' => $archivedOn,
-                    ]));
-                    $html->addHtml($archivedOnEl);
-                }
+                $template = $this->templateFactory->createTemplate();
+                $template->commission = $commission;
 
-                return $html;
+                $template->setFile(__DIR__ .'/commissionGridStatusCell.latte');
+                return $template;
             })
+            ->setTemplateEscaping(false)
             ->setFilterMultiSelect(TranslatorUtils::mapTranslate(
                 CommissionWorkflow::getStatusesLocalized(),
                 $this->translator
