@@ -15,11 +15,8 @@ class SlugRepository extends BaseRepository
 
     public function slugExists(string $slug): bool
     {
-        $result = $this->select()->where([
-            'id' => $slug,
-        ])->fetch();
-
-        return !!$result;
+        $existingSlugs = $this->select('COUNT(id)')->where(['id' => $slug])->fetchSingle();
+        return $existingSlugs > 0;
     }
 
     public function createSlug(string $string, bool $numberSuffixIfExists = false): Slug
@@ -43,18 +40,12 @@ class SlugRepository extends BaseRepository
 
     protected function getMaxSlugSuffix(string $slug): int
     {
-        $maxSlug = $this->select('id')
-            ->where('id LIKE %s', $slug . '%')
-            ->orderBy('id DESC')
-            ->limit(1)
+        $maxSlug = $this->select('CAST(SUBSTRING(id, LOCATE("-", id) + 1, CHAR_LENGTH(id)) AS int) as seqNum')
+            ->where('id LIKE %s', $slug . '-%')
+            ->orderBy('seqNum DESC')
+            ->limit(1)->offset(0)
             ->fetchSingle();
 
-        $parts = explode('-', $maxSlug);
-        $suffix = end($parts);
-        if (!is_numeric($suffix)) {
-            return 1;
-        }
-
-        return (int)$suffix;
+        return is_numeric($maxSlug) ? $maxSlug : 1;
     }
 }
