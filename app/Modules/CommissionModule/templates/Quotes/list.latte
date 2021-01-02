@@ -6,13 +6,16 @@
 </div>
 <hr/>
 
-{if !empty($quotes)}
-    <h2>{_'commission.unresolvedQuotes'}</h2>
-    <div class="row">
-        <div class="col-md-6" n:foreach="$quotes as $name => $quote">
-            {control quote-$name:tile}
+<h2>{_'commission.unresolvedQuotes'}</h2>
+<div class="quote-list">
+    {if !empty($quotes)}
+        <div class="row">
+            <div class="col-md-6" n:foreach="$quotes as $name => $quote">
+                {control quote-$name:tile}
+            </div>
         </div>
-    </div>
-{else}
-    <p>{_'commission.quotes.allResolved'}</p>
-{/if}
+    {else}
+        <p>{_'commission.quotes.allResolved'}</p>
+    {/if}
+</div>
+
