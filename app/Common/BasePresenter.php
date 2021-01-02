@@ -7,12 +7,15 @@ use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
+use PAF\Common\Security\LiveUserIdentity;
 use PAF\Common\Security\ReflectionAuthorizator;
+use PAF\Modules\DirectoryModule\Services\HasAppUser;
 use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
 use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SeStep\GeneralSettings\Settings;
+use SeStep\NetteBootstrap\Controls\Menu\Navbar;
 use stdClass;
 
 /**
@@ -24,6 +27,7 @@ use stdClass;
 abstract class BasePresenter extends Presenter implements LoggerAwareInterface
 {
     use Logging\HasLogger;
+    use HasAppUser;
 
     /** @var string @persistent */
     public $lang = 'en';
@@ -79,7 +83,12 @@ abstract class BasePresenter extends Presenter implements LoggerAwareInterface
 
     public function createComponentNavbar()
     {
-        return $this->context->getService('paf.navbar');
+        /** @var Navbar $navBar */
+        $navBar = $this->context->getService('paf.navbar');
+        if ($this->dirPerson) {
+            $navBar->setUserName($this->appUser->username);
+        }
+        return $navBar;
     }
 
     public function setLogger(LoggerInterface $logger)
