@@ -13,24 +13,39 @@ use SeStep\GeneralSettings\SectionNavigator;
 use SeStep\LeanSettings\Model\Section;
 use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
+/**
+ * @property-read Model\Section $rootSection
+ */
 class LeanOptionsAdapter implements IOptionsAdapter
 {
     /** @var OptionNodeRepository */
     private $nodeRepository;
 
+    /** @var string */
+    private $rootName;
     /** @var Model\Section */
-    private $rootSection;
+    private $rootSectionCached;
+
     /**
      * @var int
      */
     private $maxSectionItems;
 
+    public function __get($name)
+    {
+        if ($name === 'rootSection') {
+            if (!$this->rootSectionCached) {
+                $this->rootSectionCached = $this->findOrCreateSection($this->rootName, 'Root entry for options');
+            }
+            return $this->rootSectionCached;
+        }
+    }
+
     public function __construct(OptionNodeRepository $nodeRepository, string $rootName = '', int $maxSectionItems = 99)
     {
         $this->nodeRepository = $nodeRepository;
         $this->maxSectionItems = $maxSectionItems;
-
-        $this->rootSection = $this->findOrCreateSection($rootName, 'Root entry for options');
+        $this->rootName = $rootName;
     }
 
     public function addSection(string $name): Model\Section
@@ -84,8 +99,8 @@ class LeanOptionsAdapter implements IOptionsAdapter
 
             $this->nodeRepository->persist($option);
             $parent->clearOptionsCache();
-            $this->rootSection->clearOptionsCache();
         }
+        $this->rootSectionCached = null;
     }
 
     /**
