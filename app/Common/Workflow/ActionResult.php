@@ -4,14 +4,9 @@ namespace PAF\Common\Workflow;
 
 class ActionResult
 {
-    /** @var bool */
-    private $success;
-    /** @var string */
-    private $message;
-    /**
-     * @var array
-     */
-    private $params;
+    private bool $success;
+    private ?string $message;
+    private array $params;
 
     public function __construct(bool $success, string $message = null, array $params = [])
     {
@@ -34,8 +29,6 @@ class ActionResult
     {
         return $this->params;
     }
-
-
 
     public static function illegalAction(
         string $state,

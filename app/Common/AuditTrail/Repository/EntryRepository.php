@@ -2,7 +2,7 @@
 
 namespace PAF\Common\AuditTrail\Repository;
 
-use PAF\Common\Feed\Source\FeedSource;
+use PAF\Modules\Feed\Source\FeedSource;
 use PAF\Common\Lean\BaseRepository;
 use PAF\Common\Lean\LeanRepositoryFeedSource;
 

@@ -7,13 +7,10 @@ use SeStep\GeneralSettings\Model\INode;
 
 class DomainLocator
 {
-    /** @var string */
-    protected $fqn;
+    protected string $fqn;
 
-    /** @var int */
-    protected $firstDelimiter;
-    /** @var int */
-    protected $lastDelimiter;
+    protected ?int $firstDelimiter;
+    protected ?int $lastDelimiter;
 
     public function __construct(string $name, $domain = null)
     {
@@ -22,7 +19,7 @@ class DomainLocator
 
     public function getName(): string
     {
-        if ($this->lastDelimiter === false) {
+        if ($this->lastDelimiter === null) {
             return $this->fqn;
         }
 
@@ -31,7 +28,7 @@ class DomainLocator
 
     public function getDomain(): string
     {
-        if ($this->lastDelimiter === false) {
+        if ($this->lastDelimiter === null) {
             return '';
         }
 
@@ -40,7 +37,7 @@ class DomainLocator
 
     public function getTopDomain()
     {
-        if ($this->firstDelimiter === false) {
+        if ($this->firstDelimiter === null) {
             return '';
         }
 
@@ -49,7 +46,7 @@ class DomainLocator
 
     public function shiftDomain(): string
     {
-        if ($this->firstDelimiter === false) {
+        if ($this->firstDelimiter === null) {
             return '';
         }
 
@@ -57,11 +54,11 @@ class DomainLocator
         $this->fqn = substr($this->fqn, $this->firstDelimiter + 1);
 
         if ($this->firstDelimiter === $this->lastDelimiter) {
-            $this->firstDelimiter = $this->lastDelimiter = false;
+            $this->firstDelimiter = $this->lastDelimiter = null;
         } else {
             $removedLength = $this->firstDelimiter + 1;
             $this->lastDelimiter -= $removedLength;
-            $this->firstDelimiter = strpos($this->fqn, INode::DOMAIN_DELIMITER);
+            $this->firstDelimiter = $this->makePos(strpos($this->fqn, INode::DOMAIN_DELIMITER));
         }
 
         return $domain;
@@ -70,7 +67,7 @@ class DomainLocator
 
     public function pop(): string
     {
-        if ($this->lastDelimiter === false) {
+        if ($this->lastDelimiter === null) {
             $result = $this->fqn;
             $this->fqn = '';
         } else {
@@ -78,9 +75,9 @@ class DomainLocator
             $this->fqn = substr($this->fqn, 0, $this->lastDelimiter);
 
             if ($this->firstDelimiter === $this->lastDelimiter) {
-                $this->firstDelimiter = $this->lastDelimiter = false;
+                $this->firstDelimiter = $this->lastDelimiter = null;
             } else {
-                $this->lastDelimiter = strrpos($this->fqn, INode::DOMAIN_DELIMITER);
+                $this->lastDelimiter = $this->makePos(strrpos($this->fqn, INode::DOMAIN_DELIMITER));
             }
         }
 
@@ -91,8 +88,8 @@ class DomainLocator
     {
         $this->fqn = $fqn;
 
-        $this->firstDelimiter = strpos($fqn, INode::DOMAIN_DELIMITER);
-        $this->lastDelimiter = strrpos($fqn, INode::DOMAIN_DELIMITER);
+        $this->firstDelimiter = $this->makePos(strpos($fqn, INode::DOMAIN_DELIMITER));
+        $this->lastDelimiter = $this->makePos(strrpos($fqn, INode::DOMAIN_DELIMITER));
     }
 
     public function getFQN(): string
@@ -103,6 +100,22 @@ class DomainLocator
     public function __toString()
     {
         return $this->getFQN();
+    }
+
+    /**
+     * @param int|false $pos
+     * @return int|null
+     */
+    private function makePos($pos): ?int
+    {
+        return is_int($pos) ? $pos : null;
+    }
+
+
+    public function with(string...$parts): DomainLocator
+    {
+        $partsStr = implode(INode::DOMAIN_DELIMITER, $parts);
+        return new DomainLocator($partsStr, $this->getFQN());
     }
 
     /**

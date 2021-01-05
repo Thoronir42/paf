@@ -12,7 +12,7 @@ use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
-use PAF\Common\Feed\Service\FeedService;
+use PAF\Modules\Feed\Service\FeedService;
 use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
 

@@ -12,7 +12,7 @@ use SeStep\GeneralSettings\Model\INode;
  *
  * @property string $type
  *
- * @property Section $parentSection m:hasOne(parent_section_id)
+ * @property Section|null $parentSection m:hasOne(parent_section_id)
  *
  */
 abstract class OptionNode extends Entity implements INode

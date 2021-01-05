@@ -2,16 +2,15 @@
 
 namespace SeStep\LeanFixtures\Loaders;
 
+use Iterator;
+
 abstract class FixtureGroup
 {
-    /** @var string */
-    protected $entityClass;
+    protected string $entityClass;
 
-    /** @var string */
-    protected $name;
+    protected string $name;
 
     /**
-     * EntityGroup constructor.
      * @param string $entityClass
      * @param string $name
      */
@@ -31,5 +30,5 @@ abstract class FixtureGroup
         return $this->name;
     }
 
-    abstract public function entities(): \Iterator;
+    abstract public function entities(): Iterator;
 }

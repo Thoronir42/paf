@@ -4,14 +4,9 @@ namespace PAF\Common\Latte;
 
 use Nette\Localization\ITranslator;
 
-/**
- * Class YesNoFilter
- * @package Libs\LatteFilters
- */
 final class YesNoFilter extends BaseFilter
 {
-    /** @var ITranslator */
-    private $translator;
+    private ?ITranslator $translator;
 
     public function __construct(ITranslator $translator = null)
     {

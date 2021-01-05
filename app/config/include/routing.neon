@@ -15,6 +15,6 @@ services:
         tags:
             routerModule: Commission
     SettingsRouterModule:
-         class: PAF\Modules\SettingsModule\Routing\SettingsRouterModule
+         class: PAF\Modules\Settings\Routing\SettingsRouterModule
          tags:
              routerModule: Settings

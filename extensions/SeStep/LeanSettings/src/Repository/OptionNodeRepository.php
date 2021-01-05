@@ -14,19 +14,11 @@ use SeStep\LeanSettings\Model\OptionNode;
 use SeStep\LeanSettings\Model\Section;
 
 /**
- * Class LeanOptionNodeRepository
- * @package SeStep\LeanSettings\Repository
- *
  * @method OptionNode|null findOneBy(array $criteria)
  * @method OptionNode[] findBy(array $criteria)
  */
 class OptionNodeRepository extends BaseRepository
 {
-    public function __construct(Connection $connection, IMapper $mapper, IEntityFactory $entityFactory)
-    {
-        parent::__construct($connection, $mapper, $entityFactory, 'fqn');
-    }
-
     public function get(string $name = null, string $domain = null): OptionNode
     {
         $fqn = DomainLocator::concatFQN($name, $domain);

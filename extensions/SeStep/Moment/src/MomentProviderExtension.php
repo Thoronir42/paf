@@ -3,8 +3,8 @@
 namespace SeStep\Moment;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
-use Nette\DI\ServiceDefinition;
 
 class MomentProviderExtension extends CompilerExtension
 {

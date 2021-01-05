@@ -6,8 +6,7 @@ use DateTime;
 
 class RelativeMomentProvider implements MomentProvider
 {
-    /** @var DateTime */
-    private $now;
+    private DateTime $now;
 
     public function __construct(DateTime $now = null)
     {

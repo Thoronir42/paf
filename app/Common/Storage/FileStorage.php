@@ -6,11 +6,9 @@ use Nette\Http\FileUpload;
 
 class FileStorage
 {
+    private string $directory;
 
-    private $directory;
-
-
-    public function __construct($directory)
+    public function __construct(string $directory)
     {
         if (substr($directory, strlen($directory) - 1, 1) !== DIRECTORY_SEPARATOR) {
             $directory .= DIRECTORY_SEPARATOR;
@@ -26,7 +24,7 @@ class FileStorage
      *
      * @return string
      */
-    public function save(string $destFileName, FileUpload $file, string $fileCategory = null)
+    public function save(string $destFileName, FileUpload $file, string $fileCategory = null): string
     {
         if ($fileCategory) {
             $destFileName = $fileCategory . DIRECTORY_SEPARATOR . $destFileName;
@@ -43,7 +41,7 @@ class FileStorage
         return $destFile;
     }
 
-    public function delete($fileName)
+    public function delete($fileName): bool
     {
         return unlink($this->directory . $fileName);
     }

@@ -10,22 +10,23 @@ use SeStep\LeanFixtures\FixtureDao;
 
 final class RepositoryFixtureDao implements FixtureDao
 {
-    /** @var IMapper */
-    private $mapper;
-    /** @var Repository */
-    private $repository;
+    private IMapper $mapper;
+    private Repository $repository;
 
-    private $entityClass;
+    private string $entityClass;
 
     public function __construct(BaseRepository $repository, IMapper $mapper)
     {
         $this->repository = $repository;
         $this->mapper = $mapper;
+
+        $table = $this->mapper->getTableByRepositoryClass(get_class($this->repository));
+        $this->entityClass = $this->mapper->getEntityClass($table);
     }
 
     public function create($entityData): int
     {
-        $entityClass = $this->getEntityClass();
+        $entityClass = $this->entityClass;
         $entity = new $entityClass();
         foreach ($entityData as $property => $value) {
             $entity->$property = $value;
@@ -49,7 +50,7 @@ final class RepositoryFixtureDao implements FixtureDao
     public function getPropertyRelatedClasses(): array
     {
         /** @var Entity|string $entityClass */
-        $entityClass = $this->getEntityClass();
+        $entityClass = $this->entityClass;
         $reflection = $entityClass::getReflection($this->mapper);
 
         $properties = $reflection->getEntityProperties();
@@ -58,9 +59,7 @@ final class RepositoryFixtureDao implements FixtureDao
             return $propertyReflection->isWritable() && $propertyReflection->hasRelationship();
         });
 
-        return array_map(function (Property $property) {
-            return $property->getType();
-        }, $modifiableRelatedProperties);
+        return array_map(fn (Property $property) => $property->getType(), $modifiableRelatedProperties);
     }
 
     public function get($value)
@@ -70,11 +69,6 @@ final class RepositoryFixtureDao implements FixtureDao
 
     public function getEntityClass(): string
     {
-        if (!$this->entityClass) {
-            $table = $this->mapper->getTableByRepositoryClass(get_class($this->repository));
-            $this->entityClass = $this->mapper->getEntityClass($table);
-        }
-
         return $this->entityClass;
     }
 }

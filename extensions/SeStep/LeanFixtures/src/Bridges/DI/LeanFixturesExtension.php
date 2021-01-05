@@ -33,7 +33,9 @@ class LeanFixturesExtension extends CompilerExtension
             $files = $config->initFiles;
             $builder->addDefinition($this->prefix('initCommand'))
                 ->setType(InitFixturesCommand::class)
-                ->setArguments(['files' => $files]);
+                ->setArguments(['files' => $files])
+                ->addSetup('setName', ['leanFixtures:initialize'])
+                ->addTag('console.command', 'leanFixtures:initialize');
         }
     }
 }

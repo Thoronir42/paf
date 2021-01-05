@@ -2,6 +2,7 @@
 
 namespace SeStep\LeanSettings;
 
+use InvalidArgumentException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\OptionNotFoundException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
@@ -10,26 +11,17 @@ use SeStep\GeneralSettings\IOptionsAdapter;
 use SeStep\GeneralSettings\Model\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 
-use SeStep\LeanSettings\Model\Section;
-use SeStep\LeanSettings\Repository\OptionNodeRepository;
-
 /**
  * @property-read Model\Section $rootSection
  */
 class LeanOptionsAdapter implements IOptionsAdapter
 {
-    /** @var OptionNodeRepository */
-    private $nodeRepository;
+    private Repository\OptionNodeRepository $nodeRepository;
 
-    /** @var string */
-    private $rootName;
-    /** @var Model\Section */
-    private $rootSectionCached;
+    private string $rootName;
+    private ?Model\Section $rootSectionCached = null;
 
-    /**
-     * @var int
-     */
-    private $maxSectionItems;
+    private int $maxSectionItems;
 
     public function __get($name)
     {
@@ -41,8 +33,11 @@ class LeanOptionsAdapter implements IOptionsAdapter
         }
     }
 
-    public function __construct(OptionNodeRepository $nodeRepository, string $rootName = '', int $maxSectionItems = 99)
-    {
+    public function __construct(
+        Repository\OptionNodeRepository $nodeRepository,
+        string $rootName = '',
+        int $maxSectionItems = 99
+    ) {
         $this->nodeRepository = $nodeRepository;
         $this->maxSectionItems = $maxSectionItems;
         $this->rootName = $rootName;
@@ -58,28 +53,29 @@ class LeanOptionsAdapter implements IOptionsAdapter
         return $this->nodeRepository->createSection($fqn);
     }
 
-    public function addValue($value, string $section = '')
+    public function addValue($value, string $section = ''): bool
     {
-        $parent = $this->getNode($section);
-        if (!$parent instanceof Section) {
+        $dl = new DomainLocator($section, $this->getFQN());
+        $parent = $this->findOrCreateSection($dl->getFQN(), "");
+        if (!$parent instanceof Model\Section) {
             throw new SectionNotFoundException($section, $parent);
         }
 
-        for ($freeIndex = 0; $freeIndex < $this->maxSectionItems && $parent->hasNode($freeIndex); $freeIndex++) {
-            continue; // hic sunt leones
+        $freeIndex = 0;
+        while ($parent->hasNode($freeIndex)) {
+            $freeIndex++;
+            if ($freeIndex > $this->maxSectionItems) {
+                return false;
+            }
         }
 
-        if ($freeIndex >= $this->maxSectionItems) {
-            return false;
-        }
-
-        $this->setValue($value, "$freeIndex");
+        $this->setValue($value, DomainLocator::concatFQN("$freeIndex", $section));
         return true;
     }
 
     public function setValue($value, string $name)
     {
-        $entry = $this->nodeRepository->find($name);
+        $entry = $this->nodeRepository->findOneBy(['fqn' => $name]);
 
         if ($entry) {
             if (!$entry instanceof Model\Option) {
@@ -104,7 +100,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
     }
 
     /**
-     * @param Model\Section $section
+     * @param Model\Section|string $section
      * @param array $values
      */
     public function setMultipleValues($section, array $values)
@@ -116,7 +112,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
             }
         } else {
             if (!$section instanceof Model\Section) {
-                throw new \InvalidArgumentException("Parameter section expected to be fqn or instane of "
+                throw new InvalidArgumentException("Parameter section expected to be fqn or instance of "
                     . Model\Section::class);
             }
             $sec = $section;
@@ -158,7 +154,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         return $this->rootSection->getIterator();
     }
 
-    public function count()
+    public function count(): int
     {
         return $this->rootSection->count();
     }
@@ -213,7 +209,7 @@ class LeanOptionsAdapter implements IOptionsAdapter
         return $this->rootSection->getValue($name);
     }
 
-    private function findOrCreateSection(string $fqn, string $caption)
+    private function findOrCreateSection(string $fqn, string $caption): Model\Section
     {
         $section = $this->nodeRepository->findSection($fqn);
         if (!$section) {

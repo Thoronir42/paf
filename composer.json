@@ -15,7 +15,8 @@
     "initialize-workdir": "@php bin/console a:d:i --drop-all-tables -d && @php bin/console l:i && @php bin/console a:s:s",
     "test": "phpunit",
     "phpcs": "phpcs app/ test/ extensions/",
-    "phpcbf": "phpcbf app/ test/ extensions/"
+    "phpcbf": "phpcbf app/ test/ extensions/",
+    "test-e2e": "behat"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -59,8 +60,9 @@
     ],
     "psr-4": {
       "PAF\\Modules\\OfferModule\\": "appModules/Offer/src/",
+      "PAF\\Modules\\Feed\\": "appModules/Feed/src/",
+      "PAF\\Modules\\Settings\\": "appModules/Settings/src/",
       "PAF\\": "app/",
-      "SeStep\\FileAttachable\\": "extensions/SeStep/FileAttachable/src/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",

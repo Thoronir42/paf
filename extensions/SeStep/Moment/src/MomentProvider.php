@@ -2,7 +2,9 @@
 
 namespace SeStep\Moment;
 
+use DateTime;
+
 interface MomentProvider
 {
-    public function now(): \DateTime;
+    public function now(): DateTime;
 }

@@ -8,12 +8,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class InitFixturesCommand extends Command
 {
-    protected static $defaultName = 'leanFixtures:initialize';
+    private EntityFixtures $fixtures;
 
-    /** @var EntityFixtures */
-    private $fixtures;
-
-    protected $files;
+    protected array $files;
 
     public function __construct(EntityFixtures $fixtures, array $files = [])
     {

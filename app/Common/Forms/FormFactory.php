@@ -4,18 +4,13 @@ namespace PAF\Common\Forms;
 
 use Nette\InvalidArgumentException;
 use Nette\Localization\ITranslator;
-use Nette\SmartObject;
 
 use Nette\Forms\Form as NetteForm;
 
 class FormFactory
 {
-    use SmartObject;
-
-    /** @var ITranslator */
-    private $translator;
-    /** @var string */
-    private $defaultFormClass;
+    private ITranslator $translator;
+    private string $defaultFormClass;
 
     public function __construct(ITranslator $translator, string $defaultFormClass = NetteForm::class)
     {
@@ -24,7 +19,7 @@ class FormFactory
     }
 
     /**
-     * @param string $formClass
+     * @param ?string $formClass
      *
      * @return NetteForm
      */

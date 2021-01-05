@@ -7,39 +7,32 @@ use Nette\Application\UI\ITemplate;
 use Nette\Application\UI\Presenter;
 use Nette\Bridges\ApplicationLatte\Template;
 use Nette\Localization\ITranslator;
-use PAF\Common\Security\LiveUserIdentity;
 use PAF\Common\Security\ReflectionAuthorizator;
 use PAF\Modules\DirectoryModule\Services\HasAppUser;
-use PAF\Modules\SettingsModule\Components\SettingsControl\OptionNodeControl;
-use PAF\Modules\SettingsModule\InlineOption\SettingsOptionAccessor;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
-use SeStep\GeneralSettings\Settings;
+
+use PAF\Modules\Settings\SettingsAccess;
 use SeStep\NetteBootstrap\Controls\Menu\Navbar;
 use stdClass;
 
 /**
- * Class BasePresenter
- * @package PAF\Common
- *
  * @property-read Template|stdClass $template
  */
 abstract class BasePresenter extends Presenter implements LoggerAwareInterface
 {
     use Logging\HasLogger;
     use HasAppUser;
+    use SettingsAccess;
 
-    /** @var string @persistent */
-    public $lang = 'en';
+    /** @persistent */
+    public string $lang = 'en';
 
-    /** @var Settings @inject */
-    public $settings;
+    /** @inject */
+    public ITranslator $translator;
 
-    /** @var ITranslator @inject */
-    public $translator;
-
-    /** @var ReflectionAuthorizator @inject */
-    public $reflectionAuthorizator;
+    /** @inject */
+    public ReflectionAuthorizator $reflectionAuthorizator;
 
 
     protected function createTemplate(): ITemplate
@@ -96,37 +89,13 @@ abstract class BasePresenter extends Presenter implements LoggerAwareInterface
         $this->logger = $logger;
     }
 
-    public function createComponentOption()
-    {
-        $optionAccessor = new SettingsOptionAccessor($this->settings);
-        $optionAccessor->onValueChanged[] = function ($fqn) {
-            if ($this->isAjax()) {
-                $this->sendJson([
-                    'status' => 'success'
-                ]);
-            } else {
-                $this->flashMessage("Value of $fqn changed");
-            }
-        };
-        $optionAccessor->onError[] = function ($ex) {
-            $this->sendJson([
-                'status' => 'error',
-                'message' => get_class($ex) . ': ' . $ex->getMessage(),
-                'source' => $ex->getFile() . ':' . $ex->getLine(),
-            ]);
-        };
-
-        return new OptionNodeControl($optionAccessor, '', $this->translator);
-    }
-
-
     /**
      * @param string $placeholder
      * @param array|string $variables
      * @param string $level
      * @return stdClass
      */
-    protected function flashTranslate($placeholder, $variables = [], $level = 'info')
+    protected function flashTranslate(string $placeholder, $variables = [], $level = 'info'): \stdClass
     {
         if (is_string($variables)) {
             $level = $variables;

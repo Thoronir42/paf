@@ -5,18 +5,23 @@ use IteratorAggregate;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Exceptions\SectionNotFoundException;
 use SeStep\GeneralSettings\Model\INode;
+use Traversable;
 
 class Settings implements IteratorAggregate
 {
-    /** @var IOptionsAdapter */
-    public $options;
+    public IOptionsAdapter $options;
 
     public function __construct(IOptionsAdapter $options)
     {
         $this->options = $options;
     }
 
-    public function findNode($fullName, string $filterType = null)
+    /**
+     * @param string $fullName
+     * @param string|null $filterType
+     * @return INode|null
+     */
+    public function findNode(string $fullName, string $filterType = null): ?INode
     {
         $node = $this->options->getNode($fullName);
         if ($node) {
@@ -33,7 +38,7 @@ class Settings implements IteratorAggregate
      * @return Model\IOptionSection
      * @throws SectionNotFoundException
      */
-    public function getSection($fullName)
+    public function getSection($fullName): Model\IOptionSection
     {
         $node = $this->findNode($fullName);
 
@@ -49,7 +54,7 @@ class Settings implements IteratorAggregate
      * @return Model\IOption
      * @throws NodeNotFoundException
      */
-    public function getOption(string $fullName)
+    public function getOption(string $fullName): Model\IOption
     {
         $node = $this->findNode($fullName);
 
@@ -61,29 +66,29 @@ class Settings implements IteratorAggregate
     }
 
     /**
-     * @param string $name
+     * @param string $fullName
      * @return mixed
      */
-    public function getValue($name)
+    public function getValue(string $fullName)
     {
-        return $this->options->getValue($name);
+        return $this->options->getValue($fullName);
     }
 
-    public function setValue($name, $value)
+    public function setValue(string $fullName, $value)
     {
         if (is_array($value)) {
             foreach ($value as $key => $item) {
-                $this->setValue(DomainLocator::concatFQN($key, $name), $item);
+                $this->setValue(DomainLocator::concatFQN($key, $fullName), $item);
             }
 
             return;
         }
 
-        $this->options->setValue($value, $name);
+        $this->options->setValue($value, $fullName);
     }
 
     /**
-     * @return INode[]|\Traversable
+     * @return INode[]|Traversable
      */
     public function getIterator()
     {

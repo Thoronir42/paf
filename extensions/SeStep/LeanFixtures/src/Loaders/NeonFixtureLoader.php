@@ -7,8 +7,7 @@ use Nette\Neon\Neon;
 
 class NeonFixtureLoader implements FixtureLoader
 {
-    /** @var string */
-    private $file;
+    private string $file;
 
     public function __construct(string $file)
     {
@@ -22,7 +21,7 @@ class NeonFixtureLoader implements FixtureLoader
     /**
      * @return FixtureGroup[]
      */
-    public function getGroups()
+    public function getGroups(): array
     {
         $groups = $this->parseFile($this->file);
 

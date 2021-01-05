@@ -4,10 +4,6 @@ namespace PAF\Common\Latte;
 
 use Nette\SmartObject;
 
-/**
- * Class BaseFilter
- * @package Libs\LatteFilters
- */
 abstract class BaseFilter
 {
     use SmartObject;

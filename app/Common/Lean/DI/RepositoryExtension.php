@@ -21,6 +21,9 @@ class RepositoryExtension extends CompilerExtension
             if (method_exists($repoClass, 'injectTypefulRegistry')) {
                 $definition->addSetup('injectTypefulRegistry');
             }
+            if (method_exists($repoClass, 'registerUniquenessEvents')) {
+                $definition->addSetup('registerUniquenessEvents');
+            }
 
             $definition->addSetup('$mapper = ?;', [$builder->getDefinition('leanMapper.mapper')]);
             $definition->addSetup('$entityClass = $mapper->getEntityClass($mapper->getTableByRepositoryClass(?))', [

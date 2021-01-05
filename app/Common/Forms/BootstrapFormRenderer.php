@@ -22,7 +22,7 @@ class BootstrapFormRenderer extends DefaultFormRenderer
         return parent::render($form, $mode);
     }
 
-    private function createWrappers()
+    private function createWrappers(): array
     {
         return [
             'form' => [
