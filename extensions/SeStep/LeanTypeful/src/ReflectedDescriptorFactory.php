@@ -10,12 +10,9 @@ use SeStep\Typeful\Entity\Property;
 
 class ReflectedDescriptorFactory
 {
-    /** @var IMapper */
-    private $mapper;
-    /** @var ReflectionProvider */
-    private $provider;
-    /** @var Cache */
-    private $cache;
+    private IMapper $mapper;
+    private ReflectionProvider $provider;
+    private Cache $cache;
 
     public function __construct(IMapper $mapper, ReflectionProvider $provider, Cache $cache)
     {

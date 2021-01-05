@@ -7,7 +7,7 @@ console:
 
 services:
     command.initDatabase:
-        class: Data\InitDatabaseCommand
+        class: PAF\Common\Console\InitDatabaseCommand
         arguments:
             databaseName: %database.database%
             defaultFiles:
@@ -17,8 +17,16 @@ services:
                 - %appDir%/Common/AuditTrail/database/initialize.sql
                 - %appDir%/Modules/CommissionModule/Model/database/initialize.sql
                 - %appDir%/Modules/CmsModule/Model/database/initialize.sql
+        setup:
+            - setName('app:database:init')
+        tags:
+            console.command: app:database:init
 
     command.initDefaultSettings:
-        class: Data\InitDefaultSettingsCommand
+        class: SeStep\GeneralSettings\Console\InitDefaultSettingsCommand
         arguments:
             defaultSettings: %defaultSettings%
+        setup:
+            - setName('app:settings:setDefaults')
+        tags:
+            console.command: app:settings:setDefaults

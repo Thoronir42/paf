@@ -3,6 +3,7 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
+use PAF\Common\Lean\LeanQueryFilter;
 use PAF\Utils\LeanAwareTest;
 use SeStep\GeneralSettings\IOptionsAdapter;
 use SeStep\LeanSettings\LeanOptionsAdapter;
@@ -22,7 +23,8 @@ class LeanOptionsTest extends GenericOptionsTest
     protected function getOptions(): IOptionsAdapter
     {
         $entityFactory = new DefaultEntityFactory();
-        $repo = new OptionNodeRepository(self::$leanConnection, self::$leanMapper, $entityFactory);
+        $leanQueryFilter = new LeanQueryFilter(self::$leanMapper);
+        $repo = new OptionNodeRepository(self::$leanConnection, self::$leanMapper, $entityFactory, $leanQueryFilter);
 
         return new LeanOptionsAdapter($repo);
     }

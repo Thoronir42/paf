@@ -9,12 +9,9 @@ use PAF\Common\Lean\RepositoryEventsProvider;
 
 abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
 {
-    /** @var AuditTrailService */
-    protected $auditTrailService;
-    /** @var LeanSnapshots */
-    protected $snapshots;
-    /** @var IMapper */
-    protected $mapper;
+    protected AuditTrailService $auditTrailService;
+    protected LeanSnapshots $snapshots;
+    protected IMapper $mapper;
 
     public function __construct(AuditTrailService $auditTrailService, LeanSnapshots $snapshots, IMapper $mapper)
     {
@@ -25,6 +22,7 @@ abstract class AuditTrailRepositoryAdapter implements RepositoryEventsProvider
 
     protected function compare(Entity $entity)
     {
+        // TODO: Investigate whether entity reflection shouldn't be used
         $tableName = $this->mapper->getTable(get_class($entity));
 
         $diff = $this->snapshots->compare($entity);

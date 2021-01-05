@@ -9,10 +9,8 @@ use Nette\Forms\IFormRenderer;
 
 class TemplateFormRenderer implements IFormRenderer
 {
-    /** @var ITemplateFactory */
-    private $templateFactory;
-    /** @var string */
-    private $templateFile;
+    private ITemplateFactory $templateFactory;
+    private string $templateFile;
 
     public function __construct(ITemplateFactory $templateFactory, string $templateFile)
     {

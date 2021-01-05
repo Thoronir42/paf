@@ -3,7 +3,7 @@
 namespace PAF\Common\Lean;
 
 use Dibi\Fluent;
-use PAF\Common\Feed\Source\FeedSource;
+use PAF\Modules\Feed\Source\FeedSource;
 
 class LeanRepositoryFeedSource implements FeedSource
 {

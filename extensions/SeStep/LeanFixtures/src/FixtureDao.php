@@ -12,6 +12,14 @@ interface FixtureDao
 
     public function create($entityData): int;
 
+    /**
+     * Find an entry by a value
+     *
+     * The value represents the entity and may be an ID or any other significant value.
+     *
+     * @param $value
+     * @return mixed
+     */
     public function findBy($value);
 
     /**

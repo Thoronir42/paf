@@ -11,10 +11,8 @@ use PAF\Modules\CommonModule\Services\FilesService;
 // todo: implement properly
 class PafImageStorage
 {
-    /** @var FileStorage */
-    private $fileStorage;
-    /** @var FilesService */
-    private $files;
+    private FileStorage $fileStorage;
+    private FilesService $files;
 
     public function __construct(FileStorage $fileStorage, FilesService $files)
     {

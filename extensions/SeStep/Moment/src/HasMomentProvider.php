@@ -6,8 +6,7 @@ use DateTime;
 
 trait HasMomentProvider
 {
-    /** @var MomentProvider */
-    private $momentProvider;
+    private MomentProvider $momentProvider;
 
     /**
      * Retrieves MomentProvider instance

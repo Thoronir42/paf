@@ -2,7 +2,7 @@
 
 namespace PAF\Utils;
 
-use Data\InitDatabaseCommand;
+use PAF\Common\Console\InitDatabaseCommand;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 

@@ -2,6 +2,9 @@
 
 namespace SeStep\GeneralSettingsInMemory\Model;
 
+use ArrayAccess;
+use ArrayIterator;
+use RuntimeException;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Model\INode;
@@ -10,10 +13,10 @@ use SeStep\GeneralSettings\Model\IOptionSectionWritable;
 use SeStep\GeneralSettings\Model\OptionTypeEnum;
 use SeStep\GeneralSettings\SectionNavigator;
 
-class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOptionSectionWritable, \ArrayAccess
+class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOptionSectionWritable, ArrayAccess
 {
 
-    protected $nodes = [];
+    protected array $nodes = [];
 
     public function __construct(InMemoryOptionSection $parent, string $name, array &$data)
     {
@@ -29,9 +32,9 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
     }
 
 
-    public function getIterator()
+    public function getIterator(): ArrayIterator
     {
-        return new \ArrayIterator($this->getNodes());
+        return new ArrayIterator($this->getNodes());
     }
 
     public function hasNode($name): bool
@@ -113,25 +116,28 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
                 if ($node instanceof InMemoryOption) {
                     $node->setValue($value);
                 } else {
-                    throw new \RuntimeException("Could not set value");
+                    throw new RuntimeException("Could not set value");
                 }
             }
         }
     }
 
-    public function addValue($value, $name = '')
+    public function addValue($value, $section = '')
     {
-        $dl = new DomainLocator($name, $this->getFQN());
+        $dl = (new DomainLocator($section, $this->getFQN()))->with('_foo');
         /** @var self $section */
-        $section = SectionNavigator::getSectionByDomain($this, $dl);
+        $section = SectionNavigator::getSectionByDomain($this, $dl, SectionNavigator::CREATE_IF_MISSING);
         $offset = $section->data['maxIntOffset']++;
-        $this->setValue($value, "$offset");
+        $section->setValue($value, "$offset");
     }
 
     public function removeNode($name)
     {
-        unset($this->data['nodes'][$name]);
-        unset($this->nodes[$name]);
+        $dl = new DomainLocator($name);
+        /** @var self $section */
+        $section = SectionNavigator::getSectionByDomain($this, $dl);
+        unset($section->data['nodes'][$dl->getName()]);
+        unset($section->nodes[$dl->getName()]);
     }
 
     public function offsetExists($offset): bool
@@ -166,7 +172,7 @@ class InMemoryOptionSection extends InMemoryNode implements IOptionSection, IOpt
         $this->setValue($value, $offset);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->data['nodes']);
     }

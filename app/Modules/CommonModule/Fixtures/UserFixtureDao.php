@@ -11,15 +11,14 @@ use SeStep\LeanFixtures\FixtureDao;
 
 class UserFixtureDao implements FixtureDao
 {
+    private UserRepository $userRepository;
+    private RepositoryFixtureDao $repoDao;
+    private Passwords $passwords;
 
-    /** @var RepositoryFixtureDao */
-    private $repoDao;
-    /** @var Passwords */
-    private $passwords;
-
-    public function __construct(UserRepository $repository, IMapper $mapper, Passwords $passwords)
+    public function __construct(UserRepository $userRepository, IMapper $mapper, Passwords $passwords)
     {
-        $this->repoDao = new RepositoryFixtureDao($repository, $mapper);
+        $this->userRepository = $userRepository;
+        $this->repoDao = new RepositoryFixtureDao($userRepository, $mapper);
         $this->passwords = $passwords;
     }
 
@@ -37,9 +36,9 @@ class UserFixtureDao implements FixtureDao
         return $this->repoDao->create($entityData);
     }
 
-    public function findBy($value)
+    public function findBy($value): ?User
     {
-        return $this->repoDao->findBy($value);
+        return $this->userRepository->findOneBy(['username' => $value]);
     }
 
     public function getPropertyRelatedClasses(): array

@@ -4,8 +4,7 @@ namespace PAF\Common\Latte;
 
 class PriceFilter extends BaseFilter
 {
-    /** @var string */
-    private $currencyFormat;
+    private string $currencyFormat;
 
     public function __construct(string $currencyFormat)
     {

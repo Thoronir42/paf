@@ -13,7 +13,7 @@ class DateInput extends TextInput
     const FORMAT_DATE = "Y-m-d";
     const FORMAT_DATETIME = "Y-m-d H:i";
 
-    protected $format;
+    protected string $format;
 
     public function __construct(string $format, string $label = null)
     {
@@ -25,7 +25,7 @@ class DateInput extends TextInput
         $this->addRule([$this, 'validateDate'], 'invalid-date-format');
     }
 
-    public function setDate(DateTime $value)
+    public function setDate(DateTime $value): self
     {
         return $this->setValue($value->format($this->format));
     }
@@ -35,7 +35,7 @@ class DateInput extends TextInput
      * @return static
      * @internal
      */
-    public function setValue($value)
+    public function setValue($value): self
     {
         if ($value instanceof \DateTime) {
             $value = $value->format($this->format);
@@ -77,7 +77,7 @@ class DateInput extends TextInput
         return $inputGroup;
     }
 
-    private function getBootstrapFormat($format)
+    private function getBootstrapFormat($format): string
     {
         switch ($format) {
             case self::FORMAT_DATE:
@@ -89,7 +89,7 @@ class DateInput extends TextInput
         throw new UnexpectedValueException("Format $format is not supported");
     }
 
-    public function validateDate(DateInput $input)
+    public function validateDate(DateInput $input): bool
     {
         $stringValue = parent::getValue();
 

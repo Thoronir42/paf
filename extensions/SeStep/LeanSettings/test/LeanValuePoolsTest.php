@@ -3,6 +3,7 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
+use PAF\Common\Lean\LeanQueryFilter;
 use PAF\Utils\LeanAwareTest;
 use SeStep\GeneralSettings\IValuePoolsAdapter;
 use SeStep\LeanSettings\LeanValuePoolsAdapter;
@@ -23,8 +24,8 @@ class LeanValuePoolsTest extends GenericValuePoolTest
     protected function getPoolAdapter()
     {
         $entityFactory = new DefaultEntityFactory();
-
-        $repo = new OptionNodeRepository(self::$leanConnection, self::$leanMapper, $entityFactory);
+        $leanQueryFilter = new LeanQueryFilter(self::$leanMapper);
+        $repo = new OptionNodeRepository(self::$leanConnection, self::$leanMapper, $entityFactory, $leanQueryFilter);
 
         return new LeanValuePoolsAdapter($repo);
     }

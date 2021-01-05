@@ -11,5 +11,5 @@ services:
 
 pafFeed:
     entryControlClasses:
-        comment: PAF\Common\Feed\Components\Comment\CommentFeedControl
+        comment: PAF\Modules\Feed\Components\Comment\CommentFeedControl
         logEvent: @auditTrailFeed

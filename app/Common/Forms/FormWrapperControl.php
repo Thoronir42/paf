@@ -9,10 +9,8 @@ use Nette\Utils\ArrayHash;
 
 abstract class FormWrapperControl extends UI\Control
 {
-    /** @var FormFactory */
-    protected $factory;
-    /** @var ITranslator */
-    protected $translator;
+    protected FormFactory $factory;
+    protected ITranslator $translator;
 
     public function __construct(FormFactory $factory, ITranslator $translator)
     {
@@ -20,9 +18,6 @@ abstract class FormWrapperControl extends UI\Control
         $this->translator = $translator;
     }
 
-    /**
-     * @return mixed
-     */
     abstract public function createComponentForm();
 
     /**
@@ -31,9 +26,10 @@ abstract class FormWrapperControl extends UI\Control
      */
     abstract public function processForm(Form $form, $values);
 
-    /** @return Form */
-    protected function form()
+    protected function form(): Form
     {
-        return $this['form'];
+        /** @var Form $form */
+        $form = $this['form'];
+        return $form;
     }
 }

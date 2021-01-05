@@ -3,7 +3,7 @@
 namespace PAF\Common\Model;
 
 use Dibi\Exception;
-use LeanMapper\Connection;
+use Dibi\Connection;
 use PAF\Common\Logging\HasLogger;
 use PAF\Common\Model\Exceptions\TransactionFailedException;
 
@@ -14,8 +14,7 @@ class TransactionManager
 {
     use HasLogger;
 
-    /** @var Connection */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {

@@ -11,8 +11,7 @@ use SeStep\LeanSettings\Repository\OptionNodeRepository;
 
 class LeanValuePoolsAdapter implements IValuePoolsAdapter
 {
-
-    private $optionAdapter;
+    private LeanOptionsAdapter $optionAdapter;
 
     public function __construct(OptionNodeRepository $nodeRepository, string $rootName = '')
     {

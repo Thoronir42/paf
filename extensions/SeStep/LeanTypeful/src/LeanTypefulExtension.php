@@ -11,7 +11,6 @@ use Nette\DI\Definitions\ServiceDefinition;
 use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use SeStep\Typeful\DI\RegisterTypeful;
-use SeStep\Typeful\Entity\GenericDescriptor;
 
 class LeanTypefulExtension extends CompilerExtension
 {
@@ -72,7 +71,7 @@ class LeanTypefulExtension extends CompilerExtension
         }
     }
 
-    private function getReflectionStorage($config)
+    private function getReflectionStorage($config): Statement
     {
         $path = $config->cachePath ?? null;
         if (!$path) {

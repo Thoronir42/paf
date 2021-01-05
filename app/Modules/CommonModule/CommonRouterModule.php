@@ -9,6 +9,6 @@ class CommonRouterModule implements RouterModule
 {
     public function setRoutes(RouteList $routeList): void
     {
-        $routeList->addRoute('sign-in', 'Sign:in');
+        $routeList->addRoute('sign-<action in|out>', ['presenter' => 'Sign']);
     }
 }

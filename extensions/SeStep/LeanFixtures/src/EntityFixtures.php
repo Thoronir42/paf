@@ -2,19 +2,20 @@
 
 namespace SeStep\LeanFixtures;
 
+use ArrayAccess;
 use Nette\InvalidStateException;
 use Nette\UnexpectedValueException;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 final class EntityFixtures
 {
     /** @var FixtureDao[] */
-    private $daoByClass = [];
+    private array $daoByClass;
 
 
     /**
-     * EntityFixtures constructor.
      * @param FixtureDao[] $daos
      */
     public function __construct(array $daos)
@@ -35,7 +36,7 @@ final class EntityFixtures
                 $output->writeln("- processing group '$name'", OutputInterface::VERBOSITY_VERBOSE);
                 $count = $this->loadGroup($group, $output);
                 $output->writeln("- loaded $count items from group '$name'");
-            } catch (\Throwable $ex) {
+            } catch (Throwable $ex) {
                 $output->writeln("Failed to process group '$name': " . $ex->getMessage());
             }
         }
@@ -51,7 +52,7 @@ final class EntityFixtures
         $i = 0;
         foreach ($group->entities() as $n => $entityData) {
             $fixtureId = $group->getName() . "[$n]";
-            if (!is_array($entityData) || (is_object($entityData) && !$entityData instanceof \ArrayAccess)) {
+            if (!is_array($entityData) || (is_object($entityData) && !$entityData instanceof ArrayAccess)) {
                 $output->writeln("Error: Fixture '$fixtureId' is not an associative array");
                 continue;
             }
@@ -77,7 +78,7 @@ final class EntityFixtures
                 if ($result >= 0) {
                     $i++;
                 }
-            } catch (\Throwable $ex) {
+            } catch (Throwable $ex) {
                 $output->writeln("Failed to load item $n: " . $ex->getMessage());
                 $output->writeln($ex->getTraceAsString(), OutputInterface::VERBOSITY_VERY_VERBOSE);
             }
@@ -116,7 +117,7 @@ final class EntityFixtures
      *
      * @return FixtureDao[] resulting map
      */
-    private static function initializeDaoStructure(array $daos)
+    private static function initializeDaoStructure(array $daos): array
     {
         $daoByEntityClass = [];
         foreach ($daos as $key => $dao) {

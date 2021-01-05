@@ -7,10 +7,10 @@ use PAF\Common\Lean\BaseRepository;
 
 class ContactRepository extends BaseRepository
 {
-    protected function isUnique(Entity $entity)
+    protected function isUnique(Entity $entity): bool
     {
         $data = $entity->getData(['person', 'type', 'value']);
-        unset($data[$this->getPrimaryKey()]);
+        unset($data[$this->mapper->getPrimaryKey($this->getTable())]);
 
         return is_null($this->findOneBy($data));
     }

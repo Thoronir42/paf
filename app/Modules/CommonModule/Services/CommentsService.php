@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Services;
 
-use PAF\Common\Feed\Source\FeedSource;
+use PAF\Modules\Feed\Source\FeedSource;
 use PAF\Common\Lean\LeanRepositoryFeedSource;
 use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Model\CommentThread;

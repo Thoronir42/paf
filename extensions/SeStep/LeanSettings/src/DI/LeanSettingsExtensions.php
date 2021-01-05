@@ -12,7 +12,8 @@ class LeanSettingsExtensions extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('nodeRepository'))
-            ->setFactory(OptionNodeRepository::class);
+            ->setFactory(OptionNodeRepository::class)
+            ->addSetup('ensureUnique', ['fqn']);
 
         $builder->addDefinition($this->prefix('options'))
             ->setFactory(LeanOptionsAdapter::class);

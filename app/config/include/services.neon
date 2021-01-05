@@ -9,8 +9,8 @@ services:
     common.transactionManager: PAF\Common\Model\TransactionManager
     common.userRepository:
         class: PAF\Modules\CommonModule\Repository\UserRepository
-        arguments:
-            index: 'username'
+        setup:
+            - ensureUnique('username')
     common.slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
 
     common.users:
@@ -90,5 +90,3 @@ services:
 
     entityWorkflowListener:
         class: PAF\Common\Workflow\EntityWorkflowListener
-        arguments:
-            prefixByClass:

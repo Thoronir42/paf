@@ -4,8 +4,8 @@ namespace PAF\Modules\CommissionModule\Presenters;
 
 use Nette\Application\UI\Form;
 use PAF\Common\BasePresenter;
-use PAF\Common\Feed\Components\Comment\CommentFeedControl;
-use PAF\Common\Feed\Components\FeedControl\FeedControlFactory;
+use PAF\Modules\Feed\Components\Comment\CommentFeedControl;
+use PAF\Modules\Feed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Forms\FormFactory;
 use PAF\Common\Lean\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory;
@@ -29,38 +29,34 @@ final class CommissionPresenter extends BasePresenter
     use DashboardComponent;
     use HasAppUser;
 
-    /** @var CommissionService @inject */
-    public $commissionService;
+    /** @inject */
+    public CommissionService $commissionService;
+    /** @inject */
+    public CommissionsGridFactory $commissionsGridFactory;
+    /** @inject */
+    public FormFactory $formFactory;
 
-    /** @var CommissionsGridFactory @inject */
-    public $commissionsGridFactory;
-    /** @var FormFactory @inject */
-    public $formFactory;
+    /** @inject */
+    public CommissionFormFactory $commissionFormFactory;
+    /** @inject */
+    public CommissionStatusControlFactory $commissionStatusControlFactory;
 
-    /** @var CommissionFormFactory @inject */
-    public $commissionFormFactory;
-    /** @var CommissionStatusControlFactory @inject */
-    public $commissionStatusControlFactory;
+    /** @inject */
+    public CommentsControlFactory $commentsControlFactory;
+    /** @inject */
+    public FeedControlFactory $feedControlFactory;
 
-    /** @var CommentsControlFactory @inject */
-    public $commentsControlFactory;
-    /** @var FeedControlFactory @inject */
-    public $feedControlFactory;
+    /** @inject */
+    public CommentsService $commentsService;
 
-    /** @var CommentsService @inject */
-    public $commentsService;
+    /** @inject */
+    public ProductService $productService;
 
-    /** @var ProductService @inject */
-    public $productService;
-
-    /** @var LeanSnapshots @inject */
-    public $snapshots;
+    /** @inject */
+    public LeanSnapshots $snapshots;
 
     // variables
-    /** @var string @persistent */
-    public $archivedFilter = 'active';
-    /** @var Commission */
-    private $varCommission;
+    private ?Commission $varCommission = null;
 
 
     /**
@@ -68,26 +64,11 @@ final class CommissionPresenter extends BasePresenter
      */
     public function actionList()
     {
-        /** @var Form $filter */
-        $filter = $this['commissionsFilter'];
-        $filter->setDefaults([
-            'archived' => $this->archivedFilter,
-        ]);
     }
 
     public function renderList()
     {
         $filter = ['supplier' => $this->dirPerson];
-        if ($this->archivedFilter) {
-            if ($this->archivedFilter == 'archived') {
-                $filter['!archivedOn'] = null;
-            } elseif ($this->archivedFilter == 'active') {
-                $filter['archivedOn'] = null;
-            } elseif ($this->archivedFilter !== 'any') {
-                $this->archivedFilter = null;
-                $this->redirect('this');
-            }
-        }
 
         /** @var DataGrid $grid */
         $grid = $this['commissions'];
@@ -196,34 +177,6 @@ final class CommissionPresenter extends BasePresenter
                 'name' => $commission->specification->characterName,
             ]);
             $this->redirect('this');
-        };
-
-        return $form;
-    }
-
-    public function createComponentCommissionsFilter(): Form
-    {
-        /** @var Form $form */
-        $form = $this->formFactory->create(Form::class);
-        $archived = $form->addSelect('archived', 'commission.commissions.archivedFilter', [
-            'any' => 'generic.any',
-            'active' => 'commission.commission.status.active',
-            'archived' => 'commission.commission.status.archived',
-        ]);
-        $form->addSubmit('filter', 'generic.action.filter')
-            ->controlPrototype->class[] = 'd-noscript-hidden';
-
-        $archived->controlPrototype->class[] = 'submit-on-change';
-
-        $form->onSuccess[] = function ($form, $values) {
-            $this->archivedFilter = $values['archived'];
-            if ($this->isAjax()) {
-                $this->redrawControl('commissions');
-                $this->payload->postGet = true;
-                $this->payload->url = $this->link('this');
-            } else {
-                $this->redirect('this');
-            }
         };
 
         return $form;

@@ -9,6 +9,7 @@ use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
+use PAF\Common\Lean\GenericEntityForm;
 use PAF\Modules\CommissionModule\Facade\ProductService;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\DirectoryModule\Model\Contact;
@@ -23,12 +24,10 @@ use stdClass;
 class CommissionForm extends FormWrapperControl
 {
     /** @var callable[]  function (Form $form, ArrayHash $result); Occurs when form successfully validates input. */
-    public $onSave = [];
+    public array $onSave = [];
 
-    /** @var ContactDefinitions */
-    private $contactDefinitions;
-    /** @var ProductService */
-    private $productService;
+    private ContactDefinitions $contactDefinitions;
+    private ProductService $productService;
 
     public function __construct(
         FormFactory $formFactory,
@@ -42,8 +41,7 @@ class CommissionForm extends FormWrapperControl
         $this['contact'] = new Container();
     }
 
-    /** @var Commission */
-    private $commission;
+    private ?Commission $commission = null;
 
     public function setEntity(Commission $commission)
     {
@@ -72,6 +70,7 @@ class CommissionForm extends FormWrapperControl
 
     public function createComponentForm()
     {
+        /** @var GenericEntityForm $form */
         $form = $this->factory->create();
 
         $form->addGroup('fursuit-specification');
@@ -123,7 +122,7 @@ class CommissionForm extends FormWrapperControl
         $this->onSave($commission, $form);
     }
 
-    private function getContactDefaultData(Person $customer)
+    private function getContactDefaultData(Person $customer): array
     {
         $data = [
             'name' => $customer->displayName,

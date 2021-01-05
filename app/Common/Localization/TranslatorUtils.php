@@ -6,7 +6,14 @@ use Nette\Localization\ITranslator;
 
 class TranslatorUtils
 {
-    public static function mapTranslate(array $values, ITranslator $translator)
+    /**
+     * Using provided `$translator`, translates each item in `$values`
+     *
+     * @param string[] $values
+     * @param ITranslator $translator
+     * @return string[]
+     */
+    public static function mapTranslate(array $values, ITranslator $translator): array
     {
         $result = [];
 

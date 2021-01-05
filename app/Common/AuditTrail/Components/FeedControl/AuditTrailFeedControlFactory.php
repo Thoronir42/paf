@@ -4,10 +4,10 @@ namespace PAF\Common\AuditTrail\Components\FeedControl;
 
 use PAF\Common\AuditTrail\Entity\Entry;
 use PAF\Modules\CommonModule\Latte\UserFilter;
-use PAF\Common\Feed\Components\FeedControl\FeedEntryControl;
-use PAF\Common\Feed\Components\FeedControl\FeedEntryControlFactory;
-use PAF\Common\Feed\FeedEvents;
-use PAF\Common\Feed\Model\FeedEntry;
+use PAF\Modules\Feed\Components\FeedControl\FeedEntryControl;
+use PAF\Modules\Feed\Components\FeedControl\FeedEntryControlFactory;
+use PAF\Modules\Feed\FeedEvents;
+use PAF\Modules\Feed\Model\FeedEntry;
 
 class AuditTrailFeedControlFactory implements FeedEntryControlFactory
 {

@@ -2,6 +2,7 @@
 
 namespace PAF\Common\Lean;
 
+use LeanMapper\Entity;
 use LeanMapper\Fluent;
 use LeanMapper\IMapper;
 use Ublaboo\DataGrid\DataSource\FilterableDataSource;
@@ -18,26 +19,24 @@ use Ublaboo\DataGrid\Utils\Sorting;
  */
 class LeanMapperDataSource extends FilterableDataSource implements IDataSource
 {
-    /** @var Fluent */
-    private $dataSource;
-    /** @var IQueryable */
-    private $queryable;
-    /** @var IMapper */
-    private $mapper;
-    /** @var string */
-    private $entityClass;
+    private Fluent $dataSource;
+    private IQueryable $queryable;
+    private IMapper $mapper;
+    /** @var string|Entity */
+    private string $entityClass;
 
-    public function __construct(Fluent $dataSource, IQueryable $queryable, IMapper $mapper, string $entityClass)
-    {
+    public function __construct(
+        Fluent $dataSource,
+        IQueryable $queryable,
+        IMapper $mapper,
+        string $entityClass
+    ) {
         $this->dataSource = $dataSource;
         $this->queryable = $queryable;
         $this->mapper = $mapper;
         $this->entityClass = $entityClass;
     }
 
-    /**
-     * Get count of data
-     */
     public function getCount(): int
     {
         $table = $this->mapper->getTable($this->entityClass);
@@ -49,9 +48,6 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
         return $select->fetchSingle();
     }
 
-    /**
-     * Get the data
-     */
     public function getData(): array
     {
         return $this->queryable->makeEntities($this->dataSource->fetchAll());
@@ -67,7 +63,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
     {
         $mappedCondition = [];
         foreach ($condition as $column => $value) {
-            $mappedCondition[$this->mapper->getColumn($this->entityClass, $column)] = $value;
+            $mappedCondition[$this->getColumn($column)] = $value;
         }
 
         $this->dataSource->where($mappedCondition)->limit(1);
@@ -115,7 +111,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
             $this->dataSource->removeClause('ORDER BY');
             $sortMapped = [];
             foreach ($sort as $column => $value) {
-                $sortMapped[$this->mapper->getColumn($this->entityClass, $column)] = $value;
+                $sortMapped[$this->getColumn($column)] = $value;
             }
 
             $this->dataSource->orderBy($sortMapped);
@@ -124,10 +120,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    protected function getDataSource()
+    protected function getDataSource(): Fluent
     {
         return $this->dataSource;
     }
@@ -202,7 +195,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
         $or = [];
 
         foreach ($condition as $column => $value) {
-            $column = $this->mapper->getColumn($this->entityClass, $column);
+            $column = $this->getColumn($column);
 
             if ($filter->isExactSearch()) {
                 $this->dataSource->where("$column = %s", $value);
@@ -255,7 +248,7 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
     {
         $cond = [];
         foreach ($filter->getCondition() as $column => $value) {
-            $cond[$this->mapper->getColumn($this->entityClass, $column)] = $value;
+            $cond[$this->getColumn($column)] = $value;
         }
 
         $this->dataSource->where($cond);
@@ -263,6 +256,12 @@ class LeanMapperDataSource extends FilterableDataSource implements IDataSource
 
     private function getPropertyColumn(Filter\OneColumnFilter $filter): string
     {
-        return $this->mapper->getColumn($this->entityClass, $filter->getColumn());
+        return $this->getColumn($filter->getColumn());
+    }
+
+    private function getColumn(string $propertyName): string
+    {
+        $reflection = $this->entityClass::getReflection($this->mapper);
+        return $reflection->getEntityProperty($propertyName)->getColumn();
     }
 }

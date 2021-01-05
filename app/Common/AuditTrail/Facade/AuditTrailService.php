@@ -13,12 +13,10 @@ class AuditTrailService
 {
     use HasMomentProvider;
 
-    /** @var User */
-    private $user;
-    /** @var EntryRepository */
-    private $entryRepository;
+    private User $user;
+    private EntryRepository $entryRepository;
 
-    private $omittedSubjects = [];
+    private array $omittedSubjects = [];
 
     public function __construct(User $user, MomentProvider $momentProvider, EntryRepository $entryRepository)
     {

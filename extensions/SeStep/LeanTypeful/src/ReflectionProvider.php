@@ -3,13 +3,12 @@
 namespace SeStep\LeanTypeful;
 
 use Dibi\Connection;
+use UnexpectedValueException;
 
 class ReflectionProvider
 {
-    /** @var Connection */
-    private $connection;
-    /** @var string */
-    private $schemaName;
+    private Connection $connection;
+    private string $schemaName;
 
     public function __construct(Connection $connection, string $schemaName)
     {
@@ -83,7 +82,7 @@ class ReflectionProvider
                 break;
             
             default:
-                throw new \UnexpectedValueException("Unknown type $dataType");
+                throw new UnexpectedValueException("Unknown type $dataType");
         }
 
         return [

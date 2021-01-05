@@ -61,7 +61,7 @@ commission:
     acceptedOn: Accepted on
     targetDelivery: Target delivery date
 
-    archivedOn: Archived on %archivedOn%
+    archivedOn: Archived on
 
     status: Status
     status.accepted: Accepted

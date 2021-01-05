@@ -18,7 +18,7 @@ use PAF\Modules\CommonModule\Model\User;
  */
 class Entry extends Entity
 {
-    private $paramsCache;
+    private ?array $paramsCache = null;
 
     public function getParameters(): array
     {

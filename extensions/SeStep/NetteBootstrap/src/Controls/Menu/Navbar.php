@@ -14,6 +14,8 @@ class Navbar extends MenuControl
     protected $brandTarget;
     /** @var NavigationItemsProvider */
     private $signItems;
+    /** @var string */
+    private $userName;
 
     public function __construct(
         string $brandTitle,
@@ -26,6 +28,12 @@ class Navbar extends MenuControl
         $this->title = $brandTitle;
         $this->signItems = $signItems;
         $this->brandTarget = $brandTarget;
+    }
+
+    public function setUserName(string $userName): void
+    {
+        // todo: polish appearance of signed in user
+        $this->userName = $userName;
     }
 
     public function createComponent($name): IComponent
@@ -45,6 +53,8 @@ class Navbar extends MenuControl
         $this->template->title = $this->title;
         $this->template->brandTarget = $this->brandTarget;
         $this->template->items = $this->items;
+
+        $this->template->userName = $this->userName;
 
         $this->template->render();
     }

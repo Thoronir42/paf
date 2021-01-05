@@ -2,9 +2,6 @@
 
 namespace PAF\Modules\CommissionModule\Repository;
 
-use LeanMapper\Connection;
-use LeanMapper\IEntityFactory;
-use LeanMapper\IMapper;
 use PAF\Common\Lean\BaseRepository;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
@@ -14,26 +11,20 @@ use Symfony\Component\Workflow\Transition;
 
 class CommissionRepository extends BaseRepository
 {
-    /** @var CommissionWorkflow */
-    private $commissionWorkflow;
-    /** @var TransactionManager */
-    private $transactionManager;
+    private CommissionWorkflow $commissionWorkflow;
+    private TransactionManager $transactionManager;
 
-    public function __construct(
-        Connection $connection,
-        IMapper $mapper,
-        IEntityFactory $entityFactory,
-        CommissionWorkflow $commissionWorkflow,
-        TransactionManager $transactionManager,
-        string $index = null
-    ) {
-        parent::__construct($connection, $mapper, $entityFactory, $index);
+    public function injectDependencies(CommissionWorkflow $commissionWorkflow, TransactionManager $transactionManager)
+    {
         $this->commissionWorkflow = $commissionWorkflow;
         $this->transactionManager = $transactionManager;
     }
 
-
-    public function getCommissionsByStatus($status = null)
+    /**
+     * @param string $status
+     * @return Commission[]
+     */
+    public function getCommissionsByStatus($status = null): array
     {
         if (!$status) {
             $status = [CommissionWorkflow::STATUS_ACCEPTED, CommissionWorkflow::STATUS_WIP];

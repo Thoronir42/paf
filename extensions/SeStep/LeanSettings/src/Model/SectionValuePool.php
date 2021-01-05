@@ -6,9 +6,7 @@ use SeStep\GeneralSettings\Model as GeneralModel;
 
 class SectionValuePool implements GeneralModel\IValuePool
 {
-
-    /** @var Section */
-    private $section;
+    private Section $section;
 
     public function __construct(Section $section)
     {

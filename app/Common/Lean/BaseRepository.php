@@ -2,217 +2,58 @@
 
 namespace PAF\Common\Lean;
 
-use Dibi\Fluent;
-use Dibi\UniqueConstraintViolationException;
 use LeanMapper\Connection;
 use LeanMapper\Entity;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
-use LeanMapper\Reflection\EntityReflection;
 use LeanMapper\Repository;
-use SeStep\EntityIds\IdGenerator;
+use PAF\Common\Lean\RepositoryTraits;
 
 abstract class BaseRepository extends Repository implements IQueryable
 {
-    private const MAX_ID_ATTEMPTS = 10;
+    use RepositoryTraits\HasIdGenerator;
+    use RepositoryTraits\PersistencePrimitives;
+    use RepositoryTraits\UniquenessCheck;
 
-    private static $CONDITIONS = [
-        true => [
-            'IN' => 'IN',
-            'NULL' => 'IS NULL',
-            'LIKE' => 'LIKE',
-            'EQ' => '=',
-        ],
-        false => [
-            'IN' => 'NOT IN',
-            'NULL' => 'IS NOT NULL',
-            'LIKE' => 'NOT LIKE',
-            'EQ' => '!=',
-        ],
-    ];
-
-    /** @var IdGenerator */
-    protected $idGenerator;
-
-    /** @var string */
-    private $index;
-
-    private $uniqueColumns = [];
+    protected LeanQueryFilter $queryFilter;
 
     public function __construct(
         Connection $connection,
         IMapper $mapper,
         IEntityFactory $entityFactory,
-        string $index = null
+        LeanQueryFilter $queryFilter
     ) {
         parent::__construct($connection, $mapper, $entityFactory);
-        $this->index = $index;
-        if ($index) {
-            $this->uniqueColumns[] = $index;
+        $this->queryFilter = $queryFilter;
+    }
+
+    public function isPersistable(Entity $entity)
+    {
+        if ($entity->isDetached()) {
+            return $this->isUnique($entity);
+        }
+
+        $entityClass = $this->mapper->getEntityClass($this->getTable());
+        if (array_key_exists($this->mapper->getPrimaryKey($entityClass), $entity->getModifiedRowData())) {
+            return $this->isUnique($entity);
+        }
+
+        return true;
+    }
+
+    final public function registerEvents(RepositoryEventsProvider $adapter)
+    {
+        foreach ($adapter->getEvents() as $type => $callback) {
+            $this->events->registerCallback($type, $callback);
         }
     }
 
-    protected function initEvents()
-    {
-        $this->events->registerCallback($this->events::EVENT_BEFORE_CREATE, [$this, 'validateUnique']);
-    }
+    ### Entity DAO code
 
-    /**
-     * Sets given idGenerator and initializes events
-     *
-     * @param IdGenerator $generator
-     */
-    public function bindIdGenerator(IdGenerator $generator)
-    {
-        if ($this->idGenerator) {
-            throw new \RuntimeException("Id generator already set");
-        }
-
-        $this->idGenerator = $generator;
-
-        $this->events->registerCallback($this->events::EVENT_BEFORE_CREATE, [$this, 'assignId']);
-        $this->events->registerCallback($this->events::EVENT_BEFORE_UPDATE, [$this, 'validateAssignedId']);
-    }
-
-
-    protected function select(string $what = "t.*", string $alias = "t", array $criteria = null): Fluent
-    {
-        $fluent = $this->connection->select($what)
-            ->from($this->getTable() . " AS $alias");
-
-        if ($criteria) {
-            $this->applyCriteria($fluent, $criteria);
-        }
-
-        return $fluent;
-    }
-
-    private function applyCriteria(Fluent $fluent, array &$criteria)
-    {
-        $entityClass = $this->getEntityClass();
-        /** @var EntityReflection $entityReflection */
-        $entityReflection = $entityClass::getReflection($this->mapper);
-
-        foreach ($criteria as $property => $value) {
-            if ($property[0] === '!') {
-                $property = substr($property, 1);
-                $conditions = &self::$CONDITIONS[false];
-            } else {
-                $conditions = &self::$CONDITIONS[true];
-            }
-
-            $value = $this->normalizeValue($value);
-
-            $propertyReflection = $entityReflection->getEntityProperty($property);
-            if (!$propertyReflection) {
-                throw new \InvalidArgumentException("Property '$property' not found on $entityClass");
-            }
-            $column = $propertyReflection->getColumn();
-
-            if (is_array($value)) {
-                $fluent->where("$column $conditions[IN] %in", $value);
-            } elseif (is_null($value)) {
-                $fluent->where("$column $conditions[NULL]");
-            } elseif (is_string($value) && strpos($value, '%') !== false) {
-                $fluent->where("$column $conditions[LIKE] ?", $value);
-            } else {
-                $fluent->where("$column $conditions[EQ] %s", $value);
-            }
-        }
-    }
-
-    private function normalizeValue($value)
-    {
-        if (is_array($value)) {
-            return array_map([$this, 'normalizeValue'], $value);
-        }
-        if ($value instanceof Entity) {
-            $table = $this->mapper->getTable(get_class($value));
-            $primary = $this->mapper->getPrimaryKey($table);
-            return $value->$primary;
-        }
-
-        return $value;
-    }
-
-    public function find($primaryKeyValue)
-    {
-        $index = $this->index ?: $this->getPrimaryKey();
-        $criteria = [$index => $primaryKeyValue];
-
-        if (is_array($primaryKeyValue)) {
-            return $this->findBy($criteria);
-        } else {
-            return $this->findOneBy($criteria);
-        }
-    }
-
-    public function findOneBy(array $criteria)
-    {
-        $selection = $this->select('t.*', 't', $criteria);
-
-        if ($finalRow = $selection->fetch()) {
-            return $this->createEntity($finalRow);
-        }
-
-        return null;
-    }
-
-    public function findBy($criteria, $order = [], $limit = null, $offset = null)
-    {
-        $selection = $this->select('t.*', 't', $criteria);
-
-        if (is_integer($limit)) {
-            $selection->limit($limit);
-        }
-
-        if (is_integer($offset)) {
-            $selection->offset($offset);
-        }
-
-        if ($order) {
-            $selection->orderBy($order);
-        }
-
-        return $this->createEntities($selection->fetchAll());
-    }
-
-    public function findAll(): array
-    {
-        $selection = $this->select();
-        return $this->createEntities($selection->fetchAll());
-    }
-
-    public function countBy(array $criteria): int
-    {
-        $pk = $this->getPrimaryKey();
-
-        $selection = $this->select("COUNT(t.$pk)", 't', $criteria);
-
-        return $selection->fetchSingle();
-    }
-
-    public function getDataSource(string $alias = null): Fluent
-    {
-        $select = $alias ? "$alias.*" : '*';
-
-        return $this->select($select, $alias);
-    }
-
-    public function getEntityDataSource(array $conditions = null): LeanMapperDataSource
+    public function getEntityDataSource(array $conditions = []): LeanMapperDataSource
     {
         $entityClass = $this->mapper->getEntityClass($this->getTable());
-
-        $fluent = $this->connection->command();
-        $fluent
-            ->select('t.*')
-            ->from($this->getTable() . ' AS t');
-
-        if ($conditions) {
-            $this->applyCriteria($fluent, $conditions);
-        }
-
-        return new LeanMapperDataSource($fluent, $this, $this->mapper, $entityClass);
+        return new LeanMapperDataSource($this->select('t.*', 't', $conditions), $this, $this->mapper, $entityClass);
     }
 
     public function makeEntity($row)
@@ -222,7 +63,7 @@ abstract class BaseRepository extends Repository implements IQueryable
         }
 
         if (is_array($row)) {
-            $class = $this->getEntityClass();
+            $class = $this->mapper->getEntityClass($this->getTable());
             $entity = new $class($row);
             $this->persist($entity);
             return $entity;
@@ -234,136 +75,5 @@ abstract class BaseRepository extends Repository implements IQueryable
     public function makeEntities(array $rows): array
     {
         return $this->createEntities($rows);
-    }
-
-    protected function getPrimaryKey(): string
-    {
-        return $this->mapper->getPrimaryKey($this->getTable());
-    }
-
-    protected function getEntityClass(): string
-    {
-        return $this->mapper->getEntityClass($this->getTable());
-    }
-
-    public function isPersistable(Entity $entity)
-    {
-        if ($entity->isDetached()) {
-            return $this->isUnique($entity);
-        }
-
-        if (array_key_exists($this->getPrimaryKey(), $entity->getModifiedRowData())) {
-            return $this->isUnique($entity);
-        }
-
-        return true;
-    }
-
-
-    protected function isUnique(Entity $entity)
-    {
-        if (empty($this->uniqueColumns)) {
-            return true;
-        }
-
-        $primary = $this->getPrimaryKey();
-
-        $orClauses = [];
-        $orArgs = [];
-        foreach ($this->uniqueColumns as $column) {
-            if (!isset($entity->$column)) {
-                continue;
-            }
-            $value = $entity->$column;
-            if (is_null($value)) {
-                continue;
-            }
-
-            $orClauses[] = "$column = ?";
-            $orArgs[] = $value;
-        }
-
-        $check = $this->select("COUNT($primary)")
-            ->where(implode(' OR ', $orClauses), $orArgs)
-            ->fetchSingle();
-
-        return $check === 0;
-    }
-
-    protected function insertIntoDatabase(Entity $entity)
-    {
-        $primaryKey = $this->getPrimaryKey();
-        $values = $entity->getModifiedRowData();
-        foreach ($values as &$value) {
-            if ($value instanceof Entity) {
-                $primaryKey = $this->mapper->getPrimaryKey($this->mapper->getTable(get_class($value)));
-                $value = $value->$primaryKey;
-            }
-        }
-        $this->connection->query(
-            'INSERT INTO %n %v',
-            $this->getTable(),
-            $values
-        );
-
-        return isset($values[$primaryKey]) ? $values[$primaryKey] : $this->connection->getInsertId();
-    }
-
-
-    public function deleteMany(array $entities)
-    {
-        return array_map([$this, 'delete'], $entities);
-    }
-
-    public function validateUnique(Entity $entity)
-    {
-        if (!$this->isUnique($entity)) {
-            throw new UniqueConstraintViolationException("Entity fails unique check");
-        }
-    }
-
-    final public function registerEvents(RepositoryEventsProvider $adapter)
-    {
-        foreach ($adapter->getEvents() as $type => $callback) {
-            $this->events->registerCallback($type, $callback);
-        }
-    }
-
-    public function assignId(Entity $entity)
-    {
-        $type = get_class($entity);
-        $primary = $this->mapper->getPrimaryKey($this->mapper->getTable($type));
-
-        if (!isset($entity->$primary) || !$entity->$primary) {
-            $entity->$primary = $this->getUniqueId($type);
-        }
-    }
-
-    public function validateAssignedId(Entity $entity)
-    {
-        $type = get_class($entity);
-        $primary = $this->mapper->getPrimaryKey($this->mapper->getTable($type));
-
-        $changed = $entity->getModifiedRowData();
-        if (!array_key_exists($primary, $changed)) {
-            return;
-        }
-        if ($this->idGenerator->getType($changed[$primary]) !== $type) {
-            throw new \UnexpectedValueException("Id '{$changed[$primary]}' could not be validated for type '$type'");
-        }
-    }
-
-    private function getUniqueId(string $type = null)
-    {
-        $i = 0;
-        do {
-            if (++$i > self::MAX_ID_ATTEMPTS) {
-                throw new UniqueConstraintViolationException("Could not get an unique ID after "
-                    . self::MAX_ID_ATTEMPTS . ' attempts');
-            }
-            $id = $this->idGenerator->generateId($type);
-        } while ($this->find($id));
-
-        return $id;
     }
 }
