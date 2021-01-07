@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbbe91ee5ed33692571cb36ccd8cbf30",
+    "content-hash": "e411fa44be369b3fe8165bc0dad4b467",
     "packages": [
         {
             "name": "contributte/application",
@@ -400,6 +400,60 @@
                 "sqlsrv"
             ],
             "time": "2018-09-17T11:47:10+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "reference": "feb0e820b8436873675fd3aca04f3728eb2185cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.8 <=9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "keywords": [
+                "jwt",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/firebase/php-jwt/issues",
+                "source": "https://github.com/firebase/php-jwt/tree/master"
+            },
+            "time": "2020-03-25T18:49:23+00:00"
         },
         {
             "name": "latte/latte",
@@ -5110,10 +5164,10 @@
     ],
     "aliases": [
         {
-            "package": "sestep/entity-ids",
-            "version": "9999999-dev",
-            "alias": "0.9.x-dev",
-            "alias_normalized": "0.9.9999999.9999999-dev"
+            "package": "sestep/typeful",
+            "version": "dev-main",
+            "alias": "0.10.0",
+            "alias_normalized": "0.10.0.0"
         },
         {
             "package": "sestep/nette-typeful",
@@ -5122,10 +5176,10 @@
             "alias_normalized": "0.10.0.0"
         },
         {
-            "package": "sestep/typeful",
-            "version": "dev-main",
-            "alias": "0.10.0",
-            "alias_normalized": "0.10.0.0"
+            "package": "sestep/entity-ids",
+            "version": "dev-master",
+            "alias": "0.9.x-dev",
+            "alias_normalized": "0.9.9999999.9999999-dev"
         }
     ],
     "minimum-stability": "dev",

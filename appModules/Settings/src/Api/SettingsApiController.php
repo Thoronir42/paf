@@ -1,15 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Modules\Settings\Presenters;
+namespace PAF\Modules\Settings\Api;
 
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
 use Nette\Http\IResponse;
-use Nette\Utils\Json;
 use SeStep\GeneralSettings\Settings;
+use SeStep\NetteApi\ApiController;
 
-class SettingsApiPresenter extends Presenter
+class SettingsApiController extends Presenter
 {
+    use ApiController;
+
     /** @inject */
     public Settings $settings;
 
@@ -21,7 +23,7 @@ class SettingsApiPresenter extends Presenter
                 break;
 
             case 'PUT':
-                $body = Json::decode($this->getHttpRequest()->getRawBody());
+                $body = $this->parseRequestBodyJson();
                 if (!$body || !property_exists($body, 'value')) {
                     throw new BadRequestException("Malformed body, property 'value not present'");
                 }

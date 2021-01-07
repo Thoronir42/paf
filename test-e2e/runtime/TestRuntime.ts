@@ -11,6 +11,7 @@ export type InitOptions = {
     testOutDirectory: string,
     testFilesDirectory: string,
     browserName?: BrowserName,
+    authorizationHeader?: string,
 }
 
 export default class TestRuntime {
@@ -38,7 +39,7 @@ export default class TestRuntime {
         if (this._browserDriver) {
             return;
         }
-        let browser =await getDriverInstance(this.options.browserName || "firefox");
+        let browser = await getDriverInstance(this.options.browserName || "firefox");
         this._browserDriver = browser.driver;
     }
 
@@ -58,7 +59,8 @@ export default class TestRuntime {
     public get api(): ApiAdapter {
         if (!this._api) {
             let url = new URL('api', this.options.baseUrl);
-            this._api = new ApiAdapter(url.href);
+            this._api = new ApiAdapter(url.href, this.options.authorizationHeader);
+
         }
 
         return this._api

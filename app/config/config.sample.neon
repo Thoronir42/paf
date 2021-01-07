@@ -3,3 +3,5 @@ parameters:
         database: paf_2019
         user: ''
         password: ''
+
+    jwtKey: hello-there

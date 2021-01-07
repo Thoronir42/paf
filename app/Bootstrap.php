@@ -8,7 +8,7 @@ use Tracy;
 class Bootstrap
 {
 
-    public static function createContainer(): Nette\DI\Container
+    public static function createContainer(string ...$additionalConfigFiles): Nette\DI\Container
     {
         Tracy\Debugger::$showLocation = true;
         Tracy\Debugger::$maxDepth = 4;
@@ -38,6 +38,9 @@ class Bootstrap
 
         $configFile = getenv('CONFIG_FILE') ?: 'config.local.neon';
         $configurator->addConfig(__DIR__ . '/config/' . $configFile);
+        foreach ($additionalConfigFiles as $file) {
+            $configurator->addConfig(__DIR__ . '/config/' . $file);
+        }
 
         $container = $configurator->createContainer();
 

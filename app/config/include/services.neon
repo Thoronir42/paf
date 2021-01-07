@@ -3,6 +3,7 @@ services:
     authorizator: PAF\Common\Security\Authorizator
     - PAF\Common\Security\ReflectionAuthorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
+    security.jwtService: SeStep\NetteApi\JwtService(%jwtKey%)
 
     - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
 

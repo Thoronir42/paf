@@ -11,7 +11,7 @@ export default class ApiAdapter {
 
     private readonly apiBase: URL;
 
-    constructor(baseUrl: string | URL) {
+    constructor(baseUrl: string | URL, private authorizationHeader?: string) {
         this.apiBase = baseUrl instanceof URL ? baseUrl : new URL(baseUrl);
     }
 
@@ -43,6 +43,13 @@ export default class ApiAdapter {
         }
         if (typeof body === "string") {
             options.body = body;
+        }
+
+        if (!options.headers) {
+            options.headers = {};
+        }
+        if (this.authorizationHeader) {
+            options.headers['Authorization'] = this.authorizationHeader;
         }
 
         let url = new URL(this.apiBase.href);

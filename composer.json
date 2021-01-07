@@ -52,7 +52,8 @@
     "contributte/monolog": "^0.4.1",
     "symfony/workflow": "^4.3",
     "symfony/event-dispatcher": "^4.3",
-    "ublaboo/datagrid": "^6.2"
+    "ublaboo/datagrid": "^6.2",
+    "firebase/php-jwt": "^5.2"
   },
   "autoload": {
     "files": [
@@ -68,6 +69,7 @@
       "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
+      "SeStep\\NetteApi\\": "extensions/SeStep/NetteApi/src/",
       "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
       "SeStep\\LeanTypeful\\": "extensions/SeStep/LeanTypeful/src/"
     }

@@ -5,6 +5,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$container = PAF\Bootstrap::createContainer();
+$container = PAF\Bootstrap::createContainer('include/appRouting.neon');
 $application = $container->getByType(Nette\Application\Application::class);
 $application->run();

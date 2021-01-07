@@ -10,6 +10,9 @@
 	RewriteEngine On
 	# RewriteBase /
 
+	RewriteRule api/.* api/index.php
+
+
 	# prevents files starting with dot to be viewed by browser
 	RewriteRule /\.|^\.(?!well-known/) - [F]
 

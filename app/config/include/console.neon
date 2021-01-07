@@ -30,3 +30,25 @@ services:
             - setName('app:settings:setDefaults')
         tags:
             console.command: app:settings:setDefaults
+
+    command.common.createAuthToken:
+        class: PAF\Modules\CommonModule\Console\CreateAuthTokenCommand
+        setup:
+            - setName('auth:token:create')
+        tags:
+            console.command: auth:token:create
+    command.settings.listTypes:
+        class: SeStep\Typeful\Console\ListTypesCommand
+        arguments:
+            name: typeful:types:list
+        tags:
+            console.command: typeful:types:list
+
+    command.settings.listEntities:
+        class: SeStep\Typeful\Console\ListEntitiesCommand
+        arguments:
+            name: typeful:entitites:list
+        tags:
+            console.command: typeful:entitites:list
+
+

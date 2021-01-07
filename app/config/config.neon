@@ -91,7 +91,6 @@ translation:
 
 includes:
     - include/services.neon
-    - include/routing.neon
     - include/console.neon
     - include/formsMessages.neon
     - include/entityIds.neon

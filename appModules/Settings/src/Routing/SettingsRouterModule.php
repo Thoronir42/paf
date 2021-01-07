@@ -14,7 +14,5 @@ class SettingsRouterModule implements RouterModule
             'presenter' => 'Settings',
             'action' => 'default',
         ]);
-
-        $routeList->addRoute('api/settings/<fqn \w+(.\w+)*>', 'SettingsApi:optionEndpoint');
     }
 }
