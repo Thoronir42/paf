@@ -15,7 +15,7 @@ trait HasMomentProvider
      */
     public function getMomentProvider(): MomentProvider
     {
-        if (!$this->momentProvider) {
+        if (!isset($this->momentProvider)) {
             $this->momentProvider = new RelativeMomentProvider(new DateTime());
         }
 
