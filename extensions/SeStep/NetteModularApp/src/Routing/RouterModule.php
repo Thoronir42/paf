@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Router;
+namespace SeStep\NetteModularApp\Routing;
 
 use Nette\Application\Routers\RouteList;
 

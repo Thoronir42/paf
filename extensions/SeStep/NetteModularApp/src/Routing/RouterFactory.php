@@ -1,26 +1,27 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Router;
+namespace SeStep\NetteModularApp\Routing;
 
 use Nette\Application\Routers\RouteList;
 use Nette\Routing\Router;
 
 final class RouterFactory
 {
+    private ?Router $fallbackRouter = null;
     /** @var RouterModule[] */
-    private $modules = [];
-    /** @var Router */
-    private $fallbackRouter;
+    private array $modules;
 
     /**
-     * RouterFactory constructor.
-     * @param Router $fallbackRouter
      * @param RouterModule[] $modules associative array of application router modules
      */
-    public function __construct(Router $fallbackRouter, array $modules)
+    public function __construct(array $modules)
+    {
+        $this->modules = $modules;
+    }
+
+    public function setFallbackRouter(?Router $fallbackRouter): void
     {
         $this->fallbackRouter = $fallbackRouter;
-        $this->modules = $modules;
     }
 
     /** @return Router */
@@ -34,7 +35,10 @@ final class RouterFactory
             $router->add($moduleRouteList);
         }
 
-        $router[] = $this->fallbackRouter;
+        if ($this->fallbackRouter) {
+            $router[] = $this->fallbackRouter;
+        }
+
 
         return $router;
     }

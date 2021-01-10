@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommonModule;
 
 use Nette\Application\Routers\RouteList;
-use PAF\Common\Router\RouterModule;
+use SeStep\NetteModularApp\Routing\RouterModule;
 
 class CommonRouterModule implements RouterModule
 {

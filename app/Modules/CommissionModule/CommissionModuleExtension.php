@@ -8,14 +8,11 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Neon\Neon;
 use PAF\Modules\CommissionModule\Components\QuoteForm\QuoteFormFactory;
-use SeStep\Typeful\DI\RegisterTypeful;
 
 class CommissionModuleExtension extends CompilerExtension
 {
     const MODE_SINGLE_SUPPLIER = 'singleSupplier';
     const MODE_MULTI_SUPPLIERS = 'multipleSuppliers';
-
-    use RegisterTypeful;
 
     public function getConfigSchema(): Nette\Schema\Schema
     {
@@ -28,13 +25,7 @@ class CommissionModuleExtension extends CompilerExtension
 
     public function loadConfiguration()
     {
-        $staticConfig = $this->loadFromFile(__DIR__ . '/commissionModule.neon');
-        $this->loadDefinitionsFromConfig($staticConfig['services']);
-
         $builder = $this->getContainerBuilder();
-
-        $this->registerTypeful($staticConfig['typeful']);
-
         $config = $this->getConfig();
 
         $this->loadCommon($builder, $config);
@@ -86,7 +77,7 @@ class CommissionModuleExtension extends CompilerExtension
         $quoteService = $builder->getDefinition($this->prefix('quoteService'));
 
         /** @var ServiceDefinition $dashboardStats */
-        $dashboardStats = $builder->getDefinition('common.dashboardService');
+        $dashboardStats = $builder->getDefinition('App.Common.dashboardService');
         $dashboardStats->addSetup(
             '$service->registerStat(?, [?, "countUnresolvedQuotes"])',
             ['quotes', $quoteService]
@@ -95,5 +86,10 @@ class CommissionModuleExtension extends CompilerExtension
             '$service->registerStat(?, [?, "countUnresolvedCommissions"])',
             ['commissions', $commissionService]
         );
+    }
+
+    public function prefix(string $id): string
+    {
+        return substr_replace($id, 'App.' . $this->name . '.', substr($id, 0, 1) === '@' ? 1 : 0, 0);
     }
 }

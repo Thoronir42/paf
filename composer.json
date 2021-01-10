@@ -71,6 +71,7 @@
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
       "SeStep\\NetteApi\\": "extensions/SeStep/NetteApi/src/",
       "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
+      "SeStep\\NetteModularApp\\": "extensions/SeStep/NetteModularApp/src/",
       "SeStep\\LeanTypeful\\": "extensions/SeStep/LeanTypeful/src/"
     }
   },

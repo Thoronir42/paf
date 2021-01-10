@@ -5,6 +5,7 @@ services:
     commissionRepository:
             class: PAF\Modules\CommissionModule\Repository\CommissionRepository
             setup:
+                - injectDependencies()
                 - registerEvents(PAF\Modules\CommissionModule\AuditTrail\CommissionAuditTrailAdapter())
 
     commissionWorkflow: PAF\Modules\CommissionModule\Model\CommissionWorkflow
@@ -36,7 +37,7 @@ typeful:
             name: PAF\Modules\CommissionModule\Model\Commission
             properties:
                 status:
-                    type: pafCommissions.commissionStatus
+                    type: App.Commission.commissionStatus
                 targetDelivery:
                     type: typeful.date
                 archivedOn:

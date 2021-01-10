@@ -30,7 +30,6 @@ class AuthController implements IPresenter
         try {
             $expireAt = $this->getMomentProvider()->now()->modify('+ 1 day');
             $jwt = $this->authenticator->authenticateToken([$body->login, $body->password], $expireAt);
-
         } catch (AuthenticationException $ex) {
             throw new BadRequestException('authError.credentialsNotRecognized', 401);
         }

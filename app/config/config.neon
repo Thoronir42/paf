@@ -3,6 +3,8 @@
 # https://nette.org/security-warning
 #
 parameters:
+    routerMode: 'app'
+    defaultAppRoute: 'Common:Homepage'
     powerUsers: []
     defaultSettings: []
     database:
@@ -45,13 +47,23 @@ extensions:
     leanTypeful: SeStep\LeanTypeful\LeanTypefulExtension
 
     commonEvents: PAF\Common\Events\EventsExtension
-
+    modularApp: SeStep\NetteModularApp\ModularAppExtension
     pafFeed: PAF\Modules\Feed\FeedExtension
-    pafDirectory: PAF\Modules\DirectoryModule\DirectoryModuleExtension
-    pafCommissions: PAF\Modules\CommissionModule\CommissionModuleExtension
+    Commission: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 appForms:
     defaultFormClass: PAF\Common\Lean\GenericEntityForm
+
+leanMapper:
+    db: %database%
+
+leanFixtures:
+    initFiles:
+        - %rootDir%/data/testing/commonModuleFixtures.neon
+    daos:
+        - PAF\Modules\CommonModule\Fixtures\UserFixtureDao()
+        - PAF\Common\Lean\RepositoryFixtureDao(@App.Directory.personRepository)
+        - PAF\Common\Lean\RepositoryFixtureDao(@App.Directory.contactRepository)
 
 commonEvents:
     subscribers:
@@ -88,11 +100,37 @@ translation:
         - %appDir%/Modules/CommissionModule/lang
         - %vendorDir%/sestep/nette-typeful/locale
 
+modularApp:
+    routerMode: %routerMode%
+    defaultAppRoute: %defaultAppRoute%
+    mapperConventions: PAF\Common\Lean\UnderscoreMapper()
+    modules:
+        Settings:
+            appRouter: PAF\Modules\Settings\Routing\SettingsRouterModule()
+            apiRouter: PAF\Modules\Settings\Api\SettingsApiRouterModule()
+            leanMapperModule: SeStep\LeanSettings\LeanOptionsMapperModule()
+            leanMapperPrefix: ss_settings__
+        Audit:
+            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('PAF\Common\AuditTrail')
+        Common:
+            staticConfig: %appDir%/Modules/CommonModule/commonModule.neon
+            appRouter: PAF\Modules\CommonModule\CommonRouterModule()
+            apiRouter: PAF\Modules\CommonModule\Api\CommonApiRouterModule()
+            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommonModule', 'Model')
+        Directory:
+            staticConfig: %appDir%/Modules/DirectoryModule/directoryModule.neon
+            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\DirectoryModule', 'Model')
+        Commission:
+            staticConfig: %appDir%/Modules/CommissionModule/commissionModule.neon
+            appRouter: PAF\Modules\CommissionModule\Routing\CommissionRouterModule()
+            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('PAF\Modules\CommissionModule', 'Model')
+        Cms:
+            appRouter: PAF\Modules\CmsModule\Routing\CmsRouterModule()
+
 
 includes:
     - include/services.neon
     - include/console.neon
     - include/formsMessages.neon
     - include/entityIds.neon
-    - include/lean.neon
     - include/auditTrail.neon

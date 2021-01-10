@@ -1,0 +1,26 @@
+services:
+    # Repositoryies
+    userRepository:
+            class: PAF\Modules\CommonModule\Repository\UserRepository
+            setup:
+                - ensureUnique('username')
+    slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
+
+    userFileRepository: PAF\Modules\CommonModule\Repository\UserFileRepository
+    userFileThreadRepository: PAF\Modules\CommonModule\Repository\UserFileThreadRepository
+    commentRepository: PAF\Modules\CommonModule\Repository\CommentRepository
+    commentThreadRepository: PAF\Modules\CommonModule\Repository\CommentThreadRepository
+
+    # Services
+    usersServuce:
+        class: PAF\Modules\CommonModule\Services\Users
+        arguments:
+            powerUsers: %powerUsers%
+    dashboardService: PAF\Modules\CommonModule\Services\DashboardService
+    filesService: PAF\Modules\CommonModule\Services\FilesService
+
+    commentsService: PAF\Modules\CommonModule\Services\CommentsService
+    commentsControlFactory: PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory
+
+    # Components
+    signInFormFactory: PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory

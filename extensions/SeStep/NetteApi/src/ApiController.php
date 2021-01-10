@@ -32,5 +32,4 @@ trait ApiController
     {
         return new JsonResponse($payload);
     }
-
 }

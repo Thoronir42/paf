@@ -1,24 +1,11 @@
 services:
     authenticator: PAF\Common\Security\Authenticator
     authorizator: PAF\Common\Security\Authorizator
-    - PAF\Common\Security\ReflectionAuthorizator
+    reflectionAuthorizator: PAF\Common\Security\ReflectionAuthorizator
     security.userStorage: PAF\Common\Security\LiveUserStorage(Nette\Http\UserStorage())
     security.jwtService: SeStep\NetteApi\JwtService(%jwtKey%)
 
-    - PAF\Modules\CommonModule\Components\SignInForm\SignInFormFactory
-
     common.transactionManager: PAF\Common\Model\TransactionManager
-    common.userRepository:
-        class: PAF\Modules\CommonModule\Repository\UserRepository
-        setup:
-            - ensureUnique('username')
-    common.slugRepository: PAF\Modules\CommonModule\Repository\SlugRepository
-
-    common.users:
-        class: PAF\Modules\CommonModule\Services\Users
-        arguments:
-            powerUsers: %powerUsers%
-    common.dashboardService: PAF\Modules\CommonModule\Services\DashboardService
 
     paf.navbar:
         class: SeStep\NetteBootstrap\Controls\Menu\Navbar
@@ -37,15 +24,6 @@ services:
         autowired: false
 
     - PAF\Modules\CmsModule\Facade\CmsPages
-
-    - PAF\Modules\CommonModule\Services\FilesService
-    - PAF\Modules\CommonModule\Repository\UserFileRepository
-    - PAF\Modules\CommonModule\Repository\UserFileThreadRepository
-
-    common.commentRepository: PAF\Modules\CommonModule\Repository\CommentRepository
-    common.commentThreadRepository: PAF\Modules\CommonModule\Repository\CommentThreadRepository
-    common.commentsService: PAF\Modules\CommonModule\Services\CommentsService
-    common.commentsControlFactory: PAF\Modules\CommonModule\Components\CommentsControl\CommentsControlFactory
 
     generalSettings:
         factory: SeStep\GeneralSettings\Settings(SeStep\LeanSettings\LeanOptionsAdapter())
