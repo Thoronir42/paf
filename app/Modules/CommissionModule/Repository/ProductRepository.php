@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Repository;
 
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 
 class ProductRepository extends BaseRepository
 {

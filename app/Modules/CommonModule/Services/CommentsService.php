@@ -2,8 +2,8 @@
 
 namespace PAF\Modules\CommonModule\Services;
 
-use PAF\Modules\Feed\Source\FeedSource;
-use PAF\Common\Lean\LeanRepositoryFeedSource;
+use SeStep\NetteFeed\Source\FeedSource;
+use SeStep\LeanCommon\LeanRepositoryFeedSource;
 use PAF\Modules\CommonModule\Model\Comment;
 use PAF\Modules\CommonModule\Model\CommentThread;
 use PAF\Modules\CommonModule\Repository\CommentRepository;
@@ -11,10 +11,8 @@ use PAF\Modules\CommonModule\Repository\CommentThreadRepository;
 
 class CommentsService
 {
-    /** @var CommentRepository */
-    private $commentRepository;
-    /** @var CommentThreadRepository */
-    private $commentThreadRepository;
+    private CommentRepository $commentRepository;
+    private CommentThreadRepository $commentThreadRepository;
 
     public function __construct(CommentRepository $commentRepository, CommentThreadRepository $commentThreadRepository)
     {

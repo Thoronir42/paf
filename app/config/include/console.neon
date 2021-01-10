@@ -14,7 +14,7 @@ services:
                 - %appDir%/Modules/CommonModule/Model/database/initialize.sql
                 - %appDir%/Modules/DirectoryModule/Model/database/initialize.sql
                 - %rootDir%/extensions/SeStep/LeanSettings/database/initialize.sql
-                - %appDir%/Common/AuditTrail/database/initialize.sql
+                - %rootDir%/extensions/SeStep/NetteAuditTrail/database/initialize.sql
                 - %appDir%/Modules/CommissionModule/Model/database/initialize.sql
                 - %appDir%/Modules/CmsModule/Model/database/initialize.sql
         setup:

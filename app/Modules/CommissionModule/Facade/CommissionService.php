@@ -3,16 +3,16 @@
 namespace PAF\Modules\CommissionModule\Facade;
 
 use Nette\Utils\Paginator;
-use PAF\Common\AuditTrail\Facade\AuditTrailService;
-use PAF\Common\Lean\LeanMapperDataSource;
+use SeStep\NetteAuditTrail\Facade\AuditTrailService;
+use SeStep\LeanCommon\LeanMapperDataSource;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
-use PAF\Common\AuditTrail\Repository\EntryRepository;
+use SeStep\NetteAuditTrail\Repository\EntryRepository;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\CommissionModule\Repository\CommissionRepository;
-use PAF\Modules\Feed\Service\FeedService;
+use SeStep\NetteFeed\Service\FeedService;
 use PAF\Modules\CommonModule\Services\CommentsService;
 use SeStep\Moment\HasMomentProvider;
 
@@ -20,18 +20,12 @@ class CommissionService
 {
     use HasMomentProvider;
 
-    /** @var CommissionRepository */
-    private $commissionRepository;
-    /** @var CommentsService */
-    private $commentsService;
-    /** @var EntryRepository */
-    private $entryRepository;
-    /** @var FeedService */
-    private $feedService;
-    /** @var TransactionManager */
-    private $transactionManager;
-    /** @var AuditTrailService */
-    private $auditTrailService;
+    private CommissionRepository $commissionRepository;
+    private CommentsService $commentsService;
+    private EntryRepository $entryRepository;
+    private FeedService $feedService;
+    private TransactionManager $transactionManager;
+    private AuditTrailService $auditTrailService;
 
     public function __construct(
         CommissionRepository $commissionRepository,

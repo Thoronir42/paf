@@ -5,7 +5,7 @@ namespace PAF\Modules\CommissionModule\Components\CommissionsGrid;
 use LeanMapper\Fluent;
 use Nette\Application\UI\ITemplateFactory;
 use Nette\Localization\ITranslator;
-use PAF\Common\Lean\LeanQueryFilter;
+use SeStep\LeanCommon\LeanQueryFilter;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\CommissionWorkflow;
 use PAF\Common\Localization\TranslatorUtils;

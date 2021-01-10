@@ -3,7 +3,7 @@
 namespace PAF\Modules\DirectoryModule\Repository;
 
 use Dibi\Expression;
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use PAF\Modules\DirectoryModule\Model\Contact;
 use PAF\Modules\DirectoryModule\Model\Person;
 

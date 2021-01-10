@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PAF\Common\Lean;
+namespace SeStep\LeanCommon;
 
 use PAF\Modules\DirectoryModule\Model\Person;
 use PHPUnit\Framework\TestCase;

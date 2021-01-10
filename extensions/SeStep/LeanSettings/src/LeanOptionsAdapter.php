@@ -31,6 +31,8 @@ class LeanOptionsAdapter implements IOptionsAdapter
             }
             return $this->rootSectionCached;
         }
+
+        throw new \Error("Can not access property '$name'");
     }
 
     public function __construct(

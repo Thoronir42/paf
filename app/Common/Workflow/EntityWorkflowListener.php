@@ -4,7 +4,7 @@ namespace PAF\Common\Workflow;
 
 use LeanMapper\Entity;
 use LeanMapper\IMapper;
-use PAF\Common\AuditTrail\Facade\AuditTrailService;
+use SeStep\NetteAuditTrail\Facade\AuditTrailService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\CompletedEvent;
 use Symfony\Component\Workflow\Event\Event;
