@@ -5,3 +5,5 @@ parameters:
         user: root
         password:
         database: paf_test
+
+    jwtKey: debug-key
