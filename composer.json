@@ -14,8 +14,8 @@
   "scripts": {
     "initialize-workdir": "@php bin/console a:d:i --drop-all-tables -d && @php bin/console l:i && @php bin/console a:s:s",
     "test": "phpunit",
-    "phpcs": "phpcs app/ test/ extensions/",
-    "phpcbf": "phpcbf app/ test/ extensions/",
+    "phpcs": "phpcs app/ appModules/ test/ extensions/",
+    "phpcbf": "phpcbf app/ appModules/ test/ extensions/",
     "test-e2e": "behat"
   },
   "minimum-stability": "dev",
@@ -66,11 +66,14 @@
       "PAF\\": "app/",
       "SeStep\\GeneralSettings\\": "extensions/SeStep/GeneralSettings/src/",
       "SeStep\\GeneralSettingsInMemory\\": "extensions/SeStep/GeneralSettingsInMemory/src/",
-      "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
+      "SeStep\\LeanCommon\\": "extensions/SeStep/LeanCommon/src/",
       "SeStep\\LeanFixtures\\": "extensions/SeStep/LeanFixtures/src/",
+      "SeStep\\LeanSettings\\": "extensions/SeStep/LeanSettings/src/",
       "SeStep\\Moment\\": "extensions/SeStep/Moment/src/",
       "SeStep\\NetteApi\\": "extensions/SeStep/NetteApi/src/",
+      "SeStep\\NetteAuditTrail\\": "extensions/SeStep/NetteAuditTrail/src/",
       "SeStep\\NetteBootstrap\\": "extensions/SeStep/NetteBootstrap/src/",
+      "SeStep\\NetteFeed\\": "extensions/SeStep/NetteFeed/src/",
       "SeStep\\NetteModularApp\\": "extensions/SeStep/NetteModularApp/src/",
       "SeStep\\LeanTypeful\\": "extensions/SeStep/LeanTypeful/src/"
     }

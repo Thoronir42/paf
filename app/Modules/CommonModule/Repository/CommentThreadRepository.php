@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Repository;
 
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 
 class CommentThreadRepository extends BaseRepository
 {

@@ -4,7 +4,7 @@ namespace PAF\Modules\CommonModule\Repository;
 
 use Nette\InvalidStateException;
 use Nette\Utils\Strings;
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use PAF\Modules\CommonModule\Model\Slug;
 
 /**

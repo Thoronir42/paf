@@ -35,5 +35,4 @@ trait SettingsAccess
 
         return new OptionNodeControl($optionAccessor, $this->settingsRootFqn, $this->translator ?? null);
     }
-
 }

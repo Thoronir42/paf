@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Facade;
 
-use PAF\Common\AuditTrail\Facade\AuditTrailService;
+use SeStep\NetteAuditTrail\Facade\AuditTrailService;
 use PAF\Common\Model\TransactionManager;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\CommissionModule\Model\Product;

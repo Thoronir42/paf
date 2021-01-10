@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommonModule\Repository;
 
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use Nette\InvalidStateException;
 use PAF\Modules\CommonModule\Model\User;
 use SeStep\Moment\HasMomentProvider;

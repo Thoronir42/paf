@@ -4,7 +4,7 @@ namespace PAF\Modules\CommonModule\Fixtures;
 
 use LeanMapper\IMapper;
 use Nette\Security\Passwords;
-use PAF\Common\Lean\RepositoryFixtureDao;
+use SeStep\LeanFixtures\RepositoryFixtureDao;
 use PAF\Modules\CommonModule\Model\User;
 use PAF\Modules\CommonModule\Repository\UserRepository;
 use SeStep\LeanFixtures\FixtureDao;

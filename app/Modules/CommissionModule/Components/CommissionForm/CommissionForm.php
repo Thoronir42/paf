@@ -9,7 +9,7 @@ use PAF\Common\Forms\FormWrapperControl;
 use Nette\Application\UI\Form;
 use Nette\Forms\Container;
 use Nette\Forms\Controls\BaseControl;
-use PAF\Common\Lean\GenericEntityForm;
+use PAF\Common\Forms\GenericEntityForm;
 use PAF\Modules\CommissionModule\Facade\ProductService;
 use PAF\Modules\CommissionModule\Model\Commission;
 use PAF\Modules\DirectoryModule\Model\Contact;

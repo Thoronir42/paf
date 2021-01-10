@@ -3,7 +3,7 @@
 namespace PAF\Modules\CommissionModule\Repository;
 
 use Nette\Utils\Paginator;
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use PAF\Modules\CommissionModule\Model\Quote;
 use PAF\Modules\DirectoryModule\Model\Person;
 

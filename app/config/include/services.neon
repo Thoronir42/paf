@@ -61,7 +61,7 @@ services:
     netteTypeful.entityFormFactory:
         arguments:
             createCallback: [@appForms.formFactory, 'create']
-            defaultFormClass: PAF\Common\Lean\GenericEntityForm
+            defaultFormClass: PAF\Common\Forms\GenericEntityForm
 
     netteTypeful.entityGridFactory:
         setup:

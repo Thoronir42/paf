@@ -29,13 +29,12 @@ session:
 	expiration: 14 days
 
 
-
 extensions:
     entityIds: SeStep\EntityIds\DI\EntityIdsExtension
-    auditTrail: PAF\Common\AuditTrail\AuditTrailExtension
+    auditTrail: SeStep\NetteAuditTrail\AuditTrailExtension
     appForms: PAF\Common\Forms\FormsExtension
-    repository: PAF\Common\Lean\DI\RepositoryExtension
-    leanMapper: PAF\Common\Lean\DI\LeanMapperExtension
+    repository: SeStep\LeanCommon\DI\RepositoryExtension
+    leanMapper: SeStep\LeanCommon\DI\LeanMapperExtension
     moment: SeStep\Moment\MomentProviderExtension
     appLogging: PAF\Common\Logging\LoggingExtension
     leanSettings: SeStep\LeanSettings\DI\LeanSettingsExtensions
@@ -48,11 +47,11 @@ extensions:
 
     commonEvents: PAF\Common\Events\EventsExtension
     modularApp: SeStep\NetteModularApp\ModularAppExtension
-    pafFeed: PAF\Modules\Feed\FeedExtension
+    feed: SeStep\NetteFeed\FeedExtension
     Commission: PAF\Modules\CommissionModule\CommissionModuleExtension
 
 appForms:
-    defaultFormClass: PAF\Common\Lean\GenericEntityForm
+    defaultFormClass: PAF\Common\Forms\GenericEntityForm
 
 leanMapper:
     db: %database%
@@ -62,8 +61,8 @@ leanFixtures:
         - %rootDir%/data/testing/commonModuleFixtures.neon
     daos:
         - PAF\Modules\CommonModule\Fixtures\UserFixtureDao()
-        - PAF\Common\Lean\RepositoryFixtureDao(@App.Directory.personRepository)
-        - PAF\Common\Lean\RepositoryFixtureDao(@App.Directory.contactRepository)
+        - SeStep\LeanFixtures\RepositoryFixtureDao(@App.Directory.personRepository)
+        - SeStep\LeanFixtures\RepositoryFixtureDao(@App.Directory.contactRepository)
 
 commonEvents:
     subscribers:
@@ -103,7 +102,7 @@ translation:
 modularApp:
     routerMode: %routerMode%
     defaultAppRoute: %defaultAppRoute%
-    mapperConventions: PAF\Common\Lean\UnderscoreMapper()
+    mapperConventions: SeStep\LeanCommon\UnderscoreMapper()
     modules:
         Settings:
             appRouter: PAF\Modules\Settings\Routing\SettingsRouterModule()
@@ -111,7 +110,7 @@ modularApp:
             leanMapperModule: SeStep\LeanSettings\LeanOptionsMapperModule()
             leanMapperPrefix: ss_settings__
         Audit:
-            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('PAF\Common\AuditTrail')
+            leanMapperModule: SeStep\ModularLeanMapper\MapperModule::create('SeStep\NetteAuditTrail')
         Common:
             staticConfig: %appDir%/Modules/CommonModule/commonModule.neon
             appRouter: PAF\Modules\CommonModule\CommonRouterModule()

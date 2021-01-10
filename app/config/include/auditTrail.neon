@@ -1,6 +1,6 @@
 services:
     auditTrailFeed:
-        class: PAF\Common\AuditTrail\Components\FeedControl\AuditTrailFeedControlFactory
+        class: SeStep\NetteAuditTrail\Components\FeedControl\AuditTrailFeedControlFactory
         arguments:
             templateByType:
                 commission.log.commissionCreated: %appDir%/Modules/CommissionModule/AuditTrail/commissionUpdated.latte
@@ -9,7 +9,7 @@ services:
                 commission.log.commissionUnarchived: %appDir%/Modules/CommissionModule/AuditTrail/commissionWorkflowExecuted.latte
                 commission.commissionWorkflow.action.*: %appDir%/Modules/CommissionModule/AuditTrail/commissionWorkflowExecuted.latte
 
-pafFeed:
+feed:
     entryControlClasses:
-        comment: PAF\Modules\Feed\Components\Comment\CommentFeedControl
+        comment: PAF\Modules\CommonModule\Components\Feed\CommentFeedControl
         logEvent: @auditTrailFeed

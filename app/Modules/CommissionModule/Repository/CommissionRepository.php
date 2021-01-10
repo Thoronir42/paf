@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Repository;
 
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use PAF\Common\Model\TransactionManager;
 use PAF\Common\Workflow\ActionResult;
 use PAF\Modules\CommissionModule\Model\Commission;

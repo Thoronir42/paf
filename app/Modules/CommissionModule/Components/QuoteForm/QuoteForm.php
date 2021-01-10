@@ -2,7 +2,7 @@
 
 namespace PAF\Modules\CommissionModule\Components\QuoteForm;
 
-use PAF\Common\Lean\GenericEntityForm;
+use PAF\Common\Forms\GenericEntityForm;
 use PAF\Modules\CommissionModule\Model\Specification;
 use PAF\Modules\DirectoryModule\Model\Contact;
 

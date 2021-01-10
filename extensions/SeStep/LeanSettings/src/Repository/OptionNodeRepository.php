@@ -6,7 +6,7 @@ use LeanMapper\Connection;
 use LeanMapper\IEntityFactory;
 use LeanMapper\IMapper;
 use Nette\InvalidStateException;
-use PAF\Common\Lean\BaseRepository;
+use SeStep\LeanCommon\BaseRepository;
 use SeStep\GeneralSettings\DomainLocator;
 use SeStep\GeneralSettings\Exceptions\NodeNotFoundException;
 use SeStep\GeneralSettings\Model\INode;

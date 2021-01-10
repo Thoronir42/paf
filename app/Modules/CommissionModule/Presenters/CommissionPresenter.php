@@ -2,12 +2,11 @@
 
 namespace PAF\Modules\CommissionModule\Presenters;
 
-use Nette\Application\UI\Form;
 use PAF\Common\BasePresenter;
-use PAF\Modules\Feed\Components\Comment\CommentFeedControl;
-use PAF\Modules\Feed\Components\FeedControl\FeedControlFactory;
+use PAF\Modules\CommonModule\Components\Feed\CommentFeedControl;
+use SeStep\NetteFeed\Components\FeedControl\FeedControlFactory;
 use PAF\Common\Forms\FormFactory;
-use PAF\Common\Lean\LeanSnapshots;
+use SeStep\LeanCommon\LeanSnapshots;
 use PAF\Modules\CommissionModule\Components\CommissionsGrid\CommissionsGridFactory;
 use PAF\Modules\CommissionModule\Components\CommissionStatus\CommissionStatusControlFactory;
 use PAF\Modules\CommissionModule\Components\CommissionForm\CommissionFormFactory;

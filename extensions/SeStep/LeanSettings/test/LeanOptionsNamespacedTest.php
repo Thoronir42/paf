@@ -3,7 +3,7 @@
 namespace Test\SeStep\LeanSettings;
 
 use LeanMapper\DefaultEntityFactory;
-use PAF\Common\Lean\LeanQueryFilter;
+use SeStep\LeanCommon\LeanQueryFilter;
 use PAF\Utils\LeanAwareTest;
 use SeStep\GeneralSettings\IOptionsAdapter;
 use SeStep\LeanSettings\LeanOptionsAdapter;
