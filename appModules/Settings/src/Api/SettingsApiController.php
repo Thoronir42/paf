@@ -5,6 +5,7 @@ namespace PAF\Modules\Settings\Api;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
 use Nette\Http\IResponse;
+use PAF\Modules\Settings\Auth\SettingsResource;
 use SeStep\GeneralSettings\Settings;
 use SeStep\NetteApi\ApiController;
 
@@ -23,6 +24,9 @@ class SettingsApiController extends Presenter
                 break;
 
             case 'PUT':
+                if (!$this->user->isAllowed(SettingsResource::RESOURCE)) {
+                    throw new BadRequestException("authError.unauthorized", IResponse::S401_UNAUTHORIZED);
+                }
                 $body = $this->parseRequestBodyJson();
                 if (!$body || !property_exists($body, 'value')) {
                     throw new BadRequestException("Malformed body, property 'value not present'");
