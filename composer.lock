@@ -457,22 +457,22 @@
         },
         {
             "name": "latte/latte",
-            "version": "v2.9.0",
+            "version": "v2.10.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/latte.git",
-                "reference": "21861cfee4ba19f853a34bcaab15d6ec332d8fa0"
+                "reference": "8a9bd8af76557fc35abae639ab7b966af706fec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/latte/zipball/21861cfee4ba19f853a34bcaab15d6ec332d8fa0",
-                "reference": "21861cfee4ba19f853a34bcaab15d6ec332d8fa0",
+                "url": "https://api.github.com/repos/nette/latte/zipball/8a9bd8af76557fc35abae639ab7b966af706fec9",
+                "reference": "8a9bd8af76557fc35abae639ab7b966af706fec9",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": ">=7.1 <8.1"
+                "php": ">=7.1 <8.2"
             },
             "conflict": {
                 "nette/application": "<2.4.1"
@@ -491,10 +491,13 @@
                 "nette/php-generator": "to use tag {templatePrint}",
                 "nette/utils": "to use filter |webalize"
             },
+            "bin": [
+                "bin/latte-lint"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9-dev"
+                    "dev-master": "2.10-dev"
                 }
             },
             "autoload": {
@@ -532,9 +535,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nette/latte/issues",
-                "source": "https://github.com/nette/latte/tree/v2.9.0"
+                "source": "https://github.com/nette/latte/tree/v2.10.6"
             },
-            "time": "2020-11-15T23:01:29+00:00"
+            "time": "2021-11-26T22:56:21+00:00"
         },
         {
             "name": "league/flysystem",
@@ -5164,10 +5167,10 @@
     ],
     "aliases": [
         {
-            "package": "sestep/typeful",
-            "version": "dev-main",
-            "alias": "0.10.0",
-            "alias_normalized": "0.10.0.0"
+            "package": "sestep/entity-ids",
+            "version": "9999999-dev",
+            "alias": "0.9.x-dev",
+            "alias_normalized": "0.9.9999999.9999999-dev"
         },
         {
             "package": "sestep/nette-typeful",
@@ -5176,10 +5179,10 @@
             "alias_normalized": "0.10.0.0"
         },
         {
-            "package": "sestep/entity-ids",
-            "version": "dev-master",
-            "alias": "0.9.x-dev",
-            "alias_normalized": "0.9.9999999.9999999-dev"
+            "package": "sestep/typeful",
+            "version": "dev-main",
+            "alias": "0.10.0",
+            "alias_normalized": "0.10.0.0"
         }
     ],
     "minimum-stability": "dev",
@@ -5197,5 +5200,5 @@
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
